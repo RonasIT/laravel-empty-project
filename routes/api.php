@@ -1,6 +1,5 @@
 <?php
 
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -11,4 +10,3 @@
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-

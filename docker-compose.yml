@@ -1,33 +1,28 @@
-apache:
+nginx:
     build: .
-    dockerfile: docker/php.Dockerfile
-    working_dir: /app
+    dockerfile: docker/nginx/Dockerfile
     ports:
         - 80:80
-        - 443:443
     links:
-        - db:db
-        - redis:redis
+        - postgres
     volumes:
         - ./:/app
     environment:
         WEB_DOCUMENT_ROOT: /app/public
         WEB_DOCUMENT_INDEX: index.php
-        REDIS_PORT: "6379"
 
-db:
-    ports:
-        - 3307:3306
-    image: mysql:5.6
-    volumes:
-        - ./:/app
-    environment:
-        MYSQL_ROOT_PASSWORD: "secret"
-        MYSQL_DATABASE: "homestead"
+postgres:
+   ports:
+       - 5432:5432
+   image: postgres
 
-redis:
-    ports:
-        - 6379:6379
-    image: redis
+   environment:
+       POSTGRES_PASSWORD: project
+       POSTGRES_USER: project
+       POSTGRES_DB: project
+
+composer:
+    image: composer/composer
+    command: install
     volumes:
         - ./:/app
