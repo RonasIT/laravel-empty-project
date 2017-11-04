@@ -2,7 +2,7 @@ FROM webdevops/php-nginx:debian-9
 
 RUN apt-get clean && \
     apt-get -y update && \
-    apt-get -y install ssmtp php7.0-pgsql phpunit php5-xdebug && \
+    apt-get -y install ssmtp php7.0-pgsql phpunit php-xdebug && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -16,5 +16,4 @@ RUN sed -i s/'autostart = false'/'autostart = true'/g /opt/docker/etc/supervisor
     chmod 600 /etc/crontab
 
 COPY docker/nginx/ssmtp.conf /etc/ssmtp/
-COPY docker/20-xdebug.ini /etc/php5/fpm/conf.d/
-
+COPY docker/nginx/20-xdebug.ini /etc/php/7.0/cli/conf.d/
