@@ -1,0 +1,48 @@
+stages:
+  - tests
+  - deploy
+
+tests:
+  stage: tests
+  variables:
+    MYSQL_DATABASE: homestead
+    MYSQL_ALLOW_EMPTY_PASSWORD: "1"
+  image: webdevops/php:ubuntu-16.04
+  services:
+    - redis
+    - mysql:5.6
+  before_script:
+    - cp .env.dev.testing .env.testing
+    - composer -q install
+  artifacts:
+    paths:
+    - vendor
+    expire_in: 1 hour
+  script:
+    - export REDIS_PORT="6379"
+    - php vendor/bin/phpunit --stop-on-failure ./tests/
+  after_script:
+    - cat storage/logs/laravel.log || true
+  only:
+    - development
+  tags:
+    - docker
+    - linux
+
+deploy_development:
+  stage: deploy
+  image: projects.ronasit.com:4567/docker/k8s-deployer
+  environment:
+    name: "project-dev"
+    url: https://dev.api.project.ronasit.com
+  before_script:
+    - cp .env.dev .env
+  script:
+    - build kubernetes/dev/Dockerfile
+    - deploy
+    - replace
+  only:
+    - development
+  tags:
+    - docker
+    - linux
