@@ -16,11 +16,12 @@ abstract class TestCase extends AutoDocTestCase
     protected $jwt;
     protected $auth;
 
-    public function setUp() {
+    public function setUp()
+    {
         parent::setUp();
 
         $this->loadTestDump();
-        $this->auth = app( JWTAuth::class );
+        $this->auth = app(JWTAuth::class);
     }
 
     /**
@@ -28,50 +29,54 @@ abstract class TestCase extends AutoDocTestCase
      *
      * @return \Illuminate\Foundation\Application
      */
-    public function createApplication() {
+    public function createApplication()
+    {
         $app = require __DIR__ . '/../bootstrap/app.php';
 
-        $app->make( Kernel::class )->bootstrap();
+        $app->make(Kernel::class)->bootstrap();
 
         return $app;
     }
 
-    public function tearDown() {
-        $this->beforeApplicationDestroyed( function () {
+    public function tearDown()
+    {
+        $this->beforeApplicationDestroyed(function () {
             DB::disconnect();
-        } );
+        });
 
         $this->artisan('migrate');
         parent::tearDown();
     }
 
-    public function call( $method, $uri, $parameters = [], $cookies = [], $files = [], $server = [], $content = null ) {
-        $options = array_filter( [
-            'X-CSRF-TOKEN'  => null,
-            'Authorization' => empty( $this->jwt ) ? null : "Bearer {$this->jwt}",
-            'Content-Type'  => 'application/json',
-            'Accept'        => 'application/json'
-        ] );
+    public function call($method, $uri, $parameters = [], $cookies = [], $files = [], $server = [], $content = null)
+    {
+        $options = array_filter([
+            'X-CSRF-TOKEN' => null,
+            'Authorization' => empty($this->jwt) ? null : "Bearer {$this->jwt}",
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json'
+        ]);
 
-        if ( ! empty( $this->version ) ) {
+        if (!empty($this->version)) {
             $options['Version'] = $this->version;
         }
 
-        if ( ! empty( $this->platform ) ) {
+        if (!empty($this->platform)) {
             $options['Platform'] = $this->platform;
         }
 
         $server = array_merge(
-            $this->transformHeadersToServerVars( $options ),
+            $this->transformHeadersToServerVars($options),
             $server
         );
 
-        return parent::call( $method, $uri, $parameters, $cookies,
-            $files, $server, $content );
+        return parent::call($method, $uri, $parameters, $cookies,
+            $files, $server, $content);
     }
 
-    public function actingAs( Authenticatable $user, $driver = null ) {
-        $this->jwt = $this->auth->fromUser( $user );
+    public function actingAs(Authenticatable $user, $driver = null)
+    {
+        $this->jwt = $this->auth->fromUser($user);
 
         return $this;
     }
