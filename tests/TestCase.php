@@ -9,70 +9,71 @@ use RonasIT\Support\AutoDoc\Tests\AutoDocTestCase;
 use RonasIT\Support\Traits\FixturesTrait;
 use Tymon\JWTAuth\JWTAuth;
 
-abstract class TestCase extends AutoDocTestCase {
+abstract class TestCase extends AutoDocTestCase
+{
+    use FixturesTrait;
 
-	use FixturesTrait;
+    protected $jwt;
+    protected $auth;
 
-	protected $jwt;
-	protected $auth;
+    public function setUp() {
+        parent::setUp();
 
-	public function setUp() {
-		parent::setUp();
+        $this->loadTestDump();
+        $this->auth = app( JWTAuth::class );
+    }
 
-		$this->loadTestDump();
-		$this->auth = app(JWTAuth::class);
-	}
+    /**
+     * Creates the application.
+     *
+     * @return \Illuminate\Foundation\Application
+     */
+    public function createApplication() {
+        $app = require __DIR__ . '/../bootstrap/app.php';
 
-	/**
-	 * Creates the application.
-	 *
-	 * @return \Illuminate\Foundation\Application
-	 */
-	public function createApplication() {
-		$app = require __DIR__ . '/../bootstrap/app.php';
+        $app->make( Kernel::class )->bootstrap();
 
-		$app->make( Kernel::class )->bootstrap();
+        return $app;
+    }
 
-		return $app;
-	}
+    public function tearDown() {
+        $this->beforeApplicationDestroyed( function () {
+            DB::disconnect();
+        } );
 
-	public function tearDown() {
-		$this->beforeApplicationDestroyed( function () {
-			DB::disconnect();
-		} );
+        $this->artisan('migrate');
+        parent::tearDown();
+    }
 
-		parent::tearDown();
-	}
+    public function call( $method, $uri, $parameters = [], $cookies = [], $files = [], $server = [], $content = null ) {
+        $options = array_filter( [
+            'X-CSRF-TOKEN'  => null,
+            'Authorization' => empty( $this->jwt ) ? null : "Bearer {$this->jwt}",
+            'Content-Type'  => 'application/json',
+            'Accept'        => 'application/json'
+        ] );
 
-	public function call( $method, $uri, $parameters = [], $cookies = [], $files = [], $server = [], $content = null ) {
-		$options = array_filter( [
-			'X-CSRF-TOKEN'  => null,
-			'Authorization' => empty( $this->jwt ) ? null : "Bearer {$this->jwt}",
-			'Content-Type'  => 'application/json',
-			'Accept'        => 'application/json'
-		] );
+        if ( ! empty( $this->version ) ) {
+            $options['Version'] = $this->version;
+        }
 
-		if ( ! empty( $this->version ) ) {
-			$options['Version'] = $this->version;
-		}
+        if ( ! empty( $this->platform ) ) {
+            $options['Platform'] = $this->platform;
+        }
 
-		if ( ! empty( $this->platform ) ) {
-			$options['Platform'] = $this->platform;
-		}
+        $server = array_merge(
+            $this->transformHeadersToServerVars( $options ),
+            $server
+        );
 
-		$server = array_merge(
-			$this->transformHeadersToServerVars( $options ),
-			$server
-		);
+        return parent::call( $method, $uri, $parameters, $cookies,
+            $files, $server, $content );
+    }
 
-		return parent::call( $method, $uri, $parameters, $cookies,
-			$files, $server, $content );
-	}
+    public function actingAs( Authenticatable $user, $driver = null ) {
+        $this->jwt = $this->auth->fromUser( $user );
 
-	public function actingAs( Authenticatable $user, $driver = null ) {
-		$this->jwt = $this->auth->fromUser( $user );
-
-		return $this;
-	}
+        return $this;
+    }
 
 }
