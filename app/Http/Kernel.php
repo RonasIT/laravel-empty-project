@@ -5,6 +5,7 @@ namespace App\Http;
 use Barryvdh\Cors\HandleCors;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use RonasIT\Support\AutoDoc\Http\Middleware\AutoDocMiddleware;
+use Tymon\JWTAuth\Middleware\GetUserFromToken;
 
 class Kernel extends HttpKernel
 {
@@ -60,5 +61,6 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'auth:api' => GetUserFromToken::class
     ];
 }
