@@ -20,6 +20,7 @@ abstract class TestCase extends AutoDocTestCase
     {
         parent::setUp();
 
+        $this->artisan('migrate');
         $this->loadTestDump();
         $this->auth = app(JWTAuth::class);
     }
@@ -33,6 +34,7 @@ abstract class TestCase extends AutoDocTestCase
     {
         $app = require __DIR__ . '/../bootstrap/app.php';
 
+        $app->loadEnvironmentFrom('.env.testing');
         $app->make(Kernel::class)->bootstrap();
 
         return $app;
@@ -44,7 +46,6 @@ abstract class TestCase extends AutoDocTestCase
             DB::disconnect();
         });
 
-        $this->artisan('migrate');
         parent::tearDown();
     }
 
@@ -56,14 +57,6 @@ abstract class TestCase extends AutoDocTestCase
             'Content-Type' => 'application/json',
             'Accept' => 'application/json'
         ]);
-
-        if (!empty($this->version)) {
-            $options['Version'] = $this->version;
-        }
-
-        if (!empty($this->platform)) {
-            $options['Platform'] = $this->platform;
-        }
 
         $server = array_merge(
             $this->transformHeadersToServerVars($options),
