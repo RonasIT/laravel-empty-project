@@ -1,6 +1,6 @@
 nginx:
     build: .
-    dockerfile: docker/nginx/Dockerfile
+    dockerfile: docker/php.Dockerfile
     ports:
         - 80:80
     links:
