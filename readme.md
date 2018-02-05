@@ -1,8 +1,8 @@
 ## About type of database
 
 For using different database (mysql/postgres) we need to rerun docker-compose
-- For using mysql run **docker-compose -f docker-compose up**.
-- For using postgres run **docker-compose up**.s
+- For using mysql run **docker-compose -f docker-compose up**
+- For using postgres run **docker-compose up**
 
 <p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 
