@@ -1,33 +1,47 @@
-apache:
-    build: .
-    dockerfile: docker/php.Dockerfile
-    working_dir: /app
-    ports:
-        - 80:80
-        - 443:443
-    links:
-        - db:db
-        - redis:redis
-    volumes:
-        - ./:/app
-    environment:
-        WEB_DOCUMENT_ROOT: /app/public
-        WEB_DOCUMENT_INDEX: index.php
-        REDIS_PORT: "6379"
+version: '3'
 
-db:
-    ports:
-        - 3307:3306
-    image: mysql:5.6
-    volumes:
-        - ./:/app
-    environment:
-        MYSQL_ROOT_PASSWORD: "secret"
-        MYSQL_DATABASE: "homestead"
+services:
 
-redis:
+  apache:
+      build:
+        context: ./
+        dockerfile: Dockerfile
+      working_dir: /app
+      ports:
+          - 80:80
+          - 443:443
+      volumes:
+          - ./:/app
+      environment:
+          WEB_DOCUMENT_ROOT: /app/public
+          WEB_DOCUMENT_INDEX: index.php
+          REDIS_PORT: "6379"
+
+  postgres:
+    image: postgres
     ports:
-        - 6379:6379
-    image: redis
+        - 5432:5432
+    image: postgres:10.3
+    environment:
+        POSTGRES_PASSWORD: ""
+        POSTGRES_USER: pguser
+        POSTGRES_DB: pgdb
     volumes:
-        - ./:/app
+      - .:/app
+
+  mysql:
+      ports:
+          - 3306:3306
+      image: mysql:5.7
+      volumes:
+          - ./:/app
+      environment:
+          MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+          MYSQL_DATABASE: "mysqldb"
+
+  redis:
+      ports:
+          - 6379:6379
+      image: redis:3.2
+      volumes:
+          - ./:/app
