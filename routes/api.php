@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AuthController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -16,6 +17,9 @@ $auth = [
     'middleware' => ['jwt.auth']
 ];
 
+$guest = [
+    'middleware' => ['maintenance']
+];
 
 Route::group($auth, function () use ($auth) {
     Route::post('/users', ['uses' => UserController::class.'@create']);
@@ -24,3 +28,17 @@ Route::group($auth, function () use ($auth) {
     Route::get('/users/{id}', ['uses' => UserController::class.'@get']);
     Route::get('/users', ['uses' => UserController::class.'@search']);
 });
+
+Route::group($guest, function () use ($auth) {
+    Route::post('/login', ['uses' => AuthController::class . '@login']);
+    Route::get('/auth/refresh', ['uses' => AuthController::class . '@refreshToken'])
+        ->middleware(['jwt.refresh']);
+    Route::post('/register', ['uses' => AuthController::class . '@register']);
+    Route::post('/auth/forgot-password', ['uses' => AuthController::class . '@forgotPassword']);
+    Route::post('/auth/restore-password', ['uses' => AuthController::class . '@restorePassword']);
+    Route::post('/auth/token/check', ['uses' => AuthController::class . '@checkRestoreToken']);
+});
+
+Route::any('{all}', function () {
+    throw new NotFoundHttpException();
+})->where(['all' => '.*']);

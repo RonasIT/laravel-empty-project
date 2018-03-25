@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-use App\Services\OptionService;
+//use App\Services\OptionService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -18,7 +18,7 @@ class SendMailJob implements ShouldQueue
     protected $template = '';
     protected $to = '';
     protected $subject = '';
-    protected $optionService;
+//    protected $optionService;
 
     /**
      * Create a new job instance.
@@ -35,7 +35,7 @@ class SendMailJob implements ShouldQueue
         $this->template = $template;
         $this->to = $to;
         $this->subject = $subject;
-        $this->optionService = app(OptionService::class);
+//        $this->optionService = app(OptionService::class);
 
         $this->data['locale'] = session('lang');
     }
@@ -51,9 +51,9 @@ class SendMailJob implements ShouldQueue
             App::setLocale($this->data['locale']);
         }
 
-        \Mail::send($this->template, $this->data, function ($m) {
-            $m->from('contact@piasa.fr', 'Piasa');
-            $m->to($this->to)->subject($this->subject);
-        });
+//        \Mail::send($this->template, $this->data, function ($m) {
+//            $m->from('from email', 'from');
+//            $m->to($this->to)->subject($this->subject);
+//        });
     }
 }
