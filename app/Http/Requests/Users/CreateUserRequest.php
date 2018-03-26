@@ -27,7 +27,7 @@ class CreateUserRequest extends FormRequest
     {
         parent::validateResolved();
 
-        if ($this->get('role_id') === 1 && $this->user()->role_id !== RoleRepository::ADMIN_ROLE) {
+        if ($this->has('role_id') && $this->user()->role_id !== RoleRepository::ADMIN_ROLE) {
             throw new AccessDeniedHttpException('User does not exist');
         }
     }

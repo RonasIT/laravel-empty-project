@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
+use App\Repositories\RoleRepository;
 use App\Models\Role;
 
 class AddRoles extends Migration
@@ -30,8 +31,14 @@ class AddRoles extends Migration
     public function createRoles()
     {
         $roles = [
-            ['id' => 1, 'name' => 'administrator'],
-            ['id' => 2, 'name' => 'user']
+            [
+                'id' => RoleRepository::ADMIN_ROLE,
+                'name' => 'administrator'
+            ],
+            [
+                'id' => RoleRepository::USER_ROLE,
+                'name' => 'user'
+            ]
         ];
 
         foreach ($roles as $role) {
