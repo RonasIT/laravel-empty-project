@@ -27,6 +27,8 @@ Route::group($auth, function () use ($auth) {
     Route::delete('/users/{id}', ['uses' => UserController::class.'@delete']);
     Route::get('/users/{id}', ['uses' => UserController::class.'@get']);
     Route::get('/users', ['uses' => UserController::class.'@search']);
+    Route::get('/profile', ['uses' => UserController::class.'@profile']);
+    Route::put('/profile', ['uses' => UserController::class.'@updateProfile']);
 });
 
 Route::group($guest, function () use ($auth) {

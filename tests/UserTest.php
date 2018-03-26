@@ -103,6 +103,26 @@ class UserTest extends TestCase
         $response->assertStatus(Response::HTTP_BAD_REQUEST);
     }
 
+    public function testUpdateProfile()
+    {
+        $data = $this->getJsonFixture('update_user.json');
+
+        $data['email'] = 'test@example.com';
+
+        $response = $this->actingAs($this->admin)->json('put', '/profile', $data);
+
+        $response->assertStatus(Response::HTTP_NO_CONTENT);
+    }
+
+    public function testUpdateProfileNoAuth()
+    {
+        $data = $this->getJsonFixture('update_user.json');
+
+        $response = $this->json('put', '/profile', $data);
+
+        $response->assertStatus(Response::HTTP_BAD_REQUEST);
+    }
+
     public function testDelete()
     {
         $response = $this->actingAs($this->admin)->json('delete', '/users/1');
@@ -122,6 +142,15 @@ class UserTest extends TestCase
         $response = $this->json('delete', '/users/1');
 
         $response->assertStatus(Response::HTTP_BAD_REQUEST);
+    }
+
+    public function testGetProfile()
+    {
+        $response = $this->actingAs($this->admin)->json('get', '/profile');
+
+        $response->assertStatus(Response::HTTP_OK);
+
+        $this->assertEqualsFixture('get_user.json', $response->json());
     }
 
     public function testGet()

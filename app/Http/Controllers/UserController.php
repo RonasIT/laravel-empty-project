@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Users\CreateUserRequest;
 use App\Http\Requests\Users\GetUserRequest;
 use App\Http\Requests\Users\UpdateUserRequest;
+use App\Http\Requests\Users\GetUserProfileRequest;
+use App\Http\Requests\Users\UpdateProfileRequest;
 use App\Http\Requests\Users\DeleteUserRequest;
 use App\Http\Requests\Users\SearchUserRequest;
 use App\Services\UserService;
@@ -32,6 +34,22 @@ class UserController extends Controller
     {
         $service->update(
             ['id' => $id],
+            $request->except('password')
+        );
+
+        return response('', Response::HTTP_NO_CONTENT);
+    }
+
+    public function profile(GetUserProfileRequest $request, UserService $service) {
+        $result = $service->first(['id' => $request->user()->id]);
+
+        return response()->json($result);
+    }
+
+    public function updateProfile(UpdateProfileRequest $request, UserService $service)
+    {
+        $service->update(
+            ['id' => $request->user()->id],
             $request->all()
         );
 
