@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use RonasIT\Support\Repositories\BaseRepository;
-use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 
 /**
@@ -18,9 +17,6 @@ class UserRepository extends BaseRepository
 
     public function create($data)
     {
-        $data['role_id'] = array_get($data, 'role_id', RoleRepository::USER_ROLE);
-        $data['password'] = Hash::make($data['password']);
-
         $user = User::create(array_only($data, User::getFields()));
 
         return $user->toArray();

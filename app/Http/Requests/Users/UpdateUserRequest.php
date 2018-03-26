@@ -3,33 +3,22 @@
 namespace App\Http\Requests\Users;
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use App\Services\UserService;
 use Illuminate\Foundation\Http\FormRequest;
 use App\Repositories\RoleRepository;
 
 class UpdateUserRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return  bool
-     */
     public function authorize()
     {
         return $this->user()->role_id == RoleRepository::ADMIN_ROLE ||
             $this->user()->id == $this->route('id');
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return  array
-     */
     public function rules()
     {
         return [
-            'password' => 'string|same:confirm',
-            'confirm' => 'string',
             'email' => "string|email|unique:users,email,{$this->route('id')}",
             'name' => 'string',
         ];
@@ -43,6 +32,10 @@ class UpdateUserRequest extends FormRequest
 
         if (!$service->exists(['id' => $this->route('id')])) {
             throw new NotFoundHttpException('User does not exist');
+        }
+
+        if ($this->get('role_id') === 1 && $this->user()->role_id !== RoleRepository::ADMIN_ROLE) {
+            throw new AccessDeniedHttpException('User does not exist');
         }
     }
 }

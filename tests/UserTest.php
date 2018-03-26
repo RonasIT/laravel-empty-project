@@ -27,7 +27,7 @@ class UserTest extends TestCase
 
         $response->assertStatus(Response::HTTP_OK);
 
-        $expect = array_except($data, ['id', 'updated_at', 'created_at']);
+        $expect = array_except($data, ['id', 'password', 'updated_at', 'created_at']);
         $actual = array_except($response->json(), ['id', 'updated_at', 'created_at']);
 
         $this->assertEquals($expect, $actual);

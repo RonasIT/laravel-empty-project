@@ -14,7 +14,7 @@ use App\Http\Controllers\AuthController;
 */
 
 $auth = [
-    'middleware' => ['jwt.auth']
+    'middleware' => ['jwt.auth', 'maintenance']
 ];
 
 $guest = [
@@ -38,7 +38,3 @@ Route::group($guest, function () use ($auth) {
     Route::post('/auth/restore-password', ['uses' => AuthController::class . '@restorePassword']);
     Route::post('/auth/token/check', ['uses' => AuthController::class . '@checkRestoreToken']);
 });
-
-Route::any('{all}', function () {
-    throw new NotFoundHttpException();
-})->where(['all' => '.*']);

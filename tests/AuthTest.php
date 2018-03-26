@@ -2,14 +2,11 @@
 
 namespace App\Tests;
 
-use App\Tests\Support\AuthTestTrait;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\User;
 
 class AuthTest extends TestCase
 {
-    use AuthTestTrait;
-
     protected $admin;
     protected $users;
 
@@ -33,16 +30,11 @@ class AuthTest extends TestCase
         $this->assertArrayHasKey('token', $response->json());
     }
 
-    /**
-     * @dataProvider getLoginFilters()
-     * @param string $email
-     * @param string $password
-     * */
-    public function testLoginWrongCredentials($login, $password)
+    public function testLoginWrongCredentials()
     {
         $response = $this->json('post', '/login', [
-            'email' => $login,
-            'password' => $password
+            'email' => 'wrong email',
+            'password' => 'wrong password'
         ]);
 
         $response->assertStatus(Response::HTTP_UNAUTHORIZED);

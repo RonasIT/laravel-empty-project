@@ -2,10 +2,10 @@
 
 namespace App\Services;
 
-use App\Jobs\SendMailJob;
 use App\Repositories\UserRepository;
 use App\Repositories\RoleRepository;
 use RonasIT\Support\Services\EntityService;
+use Illuminate\Support\Facades\Hash;
 
 /**
  * @property  UserRepository $repository
@@ -20,10 +20,8 @@ class UserService extends EntityService
     }
 
     public function create($data) {
-        if (!empty($data['role_id']) && ($data['role_id'] == RoleRepository::USER_ROLE)) {
-            $data['login'] = $data['email'];
-            $data['password'] = bcrypt(uniqid());
-        }
+        $data['role_id'] = array_get($data, 'role_id', RoleRepository::USER_ROLE);
+        $data['password'] = Hash::make($data['password']);
 
         return $this->repository->create($data);
     }
@@ -35,7 +33,7 @@ class UserService extends EntityService
         }
 
         if (!empty($data['password'])) {
-            $data['password'] = bcrypt($data['password']);
+            $data['password'] = Hash::make($data['password']);
         }
 
         return $this->repository->update($where, $data);
@@ -49,16 +47,6 @@ class UserService extends EntityService
         ], [
             'reset_password_hash' => $hash
         ]);
-
-        dispatch(new SendMailJob(
-            'emails.forgot_password',
-            __('emails.forgot_your_password'),
-            $email,
-            [
-                'hash' => $hash,
-                'locale' => session('lang')
-            ]
-        ));
     }
 
     public function restorePassword($token, $password) {

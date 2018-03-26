@@ -30,8 +30,8 @@ class AddRoles extends Migration
     public function createRoles()
     {
         $roles = [
-            ['name' => 'administrator'],
-            ['name' => 'user']
+            ['id' => 1, 'name' => 'administrator'],
+            ['id' => 2, 'name' => 'user']
         ];
 
         foreach ($roles as $role) {

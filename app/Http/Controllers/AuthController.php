@@ -16,7 +16,7 @@ use Tymon\JWTAuth\JWTAuth;
 class AuthController extends Controller {
     use AuthenticatesUsers;
 
-    public function login(LoginRequest $request, JWTAuth $auth)
+    public function login(LoginRequest $request, UserService $service, JWTAuth $auth)
     {
         $credentials = $this->credentials($request);
         $token = $auth->attempt($credentials);
@@ -27,22 +27,26 @@ class AuthController extends Controller {
             ], Response::HTTP_UNAUTHORIZED);
         }
 
+        $user = $service->first(['email' => $request->input('email')]);
+
         return response()->json([
             'token' => $token,
             'ttl' => config('jwt.ttl'),
-            'refresh_ttl' => config('jwt.refresh_ttl')
+            'refresh_ttl' => config('jwt.refresh_ttl'),
+            'user' => $user
         ]);
     }
 
     public function register(RegisterUserRequest $request, UserService $service, JWTAuth $auth)
     {
-        $service->create($request->all());
+        $user = $service->create($request->all());
 
         $credentials = $this->credentials($request);
         $token = $auth->attempt($credentials);
 
         return response()->json([
-            'token' => $token
+            'token' => $token,
+            'user' => $user
         ]);
     }
 
