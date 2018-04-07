@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MediaController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -29,6 +30,13 @@ Route::group($auth, function () use ($auth) {
     Route::get('/users', ['uses' => UserController::class.'@search']);
     Route::get('/profile', ['uses' => UserController::class.'@profile']);
     Route::put('/profile', ['uses' => UserController::class.'@updateProfile']);
+
+    Route::post('/media', ['uses' => MediaController::class.'@createMultipart']);
+    Route::post('/media/{fileName}', ['uses' => MediaController::class.'@create']);
+    Route::put('/media/{id}', ['uses' => MediaController::class.'@update']);
+    Route::delete('/media/{id}', ['uses' => MediaController::class.'@delete']);
+    Route::get('/media/{id}', ['uses' => MediaController::class.'@get']);
+    Route::get('/media', ['uses' => MediaController::class.'@search']);
 });
 
 Route::group($guest, function () use ($auth) {
