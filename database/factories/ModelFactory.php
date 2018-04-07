@@ -28,3 +28,10 @@ $factory->define(App\Models\Role::class, function (Faker\Generator $faker) {
         'name' => 'user'
     ];
 });
+
+$factory->define(App\Models\Media::class, function (Faker\Generator $faker) {
+    return [
+        'link' => $faker->word,
+        'name' => $faker->word
+    ];
+});
