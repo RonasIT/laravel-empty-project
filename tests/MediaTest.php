@@ -25,27 +25,20 @@ class MediaTest extends TestCase
         $this->file = UploadedFile::fake()->image('file.png', 600, 600);
     }
 
-    public function testCreateMultipart()
-    {
+    public function testCreate() {
         $response = $this->actingAs($this->admin)->json('post', '/media', ['file' => $this->file]);
 
         $response->assertStatus(Response::HTTP_OK);
     }
 
-    public function testCreate() {
-        $response = $this->actingAs($this->admin)->json('post', '/media/stub.jpeg?name=Vasya', ['file' => $this->file]);
-
-        $response->assertStatus(Response::HTTP_OK);
-    }
-
     public function testCreateCheckUrls() {
-        $this->actingAs($this->admin)->json('post', '/media/stub.jpeg?name=Vasya', ['file' => $this->file]);
+        $response = $this->actingAs($this->admin)->json('post', '/media', ['file' => $this->file]);
 
         $this->assertEquals(1, Media::where('link', 'like', '/%')->count());
     }
 
     public function testCreateCheckResponse() {
-        $response = $this->actingAs($this->admin)->json('post', '/media/stub.jpeg?name=Vasya', ['file' => $this->file]);
+        $response = $this->actingAs($this->admin)->json('post', '/media', ['file' => $this->file]);
 
         $responseData = $response->json();
 
@@ -60,35 +53,7 @@ class MediaTest extends TestCase
     }
 
     public function testCreateNoAuth() {
-        $response = $this->json('post', '/media/stub.jpeg?name=Vasya', ['file' => $this->file]);
-
-        $response->assertStatus(Response::HTTP_BAD_REQUEST);
-    }
-
-    public function testCreateNoPermission() {
-        $response = $this->actingAs($this->user)->json('post', '/media/stub.jpeg?name=Vasya', ['file' => $this->file]);
-
-        $response->assertStatus(Response::HTTP_FORBIDDEN);
-    }
-
-    public function testUpdate() {
-        $response = $this->actingAs($this->admin)->json('put', '/media/1', ['name' => 'New Name']);
-
-        $response->assertStatus(Response::HTTP_NO_CONTENT);
-    }
-
-    public function testUpdateNotExists() {
-        $data = $this->getJsonFixture('media.json');
-
-        $response = $this->actingAs($this->admin)->json('put', '/media/0', $data);
-
-        $response->assertStatus(Response::HTTP_NOT_FOUND);
-    }
-
-    public function testUpdateNoAuth() {
-        $data = $this->getJsonFixture('media.json');
-
-        $response = $this->json('put', '/media/1', $data);
+        $response = $this->json('post', '/media', ['file' => $this->file]);
 
         $response->assertStatus(Response::HTTP_BAD_REQUEST);
     }
@@ -103,6 +68,12 @@ class MediaTest extends TestCase
         $response = $this->actingAs($this->admin)->json('delete', '/media/0');
 
         $response->assertStatus(Response::HTTP_NOT_FOUND);
+    }
+
+    public function testDeleteNoPermission() {
+        $response = $this->actingAs($this->user)->json('delete', '/media/1');
+
+        $response->assertStatus(Response::HTTP_FORBIDDEN);
     }
 
     public function testDeleteNoAuth() {

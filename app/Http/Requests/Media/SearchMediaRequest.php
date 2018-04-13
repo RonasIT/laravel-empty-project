@@ -23,5 +23,4 @@ class SearchMediaRequest extends FormRequest
             'name' => 'string'
         ];
     }
-
 }

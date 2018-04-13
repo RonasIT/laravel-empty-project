@@ -13,27 +13,21 @@ use Symfony\Component\HttpFoundation\Response;
 
 class MediaController extends Controller
 {
-    public function create(CreateMediaRequest $request, MediaService $service, $fileName) {
+    public function create(CreateMediaRequest $request, MediaService $service) {
+        $file = $request->file('file');
         $data = $request->all();
 
-        $result = $service->create($request->getContent(), $fileName, $data);
+        $content = file_get_contents($file->getPathname());
 
-        return response()->json($result);
+        $media = $service->create($content, $file->getClientOriginalName(), $data);
+
+        return response()->json($media);
     }
 
     public function get(GetMediaRequest $request, MediaService $service, $id) {
         $result = $service->first(['id' => $id]);
 
         return response()->json($result);
-    }
-
-    public function update(UpdateMediaRequest $request, MediaService $service, $id) {
-        $service->update(
-            ['id' => $id],
-            $request->all()
-        );
-
-        return response('', Response::HTTP_NO_CONTENT);
     }
 
     public function delete(DeleteMediaRequest $request, MediaService $service, $id) {
@@ -46,16 +40,5 @@ class MediaController extends Controller
         $result = $service->search($request->all());
 
         return response($result);
-    }
-
-    public function createMultipart(CreateMultipartMediaRequest $request, MediaService $service)
-    {
-        $file = $request->file('file');
-
-        $content = file_get_contents($file->getPathname());
-
-        $media = $service->create($content, $file->getClientOriginalName(), ['name' => '']);
-
-        return response()->json($media);
     }
 }

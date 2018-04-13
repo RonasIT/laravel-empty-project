@@ -18,7 +18,7 @@ class CreateMediaTable extends Migration
             $table->timestamps();
             $table->softDeletes();
             $table->string('link');
-            $table->string('name');
+            $table->string('name')->nullable();
         });
     }
 

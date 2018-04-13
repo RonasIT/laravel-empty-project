@@ -10,22 +10,13 @@ class CreateMediaRequest extends FormRequest
 {
     public function authorize()
     {
-        return $this->user()->role_id == RoleRepository::ADMIN_ROLE;
+        return true;
     }
 
     public function rules()
     {
         return [
-            //
+            'file' => 'file|required|max:5120'
         ];
-    }
-
-    public function validateResolved()
-    {
-        parent::validateResolved();
-
-        if (empty($this->route('fileName'))) {
-            throw new UnprocessableEntityHttpException();
-        }
     }
 }
