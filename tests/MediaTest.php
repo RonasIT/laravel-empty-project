@@ -47,7 +47,7 @@ class MediaTest extends TestCase
             'link' => $responseData['link']
         ]);
 
-        Storage::disk('local')->assertExists('public/' . $this->getFilePathFromUrl($responseData['link']));
+        Storage::disk('local')->assertExists($this->getFilePathFromUrl($responseData['link']));
 
         $this->clearFolder();
     }
@@ -80,26 +80,6 @@ class MediaTest extends TestCase
         $response = $this->json('delete', '/media/1');
 
         $response->assertStatus(Response::HTTP_BAD_REQUEST);
-    }
-
-    public function testGet() {
-        $response = $this->actingAs($this->admin)->json('get', '/media/1');
-
-        $response->assertStatus(Response::HTTP_OK);
-    }
-
-    public function testGetCheckResponse() {
-        $response = $this->actingAs($this->admin)->json('get', '/media/1');
-
-        $filteredResponse = array_except($response->json(), ['created_at', 'updated_at', 'deleted_at']);
-
-        $this->assertEqualsFixture('get_media.json', $filteredResponse);
-    }
-
-    public function testGetNotExists() {
-        $response = $this->actingAs($this->admin)->json('get', '/media/0');
-
-        $response->assertStatus(Response::HTTP_NOT_FOUND);
     }
 
     public function getSearchFilters() {

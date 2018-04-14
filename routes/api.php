@@ -32,9 +32,7 @@ Route::group($auth, function () use ($auth) {
     Route::put('/profile', ['uses' => UserController::class.'@updateProfile']);
 
     Route::post('/media', ['uses' => MediaController::class.'@create']);
-    Route::put('/media/{id}', ['uses' => MediaController::class.'@update']);
     Route::delete('/media/{id}', ['uses' => MediaController::class.'@delete']);
-    Route::get('/media/{id}', ['uses' => MediaController::class.'@get']);
     Route::get('/media', ['uses' => MediaController::class.'@search']);
 });
 
