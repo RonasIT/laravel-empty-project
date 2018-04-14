@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Media\CreateMediaRequest;
-use App\Http\Requests\Media\CreateMultipartMediaRequest;
-use App\Http\Requests\Media\GetMediaRequest;
-use App\Http\Requests\Media\UpdateMediaRequest;
 use App\Http\Requests\Media\DeleteMediaRequest;
 use App\Http\Requests\Media\SearchMediaRequest;
 use App\Services\MediaService;
@@ -22,12 +19,6 @@ class MediaController extends Controller
         $media = $service->create($content, $file->getClientOriginalName(), $data);
 
         return response()->json($media);
-    }
-
-    public function get(GetMediaRequest $request, MediaService $service, $id) {
-        $result = $service->first(['id' => $id]);
-
-        return response()->json($result);
     }
 
     public function delete(DeleteMediaRequest $request, MediaService $service, $id) {
