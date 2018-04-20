@@ -52,7 +52,9 @@ class Handler extends ExceptionHandler
                 ['error' => $exception->getMessage()],
                 $exception->getStatusCode()
             );
-        } else if ($exception instanceof AuthorizationException) {
+        }
+
+        if ($exception instanceof AuthorizationException) {
             return response()->json(
                 ['error' => $exception->getMessage()],
                 Response::HTTP_FORBIDDEN
