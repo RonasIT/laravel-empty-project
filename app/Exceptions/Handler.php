@@ -6,6 +6,8 @@ use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\Response;
 
 class Handler extends ExceptionHandler
 {
@@ -49,6 +51,11 @@ class Handler extends ExceptionHandler
             return response()->json(
                 ['error' => $exception->getMessage()],
                 $exception->getStatusCode()
+            );
+        } else if ($exception instanceof AuthorizationException) {
+            return response()->json(
+                ['error' => $exception->getMessage()],
+                Response::HTTP_FORBIDDEN
             );
         }
 
