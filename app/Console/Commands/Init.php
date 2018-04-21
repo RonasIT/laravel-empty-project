@@ -68,7 +68,7 @@ class Init extends Command
         $exampleContent = file_get_contents(base_path('/') . '.env.example');
 
         foreach ($database as $type => $value) {
-            $exampleContent = str_replace($type, ($type ? $type : '') . '=' . $value, $exampleContent);
+            $exampleContent = str_replace($type . '=', ($type ? $type : '') . '=' . $value, $exampleContent);
         }
 
         $postfix = $isTestingConfig ? 'testing' : '';
