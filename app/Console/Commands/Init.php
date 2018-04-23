@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Validator;
+use Hash;
 use App\Services\UserService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
@@ -68,7 +69,18 @@ class Init extends Command
         $exampleContent = file_get_contents(base_path('/') . '.env.example');
 
         foreach ($database as $type => $value) {
-            $exampleContent = str_replace($type . '=', ($type ? $type : '') . '=' . $value, $exampleContent);
+            $exampleContent = str_replace("{$type}=", "{$type}={$value}", $exampleContent);
+        }
+
+        if (!$isTestingConfig) {
+            config([
+                'database.default' => $database['DB_CONNECTION'],
+                "database.connections.{$database['DB_CONNECTION']}.host" => $database['DB_HOST'],
+                "database.connections.{$database['DB_CONNECTION']}.port" => $database['DB_PORT'],
+                "database.connections.{$database['DB_CONNECTION']}.database" => $database['DB_DATABASE'],
+                "database.connections.{$database['DB_CONNECTION']}.username" => $database['DB_USERNAME'],
+                "database.connections.{$database['DB_CONNECTION']}.password" => $database['DB_PASSWORD'],
+            ]);
         }
 
         $postfix = $isTestingConfig ? 'testing' : '';
@@ -77,9 +89,13 @@ class Init extends Command
     }
 
     private function createAdminUser($data = []) {
-        $admin['name'] = $this->ask('Please enter admin name', (empty($data)) ? null : $data['name']);
-        $admin['email'] = $this->ask('Please enter admin email', (empty($data)) ? null : $data['email']);
-        $admin['password'] = $this->ask('Please enter admin password', (empty($data)) ? null : $data['password']);
+        $data['password'] = $data['password'] ?? Hash::make(str_random(8));
+        $data['name'] = $data['name'] ?? null;
+        $data['email'] = $data['email'] ?? null;
+
+        $admin['name'] = $this->ask('Please enter admin name', $data['name']);
+        $admin['email'] = $this->ask('Please enter admin email', $data['email']);
+        $admin['password'] = $this->ask('Please enter admin password', $data['password']);
 
         $validator = Validator::make($admin, [
             'name' => 'required',
@@ -88,7 +104,7 @@ class Init extends Command
         ]);
 
         if ($validator->fails()) {
-            print_r($validator->messages());
+            $this->error($validator->messages());
 
             return $this->createAdminUser($admin);
         }

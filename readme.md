@@ -23,3 +23,4 @@ DB_DATABASE=mysqldb
 DB_USERNAME=root
 DB_PASSWORD=""
 ```
+Для генерации пользователя с ролью админ и файлов .env и .env.testing, необходимо запустить команду php artisan init и следовать инструкциям
