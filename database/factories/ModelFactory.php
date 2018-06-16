@@ -23,6 +23,18 @@ $factory->define(App\Models\User::class, function (Faker\Generator $faker) {
     ];
 });
 
+$factory->define(App\Models\Role::class, function (Faker\Generator $faker) {
+    return [
+        'name' => 'user'
+    ];
+});
+
+$factory->define(App\Models\Media::class, function (Faker\Generator $faker) {
+    return [
+        'link' => $faker->word,
+        'name' => $faker->word
+    ];
+});
 $factory->define(App\Models\Option::class, function (Faker\Generator $faker) {
     return [
         'key' => $faker->word,

@@ -1,0 +1,23 @@
+{
+    "current_page": 1,
+    "data": [
+        {
+            "id": 1,
+            "name": "Mr Admin",
+            "email": "admin@example.com",
+            "created_at": "2016-10-20 11:05:00",
+            "updated_at": "2016-10-20 11:05:00",
+            "role_id": 1
+        }
+    ],
+    "first_page_url": "http:\/\/localhost\/users?page=1",
+    "from": 1,
+    "last_page": 2,
+    "last_page_url": "http:\/\/localhost\/users?page=2",
+    "next_page_url": "http:\/\/localhost\/users?page=2",
+    "path": "http:\/\/localhost\/users",
+    "per_page": 1,
+    "prev_page_url": null,
+    "to": 1,
+    "total": 2
+}
