@@ -8,16 +8,18 @@ use Symfony\Component\HttpFoundation\Response;
 class OptionTest extends TestCase
 {
     protected $admin;
-    protected $user;
+    protected $staff;
 
-    public function setUp() {
+    public function setUp()
+    {
         parent::setUp();
 
         $this->admin = User::find(1);
-        $this->user = User::find(2);
+        $this->staff = User::find(2);
     }
 
-    public function testCreate() {
+    public function testCreate()
+    {
         $option = $this->getJsonFixture('new_option.json');
 
         $response = $this->actingAs($this->admin)->json('post', '/options', $option);
@@ -25,7 +27,8 @@ class OptionTest extends TestCase
         $response->assertStatus(Response::HTTP_OK);
     }
 
-    public function testCreateCheckResponse() {
+    public function testCreateCheckResponse()
+    {
         $option = $this->getJsonFixture('new_option.json');
 
         $response = $this->actingAs($this->admin)->json('post', '/options', $option);
@@ -35,7 +38,8 @@ class OptionTest extends TestCase
         $response->assertJson($option);
     }
 
-    public function testCreateNoAuth() {
+    public function testCreateNoAuth()
+    {
         $option = $this->getJsonFixture('new_option.json');
 
         $response = $this->json('post', '/options', $option);
@@ -43,15 +47,17 @@ class OptionTest extends TestCase
         $response->assertStatus(Response::HTTP_BAD_REQUEST);
     }
 
-    public function testCreateNoPermission() {
+    public function testCreateNoPermission()
+    {
         $option = $this->getJsonFixture('new_option.json');
 
-        $response = $this->actingAs($this->user)->json('post', '/options', $option);
+        $response = $this->actingAs($this->staff)->json('post', '/options', $option);
 
         $response->assertStatus(Response::HTTP_FORBIDDEN);
     }
 
-    public function testCreateUnprocessableEntity() {
+    public function testCreateUnprocessableEntity()
+    {
         $option = $this->getJsonFixture('unprocessable_option.json');
 
         $response = $this->actingAs($this->admin)->json('post', '/options', $option);
@@ -59,7 +65,8 @@ class OptionTest extends TestCase
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
-    public function testUpdate() {
+    public function testUpdate()
+    {
         $option = $this->getJsonFixture('update_option.json');
 
         $response = $this->actingAs($this->admin)->json('put', "/options/{$option['key']}", $option['value']);
@@ -67,7 +74,8 @@ class OptionTest extends TestCase
         $response->assertStatus(Response::HTTP_NO_CONTENT);
     }
 
-    public function testUpdateNotExists() {
+    public function testUpdateNotExists()
+    {
         $option = $this->getJsonFixture('update_option.json');
 
         $response = $this->actingAs($this->admin)->json('put', "/options/not-exists", $option['value']);
@@ -75,7 +83,8 @@ class OptionTest extends TestCase
         $response->assertStatus(Response::HTTP_NOT_FOUND);
     }
 
-    public function testUpdateNoAuth() {
+    public function testUpdateNoAuth()
+    {
         $option = $this->getJsonFixture('update_option.json');
 
         $response = $this->json('put', '/options/1', $option);
@@ -83,57 +92,66 @@ class OptionTest extends TestCase
         $response->assertStatus(Response::HTTP_BAD_REQUEST);
     }
 
-    public function testUpdateNoPermission() {
+    public function testUpdateNoPermission()
+    {
         $option = $this->getJsonFixture('update_option.json');
 
-        $response = $this->actingAs($this->user)->json('put', '/options/1', $option);
+        $response = $this->actingAs($this->staff)->json('put', '/options/1', $option);
 
         $response->assertStatus(Response::HTTP_FORBIDDEN);
     }
 
-    public function testDelete() {
+    public function testDelete()
+    {
         $response = $this->actingAs($this->admin)->json('delete', '/options/visa_types');
 
         $response->assertStatus(Response::HTTP_NO_CONTENT);
     }
 
-    public function testDeleteNotExists() {
+    public function testDeleteNotExists()
+    {
         $response = $this->actingAs($this->admin)->json('delete', '/options/0');
 
         $response->assertStatus(Response::HTTP_NOT_FOUND);
     }
 
-    public function testDeleteNoAuth() {
+    public function testDeleteNoAuth()
+    {
         $response = $this->json('delete', '/options/1');
 
         $response->assertStatus(Response::HTTP_BAD_REQUEST);
     }
 
-    public function testDeleteNoPermission() {
-        $response = $this->actingAs($this->user)->json('delete', '/options/1');
+    public function testDeleteNoPermission()
+    {
+        $response = $this->actingAs($this->staff)->json('delete', '/options/1');
 
         $response->assertStatus(Response::HTTP_FORBIDDEN);
     }
 
-    public function testGet() {
+    public function testGet()
+    {
         $response = $this->actingAs($this->admin)->json('get', '/options/states');
 
         $response->assertStatus(Response::HTTP_OK);
     }
 
-    public function testGetCheckResponse() {
+    public function testGetCheckResponse()
+    {
         $response = $this->actingAs($this->admin)->json('get', '/options/states');
 
         $this->assertEqualsFixture('get_option.json', $response->json());
     }
 
-    public function testGetNotExists() {
+    public function testGetNotExists()
+    {
         $response = $this->actingAs($this->admin)->json('get', '/options/0');
 
         $response->assertStatus(Response::HTTP_NOT_FOUND);
     }
 
-    public function getSearchFilters() {
+    public function getSearchFilters()
+    {
         return [
             [
                 'filter' => ['query' => 'states'],
@@ -174,7 +192,8 @@ class OptionTest extends TestCase
      * @param  array $filter
      * @param  string $fixture
      */
-    public function testSearch($filter, $fixture) {
+    public function testSearch($filter, $fixture)
+    {
         $response = $this->actingAs($this->admin)->json('get', '/options', $filter);
 
         $response->assertStatus(Response::HTTP_OK);

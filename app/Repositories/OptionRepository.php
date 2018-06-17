@@ -3,11 +3,12 @@
 namespace App\Repositories;
 
 use App\Models\Option;
+use RonasIT\Support\Repositories\BaseRepository;
 
 /**
  * @property  Option $model
 */
-class OptionRepository extends Repository
+class OptionRepository extends BaseRepository
 {
     public function __construct()
     {

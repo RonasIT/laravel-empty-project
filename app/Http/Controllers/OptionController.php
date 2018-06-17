@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CreateOptionRequest;
-use App\Http\Requests\DeleteOptionRequest;
-use App\Http\Requests\GetOptionRequest;
-use App\Http\Requests\GetPaymentTokenRequest;
-use App\Http\Requests\SearchOptionRequest;
-use App\Http\Requests\UpdateOptionRequest;
+use App\Http\Requests\Option\CreateOptionRequest;
+use App\Http\Requests\Option\DeleteOptionRequest;
+use App\Http\Requests\Option\GetOptionRequest;
+use App\Http\Requests\Option\SearchOptionRequest;
+use App\Http\Requests\Option\UpdateOptionRequest;
 use App\Services\OptionService;
 use Symfony\Component\HttpFoundation\Response;
 

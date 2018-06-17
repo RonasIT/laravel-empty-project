@@ -3,6 +3,7 @@
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MediaController;
+use App\Http\Controllers\OptionController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -34,6 +35,10 @@ Route::group($auth, function () use ($auth) {
     Route::post('/media', ['uses' => MediaController::class.'@create']);
     Route::delete('/media/{id}', ['uses' => MediaController::class.'@delete']);
     Route::get('/media', ['uses' => MediaController::class.'@search']);
+
+    Route::post('/options', ['uses' => OptionController::class.'@create']);
+    Route::put('/options/{key}', ['uses' => OptionController::class.'@update']);
+    Route::delete('/options/{key}', ['uses' => OptionController::class.'@delete']);
 });
 
 Route::group($guest, function () use ($auth) {
