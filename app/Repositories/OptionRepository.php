@@ -19,7 +19,6 @@ class OptionRepository extends BaseRepository
     {
         return $this->searchQuery($filters)
             ->filterByQuery(['key'])
-            ->setOrderBy()
             ->getSearchResults();
     }
 

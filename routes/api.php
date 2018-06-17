@@ -39,6 +39,8 @@ Route::group($auth, function () use ($auth) {
     Route::post('/options', ['uses' => OptionController::class.'@create']);
     Route::put('/options/{key}', ['uses' => OptionController::class.'@update']);
     Route::delete('/options/{key}', ['uses' => OptionController::class.'@delete']);
+    Route::get('/options/{key}', ['uses' => OptionController::class.'@get']);
+    Route::get('/options', ['uses' => OptionController::class.'@search']);
 });
 
 Route::group($guest, function () use ($auth) {
