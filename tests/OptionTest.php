@@ -103,7 +103,7 @@ class OptionTest extends TestCase
 
     public function testDelete()
     {
-        $response = $this->actingAs($this->admin)->json('delete', '/options/visa_types');
+        $response = $this->actingAs($this->admin)->json('delete', '/options/states');
 
         $response->assertStatus(Response::HTTP_NO_CONTENT);
     }

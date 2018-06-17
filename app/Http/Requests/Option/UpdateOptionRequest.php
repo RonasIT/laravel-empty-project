@@ -29,9 +29,9 @@ class UpdateOptionRequest extends FormRequest
         return [];
     }
 
-    public function validate()
+    public function validateResolved()
     {
-        parent::validate();
+        parent::validateResolved();
 
         $service = app(OptionService::class);
 
