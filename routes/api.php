@@ -3,7 +3,7 @@
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MediaController;
-use App\Http\Controllers\OptionController;
+use App\Http\Controllers\SettingController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -36,11 +36,11 @@ Route::group($auth, function () use ($auth) {
     Route::delete('/media/{id}', ['uses' => MediaController::class.'@delete']);
     Route::get('/media', ['uses' => MediaController::class.'@search']);
 
-    Route::post('/options', ['uses' => OptionController::class.'@create']);
-    Route::put('/options/{key}', ['uses' => OptionController::class.'@update']);
-    Route::delete('/options/{key}', ['uses' => OptionController::class.'@delete']);
-    Route::get('/options/{key}', ['uses' => OptionController::class.'@get']);
-    Route::get('/options', ['uses' => OptionController::class.'@search']);
+    Route::post('/settings', ['uses' => SettingController::class.'@create']);
+    Route::put('/settings/{key}', ['uses' => SettingController::class.'@update']);
+    Route::delete('/settings/{key}', ['uses' => SettingController::class.'@delete']);
+    Route::get('/settings/{key}', ['uses' => SettingController::class.'@get']);
+    Route::get('/settings', ['uses' => SettingController::class.'@search']);
 });
 
 Route::group($guest, function () use ($auth) {

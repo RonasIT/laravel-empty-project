@@ -2,17 +2,17 @@
 
 namespace App\Repositories;
 
-use App\Models\Option;
+use App\Models\Setting;
 use RonasIT\Support\Repositories\BaseRepository;
 
 /**
- * @property  Option $model
+ * @property  Setting $model
 */
-class OptionRepository extends BaseRepository
+class SettingRepository extends BaseRepository
 {
     public function __construct()
     {
-        $this->setModel(Option::class);
+        $this->setModel(Setting::class);
     }
 
     public function search($filters)
@@ -20,6 +20,13 @@ class OptionRepository extends BaseRepository
         return $this->searchQuery($filters)
             ->filterByQuery(['key'])
             ->getSearchResults();
+    }
+
+    protected function getSearchResults()
+    {
+        $this->query->applySettingPermissionRestrictions();
+
+        return parent::getSearchResults();
     }
 
     public function update($where, $data)

@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Requests\Option;
+namespace App\Http\Requests\Setting;
 
-use App\Services\OptionService;
+use App\Repositories\RoleRepository;
+use App\Services\SettingService;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class GetOptionRequest extends FormRequest
+class DeleteSettingRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -15,7 +16,7 @@ class GetOptionRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return $this->user()->role_id == RoleRepository::ADMIN_ROLE;
     }
 
     /**
@@ -32,7 +33,7 @@ class GetOptionRequest extends FormRequest
     {
         parent::validateResolved();
 
-        $service = app(OptionService::class);
+        $service = app(SettingService::class);
 
         if (!$service->exists(['key' => $this->route('key')])) {
             throw new NotFoundHttpException('Option does not exists');

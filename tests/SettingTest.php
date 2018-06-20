@@ -5,147 +5,147 @@ namespace App\Tests;
 use App\Models\User;
 use Symfony\Component\HttpFoundation\Response;
 
-class OptionTest extends TestCase
+class SettingTest extends TestCase
 {
     protected $admin;
-    protected $staff;
+    protected $user;
 
     public function setUp()
     {
         parent::setUp();
 
         $this->admin = User::find(1);
-        $this->staff = User::find(2);
+        $this->user = User::find(2);
     }
 
     public function testCreate()
     {
-        $option = $this->getJsonFixture('new_option.json');
+        $setting = $this->getJsonFixture('new_setting.json');
 
-        $response = $this->actingAs($this->admin)->json('post', '/options', $option);
+        $response = $this->actingAs($this->admin)->json('post', '/settings', $setting);
 
         $response->assertStatus(Response::HTTP_OK);
     }
 
     public function testCreateCheckResponse()
     {
-        $option = $this->getJsonFixture('new_option.json');
+        $setting = $this->getJsonFixture('new_setting.json');
 
-        $response = $this->actingAs($this->admin)->json('post', '/options', $option);
+        $response = $this->actingAs($this->admin)->json('post', '/settings', $setting);
 
         $response->assertStatus(Response::HTTP_OK);
 
-        $response->assertJson($option);
+        $response->assertJson($setting);
     }
 
     public function testCreateNoAuth()
     {
-        $option = $this->getJsonFixture('new_option.json');
+        $setting = $this->getJsonFixture('new_setting.json');
 
-        $response = $this->json('post', '/options', $option);
+        $response = $this->json('post', '/settings', $setting);
 
         $response->assertStatus(Response::HTTP_BAD_REQUEST);
     }
 
     public function testCreateNoPermission()
     {
-        $option = $this->getJsonFixture('new_option.json');
+        $setting = $this->getJsonFixture('new_setting.json');
 
-        $response = $this->actingAs($this->staff)->json('post', '/options', $option);
+        $response = $this->actingAs($this->user)->json('post', '/settings', $setting);
 
         $response->assertStatus(Response::HTTP_FORBIDDEN);
     }
 
     public function testCreateUnprocessableEntity()
     {
-        $option = $this->getJsonFixture('unprocessable_option.json');
+        $setting = $this->getJsonFixture('unprocessable_setting.json');
 
-        $response = $this->actingAs($this->admin)->json('post', '/options', $option);
+        $response = $this->actingAs($this->admin)->json('post', '/settings', $setting);
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     public function testUpdate()
     {
-        $option = $this->getJsonFixture('update_option.json');
+        $setting = $this->getJsonFixture('update_setting.json');
 
-        $response = $this->actingAs($this->admin)->json('put', "/options/{$option['key']}", $option['value']);
+        $response = $this->actingAs($this->admin)->json('put', "/settings/{$setting['key']}", $setting['value']);
 
         $response->assertStatus(Response::HTTP_NO_CONTENT);
     }
 
     public function testUpdateNotExists()
     {
-        $option = $this->getJsonFixture('update_option.json');
+        $setting = $this->getJsonFixture('update_setting.json');
 
-        $response = $this->actingAs($this->admin)->json('put', "/options/not-exists", $option['value']);
+        $response = $this->actingAs($this->admin)->json('put', "/settings/not-exists", $setting['value']);
 
         $response->assertStatus(Response::HTTP_NOT_FOUND);
     }
 
     public function testUpdateNoAuth()
     {
-        $option = $this->getJsonFixture('update_option.json');
+        $setting = $this->getJsonFixture('update_setting.json');
 
-        $response = $this->json('put', '/options/1', $option);
+        $response = $this->json('put', '/settings/1', $setting);
 
         $response->assertStatus(Response::HTTP_BAD_REQUEST);
     }
 
     public function testUpdateNoPermission()
     {
-        $option = $this->getJsonFixture('update_option.json');
+        $setting = $this->getJsonFixture('update_setting.json');
 
-        $response = $this->actingAs($this->staff)->json('put', '/options/1', $option);
+        $response = $this->actingAs($this->user)->json('put', '/settings/1', $setting);
 
         $response->assertStatus(Response::HTTP_FORBIDDEN);
     }
 
     public function testDelete()
     {
-        $response = $this->actingAs($this->admin)->json('delete', '/options/states');
+        $response = $this->actingAs($this->admin)->json('delete', '/settings/states');
 
         $response->assertStatus(Response::HTTP_NO_CONTENT);
     }
 
     public function testDeleteNotExists()
     {
-        $response = $this->actingAs($this->admin)->json('delete', '/options/0');
+        $response = $this->actingAs($this->admin)->json('delete', '/settings/0');
 
         $response->assertStatus(Response::HTTP_NOT_FOUND);
     }
 
     public function testDeleteNoAuth()
     {
-        $response = $this->json('delete', '/options/1');
+        $response = $this->json('delete', '/settings/1');
 
         $response->assertStatus(Response::HTTP_BAD_REQUEST);
     }
 
     public function testDeleteNoPermission()
     {
-        $response = $this->actingAs($this->staff)->json('delete', '/options/1');
+        $response = $this->actingAs($this->user)->json('delete', '/settings/1');
 
         $response->assertStatus(Response::HTTP_FORBIDDEN);
     }
 
     public function testGet()
     {
-        $response = $this->actingAs($this->admin)->json('get', '/options/states');
+        $response = $this->actingAs($this->admin)->json('get', '/settings/states');
 
         $response->assertStatus(Response::HTTP_OK);
     }
 
     public function testGetCheckResponse()
     {
-        $response = $this->actingAs($this->admin)->json('get', '/options/states');
+        $response = $this->actingAs($this->admin)->json('get', '/settings/states');
 
-        $this->assertEqualsFixture('get_option.json', $response->json());
+        $this->assertEqualsFixture('get_setting.json', $response->json());
     }
 
     public function testGetNotExists()
     {
-        $response = $this->actingAs($this->admin)->json('get', '/options/0');
+        $response = $this->actingAs($this->admin)->json('get', '/settings/0');
 
         $response->assertStatus(Response::HTTP_NOT_FOUND);
     }
@@ -155,14 +155,14 @@ class OptionTest extends TestCase
         return [
             [
                 'filter' => ['query' => 'states'],
-                'result' => 'get_option_by_key.json'
+                'result' => 'get_setting_by_key.json'
             ],
             [
                 'filter' => [
                     'order_by' => 'key',
                     'desc' => false
                 ],
-                'result' => 'get_options_check_order.json'
+                'result' => 'get_settings_check_order.json'
             ],
             [
                 'filters' => [
@@ -194,7 +194,32 @@ class OptionTest extends TestCase
      */
     public function testSearch($filter, $fixture)
     {
-        $response = $this->actingAs($this->admin)->json('get', '/options', $filter);
+        $response = $this->actingAs($this->admin)->json('get', '/settings', $filter);
+
+        $response->assertStatus(Response::HTTP_OK);
+
+        $this->assertEqualsFixture($fixture, $response->json());
+    }
+
+    public function getUserSearchFilters()
+    {
+        return [
+            [
+                'filter' => [],
+                'result' => 'get_public_settings.json'
+            ]
+        ];
+    }
+
+    /**
+     * @dataProvider  getUserSearchFilters
+     *
+     * @param  array $filter
+     * @param  string $fixture
+     */
+    public function testSearchByUser($filter, $fixture)
+    {
+        $response = $this->actingAs($this->user)->json('get', '/settings', $filter);
 
         $response->assertStatus(Response::HTTP_OK);
 

@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests\Option;
+namespace App\Http\Requests\Setting;
 
+use App\Repositories\RoleRepository;
 use Illuminate\Foundation\Http\FormRequest;
 
-class SearchOptionRequest extends FormRequest
+class SearchSettingRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

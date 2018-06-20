@@ -12,5 +12,6 @@
     "TAS",
     "VIC",
     "WA"
-  ]
+  ],
+  "is_public":true
 }

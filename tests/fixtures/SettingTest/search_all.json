@@ -7,7 +7,8 @@
         "value": {
             "name": "color",
             "value": "#000"
-        }
+        },
+        "is_public": true
     },
     {
         "id": 2,
@@ -16,7 +17,8 @@
         "key": "settings",
         "value": {
             "timezone": "australia"
-        }
+        },
+        "is_public": true
     },
     {
         "id": 3,
@@ -26,7 +28,8 @@
         "value": {
             "api_key": "superKey",
             "account_id": "3495"
-        }
+        },
+        "is_public": false
     },
     {
         "id": 4,
@@ -42,6 +45,7 @@
             "TAS",
             "VIC",
             "WA"
-        ]
+        ],
+        "is_public": true
     }
 ]

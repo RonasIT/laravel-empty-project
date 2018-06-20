@@ -19,14 +19,15 @@ class Kernel extends ConsoleKernel
     /**
      * Define the application's command schedule.
      *
+     * Run queue:work command with php supervisor, due to performance issues
+     *
+     *
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('queue:work --timeout=6000 --tries=3')
-            ->everyMinute()
-            ->withoutOverlapping();
+        //
     }
 
     /**
