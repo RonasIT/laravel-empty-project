@@ -15,6 +15,7 @@ class SendMailJob implements ShouldQueue
 
     protected $data = [];
     protected $template = '';
+    protected $from = '';
     protected $to = '';
     protected $subject = '';
     protected $optionService;
@@ -24,13 +25,15 @@ class SendMailJob implements ShouldQueue
      *
      * @param string $template
      * @param string $subject
+     * @param string $from
      * @param string $to
      * @param array $data
      */
-    public function __construct($template, $subject, $to, $data)
+    public function __construct($template, $subject, $from, $to, $data)
     {
         $this->data = $data;
         $this->template = $template;
+        $this->from = $from;
         $this->to = $to;
         $this->subject = $subject;
     }
@@ -43,7 +46,7 @@ class SendMailJob implements ShouldQueue
     public function handle()
     {
         \Mail::send($this->template, $this->data, function ($m) {
-            $m->from('contactus@example.org', $this->subject);
+            $m->from($this->from, $this->subject);
             $m->to($this->to)->subject($this->subject);
         });
     }
