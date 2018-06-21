@@ -19,13 +19,15 @@ class Kernel extends ConsoleKernel
     /**
      * Define the application's command schedule.
      *
+     * Run queue:work command with php supervisor, due to performance issues
+     * Contact server administrator for php supervisor setup
+     *
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        //
     }
 
     /**
