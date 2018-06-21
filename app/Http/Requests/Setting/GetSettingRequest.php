@@ -9,32 +9,20 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class GetSettingRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return  bool
-     */
+    protected $setting;
+
     public function authorize()
     {
+        $service = app(SettingService::class);
+        $this->setting = $service->findBy('key', $this->route('key'));
+
         if ($this->user()->role_id == RoleRepository::ADMIN_ROLE) {
             return true;
         }
 
-        $service = app(SettingService::class);
-        $setting = $service->findBy('key', $this->route('key'));
-
-        if (!empty($setting) && $setting['is_public']) {
-            return true;
-        }
-
-        return false;
+        return array_get($this->setting, 'is_public');
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return  array
-     */
     public function rules()
     {
         return [];
@@ -44,9 +32,7 @@ class GetSettingRequest extends FormRequest
     {
         parent::validateResolved();
 
-        $service = app(SettingService::class);
-
-        if (!$service->exists(['key' => $this->route('key')])) {
+        if (empty($this->setting)) {
             throw new NotFoundHttpException('Setting does not exists');
         }
     }

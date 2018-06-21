@@ -129,11 +129,25 @@ class SettingTest extends TestCase
         $response->assertStatus(Response::HTTP_FORBIDDEN);
     }
 
-    public function testGet()
+    public function testGetAsAdmin()
     {
         $response = $this->actingAs($this->admin)->json('get', '/settings/states');
 
         $response->assertStatus(Response::HTTP_OK);
+    }
+
+    public function testGetAsUser()
+    {
+        $response = $this->actingAs($this->user)->json('get', '/settings/states');
+
+        $response->assertStatus(Response::HTTP_OK);
+    }
+
+    public function testGetNoPermission()
+    {
+        $response = $this->actingAs($this->user)->json('get', '/settings/mailgun');
+
+        $response->assertStatus(Response::HTTP_FORBIDDEN);
     }
 
     public function testGetCheckResponse()
