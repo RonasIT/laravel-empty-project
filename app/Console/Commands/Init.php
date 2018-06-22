@@ -7,6 +7,7 @@ use Hash;
 use App\Services\UserService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
+use Yaml;
 
 class Init extends Command
 {
@@ -23,6 +24,26 @@ class Init extends Command
      * @var string
      */
     protected $description = 'Command generate admin user and .env files';
+
+    protected $settings = [
+        'DB_HOST' => 'Please enter database connection host',
+        'DB_PORT' => 'Please enter database connection port',
+        'DB_DATABASE' => 'Please enter database name',
+        'DB_USERNAME' => 'Please enter database user name',
+        'DB_PASSWORD' => 'Please enter password'
+    ];
+
+    protected $abbreviations = [
+        'pgsql' => [
+            'DB_PASSWORD' => 'POSTGRES_PASSWORD',
+            'DB_USER' => 'POSTGRES_USER',
+            'DB_DATABASE' => 'POSTGRES_DB'
+        ],
+        'mysql' => [
+            'DB_DATABASE' => 'MYSQL_DATABASE'
+        ]
+
+    ];
 
     /**
      * Create a new command instance.
@@ -56,39 +77,60 @@ class Init extends Command
         Artisan::call('key:generate');
     }
 
-    public function generateDotEnv($isTestingConfig = false) {
+    public function generateDotEnv($isTestingConfig = false)
+    {
         $connectionsTypes = array_keys(config('database.connections'));
+        $connection = $this->choice('Please select database connection type', $connectionsTypes, '2');
 
-        $database['DB_CONNECTION'] = $this->choice('Please select database connection type', $connectionsTypes, '2');
-        $database['DB_HOST'] = $this->ask('Please enter database connection host');
-        $database['DB_PORT'] = $this->ask('Please enter database connection port');
-        $database['DB_DATABASE'] = $this->ask('Please enter database name');
-        $database['DB_USERNAME'] = $this->ask('Please enter database username');
-        $database['DB_PASSWORD'] = $this->ask('Please enter database password');
-
-        $exampleContent = file_get_contents(base_path('/') . '.env.example');
-
-        foreach ($database as $type => $value) {
-            $exampleContent = str_replace("{$type}=", "{$type}={$value}", $exampleContent);
-        }
+        $ymlSettings = Yaml::parse(file_get_contents(base_path('/') . 'docker-compose.yml'));
+        $settings = $this->askDatabaseSettings($ymlSettings['services'], $connection);
 
         if (!$isTestingConfig) {
-            config([
-                'database.default' => $database['DB_CONNECTION'],
-                "database.connections.{$database['DB_CONNECTION']}.host" => $database['DB_HOST'],
-                "database.connections.{$database['DB_CONNECTION']}.port" => $database['DB_PORT'],
-                "database.connections.{$database['DB_CONNECTION']}.database" => $database['DB_DATABASE'],
-                "database.connections.{$database['DB_CONNECTION']}.username" => $database['DB_USERNAME'],
-                "database.connections.{$database['DB_CONNECTION']}.password" => $database['DB_PASSWORD'],
-            ]);
+            $this->addSettingsToConfig($settings, $connection);
         }
 
+        $exampleSettings = $this->generateExampleSettings($settings);
         $postfix = $isTestingConfig ? 'testing' : '';
 
-        return file_put_contents(base_path('/') . '.env' . $postfix, $exampleContent);
+        return file_put_contents(base_path('/') . '.env' . $postfix, $exampleSettings);
     }
 
-    private function createAdminUser($data = []) {
+    protected function generateExampleSettings($settings)
+    {
+        $exampleContent = file_get_contents(base_path('/') . '.env.example');
+
+        foreach ($settings as $type => $value) {
+            $exampleContent = str_replace("{$type}=", "{$type}={$value}", $exampleContent);
+        }
+    }
+
+    protected function addSettingsToConfig($settings, $connectionType)
+    {
+        $configSettings['database.default'] = $connectionType;
+
+        foreach ($settings as $key => $setting) {
+            $settingName = strtolower(str_replace('DB_', '', $key));
+            $configSettings["database.connections.{$connectionType}.{$settingName}"] = $setting;
+        }
+
+        config($configSettings);
+    }
+
+    protected function askDatabaseSettings($defaultSettings, $connectionType)
+    {
+        $databaseSettings['DB_CONNECTION'] = $connectionType;
+
+        foreach ($this->settings as $key => $question) {
+            $settingsName = (!empty($this->abbreviations[$connectionType][$key])) ?? $this->abbreviations[$connectionType];
+            $defaultSetting = ($settingsName) ? $defaultSettings[$connectionType][$settingsName] : '';
+            $databaseSettings[$key] = $this->ask($question, $defaultSetting);
+        }
+
+        return $databaseSettings;
+    }
+
+    private function createAdminUser($data = [])
+    {
         $data['password'] = $data['password'] ?? Hash::make(str_random(8));
         $data['name'] = $data['name'] ?? null;
         $data['email'] = $data['email'] ?? null;
