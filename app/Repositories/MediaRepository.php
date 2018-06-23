@@ -21,4 +21,11 @@ class MediaRepository extends BaseRepository
             ->filterByQuery(['name'])
             ->getSearchResults();
     }
+
+    protected function getSearchResults()
+    {
+        $this->query->applyMediaPermissionRestrictions();
+
+        return parent::getSearchResults();
+    }
 }

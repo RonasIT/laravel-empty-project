@@ -19,6 +19,8 @@ class CreateMediaTable extends Migration
             $table->softDeletes();
             $table->string('link');
             $table->string('name')->nullable();
+            $table->boolean('is_public')->default(false);
+            $table->integer('owner_id')->nullable();
         });
     }
 
