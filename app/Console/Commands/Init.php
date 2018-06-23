@@ -95,14 +95,19 @@ class Init extends Command
         return file_put_contents(base_path('/') . '.env' . $postfix, $exampleSettings);
     }
 
-    protected function generateExampleSettings($settings)
+    protected function askDatabaseSettings($defaultSettings, $connectionType)
     {
-        $exampleContent = file_get_contents(base_path('/') . '.env.example');
+        $databaseSettings['DB_CONNECTION'] = $connectionType;
 
-        foreach ($settings as $type => $value) {
-            $exampleContent = str_replace("{$type}=", "{$type}={$value}", $exampleContent);
+        foreach ($this->settings as $key => $question) {
+            $settingsName = (!empty($this->abbreviations[$connectionType][$key])) ?? $this->abbreviations[$connectionType];
+            $defaultSetting = ($settingsName) ? $defaultSettings[$connectionType][$settingsName] : '';
+            $databaseSettings[$key] = $this->ask($question, $defaultSetting);
         }
+
+        return $databaseSettings;
     }
+
 
     protected function addSettingsToConfig($settings, $connectionType)
     {
@@ -116,17 +121,13 @@ class Init extends Command
         config($configSettings);
     }
 
-    protected function askDatabaseSettings($defaultSettings, $connectionType)
+    protected function generateExampleSettings($settings)
     {
-        $databaseSettings['DB_CONNECTION'] = $connectionType;
+        $exampleContent = file_get_contents(base_path('/') . '.env.example');
 
-        foreach ($this->settings as $key => $question) {
-            $settingsName = (!empty($this->abbreviations[$connectionType][$key])) ?? $this->abbreviations[$connectionType];
-            $defaultSetting = ($settingsName) ? $defaultSettings[$connectionType][$settingsName] : '';
-            $databaseSettings[$key] = $this->ask($question, $defaultSetting);
+        foreach ($settings as $type => $value) {
+            $exampleContent = str_replace("{$type}=", "{$type}={$value}", $exampleContent);
         }
-
-        return $databaseSettings;
     }
 
     private function createAdminUser($data = [])
