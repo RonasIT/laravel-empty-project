@@ -173,7 +173,6 @@ class MediaTest extends TestCase
     {
         $response = $this->actingAs($this->admin)->json('get', '/media', $filter);
 
-        $this->exportJson($response->json(), $fixture);
         $response->assertStatus(Response::HTTP_OK);
 
         $this->assertEqualsFixture($fixture, $response->json());
@@ -189,7 +188,6 @@ class MediaTest extends TestCase
     {
         $response = $this->actingAs($this->user)->json('get', '/media', $filter);
 
-        $this->exportJson($response->json(), $fixture);
         $response->assertStatus(Response::HTTP_OK);
 
         $this->assertEqualsFixture($fixture, $response->json());
