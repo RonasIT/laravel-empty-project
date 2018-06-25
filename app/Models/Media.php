@@ -20,7 +20,6 @@ class Media extends Model
 
     protected $hidden = ['pivot'];
 
-
     public function scopeApplyMediaPermissionRestrictions($query)
     {
         if (!JWTAuth::getToken()) {
