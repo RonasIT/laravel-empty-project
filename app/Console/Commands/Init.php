@@ -25,7 +25,7 @@ class Init extends Command
 
     protected $connectionTypes = ['mysql', 'postgres'];
 
-    protected $abbreviations = [
+    protected $dockerVariables = [
         'postgres' => [
             'DB_PASSWORD' => 'POSTGRES_PASSWORD',
             'DB_USERNAME' => 'POSTGRES_USER',
@@ -83,7 +83,7 @@ class Init extends Command
             if ($key == 'DB_PORT') {
                 $defaultSetting = substr($defaultSettings[$connectionType]['ports'][0], -4);
             } else {
-                $settingsName = (!empty($this->abbreviations[$connectionType][$key])) ? $this->abbreviations[$connectionType][$key] : false;
+                $settingsName = array_get($this->dockerVariables[$connectionType], $key, false);
                 $defaultSetting = ($settingsName) ? $defaultSettings[$connectionType]['environment'][$settingsName] : '';
             }
 
