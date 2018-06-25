@@ -7,7 +7,9 @@
             "updated_at": "2016-10-20 11:05:00",
             "deleted_at": "2016-10-20 11:05:00",
             "link": "http:\/\/localhost\/test3.jpg",
-            "name": "Deleted photo"
+            "name": "Deleted photo",
+            "is_public": true,
+            "owner_id": 2
         }
     ],
     "first_page_url": "http:\/\/localhost\/media?page=1",
