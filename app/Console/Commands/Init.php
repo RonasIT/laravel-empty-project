@@ -63,7 +63,7 @@ class Init extends Command
         $connection = $this->choice('Please select database connection type', $this->connectionTypes, '1');
 
         $ymlSettings = Yaml::parse(file_get_contents(base_path('/') . 'docker-compose.yml'));
-        $settings = $this->askDatabaseSettings($ymlSettings['services'], $connection);
+        $settings = $this->askDatabaseSettings($ymlSettings['services'][$connection], $connection);
 
         if (!$isTestingConfig) {
             $this->addSettingsToConfig($settings, $connection);
@@ -78,13 +78,14 @@ class Init extends Command
     protected function askDatabaseSettings($defaultSettings, $connectionType)
     {
         $databaseSettings['DB_CONNECTION'] = $connectionType;
+        $environment = $defaultSettings['environment'];
 
         foreach ($this->settings as $key => $question) {
             if ($key == 'DB_PORT') {
-                $defaultSetting = substr($defaultSettings[$connectionType]['ports'][0], -4);
+                $defaultSetting = substr($defaultSettings['ports'][0], -4);
             } else {
                 $settingsName = array_get($this->dockerVariables[$connectionType], $key, false);
-                $defaultSetting = ($settingsName) ? $defaultSettings[$connectionType]['environment'][$settingsName] : '';
+                $defaultSetting = ($settingsName) ? $environment[$settingsName] : '';
             }
 
             $databaseSettings[$key] = $this->ask($question, $defaultSetting);
