@@ -2,27 +2,17 @@
 
 namespace App\Console\Commands;
 
+use Illuminate\Support\Carbon;
 use Validator;
 use Hash;
-use App\Services\UserService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 use Yaml;
 
 class Init extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'init';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Command generate admin user and .env files';
 
     protected $settings = [
@@ -33,33 +23,24 @@ class Init extends Command
         'DB_PASSWORD' => 'Please enter password'
     ];
 
+    protected $connectionTypes = ['mysql', 'postgres'];
+
     protected $abbreviations = [
-        'pgsql' => [
+        'postgres' => [
             'DB_PASSWORD' => 'POSTGRES_PASSWORD',
-            'DB_USER' => 'POSTGRES_USER',
+            'DB_USERNAME' => 'POSTGRES_USER',
             'DB_DATABASE' => 'POSTGRES_DB'
         ],
         'mysql' => [
             'DB_DATABASE' => 'MYSQL_DATABASE'
         ]
-
     ];
 
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         parent::__construct();
     }
 
-    /**
-     * Execute the console command.
-     *function
-     * @return mixed
-     */
     public function handle()
     {
         if ($this->confirm('Do you want generate .env?')) {
@@ -70,17 +51,16 @@ class Init extends Command
             $this->generateDotEnv(true);
         }
 
+        Artisan::call('key:generate');
+
         if ($this->confirm('Do you want generate admin user?')) {
             $this->createAdminUser();
         }
-
-        Artisan::call('key:generate');
     }
 
     public function generateDotEnv($isTestingConfig = false)
     {
-        $connectionsTypes = array_keys(config('database.connections'));
-        $connection = $this->choice('Please select database connection type', $connectionsTypes, '2');
+        $connection = $this->choice('Please select database connection type', $this->connectionTypes, '1');
 
         $ymlSettings = Yaml::parse(file_get_contents(base_path('/') . 'docker-compose.yml'));
         $settings = $this->askDatabaseSettings($ymlSettings['services'], $connection);
@@ -90,7 +70,7 @@ class Init extends Command
         }
 
         $exampleSettings = $this->generateExampleSettings($settings);
-        $postfix = $isTestingConfig ? 'testing' : '';
+        $postfix = $isTestingConfig ? '.testing' : '';
 
         return file_put_contents(base_path('/') . '.env' . $postfix, $exampleSettings);
     }
@@ -100,14 +80,18 @@ class Init extends Command
         $databaseSettings['DB_CONNECTION'] = $connectionType;
 
         foreach ($this->settings as $key => $question) {
-            $settingsName = (!empty($this->abbreviations[$connectionType][$key])) ?? $this->abbreviations[$connectionType];
-            $defaultSetting = ($settingsName) ? $defaultSettings[$connectionType][$settingsName] : '';
+            if ($key == 'DB_PORT') {
+                $defaultSetting = substr($defaultSettings[$connectionType]['ports'][0], -4);
+            } else {
+                $settingsName = (!empty($this->abbreviations[$connectionType][$key])) ? $this->abbreviations[$connectionType][$key] : false;
+                $defaultSetting = ($settingsName) ? $defaultSettings[$connectionType]['environment'][$settingsName] : '';
+            }
+
             $databaseSettings[$key] = $this->ask($question, $defaultSetting);
         }
 
         return $databaseSettings;
     }
-
 
     protected function addSettingsToConfig($settings, $connectionType)
     {
@@ -128,6 +112,8 @@ class Init extends Command
         foreach ($settings as $type => $value) {
             $exampleContent = str_replace("{$type}=", "{$type}={$value}", $exampleContent);
         }
+
+        return $exampleContent;
     }
 
     private function createAdminUser($data = [])
@@ -152,9 +138,14 @@ class Init extends Command
             return $this->createAdminUser($admin);
         }
 
-        $service = new UserService();
-        $admin = $service->create($admin);
+        return $this->publishMigration($admin);
+    }
 
-        return $admin;
+    public function publishMigration($admin)
+    {
+        $data = view('ronasit::add_default_user')->with($admin)->render();
+        $fileName = Carbon::now()->format('Y_m_d_His') . '_add_default_user.php';
+
+        return file_put_contents("database/migrations/{$fileName}", $data);
     }
 }
