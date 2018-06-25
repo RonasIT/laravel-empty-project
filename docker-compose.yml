@@ -21,7 +21,6 @@ services:
     image: postgres
     ports:
         - 5432:5432
-    image: postgres:10.3
     environment:
         POSTGRES_PASSWORD: ""
         POSTGRES_USER: pguser
