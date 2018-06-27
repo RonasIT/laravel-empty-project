@@ -20,7 +20,9 @@ abstract class TestCase extends AutoDocTestCase
     {
         parent::setUp();
 
+        $this->artisan("cache:clear");
         $this->artisan('migrate');
+
         $this->loadTestDump();
         $this->auth = app(JWTAuth::class);
     }
