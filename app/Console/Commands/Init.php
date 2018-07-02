@@ -147,6 +147,6 @@ class Init extends Command
         $data = view('ronasit::add_default_user')->with($admin)->render();
         $fileName = Carbon::now()->format('Y_m_d_His') . '_add_default_user.php';
 
-        return file_put_contents("database/migrations/{$fileName}", $data);
+        return file_put_contents("database/migrations/{$fileName}", "<?php\n\n{$data}");
     }
 }
