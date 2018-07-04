@@ -78,7 +78,8 @@ class AuthTest extends TestCase
         $this->assertNotEquals($this->jwt, last($explodedHeader));
     }
 
-    public function testForgotPassword() {
+    public function testForgotPassword()
+    {
         $response = $this->json('post', '/auth/forgot-password', [
             'email' => 'fidel.kutch@example.com'
         ]);
@@ -91,7 +92,8 @@ class AuthTest extends TestCase
         ]);
     }
 
-    public function testForgotPasswordUserDoesNotExists() {
+    public function testForgotPasswordUserDoesNotExists()
+    {
         $response = $this->json('post','/auth/forgot-password', [
             'email' => 'not_exists@example.com'
         ]);
@@ -99,7 +101,8 @@ class AuthTest extends TestCase
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
-    public function testRestorePassword() {
+    public function testRestorePassword()
+    {
         $response = $this->json('post', '/auth/restore-password', [
             'password' => 'new_password',
             'token' => 'restore_token',
@@ -118,7 +121,8 @@ class AuthTest extends TestCase
         ]);
     }
 
-    public function testRestorePasswordWrongToken() {
+    public function testRestorePasswordWrongToken()
+    {
         $response = $this->json('post','/auth/restore-password', [
             'password' => 'new_password',
             'token' => 'incorrect_token',
@@ -127,7 +131,8 @@ class AuthTest extends TestCase
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
-    public function testCheckRestoreToken() {
+    public function testCheckRestoreToken()
+    {
         $response = $this->json('post','/auth/token/check', [
             'token' => 'restore_token',
         ]);
@@ -135,7 +140,8 @@ class AuthTest extends TestCase
         $response->assertStatus(Response::HTTP_NO_CONTENT);
     }
 
-    public function testCheckRestoreWrongToken() {
+    public function testCheckRestoreWrongToken()
+    {
         $response = $this->json('post','/auth/token/check', [
             'token' => 'wrong_token',
         ]);

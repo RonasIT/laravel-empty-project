@@ -10,7 +10,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class MediaController extends Controller
 {
-    public function create(CreateMediaRequest $request, MediaService $service) {
+    public function create(CreateMediaRequest $request, MediaService $service)
+    {
         $file = $request->file('file');
         $data = $request->all();
 
@@ -21,13 +22,15 @@ class MediaController extends Controller
         return response()->json($media);
     }
 
-    public function delete(DeleteMediaRequest $request, MediaService $service, $id) {
+    public function delete(DeleteMediaRequest $request, MediaService $service, $id)
+    {
         $service->delete(['id' => $id]);
 
         return response('', Response::HTTP_NO_CONTENT);
     }
 
-    public function search(SearchMediaRequest $request, MediaService $service) {
+    public function search(SearchMediaRequest $request, MediaService $service)
+    {
         $result = $service->search($request->all());
 
         return response($result);

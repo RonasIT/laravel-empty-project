@@ -41,7 +41,8 @@ class AddFieldsToUsersTable extends Migration
         DB::commit();
     }
 
-    public function updateTable() {
+    public function updateTable()
+    {
         Schema::table('users', function (Blueprint $table) {
             $table->integer('role_id');
             $table->string('reset_password_hash')->nullable();

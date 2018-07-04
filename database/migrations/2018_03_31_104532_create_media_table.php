@@ -13,7 +13,7 @@ class CreateMediaTable extends Migration
      */
     public function up()
     {
-        Schema::create('media', function(Blueprint $table) {
+        Schema::create('media', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
             $table->softDeletes();

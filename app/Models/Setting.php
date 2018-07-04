@@ -27,7 +27,7 @@ class Setting extends Model
         $user = JWTAuth::toUser();
 
         if ($user->role_id !== RoleRepository::ADMIN_ROLE) {
-            $query->where(function ($query) use ($user) {
+            $query->where(function ($query) {
                 $query->where('is_public', true);
             });
         }

@@ -13,7 +13,8 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Response;
 use Tymon\JWTAuth\JWTAuth;
 
-class AuthController extends Controller {
+class AuthController extends Controller
+{
     use AuthenticatesUsers;
 
     public function login(LoginRequest $request, UserService $service, JWTAuth $auth)
@@ -55,13 +56,15 @@ class AuthController extends Controller {
         return response('', Response::HTTP_NO_CONTENT);
     }
 
-    public function forgotPassword(ForgotPasswordRequest $request, UserService $service) {
+    public function forgotPassword(ForgotPasswordRequest $request, UserService $service)
+    {
         $service->forgotPassword($request->input('email'));
 
         return response('', Response::HTTP_NO_CONTENT);
     }
 
-    public function restorePassword(RestorePasswordRequest $request, UserService $service) {
+    public function restorePassword(RestorePasswordRequest $request, UserService $service)
+    {
         $service->restorePassword(
             $request->input('token'),
             $request->input('password')
@@ -70,7 +73,8 @@ class AuthController extends Controller {
         return response('', Response::HTTP_NO_CONTENT);
     }
 
-    public function checkRestoreToken(CheckRestoreTokenRequest $request) {
+    public function checkRestoreToken(CheckRestoreTokenRequest $request)
+    {
         return response('', Response::HTTP_NO_CONTENT);
     }
 

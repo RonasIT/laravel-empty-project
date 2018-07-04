@@ -63,13 +63,13 @@ class Init extends Command
         $connection = $this->choice('Please select database connection type', $this->connectionTypes, '1');
 
         $ymlSettings = Yaml::parse(file_get_contents(base_path('/') . 'docker-compose.yml'));
-        $settings = $this->askDatabaseSettings($ymlSettings['services'][$connection], $connection);
+        $databaseSettings = $this->askDatabaseSettings($ymlSettings['services'][$connection], $connection);
 
         if (!$isTestingConfig) {
-            $this->addSettingsToConfig($settings, $connection);
+            $this->addSettingsToConfig($databaseSettings, $connection);
         }
 
-        $exampleSettings = $this->generateExampleSettings($settings);
+        $exampleSettings = $this->generateExampleSettings($databaseSettings);
         $postfix = $isTestingConfig ? '.testing' : '';
 
         return file_put_contents(base_path('/') . '.env' . $postfix, $exampleSettings);

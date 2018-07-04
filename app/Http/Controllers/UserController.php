@@ -40,7 +40,8 @@ class UserController extends Controller
         return response('', Response::HTTP_NO_CONTENT);
     }
 
-    public function profile(GetUserProfileRequest $request, UserService $service) {
+    public function profile(GetUserProfileRequest $request, UserService $service)
+    {
         $result = $service->first(['id' => $request->user()->id]);
 
         return response()->json($result);
