@@ -94,7 +94,7 @@ class AuthTest extends TestCase
 
     public function testForgotPasswordUserDoesNotExists()
     {
-        $response = $this->json('post','/auth/forgot-password', [
+        $response = $this->json('post', '/auth/forgot-password', [
             'email' => 'not_exists@example.com'
         ]);
 
@@ -123,7 +123,7 @@ class AuthTest extends TestCase
 
     public function testRestorePasswordWrongToken()
     {
-        $response = $this->json('post','/auth/restore-password', [
+        $response = $this->json('post', '/auth/restore-password', [
             'password' => 'new_password',
             'token' => 'incorrect_token',
         ]);
@@ -133,7 +133,7 @@ class AuthTest extends TestCase
 
     public function testCheckRestoreToken()
     {
-        $response = $this->json('post','/auth/token/check', [
+        $response = $this->json('post', '/auth/token/check', [
             'token' => 'restore_token',
         ]);
 
@@ -142,7 +142,7 @@ class AuthTest extends TestCase
 
     public function testCheckRestoreWrongToken()
     {
-        $response = $this->json('post','/auth/token/check', [
+        $response = $this->json('post', '/auth/token/check', [
             'token' => 'wrong_token',
         ]);
 
