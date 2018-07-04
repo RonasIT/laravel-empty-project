@@ -1,0 +1,11 @@
+stages:
+  - code_validation
+
+commit_linter:
+  stage: code_validation
+  image: projects.ronasit.com:4567/docker/sonarqube-linter
+  script:
+    - linter
+  tags:
+    - docker
+    - linux
