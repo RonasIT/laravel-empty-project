@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\tests\CreatetestRequest;
-use App\Http\Requests\tests\GettestRequest;
-use App\Http\Requests\tests\UpdatetestRequest;
-use App\Http\Requests\tests\DeletetestRequest;
-use App\Http\Requests\tests\SearchtestRequest;
-use App\Services\testService;
+use App\Http\Requests\Tests\CreateTestRequest;
+use App\Http\Requests\Tests\GetTestRequest;
+use App\Http\Requests\Tests\UpdateTestRequest;
+use App\Http\Requests\Tests\DeleteTestRequest;
+use App\Http\Requests\Tests\SearchTestRequest;
+use App\Services\TestService;
 use Symfony\Component\HttpFoundation\Response;
 
-class testController extends Controller
+class TestController extends Controller
 {
-    public function create(CreatetestRequest $request, testService $service)
+    public function create(CreateTestRequest $request, TestService $service)
     {
         $data = $request->all();
 
@@ -21,14 +21,14 @@ class testController extends Controller
         return response()->json($result);
     }
 
-    public function get(GettestRequest $request, testService $service, $id)
+    public function get(GetTestRequest $request, TestService $service, $id)
     {
         $result = $service->first(['id' => $id]);
 
         return response()->json($result);
     }
 
-    public function update(UpdatetestRequest $request, testService $service, $id)
+    public function update(UpdateTestRequest $request, TestService $service, $id)
     {
         $service->update(
             ['id' => $id],
@@ -38,14 +38,14 @@ class testController extends Controller
         return response('', Response::HTTP_NO_CONTENT);
     }
 
-    public function delete(DeletetestRequest $request, testService $service, $id)
+    public function delete(DeleteTestRequest $request, TestService $service, $id)
     {
         $service->delete(['id' => $id]);
 
         return response('', Response::HTTP_NO_CONTENT);
     }
 
-    public function search(SearchtestRequest $request, testService $service)
+    public function search(SearchTestRequest $request, TestService $service)
     {
         $result = $service->search($request->all());
 

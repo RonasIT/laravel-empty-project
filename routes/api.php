@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\testController;
+use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MediaController;
@@ -17,15 +17,7 @@ use App\Http\Controllers\SettingController;
 |
 */
 
-$auth = [
-    'middleware' => ['jwt.auth', 'maintenance']
-];
-
-$guest = [
-    'middleware' => ['maintenance']
-];
-
-Route::group($auth, function () {
+Route::group(['middleware' => ['jwt.auth', 'maintenance']], function () {
     Route::post('/users', ['uses' => UserController::class.'@create']);
     Route::put('/users/{id}', ['uses' => UserController::class.'@update']);
     Route::delete('/users/{id}', ['uses' => UserController::class.'@delete']);
@@ -45,7 +37,7 @@ Route::group($auth, function () {
     Route::get('/settings', ['uses' => SettingController::class.'@search']);
 });
 
-Route::group($guest, function () {
+Route::group(['middleware' => ['maintenance']], function () {
     Route::post('/login', ['uses' => AuthController::class . '@login']);
     Route::get('/auth/refresh', ['uses' => AuthController::class . '@refreshToken'])
         ->middleware(['jwt.refresh']);
@@ -55,8 +47,8 @@ Route::group($guest, function () {
     Route::post('/auth/token/check', ['uses' => AuthController::class . '@checkRestoreToken']);
 });
 
-Route::post('/tests', ['uses' => testController::class.'@create'])->middleware('jwt.auth');
-Route::put('/tests/{id}', ['uses' => testController::class.'@update'])->middleware('jwt.auth');
-Route::delete('/tests/{id}', ['uses' => testController::class.'@delete'])->middleware('jwt.auth');
-Route::get('/tests/{id}', ['uses' => testController::class.'@get']);
-Route::get('/tests', ['uses' => testController::class.'@search']);
+Route::post('/tests', ['uses' => TestController::class.'@create'])->middleware('jwt.auth');
+Route::put('/tests/{id}', ['uses' => TestController::class.'@update'])->middleware('jwt.auth');
+Route::delete('/tests/{id}', ['uses' => TestController::class.'@delete'])->middleware('jwt.auth');
+Route::get('/tests/{id}', ['uses' => TestController::class.'@get']);
+Route::get('/tests', ['uses' => TestController::class.'@search']);

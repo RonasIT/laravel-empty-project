@@ -6,7 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 use RonasIT\Support\Traits\MigrationTrait;
 
-class CreatetestsTable extends Migration
+class CreateTestsTable extends Migration
 {
     use MigrationTrait;
 
@@ -29,13 +29,13 @@ class CreatetestsTable extends Migration
         DB::commit();
     }
 
-    public function createTable() {
+    public function createTable()
+    {
         Schema::create('tests', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
             $table->float('votes');
             $table->string('name');
-            $table->timestamp('');
         });
     }
 }

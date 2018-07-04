@@ -3,16 +3,16 @@
 namespace App\Repositories;
 
 use RonasIT\Support\Repositories\BaseRepository;
-use App\Models\test;
+use App\Models\Test;
 
 /**
- * @property  test $model
+ * @property  Test $model
 */
-class testRepository extends BaseRepository
+class TestRepository extends BaseRepository
 {
     public function __construct()
     {
-        $this->setModel(test::class);
+        $this->setModel(Test::class);
     }
 
     public function search($filters)
