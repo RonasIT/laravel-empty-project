@@ -41,3 +41,12 @@ $factory->define(App\Models\Option::class, function (Faker\Generator $faker) {
         'value' => $faker->word
     ];
 });
+
+
+$factory->define(App\Models\test::class, function (Faker\Generator $faker) {
+    return [
+        'votes' => $faker->randomFloat(),
+        'name' => $faker->word,
+        '' => $faker->dateTime,
+    ];
+});

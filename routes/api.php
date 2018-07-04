@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\testController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MediaController;
@@ -53,3 +54,9 @@ Route::group($guest, function () {
     Route::post('/auth/restore-password', ['uses' => AuthController::class . '@restorePassword']);
     Route::post('/auth/token/check', ['uses' => AuthController::class . '@checkRestoreToken']);
 });
+
+Route::post('/tests', ['uses' => testController::class.'@create'])->middleware('jwt.auth');
+Route::put('/tests/{id}', ['uses' => testController::class.'@update'])->middleware('jwt.auth');
+Route::delete('/tests/{id}', ['uses' => testController::class.'@delete'])->middleware('jwt.auth');
+Route::get('/tests/{id}', ['uses' => testController::class.'@get']);
+Route::get('/tests', ['uses' => testController::class.'@search']);
