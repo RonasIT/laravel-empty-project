@@ -46,9 +46,3 @@ Route::group(['middleware' => 'guest'], function () {
     Route::post('/auth/restore-password', ['uses' => AuthController::class . '@restorePassword']);
     Route::post('/auth/token/check', ['uses' => AuthController::class . '@checkRestoreToken']);
 });
-
-Route::post('/tests', ['uses' => TestController::class.'@create'])->middleware('jwt.auth');
-Route::put('/tests/{id}', ['uses' => TestController::class.'@update'])->middleware('jwt.auth');
-Route::delete('/tests/{id}', ['uses' => TestController::class.'@delete'])->middleware('jwt.auth');
-Route::get('/tests/{id}', ['uses' => TestController::class.'@get']);
-Route::get('/tests', ['uses' => TestController::class.'@search']);
