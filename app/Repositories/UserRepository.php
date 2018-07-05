@@ -30,7 +30,8 @@ class UserRepository extends BaseRepository
             ->getSearchResults();
     }
 
-    public function forceUpdate($where, $data) {
+    public function forceUpdate($where, $data)
+    {
         $user = User::where($where)->first();
 
         $user->forceFill($data);

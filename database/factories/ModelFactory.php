@@ -23,7 +23,7 @@ $factory->define(App\Models\User::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(App\Models\Role::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\Role::class, function () {
     return [
         'name' => 'user'
     ];

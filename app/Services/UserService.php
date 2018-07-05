@@ -19,7 +19,8 @@ class UserService extends EntityService
         $this->setRepository(UserRepository::class);
     }
 
-    public function create($data) {
+    public function create($data)
+    {
         $data['role_id'] = array_get($data, 'role_id', RoleRepository::USER_ROLE);
         $data['password'] = Hash::make($data['password']);
 
@@ -39,7 +40,8 @@ class UserService extends EntityService
         return $this->repository->update($where, $data);
     }
 
-    public function forgotPassword($email) {
+    public function forgotPassword($email)
+    {
         $hash = uniqid();
 
         $this->repository->forceUpdate([
@@ -49,7 +51,8 @@ class UserService extends EntityService
         ]);
     }
 
-    public function restorePassword($token, $password) {
+    public function restorePassword($token, $password)
+    {
         $this->repository->forceUpdate([
             'reset_password_hash' => $token
         ], [

@@ -65,8 +65,7 @@ abstract class TestCase extends AutoDocTestCase
             $server
         );
 
-        return parent::call($method, $uri, $parameters, $cookies,
-            $files, $server, $content);
+        return parent::call($method, $uri, $parameters, $cookies, $files, $server, $content);
     }
 
     public function actingAs(Authenticatable $user, $driver = null)

@@ -78,7 +78,8 @@ class AuthTest extends TestCase
         $this->assertNotEquals($this->jwt, last($explodedHeader));
     }
 
-    public function testForgotPassword() {
+    public function testForgotPassword()
+    {
         $response = $this->json('post', '/auth/forgot-password', [
             'email' => 'fidel.kutch@example.com'
         ]);
@@ -91,15 +92,17 @@ class AuthTest extends TestCase
         ]);
     }
 
-    public function testForgotPasswordUserDoesNotExists() {
-        $response = $this->json('post','/auth/forgot-password', [
+    public function testForgotPasswordUserDoesNotExists()
+    {
+        $response = $this->json('post', '/auth/forgot-password', [
             'email' => 'not_exists@example.com'
         ]);
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
-    public function testRestorePassword() {
+    public function testRestorePassword()
+    {
         $response = $this->json('post', '/auth/restore-password', [
             'password' => 'new_password',
             'token' => 'restore_token',
@@ -118,8 +121,9 @@ class AuthTest extends TestCase
         ]);
     }
 
-    public function testRestorePasswordWrongToken() {
-        $response = $this->json('post','/auth/restore-password', [
+    public function testRestorePasswordWrongToken()
+    {
+        $response = $this->json('post', '/auth/restore-password', [
             'password' => 'new_password',
             'token' => 'incorrect_token',
         ]);
@@ -127,16 +131,18 @@ class AuthTest extends TestCase
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
-    public function testCheckRestoreToken() {
-        $response = $this->json('post','/auth/token/check', [
+    public function testCheckRestoreToken()
+    {
+        $response = $this->json('post', '/auth/token/check', [
             'token' => 'restore_token',
         ]);
 
         $response->assertStatus(Response::HTTP_NO_CONTENT);
     }
 
-    public function testCheckRestoreWrongToken() {
-        $response = $this->json('post','/auth/token/check', [
+    public function testCheckRestoreWrongToken()
+    {
+        $response = $this->json('post', '/auth/token/check', [
             'token' => 'wrong_token',
         ]);
 
