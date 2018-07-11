@@ -16,7 +16,8 @@ class CreateMediaRequest extends FormRequest
     public function rules()
     {
         return [
-            'file' => 'file|required|max:5120'
+            'file' => 'file|required|max:5120|'
+                .'mimes:'.implode(',', config('defaults.permitted_media_types'))
         ];
     }
 }
