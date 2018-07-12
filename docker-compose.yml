@@ -17,7 +17,7 @@ services:
           WEB_DOCUMENT_INDEX: index.php
           REDIS_PORT: "6379"
 
-  postgres:
+  pgsql:
     image: postgres
     ports:
         - 5432:5432
