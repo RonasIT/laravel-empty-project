@@ -1,10 +1,8 @@
 FROM webdevops/php-nginx:7.1
 
 RUN apt-get clean && \
-    echo "deb http://httpredir.debian.org/debian jessie-backports main contrib non-free" >> /etc/apt/sources.list && \
     apt-get -y update && \
-    apt-get -y install ssmtp sudo && \
-    apt-get -t jessie-backports install -y libpq-dev libsodium-dev libmagickwand-dev libmagickcore-dev && \
+    apt-get -y install ssmtp sudo libpq-dev libsodium-dev libmagickwand-dev libmagickcore-dev && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
