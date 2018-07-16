@@ -8,7 +8,6 @@ use Hash;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 use Yaml;
-use App\Repositories\RoleRepository;
 
 class Init extends Command
 {
@@ -127,7 +126,6 @@ class Init extends Command
         $admin['name'] = $this->ask('Please enter admin name', $data['name']);
         $admin['email'] = $this->ask('Please enter admin email', $data['email']);
         $admin['password'] = $this->ask('Please enter admin password', $data['password']);
-        $admin['role'] = RoleRepository::ADMIN_ROLE;
 
         $validator = Validator::make($admin, [
             'name' => 'required',
