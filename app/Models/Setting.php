@@ -11,14 +11,21 @@ class Setting extends Model
 {
     use ModelTrait;
 
+    public $incrementing = false;
+
+    protected $primaryKey = 'name';
     protected $fillable = [
-        'key', 'value', 'is_public'
+        'name',
+        'value',
+        'is_public'
     ];
 
     protected $hidden = ['pivot'];
 
     protected $casts = [
-        'value' => 'array'
+        'value' => 'array',
+        'name' => 'string',
+        'is_public' => 'boolean'
     ];
 
 

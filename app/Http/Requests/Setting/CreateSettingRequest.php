@@ -15,7 +15,7 @@ class CreateSettingRequest extends FormRequest
     public function rules()
     {
         return [
-            'key' => 'required',
+            'name' => 'required|unique:settings,name',
             'value' => 'required'
         ];
     }

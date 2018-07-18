@@ -69,7 +69,7 @@ class SettingTest extends TestCase
     {
         $setting = $this->getJsonFixture('update_setting.json');
 
-        $response = $this->actingAs($this->admin)->json('put', "/settings/{$setting['key']}", $setting['value']);
+        $response = $this->actingAs($this->admin)->json('put', "/settings/{$setting['name']}", $setting['value']);
 
         $response->assertStatus(Response::HTTP_NO_CONTENT);
     }

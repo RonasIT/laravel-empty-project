@@ -25,7 +25,7 @@ class DeleteSettingRequest extends FormRequest
 
         $service = app(SettingService::class);
 
-        if (!$service->exists(['key' => $this->route('key')])) {
+        if (!$service->exists(['name' => $this->route('name')])) {
             throw new NotFoundHttpException('Option does not exists');
         }
     }

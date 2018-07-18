@@ -1,5 +1,5 @@
 {
-  "key": "test option",
+  "name": "test option",
   "value": {
     "0": "NSW",
     "1": "ACT"

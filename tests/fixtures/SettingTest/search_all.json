@@ -1,9 +1,8 @@
 [
     {
-        "id": 1,
         "created_at": "2016-10-20 11:05:00",
         "updated_at": "2016-10-20 11:06:00",
-        "key": "attribute",
+        "name": "attribute",
         "value": {
             "name": "color",
             "value": "#000"
@@ -11,20 +10,9 @@
         "is_public": true
     },
     {
-        "id": 2,
-        "created_at": "2016-10-20 11:06:00",
-        "updated_at": "2016-10-20 11:07:00",
-        "key": "settings",
-        "value": {
-            "timezone": "australia"
-        },
-        "is_public": true
-    },
-    {
-        "id": 3,
         "created_at": "2016-10-20 11:07:00",
         "updated_at": "2016-10-20 11:08:00",
-        "key": "mailgun",
+        "name": "mailgun",
         "value": {
             "api_key": "superKey",
             "account_id": "3495"
@@ -32,10 +20,18 @@
         "is_public": false
     },
     {
-        "id": 4,
+        "created_at": "2016-10-20 11:06:00",
+        "updated_at": "2016-10-20 11:07:00",
+        "name": "settings",
+        "value": {
+            "timezone": "australia"
+        },
+        "is_public": true
+    },
+    {
         "created_at": "2016-10-20 11:08:00",
         "updated_at": "2016-10-20 11:09:00",
-        "key": "states",
+        "name": "states",
         "value": [
             "NSW",
             "ACT",
