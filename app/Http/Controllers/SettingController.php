@@ -12,15 +12,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SettingController extends Controller
 {
-    public function create(CreateSettingRequest $request, SettingService $service)
-    {
-        $data = $request->all();
-
-        $result = $service->create($data);
-
-        return response()->json($result);
-    }
-
     public function get(GetSettingRequest $request, SettingService $service, $key)
     {
         $result = $service->first(['name' => $key]);

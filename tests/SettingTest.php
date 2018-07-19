@@ -18,53 +18,6 @@ class SettingTest extends TestCase
         $this->user = User::find(2);
     }
 
-    public function testCreate()
-    {
-        $setting = $this->getJsonFixture('new_setting.json');
-
-        $response = $this->actingAs($this->admin)->json('post', '/settings', $setting);
-
-        $response->assertStatus(Response::HTTP_OK);
-    }
-
-    public function testCreateCheckResponse()
-    {
-        $setting = $this->getJsonFixture('new_setting.json');
-
-        $response = $this->actingAs($this->admin)->json('post', '/settings', $setting);
-
-        $response->assertStatus(Response::HTTP_OK);
-
-        $response->assertJson($setting);
-    }
-
-    public function testCreateNoAuth()
-    {
-        $setting = $this->getJsonFixture('new_setting.json');
-
-        $response = $this->json('post', '/settings', $setting);
-
-        $response->assertStatus(Response::HTTP_BAD_REQUEST);
-    }
-
-    public function testCreateNoPermission()
-    {
-        $setting = $this->getJsonFixture('new_setting.json');
-
-        $response = $this->actingAs($this->user)->json('post', '/settings', $setting);
-
-        $response->assertStatus(Response::HTTP_FORBIDDEN);
-    }
-
-    public function testCreateUnprocessableEntity()
-    {
-        $setting = $this->getJsonFixture('unprocessable_setting.json');
-
-        $response = $this->actingAs($this->admin)->json('post', '/settings', $setting);
-
-        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
-    }
-
     public function testUpdate()
     {
         $setting = $this->getJsonFixture('update_setting.json');
