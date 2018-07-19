@@ -54,34 +54,6 @@ class SettingTest extends TestCase
         $response->assertStatus(Response::HTTP_FORBIDDEN);
     }
 
-    public function testDelete()
-    {
-        $response = $this->actingAs($this->admin)->json('delete', '/settings/states');
-
-        $response->assertStatus(Response::HTTP_NO_CONTENT);
-    }
-
-    public function testDeleteNotExists()
-    {
-        $response = $this->actingAs($this->admin)->json('delete', '/settings/0');
-
-        $response->assertStatus(Response::HTTP_NOT_FOUND);
-    }
-
-    public function testDeleteNoAuth()
-    {
-        $response = $this->json('delete', '/settings/1');
-
-        $response->assertStatus(Response::HTTP_BAD_REQUEST);
-    }
-
-    public function testDeleteNoPermission()
-    {
-        $response = $this->actingAs($this->user)->json('delete', '/settings/1');
-
-        $response->assertStatus(Response::HTTP_FORBIDDEN);
-    }
-
     public function testGetAsAdmin()
     {
         $response = $this->actingAs($this->admin)->json('get', '/settings/states');

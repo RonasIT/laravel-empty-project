@@ -19,7 +19,6 @@ class Setting extends Model
         'value',
         'is_public'
     ];
-
     protected $hidden = ['pivot'];
 
     protected $casts = [

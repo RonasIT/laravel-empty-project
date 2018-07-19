@@ -23,7 +23,7 @@ abstract class TestCase extends AutoDocTestCase
         $this->artisan("cache:clear");
         $this->artisan('migrate');
 
-        $this->loadTestDump(['migrations', 'password_resets', 'settings']);
+        $this->loadTestDump();
         $this->auth = app(JWTAuth::class);
     }
 

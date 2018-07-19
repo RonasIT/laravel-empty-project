@@ -29,12 +29,6 @@ class SettingController extends Controller
         return response('', Response::HTTP_NO_CONTENT);
     }
 
-    public function delete(DeleteSettingRequest $request, SettingService $service, $key)
-    {
-        $service->delete(['name' => $key]);
-
-        return response('', Response::HTTP_NO_CONTENT);
-    }
 
     public function search(SearchSettingRequest $request, SettingService $service)
     {

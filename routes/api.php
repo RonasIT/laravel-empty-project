@@ -30,7 +30,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/media', ['uses' => MediaController::class.'@search']);
 
     Route::put('/settings/{name}', ['uses' => SettingController::class.'@update']);
-    Route::delete('/settings/{name}', ['uses' => SettingController::class.'@delete']);
     Route::get('/settings/{name}', ['uses' => SettingController::class.'@get']);
     Route::get('/settings', ['uses' => SettingController::class.'@search']);
 });
