@@ -173,7 +173,7 @@ class SettingTest extends TestCase
             ],
             [
                 'filter' => [
-                    'order_by' => 'key',
+                    'order_by' => 'name',
                     'desc' => false
                 ],
                 'result' => 'get_settings_check_order.json'
