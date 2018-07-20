@@ -12,18 +12,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SettingController extends Controller
 {
-    public function create(CreateSettingRequest $request, SettingService $service)
-    {
-        $data = $request->all();
-
-        $result = $service->create($data);
-
-        return response()->json($result);
-    }
-
     public function get(GetSettingRequest $request, SettingService $service, $key)
     {
-        $result = $service->first(['key' => $key]);
+        $result = $service->first(['name' => $key]);
 
         return response()->json($result);
     }
@@ -31,19 +22,13 @@ class SettingController extends Controller
     public function update(UpdateSettingRequest $request, SettingService $service, $key)
     {
         $service->update(
-            ['key' => $key],
+            ['name' => $key],
             ['value' => $request->all()]
         );
 
         return response('', Response::HTTP_NO_CONTENT);
     }
 
-    public function delete(DeleteSettingRequest $request, SettingService $service, $key)
-    {
-        $service->delete(['key' => $key]);
-
-        return response('', Response::HTTP_NO_CONTENT);
-    }
 
     public function search(SearchSettingRequest $request, SettingService $service)
     {

@@ -20,7 +20,7 @@ class SettingService extends EntityService
         $explodedKey = explode('.', $key);
         $primaryKey = array_shift($explodedKey);
 
-        $setting = $this->repository->findBy('key', $primaryKey);
+        $setting = $this->repository->findBy('name', $primaryKey);
 
         if (empty($setting)) {
             return $default;
@@ -41,11 +41,11 @@ class SettingService extends EntityService
         $explodedKey = explode('.', $key);
         $primaryKey = array_shift($explodedKey);
 
-        $setting = $this->repository->findBy('key', $primaryKey);
+        $setting = $this->repository->findBy('name', $primaryKey);
 
         if (empty($setting)) {
             return $this->repository->create([
-                'key' => $key,
+                'name' => $key,
                 'value' => $value
             ]);
         }
@@ -55,7 +55,7 @@ class SettingService extends EntityService
 
         array_set($setting, $valuePath, $value);
 
-        return $this->repository->update(['key' => $primaryKey], [
+        return $this->repository->update(['name' => $primaryKey], [
             'value' => $setting['value']
         ]);
     }
