@@ -18,6 +18,10 @@ class Media extends Model
         'is_public'
     ];
 
+    protected $casts = [
+        'is_public' => 'boolean'
+    ];
+
     protected $hidden = ['pivot'];
 
     public function scopeApplyMediaPermissionRestrictions($query)

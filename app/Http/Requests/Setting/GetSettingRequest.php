@@ -14,7 +14,7 @@ class GetSettingRequest extends FormRequest
     public function authorize()
     {
         $service = app(SettingService::class);
-        $this->setting = $service->findBy('key', $this->route('key'));
+        $this->setting = $service->findBy('name', $this->route('name'));
 
         if ($this->user()->role_id == RoleRepository::ADMIN_ROLE) {
             return true;

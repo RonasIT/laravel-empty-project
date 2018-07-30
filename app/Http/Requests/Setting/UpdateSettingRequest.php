@@ -25,8 +25,8 @@ class UpdateSettingRequest extends FormRequest
 
         $service = app(SettingService::class);
 
-        if (!$service->exists(['key' => $this->route('key')])) {
-            throw new NotFoundHttpException('Option does not exists');
+        if (!$service->exists(['name' => $this->route('name')])) {
+            throw new NotFoundHttpException('Setting does not exists');
         }
     }
 }

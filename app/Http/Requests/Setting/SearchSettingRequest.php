@@ -19,7 +19,7 @@ class SearchSettingRequest extends FormRequest
             'per_page' => 'integer',
             'all' => 'integer',
             'query' => 'string|nullable',
-            'order_by' => 'string|in:key',
+            'order_by' => 'string|in:name',
             'desc' => 'boolean'
         ];
     }

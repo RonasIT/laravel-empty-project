@@ -18,13 +18,14 @@ class SettingRepository extends BaseRepository
     public function search($filters)
     {
         return $this->searchQuery($filters)
-            ->filterByQuery(['key'])
+            ->filterByQuery(['name'])
             ->getSearchResults();
     }
 
     protected function getSearchResults()
     {
-        $this->query->applySettingPermissionRestrictions();
+        $this->query->orderBy('name')
+            ->applySettingPermissionRestrictions();
 
         return parent::getSearchResults();
     }

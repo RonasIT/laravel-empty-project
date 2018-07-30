@@ -192,4 +192,71 @@ class MediaTest extends TestCase
 
         $this->assertEqualsFixture($fixture, $response->json());
     }
+
+    public function getBadFiles()
+    {
+        return [
+            [
+                'filter' => ['fileName' => 'notAVirus.exe']
+            ],
+            [
+                'filter' => ['fileName' => 'notAVirus.psd']
+            ]
+        ];
+    }
+
+    /**
+     * @dataProvider  getBadFiles
+     *
+     * @param  array $filter
+     * @param  string $fixture
+     */
+    public function testUploadingBadFiles($filter){
+
+        $this->file = UploadedFile::fake()->create($filter['fileName'], 1024);
+
+        $response = $this->actingAs($this->user)->json('post', '/media', ['file' => $this->file]);
+
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+
+        $response->assertJson([
+            'errors' => [
+                'file' => ['The file must be a file of type: jpeg, bmp, png.']
+            ]
+        ]);
+    }
+
+    public function getGoodFiles()
+    {
+        return [
+            [
+                'filter' => ['fileName' => 'image.jpg']
+            ],
+            [
+                'filter' => ['fileName' => 'image.png']
+            ],
+            [
+                'filter' => ['fileName' => 'image.bmp']
+            ]
+        ];
+    }
+
+    /**
+     * @dataProvider  getGoodFiles
+     *
+     * @param  array $filter
+     * @param  string $fixture
+     */
+    public function testUploadingGoodFiles($filter){
+
+        $this->file = UploadedFile::fake()->image($filter['fileName'], 600, 600);
+
+        $response = $this->actingAs($this->user)->json('post', '/media', ['file' => $this->file]);
+
+        $responseData = $response->json();
+
+        $this->assertDatabaseHas('media', [
+            'id' => $responseData['id'],
+        ]);
+    }
 }

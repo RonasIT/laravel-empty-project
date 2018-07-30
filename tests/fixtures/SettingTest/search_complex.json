@@ -2,10 +2,9 @@
     "current_page": 1,
     "data": [
         {
-            "id": 4,
             "created_at": "2016-10-20 11:08:00",
             "updated_at": "2016-10-20 11:09:00",
-            "key": "states",
+            "name": "states",
             "value": [
                 "NSW",
                 "ACT",

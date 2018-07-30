@@ -23,10 +23,10 @@ class Init extends Command
         'DB_PASSWORD' => 'Please enter password'
     ];
 
-    protected $connectionTypes = ['mysql', 'postgres'];
+    protected $connectionTypes = ['mysql', 'pgsql'];
 
     protected $dockerVariables = [
-        'postgres' => [
+        'pgsql' => [
             'DB_PASSWORD' => 'POSTGRES_PASSWORD',
             'DB_USERNAME' => 'POSTGRES_USER',
             'DB_DATABASE' => 'POSTGRES_DB'
@@ -43,17 +43,17 @@ class Init extends Command
 
     public function handle()
     {
-        if ($this->confirm('Do you want generate .env?')) {
+        if ($this->confirm('Do you want generate .env?', true)) {
             $this->generateDotEnv();
         }
 
-        if ($this->confirm('Do you want generate .env.testing?')) {
+        if ($this->confirm('Do you want generate .env.testing?', true)) {
             $this->generateDotEnv(true);
         }
 
         Artisan::call('key:generate');
 
-        if ($this->confirm('Do you want generate admin user?')) {
+        if ($this->confirm('Do you want generate admin user?', true)) {
             $this->createAdminUser();
         }
     }
@@ -119,7 +119,7 @@ class Init extends Command
 
     private function createAdminUser($data = [])
     {
-        $data['password'] = $data['password'] ?? Hash::make(str_random(8));
+        $data['password'] = $data['password'] ?? substr(md5(uniqid()), 0, 8);
         $data['name'] = $data['name'] ?? null;
         $data['email'] = $data['email'] ?? null;
 
