@@ -1,4 +1,4 @@
-FROM webdevops/php-nginx:7.1
+FROM webdevops/php-nginx-dev:7.1
 
 RUN apt-get clean && \
     apt-get -y update && \
