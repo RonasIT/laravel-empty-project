@@ -4,14 +4,18 @@ namespace App\Console\Commands;
 
 use Illuminate\Support\Carbon;
 use Validator;
-use Hash;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 use Yaml;
 use App\Repositories\RoleRepository;
+use Exception;
 
 class Init extends Command
 {
+    private $prevSettings = [];
+
+    private $cacheSettingsNames = ['DB_HOST'];
+
     protected $signature = 'init';
 
     protected $description = 'Command generate admin user and .env files';
@@ -49,7 +53,7 @@ class Init extends Command
         }
 
         if ($this->confirm('Do you want generate .env.testing?', true)) {
-            $this->generateDotEnv(true);
+            $this->generateDotEnvDotTesting();
         }
 
         Artisan::call('key:generate');
@@ -59,21 +63,33 @@ class Init extends Command
         }
     }
 
-    public function generateDotEnv($isTestingConfig = false)
+    public function generateDotEnv()
     {
         $connection = $this->choice('Please select database connection type', $this->connectionTypes, '1');
 
         $ymlSettings = Yaml::parse(file_get_contents(base_path('/') . 'docker-compose.yml'));
-        $settings = $this->askDatabaseSettings($ymlSettings['services'][$connection], $connection);
 
-        if (!$isTestingConfig) {
-            $this->addSettingsToConfig($settings, $connection);
-        }
+        $settings = $this->askDatabaseSettings($ymlSettings['services'][$connection], $connection);
+        $settings["APP_ENV"] = "local";
+        $this->addSettingsToConfig($settings, $connection);
 
         $exampleSettings = $this->generateExampleSettings($settings);
-        $postfix = $isTestingConfig ? '.testing' : '';
 
-        return file_put_contents(base_path('/') . '.env' . $postfix, $exampleSettings);
+        return file_put_contents(base_path('/') . '.env', $exampleSettings);
+    }
+
+    public function generateDotEnvDotTesting()
+    {
+        $connection = $this->choice('Please select database connection type', $this->connectionTypes, '1');
+
+        $ymlSettings = Yaml::parse(file_get_contents(base_path('/') . 'docker-compose.yml'));
+
+        $settings = $this->askDatabaseSettings($ymlSettings['services'][$connection], $connection);
+        $settings["APP_ENV"] = "testing";
+
+        $exampleSettings = $this->generateExampleSettings($settings);
+
+        return file_put_contents(base_path('/') . '.env.testing', $exampleSettings);
     }
 
     protected function askDatabaseSettings($defaultSettings, $connectionType)
@@ -82,17 +98,27 @@ class Init extends Command
         $environment = $defaultSettings['environment'];
 
         foreach ($this->settings as $key => $question) {
-            if ($key == 'DB_PORT') {
-                $defaultSetting = substr($defaultSettings['ports'][0], -4);
-            } else {
-                $settingsName = array_get($this->dockerVariables[$connectionType], $key, false);
-                $defaultSetting = ($settingsName) ? $environment[$settingsName] : '';
-            }
-
+            $defaultSetting = $this->getDefaultSetting($key, $defaultSettings, $environment, $connectionType);
             $databaseSettings[$key] = $this->ask($question, $defaultSetting);
         }
 
         return $databaseSettings;
+    }
+
+    protected function getDefaultSetting($key, $defaultSettings, $environment, $connectionType)
+    {
+        if (array_get($this->dockerVariables[$connectionType], $key, false)) {
+            $settingsName = array_get($this->dockerVariables[$connectionType], $key, false);
+
+            return $environment[$settingsName];
+        }
+
+        if ($key == 'DB_PORT') {
+            return substr($defaultSettings['ports'][0], -4);
+        }
+
+
+        return '';///throw new Exception("getDefaultSetting not found handler for this key = $key");//or return '';??
     }
 
     protected function addSettingsToConfig($settings, $connectionType)
@@ -146,7 +172,7 @@ class Init extends Command
 
     public function publishMigration($admin)
     {
-        $data = view('ronasit::add_default_user')->with($admin)->render();
+        $data = view('add_default_user')->with($admin)->render();
         $fileName = Carbon::now()->format('Y_m_d_His') . '_add_default_user.php';
 
         return file_put_contents("database/migrations/{$fileName}", "<?php\n\n{$data}");

@@ -4,21 +4,25 @@ services:
 
   apache:
       build:
-        context: ./
-        dockerfile: Dockerfile
-      working_dir: /app
+        context: ""
+        dockerfile: docker/Dockerfile
+      working_dir: /
       ports:
           - 80:80
           - 443:443
       volumes:
           - ./:/app
       environment:
+          XDEBUG_REMOTE_AUTOSTART: "on"
+          XDEBUG_REMOTE_CONNECT_BACK: 0
+          XDEBUG_PROFILER_ENABLE: 0
+          XDEBUG_REMOTE_HOST: 10.254.254.254
           WEB_DOCUMENT_ROOT: /app/public
           WEB_DOCUMENT_INDEX: index.php
           REDIS_PORT: "6379"
 
   pgsql:
-    image: postgres
+    image: postgres:latest
     ports:
         - 5432:5432
     environment:

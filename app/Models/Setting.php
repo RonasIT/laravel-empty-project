@@ -12,7 +12,9 @@ class Setting extends Model
     use ModelTrait;
 
     protected $fillable = [
-        'key', 'value', 'is_public'
+        'key',
+        'value',
+        'is_public'
     ];
 
     protected $hidden = ['pivot'];
