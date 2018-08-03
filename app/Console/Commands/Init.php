@@ -8,13 +8,10 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 use Yaml;
 use App\Repositories\RoleRepository;
-use Exception;
 
 class Init extends Command
 {
-    private $prevSettings = [];
-
-    private $cacheSettingsNames = ['DB_HOST'];
+    private $prevSettings;
 
     protected $signature = 'init';
 
@@ -69,43 +66,29 @@ class Init extends Command
 
         $ymlSettings = Yaml::parse(file_get_contents(base_path('/') . 'docker-compose.yml'));
 
-        $settings = $this->askDatabaseSettings($ymlSettings['services'][$connection], $connection);
+        $settings = $this->askDatabaseEnvSettings($ymlSettings['services'][$connection], $connection);
         $settings["APP_ENV"] = "local";
         $this->addSettingsToConfig($settings, $connection);
-
+        $this->prevSettings = $settings;
         $exampleSettings = $this->generateExampleSettings($settings);
 
         return file_put_contents(base_path('/') . '.env', $exampleSettings);
     }
 
-    public function generateDotEnvDotTesting()
-    {
-        $connection = $this->choice('Please select database connection type', $this->connectionTypes, '1');
-
-        $ymlSettings = Yaml::parse(file_get_contents(base_path('/') . 'docker-compose.yml'));
-
-        $settings = $this->askDatabaseSettings($ymlSettings['services'][$connection], $connection);
-        $settings["APP_ENV"] = "testing";
-
-        $exampleSettings = $this->generateExampleSettings($settings);
-
-        return file_put_contents(base_path('/') . '.env.testing', $exampleSettings);
-    }
-
-    protected function askDatabaseSettings($defaultSettings, $connectionType)
+    protected function askDatabaseEnvSettings($defaultSettings, $connectionType)
     {
         $databaseSettings['DB_CONNECTION'] = $connectionType;
         $environment = $defaultSettings['environment'];
 
         foreach ($this->settings as $key => $question) {
-            $defaultSetting = $this->getDefaultSetting($key, $defaultSettings, $environment, $connectionType);
+            $defaultSetting = $this->getDefaultSettingEnv($key, $defaultSettings, $environment, $connectionType);
             $databaseSettings[$key] = $this->ask($question, $defaultSetting);
         }
 
         return $databaseSettings;
     }
 
-    protected function getDefaultSetting($key, $defaultSettings, $environment, $connectionType)
+    protected function getDefaultSettingEnv($key, $defaultSettings, $environment, $connectionType)
     {
         if (array_get($this->dockerVariables[$connectionType], $key, false)) {
             $settingsName = array_get($this->dockerVariables[$connectionType], $key, false);
@@ -117,9 +100,55 @@ class Init extends Command
             return substr($defaultSettings['ports'][0], -4);
         }
 
-
-        return '';///throw new Exception("getDefaultSetting not found handler for this key = $key");//or return '';??
+        return '';
     }
+
+    public function generateDotEnvDotTesting()
+    {
+        $connection = $this->choice('Please select database connection type', $this->connectionTypes, '1');
+
+        $ymlSettings = Yaml::parse(file_get_contents(base_path('/') . 'docker-compose.yml'));
+
+        $settings = $this->askDatabaseDotEnvSettings($ymlSettings['services'][$connection], $connection);
+        $settings["APP_ENV"] = "testing";
+
+        $exampleSettings = $this->generateExampleSettings($settings);
+
+        return file_put_contents(base_path('/') . '.env.testing', $exampleSettings);
+    }
+
+    protected function askDatabaseDotEnvSettings($defaultSettings, $connectionType)
+    {
+        $databaseSettings['DB_CONNECTION'] = $connectionType;
+        $environment = $defaultSettings['environment'];
+
+        foreach ($this->settings as $key => $question) {
+            $defaultSetting = $this->getDefaultSettingDotEnv($key, $defaultSettings, $environment, $connectionType);
+            $databaseSettings[$key] = $this->ask($question, $defaultSetting);
+        }
+
+        return $databaseSettings;
+    }
+
+    protected function getDefaultSettingDotEnv($key, $defaultSettings, $environment, $connectionType)
+    {
+        if (array_get($this->dockerVariables[$connectionType], $key, false)) {
+            $settingsName = array_get($this->dockerVariables[$connectionType], $key, false);
+
+            return $environment[$settingsName];
+        }
+
+        if ($key == 'DB_PORT') {
+            return substr($defaultSettings['ports'][0], -4);
+        }
+
+        if($key == 'DB_HOST') {
+            return $this->prevSettings['DB_HOST'];
+        }
+
+        return '';
+    }
+
 
     protected function addSettingsToConfig($settings, $connectionType)
     {
