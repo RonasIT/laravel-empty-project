@@ -51,9 +51,9 @@ class Init extends Command
             $this->generateDotEnv(true);
         }
 
-        Artisan::call('key:generate');
-        Artisan::call('jwt:secret');
-        Artisan::call('jwt:secret --env=testing');
+        $this->call('key:generate');
+        $this->call('jwt:secret');
+        exec('php artisan jwt:secret -f --env=testing');
 
         if ($this->confirm('Do you want generate admin user?', true)) {
             $this->createAdminUser();
