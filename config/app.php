@@ -173,7 +173,7 @@ return [
         RonasIT\Support\DataCollectors\RemoteDataCollectorServiceProvider::class,
         Barryvdh\Cors\ServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
-        Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
+        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
 
         /*
          * Application Service Providers...

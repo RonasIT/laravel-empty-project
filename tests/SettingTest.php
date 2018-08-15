@@ -42,7 +42,7 @@ class SettingTest extends TestCase
 
         $response = $this->json('put', '/settings/1', $setting);
 
-        $response->assertStatus(Response::HTTP_BAD_REQUEST);
+        $response->assertStatus(Response::HTTP_UNAUTHORIZED);
     }
 
     public function testUpdateNoPermission()

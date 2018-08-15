@@ -86,7 +86,7 @@ class MediaTest extends TestCase
     {
         $response = $this->json('post', '/media', ['file' => $this->file]);
 
-        $response->assertStatus(Response::HTTP_BAD_REQUEST);
+        $response->assertStatus(Response::HTTP_UNAUTHORIZED);
     }
 
     public function testDelete()
@@ -114,7 +114,7 @@ class MediaTest extends TestCase
     {
         $response = $this->json('delete', '/media/1');
 
-        $response->assertStatus(Response::HTTP_BAD_REQUEST);
+        $response->assertStatus(Response::HTTP_UNAUTHORIZED);
     }
 
     public function getSearchFilters()
