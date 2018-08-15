@@ -53,6 +53,7 @@ class Init extends Command
 
         Artisan::call('key:generate');
         Artisan::call('jwt:secret');
+        Artisan::call('jwt:secret --env=testing');
 
         if ($this->confirm('Do you want generate admin user?', true)) {
             $this->createAdminUser();
