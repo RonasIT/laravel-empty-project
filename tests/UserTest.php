@@ -39,7 +39,7 @@ class UserTest extends TestCase
 
         $response = $this->json('post', '/users', $data);
 
-        $response->assertStatus(Response::HTTP_BAD_REQUEST);
+        $response->assertStatus(Response::HTTP_UNAUTHORIZED);
     }
 
     public function testCreateNoPermission()
@@ -100,7 +100,7 @@ class UserTest extends TestCase
 
         $response = $this->json('put', '/users/1', $data);
 
-        $response->assertStatus(Response::HTTP_BAD_REQUEST);
+        $response->assertStatus(Response::HTTP_UNAUTHORIZED);
     }
 
     public function testUpdateProfile()
@@ -120,7 +120,7 @@ class UserTest extends TestCase
 
         $response = $this->json('put', '/profile', $data);
 
-        $response->assertStatus(Response::HTTP_BAD_REQUEST);
+        $response->assertStatus(Response::HTTP_UNAUTHORIZED);
     }
 
     public function testDelete()
@@ -141,7 +141,7 @@ class UserTest extends TestCase
     {
         $response = $this->json('delete', '/users/1');
 
-        $response->assertStatus(Response::HTTP_BAD_REQUEST);
+        $response->assertStatus(Response::HTTP_UNAUTHORIZED);
     }
 
     public function testGetProfile()
