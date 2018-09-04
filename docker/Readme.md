@@ -50,14 +50,15 @@ Set `Port` field to 9000.
 
 Setting env.testing settings, for database connection: 
 
+If (in docker-compose.yml in server container defined keyword links) {
+    
+Use link as HOST in env.testing.
+
+} else {
+
 ```bash
     docker ps
 ```
+Use NAME colon from command output of database service as host ip in env.testing.
 
-If (in docker-compose.yml in server container defined keyword links) {
-    
-    Use link as HOST in env.testing.
-} else {
-
-    Use NAME colon from command output of database service as host ip in env.testing.
 }
