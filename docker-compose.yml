@@ -12,6 +12,10 @@ services:
           - 443:443
       volumes:
           - ./:/app
+      links:
+        - pgsql
+        - mysql
+        - redis
       environment:
           WEB_DOCUMENT_ROOT: /app/public
           WEB_DOCUMENT_INDEX: index.php
@@ -20,7 +24,7 @@ services:
   pgsql:
     image: postgres
     ports:
-        - 5432:5432
+        - 5433:5432
     environment:
         POSTGRES_PASSWORD: ""
         POSTGRES_USER: pguser
@@ -30,7 +34,7 @@ services:
 
   mysql:
       ports:
-          - 3306:3306
+          - 3307:3306
       image: mysql:5.7
       volumes:
           - ./:/app
@@ -40,7 +44,7 @@ services:
 
   redis:
       ports:
-          - 6379:6379
+          - 6380:6379
       image: redis:3.2
       volumes:
           - ./:/app
