@@ -11,16 +11,20 @@ class Setting extends Model
 {
     use ModelTrait;
 
+    public $incrementing = false;
+
+    protected $primaryKey = 'name';
     protected $fillable = [
-        'key',
+        'name',
         'value',
         'is_public'
     ];
-
     protected $hidden = ['pivot'];
 
     protected $casts = [
-        'value' => 'array'
+        'value' => 'array',
+        'name' => 'string',
+        'is_public' => 'boolean'
     ];
 
 
@@ -29,7 +33,7 @@ class Setting extends Model
         $user = JWTAuth::toUser();
 
         if ($user->role_id !== RoleRepository::ADMIN_ROLE) {
-            $query->where(function ($query) use ($user) {
+            $query->where(function ($query) {
                 $query->where('is_public', true);
             });
         }

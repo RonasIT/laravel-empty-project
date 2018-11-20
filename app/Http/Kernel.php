@@ -44,7 +44,16 @@ class Kernel extends HttpKernel
 
         'api' => [
             'throttle:60,1',
-            'bindings',
+            'bindings'
+        ],
+
+        'auth' => [
+            'jwt.auth',
+            'maintenance'
+        ],
+
+        'guest' => [
+            'maintenance'
         ],
     ];
 
@@ -62,8 +71,6 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'maintenance' => \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
-        'jwt.auth' => GetUserFromToken::class,
-        'jwt.refresh' => RefreshToken::class
+        'maintenance' => \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class
     ];
 }

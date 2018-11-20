@@ -2,11 +2,10 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Support\Carbon;
-use Validator;
-use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Artisan;
 use Yaml;
+use Validator;
+use Illuminate\Support\Carbon;
+use Illuminate\Console\Command;
 use App\Repositories\RoleRepository;
 
 class Init extends Command
@@ -53,7 +52,9 @@ class Init extends Command
             $this->generateDotEnvDotTesting();
         }
 
-        Artisan::call('key:generate');
+        $this->call('key:generate');
+        $this->call('jwt:secret');
+        exec('php artisan jwt:secret -f --env=testing');
 
         if ($this->confirm('Do you want generate admin user?', true)) {
             $this->createAdminUser();
@@ -66,10 +67,12 @@ class Init extends Command
 
         $ymlSettings = Yaml::parse(file_get_contents(base_path('/') . 'docker-compose.yml'));
 
-        $settings = $this->askDatabaseEnvSettings($ymlSettings['services'][$connection], $connection);
+        $settings = $this->askDatabaseEnvSettings($ymlSettings['services'], $connection);
         $settings["APP_ENV"] = "local";
+
         $this->addSettingsToConfig($settings, $connection);
         $this->prevSettings = $settings;
+
         $exampleSettings = $this->generateExampleSettings($settings);
 
         return file_put_contents(base_path('/') . '.env', $exampleSettings);
@@ -78,10 +81,9 @@ class Init extends Command
     protected function askDatabaseEnvSettings($defaultSettings, $connectionType)
     {
         $databaseSettings['DB_CONNECTION'] = $connectionType;
-        $environment = $defaultSettings['environment'];
 
         foreach ($this->settings as $key => $question) {
-            $defaultSetting = $this->getDefaultSettingEnv($key, $defaultSettings, $environment, $connectionType);
+            $defaultSetting = $this->getDefaultSettingEnv($key, $defaultSettings, $defaultSettings[$connectionType]['environment'], $connectionType);
             $databaseSettings[$key] = $this->ask($question, $defaultSetting);
         }
 
@@ -97,7 +99,20 @@ class Init extends Command
         }
 
         if ($key == 'DB_PORT') {
-            return substr($defaultSettings['ports'][0], -4);
+            return substr($defaultSettings[$connectionType]['ports'][0], -4);
+        }
+
+        if ($key == 'DB_HOST') {
+            $links = $defaultSettings['apache']['links'];
+            $link = null;
+
+            if ($connectionType === $this->connectionTypes[0]) {
+                return $links[1];
+            }
+
+            if ($connectionType === $this->connectionTypes[1]) {
+                return $links[0];
+            }
         }
 
         return '';
@@ -148,7 +163,6 @@ class Init extends Command
 
         return '';
     }
-
 
     protected function addSettingsToConfig($settings, $connectionType)
     {

@@ -38,7 +38,8 @@ class CreateRolesTable extends Migration
         DB::commit();
     }
 
-    public function createTable() {
+    public function createTable()
+    {
         Schema::create('roles', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();

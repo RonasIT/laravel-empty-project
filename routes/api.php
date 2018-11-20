@@ -4,6 +4,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\SettingController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -15,15 +16,7 @@ use App\Http\Controllers\SettingController;
 |
 */
 
-$auth = [
-    'middleware' => ['jwt.auth', 'maintenance']
-];
-
-$guest = [
-    'middleware' => ['maintenance']
-];
-
-Route::group($auth, function () use ($auth) {
+Route::group(['middleware' => 'auth'], function () {
     Route::post('/users', ['uses' => UserController::class.'@create']);
     Route::put('/users/{id}', ['uses' => UserController::class.'@update']);
     Route::delete('/users/{id}', ['uses' => UserController::class.'@delete']);
@@ -36,14 +29,12 @@ Route::group($auth, function () use ($auth) {
     Route::delete('/media/{id}', ['uses' => MediaController::class.'@delete']);
     Route::get('/media', ['uses' => MediaController::class.'@search']);
 
-    Route::post('/settings', ['uses' => SettingController::class.'@create']);
-    Route::put('/settings/{key}', ['uses' => SettingController::class.'@update']);
-    Route::delete('/settings/{key}', ['uses' => SettingController::class.'@delete']);
-    Route::get('/settings/{key}', ['uses' => SettingController::class.'@get']);
+    Route::put('/settings/{name}', ['uses' => SettingController::class.'@update']);
+    Route::get('/settings/{name}', ['uses' => SettingController::class.'@get']);
     Route::get('/settings', ['uses' => SettingController::class.'@search']);
 });
 
-Route::group($guest, function () use ($auth) {
+Route::group(['middleware' => 'guest'], function () {
     Route::post('/login', ['uses' => AuthController::class . '@login']);
     Route::get('/auth/refresh', ['uses' => AuthController::class . '@refreshToken'])
         ->middleware(['jwt.refresh']);

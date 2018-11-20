@@ -15,3 +15,5 @@ RUN docker-php-ext-install pgsql pdo_pgsql && \
     echo 'yes' | pecl install imagick && \
     echo "extension=/usr/local/lib/php/extensions/no-debug-non-zts-20160303/sodium.so" >> /usr/local/etc/php/conf.d/sodium.ini && \
     echo "extension=/usr/local/lib/php/extensions/no-debug-non-zts-20160303/imagick.so" >> /usr/local/etc/php/conf.d/imagick.ini
+
+COPY docker/20-xdebug.ini /usr/local/etc/php/conf.d/20-xdebug.ini
