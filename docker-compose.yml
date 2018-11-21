@@ -14,7 +14,9 @@ services:
           - ./:/app
       links:
         - pgsql
+        - pgsql_test
         - mysql
+        - mysql_test
         - redis
       environment:
           XDEBUG_REMOTE_AUTOSTART: "on"
@@ -28,7 +30,7 @@ services:
   pgsql:
     image: postgres:latest
     ports:
-        - 5433:5432
+        - 5432:5432
     environment:
         POSTGRES_PASSWORD: ""
         POSTGRES_USER: pguser
@@ -49,7 +51,7 @@ services:
 
   mysql:
       ports:
-          - 3307:3306
+          - 3308:3306
       image: mysql:5.7
       volumes:
           - ./:/app
