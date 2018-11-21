@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Yaml;
+use Error;
 use Validator;
 use Illuminate\Support\Carbon;
 use Illuminate\Console\Command;
@@ -68,6 +69,10 @@ class Init extends Command
             $this->generateDotEnvDotTesting();
         }
 
+        $this->call('key:generate');
+        $this->call('jwt:secret');
+        exec('php artisan jwt:secret -f --env=testing');
+
         if ($this->confirm('Do you want generate admin user?', true)) {
             $this->createAdminUser();
         }
@@ -81,12 +86,11 @@ class Init extends Command
 
         $settings = $this->askDatabaseEnvSettings($ymlSettings['services'], $connection);
         $settings["APP_ENV"] = "local";
+        $settings["DATA_COLLECTOR_KEY"] = $this->getDataCollectorKey();
 
         $this->addSettingsToConfig($settings, $connection);
-        $this->prevSettings = $settings;
 
-        $this->generateKeyIfNeeded();
-        $settings["JWT_SECRET"] = $this->getKeys();
+        $this->prevSettings = $settings;
 
         $exampleSettings = $this->generateExampleSettings($settings);
 
@@ -140,7 +144,8 @@ class Init extends Command
         $ymlSettings = Yaml::parse(file_get_contents(base_path('/') . 'docker-compose.yml'));
 
         $settings = $this->askDatabaseDotEnvSettings($ymlSettings['services'][$connection], $connection);
-        $settings["APP_ENV"] = "testing";
+        $settings['APP_ENV'] = 'testing';
+        $settings['DATA_COLLECTOR_KEY'] = $this->prevSettings['DATA_COLLECTOR_KEY'];
 
         $exampleSettings = $this->generateExampleSettings($settings);
 
@@ -202,22 +207,9 @@ class Init extends Command
         return $exampleContent;
     }
 
-    private function generateKeyIfNeeded()
+    private function getDataCollectorKey()
     {
-        if ($this->confirm("Please enter, is needed to create data-collector-key", false)) {
-            $this->call('key:generate');
-            $this->call('jwt:secret');
-        }
-    }
-
-    private function getKeys()
-    {
-        $content = file_get_contents(base_path('/') . '.env');
-        $matches = [];
-
-        preg_match("JWT_SECRET=[^\n]*", $content, $matches);
-
-        return array_first($matches,null, '');
+        return $this->ask("Input new DATA_COLLECTOR_KEY", "some-project-name");
     }
 
     private function createAdminUser($data = [])
@@ -262,5 +254,7 @@ class Init extends Command
         if ($this->prevSettings['DB_CONNECTION'] === $this->connectionTypes[1]) {
             return $this->testConnectionTypes[1];
         }
+
+        throw new Error("Bad connection type");
     }
 }
