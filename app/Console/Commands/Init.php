@@ -10,11 +10,21 @@ use App\Repositories\RoleRepository;
 
 class Init extends Command
 {
-    private $prevSettings;
-
     protected $signature = 'init';
 
     protected $description = 'Command generate admin user and .env files';
+
+    private $prevSettings;
+
+    protected $connectionTypes = [
+        'mysql',
+        'pgsql'
+    ];
+
+    protected $testConnectionTypes = [
+        'mysql_test',
+        'pgsql_test'
+    ];
 
     protected $settings = [
         'DB_HOST' => 'Please enter database connection host',
@@ -24,8 +34,6 @@ class Init extends Command
         'DB_PASSWORD' => 'Please enter password'
     ];
 
-    protected $connectionTypes = ['mysql', 'pgsql'];
-
     protected $dockerVariables = [
         'pgsql' => [
             'DB_PASSWORD' => 'POSTGRES_PASSWORD',
@@ -33,6 +41,14 @@ class Init extends Command
             'DB_DATABASE' => 'POSTGRES_DB'
         ],
         'mysql' => [
+            'DB_DATABASE' => 'MYSQL_DATABASE'
+        ],
+        'pgsql_test' => [
+            'DB_PASSWORD' => 'POSTGRES_PASSWORD',
+            'DB_USERNAME' => 'POSTGRES_USER',
+            'DB_DATABASE' => 'POSTGRES_DB'
+        ],
+        'mysql_test' => [
             'DB_DATABASE' => 'MYSQL_DATABASE'
         ]
     ];
@@ -52,10 +68,6 @@ class Init extends Command
             $this->generateDotEnvDotTesting();
         }
 
-        $this->call('key:generate');
-        $this->call('jwt:secret');
-        exec('php artisan jwt:secret -f --env=testing');
-
         if ($this->confirm('Do you want generate admin user?', true)) {
             $this->createAdminUser();
         }
@@ -73,6 +85,9 @@ class Init extends Command
         $this->addSettingsToConfig($settings, $connection);
         $this->prevSettings = $settings;
 
+        $this->generateKeyIfNeeded();
+        $settings["JWT_SECRET"] = $this->getKeys();
+
         $exampleSettings = $this->generateExampleSettings($settings);
 
         return file_put_contents(base_path('/') . '.env', $exampleSettings);
@@ -83,7 +98,8 @@ class Init extends Command
         $databaseSettings['DB_CONNECTION'] = $connectionType;
 
         foreach ($this->settings as $key => $question) {
-            $defaultSetting = $this->getDefaultSettingEnv($key, $defaultSettings, $defaultSettings[$connectionType]['environment'], $connectionType);
+            $defaultSetting = $this->getDefaultSettingEnv($key, $defaultSettings,
+                $defaultSettings[$connectionType]['environment'], $connectionType);
             $databaseSettings[$key] = $this->ask($question, $defaultSetting);
         }
 
@@ -104,7 +120,6 @@ class Init extends Command
 
         if ($key == 'DB_HOST') {
             $links = $defaultSettings['apache']['links'];
-            $link = null;
 
             if ($connectionType === $this->connectionTypes[0]) {
                 return $links[1];
@@ -120,7 +135,7 @@ class Init extends Command
 
     public function generateDotEnvDotTesting()
     {
-        $connection = $this->choice('Please select database connection type', $this->connectionTypes, '1');
+        $connection = $this->getTestConnection();
 
         $ymlSettings = Yaml::parse(file_get_contents(base_path('/') . 'docker-compose.yml'));
 
@@ -187,6 +202,24 @@ class Init extends Command
         return $exampleContent;
     }
 
+    private function generateKeyIfNeeded()
+    {
+        if ($this->confirm("Please enter, is needed to create data-collector-key", false)) {
+            $this->call('key:generate');
+            $this->call('jwt:secret');
+        }
+    }
+
+    private function getKeys()
+    {
+        $content = file_get_contents(base_path('/') . '.env');
+        $matches = [];
+
+        preg_match("JWT_SECRET=[^\n]*", $content, $matches);
+
+        return array_first($matches,null, '');
+    }
+
     private function createAdminUser($data = [])
     {
         $data['password'] = $data['password'] ?? substr(md5(uniqid()), 0, 8);
@@ -219,5 +252,15 @@ class Init extends Command
         $fileName = Carbon::now()->format('Y_m_d_His') . '_add_default_user.php';
 
         return file_put_contents("database/migrations/{$fileName}", "<?php\n\n{$data}");
+    }
+
+    private function getTestConnection() {
+        if ($this->prevSettings['DB_CONNECTION'] === $this->connectionTypes[0]) {
+            return $this->testConnectionTypes[0];
+        }
+
+        if ($this->prevSettings['DB_CONNECTION'] === $this->connectionTypes[1]) {
+            return $this->testConnectionTypes[1];
+        }
     }
 }

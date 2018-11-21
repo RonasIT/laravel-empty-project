@@ -36,6 +36,17 @@ services:
     volumes:
       - .:/app
 
+  pgsql_test:
+    image: postgres:latest
+    ports:
+    - 5433:5432
+    environment:
+      POSTGRES_PASSWORD: ""
+      POSTGRES_USER: pguser
+      POSTGRES_DB: pgdb
+    volumes:
+    - .:/app
+
   mysql:
       ports:
           - 3307:3306
@@ -45,6 +56,16 @@ services:
       environment:
           MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
           MYSQL_DATABASE: "mysqldb"
+
+  mysql_test:
+      ports:
+          - 3307:3306
+      image: mysql:5.7
+      volumes:
+          - ./:/app
+      environment:
+        MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+        MYSQL_DATABASE: "mysqldb"
 
   redis:
       ports:
