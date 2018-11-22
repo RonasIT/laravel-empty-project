@@ -85,8 +85,8 @@ class Init extends Command
         $ymlSettings = Yaml::parse(file_get_contents(base_path('/') . 'docker-compose.yml'));
 
         $settings = $this->askDatabaseEnvSettings($ymlSettings['services'], $connection);
-        $settings["APP_ENV"] = "local";
-        $settings["DATA_COLLECTOR_KEY"] = $this->getDataCollectorKey();
+        $settings['APP_ENV'] = 'local';
+        $settings['DATA_COLLECTOR_KEY'] = $this->getDataCollectorKey();
 
         $this->addSettingsToConfig($settings, $connection);
 
@@ -102,8 +102,12 @@ class Init extends Command
         $databaseSettings['DB_CONNECTION'] = $connectionType;
 
         foreach ($this->settings as $key => $question) {
-            $defaultSetting = $this->getDefaultSettingEnv($key, $defaultSettings,
-                $defaultSettings[$connectionType]['environment'], $connectionType);
+            $defaultSetting = $this->getDefaultSettingEnv(
+                $key,
+                $defaultSettings,
+                $defaultSettings[$connectionType]['environment'],
+                $connectionType
+            );
             $databaseSettings[$key] = $this->ask($question, $defaultSetting);
         }
 
@@ -119,7 +123,7 @@ class Init extends Command
         }
 
         if ($key == 'DB_PORT') {
-            return substr($defaultSettings[$connectionType]['ports'][0], -4);
+            return $this->getPort($defaultSettings[$connectionType]['ports'][0]);
         }
 
         if ($key == 'DB_HOST') {
@@ -143,7 +147,7 @@ class Init extends Command
 
         $ymlSettings = Yaml::parse(file_get_contents(base_path('/') . 'docker-compose.yml'));
 
-        $settings = $this->askDatabaseDotEnvSettings($ymlSettings['services'][$connection], $connection);
+        $settings = $this->askDatabaseDotEnvTestingSettings($ymlSettings['services'], $connection);
         $settings['APP_ENV'] = 'testing';
         $settings['DATA_COLLECTOR_KEY'] = $this->prevSettings['DATA_COLLECTOR_KEY'];
 
@@ -152,20 +156,20 @@ class Init extends Command
         return file_put_contents(base_path('/') . '.env.testing', $exampleSettings);
     }
 
-    protected function askDatabaseDotEnvSettings($defaultSettings, $connectionType)
+    protected function askDatabaseDotEnvTestingSettings($defaultSettings, $connectionType)
     {
         $databaseSettings['DB_CONNECTION'] = $connectionType;
-        $environment = $defaultSettings['environment'];
+        $environment = $defaultSettings[$connectionType]['environment'];
 
         foreach ($this->settings as $key => $question) {
-            $defaultSetting = $this->getDefaultSettingDotEnv($key, $defaultSettings, $environment, $connectionType);
+            $defaultSetting = $this->getDefaultSettingDotEnvTesting($key, $defaultSettings, $environment, $connectionType);
             $databaseSettings[$key] = $this->ask($question, $defaultSetting);
         }
 
         return $databaseSettings;
     }
 
-    protected function getDefaultSettingDotEnv($key, $defaultSettings, $environment, $connectionType)
+    protected function getDefaultSettingDotEnvTesting($key, $defaultSettings, $environment, $connectionType)
     {
         if (array_get($this->dockerVariables[$connectionType], $key, false)) {
             $settingsName = array_get($this->dockerVariables[$connectionType], $key, false);
@@ -174,10 +178,10 @@ class Init extends Command
         }
 
         if ($key == 'DB_PORT') {
-            return substr($defaultSettings['ports'][0], -4);
+            return $this->getPort($defaultSettings[$connectionType]['ports'][0]);
         }
 
-        if($key == 'DB_HOST') {
+        if ($key == 'DB_HOST') {
             return $this->prevSettings['DB_HOST'];
         }
 
@@ -209,7 +213,7 @@ class Init extends Command
 
     private function getDataCollectorKey()
     {
-        return $this->ask("Input new DATA_COLLECTOR_KEY", "some-project-name");
+        return $this->ask('Input new DATA_COLLECTOR_KEY', 'some-project-name');
     }
 
     private function createAdminUser($data = [])
@@ -255,6 +259,13 @@ class Init extends Command
             return $this->testConnectionTypes[1];
         }
 
-        throw new Error("Bad connection type");
+        throw new Error('Bad connection type');
+    }
+
+    private function getPort($string)
+    {
+        $matches = preg_split('/:/', $string);
+
+        return $matches[1];
     }
 }
