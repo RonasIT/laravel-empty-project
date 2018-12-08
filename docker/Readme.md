@@ -1,10 +1,20 @@
+###Starting new project
+```bash
+    git clone ...
+    docker-compose up
+    docker ps
+    docker exec -it .. composer update 
+    docker exec -it .. php artisan init
+    docker exec -it .. php artisan migrate
+```
+
 ### Setting up docker-compose for phpStorm
 
 ####Ubuntu
 
 * [Setting up Docker](https://docs.docker.com/install/linux/docker-ce/ubuntu/#install-docker-ce-1)
 
-* [Setiing up Docker-compose](https://docs.docker.com/compose/install/)
+* [Setting up Docker-compose](https://docs.docker.com/compose/install/)
 
 * Running PhpStorm
 
