@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use Yaml;
-use Error;
 use Validator;
 use Illuminate\Support\Carbon;
 use Illuminate\Console\Command;
@@ -11,21 +10,17 @@ use App\Repositories\RoleRepository;
 
 class Init extends Command
 {
+    const MYSQL_CONNECTION = 'mysql';
+    const PGSQL_CONNECTION = 'pgsql';
+
+    const MYSQL_TEST_HOST = 'mysql_test';
+    const PGSQL_TEST_HOST = 'pgsql_test';
+
     protected $signature = 'init';
 
     protected $description = 'Command generate admin user and .env files';
 
     private $prevSettings;
-
-    protected $connectionTypes = [
-        'mysql',
-        'pgsql'
-    ];
-
-    protected $testConnectionTypes = [
-        'mysql_test',
-        'pgsql_test'
-    ];
 
     protected $settings = [
         'DB_HOST' => 'Please enter database connection host',
@@ -80,7 +75,12 @@ class Init extends Command
 
     public function generateDotEnv()
     {
-        $connection = $this->choice('Please select database connection type', $this->connectionTypes, '1');
+        $connectionTypes = [
+            self::MYSQL_CONNECTION,
+            self::PGSQL_CONNECTION
+        ];
+
+        $connection = $this->choice('Please select database connection type', $connectionTypes, '1');
 
         $ymlSettings = Yaml::parse(file_get_contents(base_path('/') . 'docker-compose.yml'));
 
@@ -129,11 +129,11 @@ class Init extends Command
         if ($key == 'DB_HOST') {
             $links = $defaultSettings['apache']['links'];
 
-            if ($connectionType === $this->connectionTypes[0]) {
+            if ($connectionType === self::MYSQL_CONNECTION) {
                 return $links[1];
             }
 
-            if ($connectionType === $this->connectionTypes[1]) {
+            if ($connectionType === self::PGSQL_CONNECTION) {
                 return $links[0];
             }
         }
@@ -143,7 +143,7 @@ class Init extends Command
 
     public function generateDotEnvDotTesting()
     {
-        $connection = $this->getTestConnection();
+        $connection = $this->prevSettings['DB_CONNECTION'];
 
         $ymlSettings = Yaml::parse(file_get_contents(base_path('/') . 'docker-compose.yml'));
 
@@ -182,8 +182,13 @@ class Init extends Command
         }
 
         if ($key == 'DB_HOST') {
-            return $this->prevSettings['DB_HOST'];
-        }
+            if ($this->prevSettings['DB_CONNECTION'] === self::MYSQL_CONNECTION) {
+                return self::MYSQL_TEST_HOST;
+            }
+
+            if ($this->prevSettings['DB_CONNECTION'] === self::PGSQL_CONNECTION) {
+                return self::PGSQL_TEST_HOST;
+            }        }
 
         return '';
     }
@@ -248,18 +253,6 @@ class Init extends Command
         $fileName = Carbon::now()->format('Y_m_d_His') . '_add_default_user.php';
 
         return file_put_contents("database/migrations/{$fileName}", "<?php\n\n{$data}");
-    }
-
-    private function getTestConnection() {
-        if ($this->prevSettings['DB_CONNECTION'] === $this->connectionTypes[0]) {
-            return $this->testConnectionTypes[0];
-        }
-
-        if ($this->prevSettings['DB_CONNECTION'] === $this->connectionTypes[1]) {
-            return $this->testConnectionTypes[1];
-        }
-
-        throw new Error('Bad connection type');
     }
 
     private function getPort($string)
