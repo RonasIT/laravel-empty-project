@@ -82,7 +82,7 @@ class Init extends Command
 
         $connection = $this->choice('Please select database connection type', $connectionTypes, '1');
 
-        $ymlSettings = Yaml::parse(file_get_contents(base_path('/') . 'docker-compose.yml'));
+        $ymlSettings = Yaml::parse(file_get_contents('docker-compose.yml'));
 
         $settings = $this->askDatabaseEnvSettings($ymlSettings['services'], $connection);
         $settings['APP_ENV'] = 'local';
@@ -145,7 +145,7 @@ class Init extends Command
     {
         $connection = $this->prevSettings['DB_CONNECTION'];
 
-        $ymlSettings = Yaml::parse(file_get_contents(base_path('/') . 'docker-compose.yml'));
+        $ymlSettings = Yaml::parse(file_get_contents('docker-compose.yml'));
 
         $settings = $this->askDatabaseDotEnvTestingSettings($ymlSettings['services'], $connection);
         $settings['APP_ENV'] = 'testing';
