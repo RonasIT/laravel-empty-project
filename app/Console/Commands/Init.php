@@ -94,7 +94,7 @@ class Init extends Command
 
         $exampleSettings = $this->generateExampleSettings($settings);
 
-        return file_put_contents(base_path('/') . '.env', $exampleSettings);
+        return file_put_contents('.env', $exampleSettings);
     }
 
     protected function askDatabaseEnvSettings($defaultSettings, $connectionType)
@@ -153,7 +153,7 @@ class Init extends Command
 
         $exampleSettings = $this->generateExampleSettings($settings);
 
-        return file_put_contents(base_path('/') . '.env.testing', $exampleSettings);
+        return file_put_contents('.env.testing', $exampleSettings);
     }
 
     protected function askDatabaseDotEnvTestingSettings($defaultSettings, $connectionType)
