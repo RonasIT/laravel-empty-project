@@ -51,11 +51,6 @@ class Init extends Command
         ]
     ];
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public function handle()
     {
         if ($this->confirm('Do you want generate .env?', true)) {
@@ -77,24 +72,19 @@ class Init extends Command
 
     public function generateDotEnv()
     {
-        $connectionTypes = [
-            self::MYSQL_CONNECTION,
-            self::PGSQL_CONNECTION
-        ];
-
-        $connection = $this->choice('Please select database connection type', $connectionTypes, '1');
+        $connection = $this->getConnection();
 
         $ymlSettings = Yaml::parse(file_get_contents('docker-compose.yml'));
 
-        $settings = $this->askDatabaseEnvSettings($ymlSettings['services'], $connection);
-        $settings['APP_ENV'] = 'local';
-        $settings['DATA_COLLECTOR_KEY'] = $this->getDataCollectorKey();
+        $envSettings = $this->askDatabaseEnvSettings($ymlSettings['services'], $connection);
+        $envSettings['APP_ENV'] = 'local';
+        $envSettings['DATA_COLLECTOR_KEY'] = $this->getDataCollectorKey();
 
-        $this->addSettingsToConfig($settings, $connection);
+        $this->addSettingsToConfig($envSettings, $connection);
 
-        $this->prevSettings = $settings;
+        $this->prevSettings = $envSettings;
 
-        $exampleSettings = $this->generateExampleSettings($settings);
+        $exampleSettings = $this->generateExampleSettings($envSettings);
 
         return file_put_contents('.env', $exampleSettings);
     }
@@ -118,40 +108,42 @@ class Init extends Command
 
     protected function getDefaultSettingEnv($key, $defaultSettings, $environment, $connectionType)
     {
+        $result = '';
+
         if (array_get($this->dockerVariables[$connectionType], $key, false)) {
             $settingsName = array_get($this->dockerVariables[$connectionType], $key, false);
 
-            return $environment[$settingsName];
+            $result = $environment[$settingsName];
         }
 
         if ($key == 'DB_PORT') {
-            return $this->getPort(array_shift($defaultSettings[$connectionType]['ports']));
+            $result = $this->getPort(array_shift($defaultSettings[$connectionType]['ports']));
         }
 
         if ($key == 'DB_HOST') {
             if ($connectionType === self::MYSQL_CONNECTION) {
-                return self::MYSQL_HOST;
+                $result = self::MYSQL_HOST;
             }
 
             if ($connectionType === self::PGSQL_CONNECTION) {
-                return self::PGSQL_HOST;
+                $result = self::PGSQL_HOST;
             }
         }
 
-        return '';
+        return $result;
     }
 
     public function generateDotEnvDotTesting()
     {
-        $connection = $this->prevSettings['DB_CONNECTION'];
+        $connection = $this->getConnection();
 
         $ymlSettings = Yaml::parse(file_get_contents('docker-compose.yml'));
 
-        $settings = $this->askDatabaseDotEnvTestingSettings($ymlSettings['services'], $connection);
-        $settings['APP_ENV'] = 'testing';
-        $settings['DATA_COLLECTOR_KEY'] = $this->prevSettings['DATA_COLLECTOR_KEY'];
+        $envTestingSettings = $this->askDatabaseDotEnvTestingSettings($ymlSettings['services'], $connection);
+        $envTestingSettings['APP_ENV'] = 'testing';
+        $envTestingSettings['DATA_COLLECTOR_KEY'] = $this->prevSettings['DATA_COLLECTOR_KEY'];
 
-        $exampleSettings = $this->generateExampleSettings($settings);
+        $exampleSettings = $this->generateExampleSettings($envTestingSettings);
 
         return file_put_contents('.env.testing', $exampleSettings);
     }
@@ -171,27 +163,23 @@ class Init extends Command
 
     protected function getDefaultSettingDotEnvTesting($key, $defaultSettings, $environment, $connectionType)
     {
+        $result = '';
+
         if (array_get($this->dockerVariables[$connectionType], $key, false)) {
             $settingsName = array_get($this->dockerVariables[$connectionType], $key, false);
 
-            return $environment[$settingsName];
+            $result = $environment[$settingsName];
         }
 
         if ($key == 'DB_PORT') {
-            return $this->getPort(array_shift($defaultSettings[$connectionType]['ports']));
+            $result = $this->getPort(array_shift($defaultSettings[$connectionType]['ports']));
         }
 
         if ($key == 'DB_HOST') {
-            if ($this->prevSettings['DB_CONNECTION'] === self::MYSQL_CONNECTION) {
-                return self::MYSQL_TEST_HOST;
-            }
-
-            if ($this->prevSettings['DB_CONNECTION'] === self::PGSQL_CONNECTION) {
-                return self::PGSQL_TEST_HOST;
-            }
+            $result = $this->getTestingHost($connectionType);
         }
 
-        return '';
+        return $result;
     }
 
     protected function addSettingsToConfig($settings, $connectionType)
@@ -260,6 +248,43 @@ class Init extends Command
     {
         $matches = preg_split('/:/', $string);
 
-        return $matches[1];
+        return array_pop($matches);
+    }
+
+    private function getConnection()
+    {
+        $connectionTypes = [
+            self::MYSQL_CONNECTION,
+            self::PGSQL_CONNECTION
+        ];
+
+        if ($this->prevSettings['DB_CONNECTION']) {
+            return $this->prevSettings['DB_CONNECTION'];
+        } else {
+            return $this->choice('Please select database connection type', $connectionTypes, '1');
+        }
+    }
+
+    private function getTestingHost($connectionType)
+    {
+        $result = '';
+
+        if ($this->prevSettings['DB_CONNECTION'] === self::MYSQL_CONNECTION) {
+            $result = self::MYSQL_TEST_HOST;
+        }
+
+        if ($this->prevSettings['DB_CONNECTION'] === self::PGSQL_CONNECTION) {
+            $result = self::PGSQL_TEST_HOST;
+        }
+
+        if ($this->prevSettings['DB_CONNECTION'] === null && $connectionType === self::MYSQL_CONNECTION) {
+            $result = self::MYSQL_TEST_HOST;
+        }
+
+        if ($this->prevSettings['DB_CONNECTION'] === null && $connectionType === self::PGSQL_HOST) {
+            $result = self::PGSQL_TEST_HOST;
+        }
+
+        return $result;
     }
 }
