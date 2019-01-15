@@ -129,11 +129,11 @@ class Init extends Command
         }
 
         if ($key == 'DB_HOST') {
-            if ($this->prevSettings['DB_CONNECTION'] === self::MYSQL_CONNECTION) {
+            if ($connectionType === self::MYSQL_CONNECTION) {
                 return self::MYSQL_HOST;
             }
 
-            if ($this->prevSettings['DB_CONNECTION'] === self::PGSQL_CONNECTION) {
+            if ($connectionType === self::PGSQL_CONNECTION) {
                 return self::PGSQL_HOST;
             }
         }
