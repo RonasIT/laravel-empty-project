@@ -3,10 +3,8 @@ version: '3'
 services:
 
   apache:
-      build:
-        context: ""
-        dockerfile: docker/Dockerfile
-      working_dir: /
+      image: ronasit/php-nginx-dev:7.1
+      working_dir: /app
       ports:
           - 80:80
           - 443:443
@@ -20,12 +18,13 @@ services:
         - redis
       environment:
           XDEBUG_REMOTE_AUTOSTART: "on"
-          XDEBUG_REMOTE_CONNECT_BACK: 0
           XDEBUG_PROFILER_ENABLE: 0
-          XDEBUG_REMOTE_HOST: 10.254.254.254
           WEB_DOCUMENT_ROOT: /app/public
           WEB_DOCUMENT_INDEX: index.php
           REDIS_PORT: "6379"
+          XDEBUG_REMOTE_CONNECT_BACK: 0
+          XDEBUG_REMOTE_PORT: 9000
+          XDEBUG_REMOTE_HOST: host.docker.internal
 
   pgsql:
     image: postgres:latest
