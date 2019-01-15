@@ -125,7 +125,7 @@ class Init extends Command
         }
 
         if ($key == 'DB_PORT') {
-            return $this->getPort($defaultSettings[$connectionType]['ports'][0]);
+            return $this->getPort(array_shift($defaultSettings[$connectionType]['ports']));
         }
 
         if ($key == 'DB_HOST') {
@@ -178,7 +178,7 @@ class Init extends Command
         }
 
         if ($key == 'DB_PORT') {
-            return $this->getPort($defaultSettings[$connectionType]['ports'][0]);
+            return $this->getPort(array_shift($defaultSettings[$connectionType]['ports']));
         }
 
         if ($key == 'DB_HOST') {
