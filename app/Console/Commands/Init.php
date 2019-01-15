@@ -13,6 +13,8 @@ class Init extends Command
     const MYSQL_CONNECTION = 'mysql';
     const PGSQL_CONNECTION = 'pgsql';
 
+    const MYSQL_HOST = 'mysql';
+    const PGSQL_HOST = 'pgsql';
     const MYSQL_TEST_HOST = 'mysql_test';
     const PGSQL_TEST_HOST = 'pgsql_test';
 
@@ -127,14 +129,12 @@ class Init extends Command
         }
 
         if ($key == 'DB_HOST') {
-            $links = $defaultSettings['apache']['links'];
-
-            if ($connectionType === self::MYSQL_CONNECTION) {
-                return $links[1];
+            if ($this->prevSettings['DB_CONNECTION'] === self::MYSQL_CONNECTION) {
+                return self::MYSQL_HOST;
             }
 
-            if ($connectionType === self::PGSQL_CONNECTION) {
-                return $links[0];
+            if ($this->prevSettings['DB_CONNECTION'] === self::PGSQL_CONNECTION) {
+                return self::PGSQL_HOST;
             }
         }
 
@@ -188,7 +188,8 @@ class Init extends Command
 
             if ($this->prevSettings['DB_CONNECTION'] === self::PGSQL_CONNECTION) {
                 return self::PGSQL_TEST_HOST;
-            }        }
+            }
+        }
 
         return '';
     }
@@ -207,7 +208,7 @@ class Init extends Command
 
     protected function generateExampleSettings($settings)
     {
-        $exampleContent = file_get_contents(base_path('/') . '.env.example');
+        $exampleContent = file_get_contents('.env.example');
 
         foreach ($settings as $type => $value) {
             $exampleContent = str_replace("{$type}=", "{$type}={$value}", $exampleContent);
