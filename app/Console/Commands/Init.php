@@ -2,18 +2,27 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Support\Carbon;
-use Validator;
-use Hash;
-use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Artisan;
 use Yaml;
+use Validator;
+use Illuminate\Support\Carbon;
+use Illuminate\Console\Command;
+use App\Repositories\RoleRepository;
 
 class Init extends Command
 {
+    const MYSQL_CONNECTION = 'mysql';
+    const PGSQL_CONNECTION = 'pgsql';
+
+    const MYSQL_HOST = 'mysql';
+    const PGSQL_HOST = 'pgsql';
+    const MYSQL_TEST_HOST = 'mysql_test';
+    const PGSQL_TEST_HOST = 'pgsql_test';
+
     protected $signature = 'init';
 
     protected $description = 'Command generate admin user and .env files';
+
+    private $prevSettings;
 
     protected $settings = [
         'DB_HOST' => 'Please enter database connection host',
@@ -23,8 +32,6 @@ class Init extends Command
         'DB_PASSWORD' => 'Please enter password'
     ];
 
-    protected $connectionTypes = ['mysql', 'pgsql'];
-
     protected $dockerVariables = [
         'pgsql' => [
             'DB_PASSWORD' => 'POSTGRES_PASSWORD',
@@ -33,13 +40,16 @@ class Init extends Command
         ],
         'mysql' => [
             'DB_DATABASE' => 'MYSQL_DATABASE'
+        ],
+        'pgsql_test' => [
+            'DB_PASSWORD' => 'POSTGRES_PASSWORD',
+            'DB_USERNAME' => 'POSTGRES_USER',
+            'DB_DATABASE' => 'POSTGRES_DB'
+        ],
+        'mysql_test' => [
+            'DB_DATABASE' => 'MYSQL_DATABASE'
         ]
     ];
-
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     public function handle()
     {
@@ -48,7 +58,7 @@ class Init extends Command
         }
 
         if ($this->confirm('Do you want generate .env.testing?', true)) {
-            $this->generateDotEnv(true);
+            $this->generateDotEnvDotTesting();
         }
 
         $this->call('key:generate');
@@ -60,40 +70,116 @@ class Init extends Command
         }
     }
 
-    public function generateDotEnv($isTestingConfig = false)
+    public function generateDotEnv()
     {
-        $connection = $this->choice('Please select database connection type', $this->connectionTypes, '1');
+        $connection = $this->getConnection();
 
-        $ymlSettings = Yaml::parse(file_get_contents(base_path('/') . 'docker-compose.yml'));
-        $databaseSettings = $this->askDatabaseSettings($ymlSettings['services'][$connection], $connection);
+        $ymlSettings = Yaml::parse(file_get_contents('docker-compose.yml'));
 
-        if (!$isTestingConfig) {
-            $this->addSettingsToConfig($databaseSettings, $connection);
-        }
+        $envSettings = $this->askDatabaseEnvSettings($ymlSettings['services'], $connection);
+        $envSettings['APP_ENV'] = 'local';
+        $envSettings['DATA_COLLECTOR_KEY'] = $this->getDataCollectorKey();
 
-        $exampleSettings = $this->generateExampleSettings($databaseSettings);
-        $postfix = $isTestingConfig ? '.testing' : '';
+        $this->addSettingsToConfig($envSettings, $connection);
 
-        return file_put_contents(base_path('/') . '.env' . $postfix, $exampleSettings);
+        $this->prevSettings = $envSettings;
+
+        $exampleSettings = $this->generateExampleSettings($envSettings);
+
+        return file_put_contents('.env', $exampleSettings);
     }
 
-    protected function askDatabaseSettings($defaultSettings, $connectionType)
+    protected function askDatabaseEnvSettings($defaultSettings, $connectionType)
     {
         $databaseSettings['DB_CONNECTION'] = $connectionType;
-        $environment = $defaultSettings['environment'];
 
         foreach ($this->settings as $key => $question) {
-            if ($key == 'DB_PORT') {
-                $defaultSetting = substr($defaultSettings['ports'][0], -4);
-            } else {
-                $settingsName = array_get($this->dockerVariables[$connectionType], $key, false);
-                $defaultSetting = ($settingsName) ? $environment[$settingsName] : '';
-            }
-
+            $defaultSetting = $this->getDefaultSettingEnv(
+                $key,
+                $defaultSettings,
+                $defaultSettings[$connectionType]['environment'],
+                $connectionType
+            );
             $databaseSettings[$key] = $this->ask($question, $defaultSetting);
         }
 
         return $databaseSettings;
+    }
+
+    protected function getDefaultSettingEnv($key, $defaultSettings, $environment, $connectionType)
+    {
+        $result = '';
+
+        if (array_get($this->dockerVariables[$connectionType], $key, false)) {
+            $settingsName = array_get($this->dockerVariables[$connectionType], $key, false);
+
+            $result = $environment[$settingsName];
+        }
+
+        if ($key == 'DB_PORT') {
+            $result = $this->getPort(array_shift($defaultSettings[$connectionType]['ports']));
+        }
+
+        if ($key == 'DB_HOST') {
+            if ($connectionType === self::MYSQL_CONNECTION) {
+                $result = self::MYSQL_HOST;
+            }
+
+            if ($connectionType === self::PGSQL_CONNECTION) {
+                $result = self::PGSQL_HOST;
+            }
+        }
+
+        return $result;
+    }
+
+    public function generateDotEnvDotTesting()
+    {
+        $connection = $this->getConnection();
+
+        $ymlSettings = Yaml::parse(file_get_contents('docker-compose.yml'));
+
+        $envTestingSettings = $this->askDatabaseDotEnvTestingSettings($ymlSettings['services'], $connection);
+        $envTestingSettings['APP_ENV'] = 'testing';
+        $envTestingSettings['DATA_COLLECTOR_KEY'] = $this->prevSettings['DATA_COLLECTOR_KEY'];
+
+        $exampleSettings = $this->generateExampleSettings($envTestingSettings);
+
+        return file_put_contents('.env.testing', $exampleSettings);
+    }
+
+    protected function askDatabaseDotEnvTestingSettings($defaultSettings, $connectionType)
+    {
+        $databaseSettings['DB_CONNECTION'] = $connectionType;
+        $environment = $defaultSettings[$connectionType]['environment'];
+
+        foreach ($this->settings as $key => $question) {
+            $defaultSetting = $this->getDefaultSettingDotEnvTesting($key, $defaultSettings, $environment, $connectionType);
+            $databaseSettings[$key] = $this->ask($question, $defaultSetting);
+        }
+
+        return $databaseSettings;
+    }
+
+    protected function getDefaultSettingDotEnvTesting($key, $defaultSettings, $environment, $connectionType)
+    {
+        $result = '';
+
+        if (array_get($this->dockerVariables[$connectionType], $key, false)) {
+            $settingsName = array_get($this->dockerVariables[$connectionType], $key, false);
+
+            $result = $environment[$settingsName];
+        }
+
+        if ($key == 'DB_PORT') {
+            $result = $this->getPort(array_shift($defaultSettings[$connectionType]['ports']));
+        }
+
+        if ($key == 'DB_HOST') {
+            $result = $this->getTestingHost($connectionType);
+        }
+
+        return $result;
     }
 
     protected function addSettingsToConfig($settings, $connectionType)
@@ -110,13 +196,18 @@ class Init extends Command
 
     protected function generateExampleSettings($settings)
     {
-        $exampleContent = file_get_contents(base_path('/') . '.env.example');
+        $exampleContent = file_get_contents('.env.example');
 
         foreach ($settings as $type => $value) {
             $exampleContent = str_replace("{$type}=", "{$type}={$value}", $exampleContent);
         }
 
         return $exampleContent;
+    }
+
+    private function getDataCollectorKey()
+    {
+        return $this->ask('Input new DATA_COLLECTOR_KEY', 'some-project-name');
     }
 
     private function createAdminUser($data = [])
@@ -128,6 +219,7 @@ class Init extends Command
         $admin['name'] = $this->ask('Please enter admin name', $data['name']);
         $admin['email'] = $this->ask('Please enter admin email', $data['email']);
         $admin['password'] = $this->ask('Please enter admin password', $data['password']);
+        $admin['role'] = RoleRepository::ADMIN_ROLE;
 
         $validator = Validator::make($admin, [
             'name' => 'required',
@@ -146,9 +238,53 @@ class Init extends Command
 
     public function publishMigration($admin)
     {
-        $data = view('ronasit::add_default_user')->with($admin)->render();
+        $data = view('add_default_user')->with($admin)->render();
         $fileName = Carbon::now()->format('Y_m_d_His') . '_add_default_user.php';
 
         return file_put_contents("database/migrations/{$fileName}", "<?php\n\n{$data}");
+    }
+
+    private function getPort($string)
+    {
+        $matches = preg_split('/:/', $string);
+
+        return array_pop($matches);
+    }
+
+    private function getConnection()
+    {
+        $connectionTypes = [
+            self::MYSQL_CONNECTION,
+            self::PGSQL_CONNECTION
+        ];
+
+        if ($this->prevSettings['DB_CONNECTION']) {
+            return $this->prevSettings['DB_CONNECTION'];
+        } else {
+            return $this->choice('Please select database connection type', $connectionTypes, '1');
+        }
+    }
+
+    private function getTestingHost($connectionType)
+    {
+        $result = '';
+
+        if ($this->prevSettings['DB_CONNECTION'] === self::MYSQL_CONNECTION) {
+            $result = self::MYSQL_TEST_HOST;
+        }
+
+        if ($this->prevSettings['DB_CONNECTION'] === self::PGSQL_CONNECTION) {
+            $result = self::PGSQL_TEST_HOST;
+        }
+
+        if ($this->prevSettings['DB_CONNECTION'] === null && $connectionType === self::MYSQL_CONNECTION) {
+            $result = self::MYSQL_TEST_HOST;
+        }
+
+        if ($this->prevSettings['DB_CONNECTION'] === null && $connectionType === self::PGSQL_HOST) {
+            $result = self::PGSQL_TEST_HOST;
+        }
+
+        return $result;
     }
 }

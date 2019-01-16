@@ -12,9 +12,13 @@ services:
           - ./:/app
       links:
         - pgsql
+        - pgsql_test
         - mysql
+        - mysql_test
         - redis
       environment:
+          XDEBUG_REMOTE_AUTOSTART: "on"
+          XDEBUG_PROFILER_ENABLE: 0
           WEB_DOCUMENT_ROOT: /app/public
           WEB_DOCUMENT_INDEX: index.php
           REDIS_PORT: "6379"
@@ -23,9 +27,9 @@ services:
           XDEBUG_REMOTE_HOST: host.docker.internal
 
   pgsql:
-    image: postgres
+    image: postgres:latest
     ports:
-        - 5433:5432
+        - 5432:5432
     environment:
         POSTGRES_PASSWORD: ""
         POSTGRES_USER: pguser
@@ -33,15 +37,37 @@ services:
     volumes:
       - .:/app
 
+  pgsql_test:
+    image: postgres:latest
+    ports:
+        - 5433:5432
+    environment:
+      POSTGRES_PASSWORD: ""
+      POSTGRES_USER: pguser
+      POSTGRES_DB: pgdb
+    volumes:
+    - .:/app
+    command: ["-c", "fsync=off"]
+
   mysql:
       ports:
-          - 3307:3306
+          - 3308:3306
       image: mysql:5.7
       volumes:
           - ./:/app
       environment:
           MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
           MYSQL_DATABASE: "mysqldb"
+
+  mysql_test:
+      ports:
+          - 3307:3306
+      image: mysql:5.7
+      volumes:
+          - ./:/app
+      environment:
+        MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+        MYSQL_DATABASE: "mysqldb"
 
   redis:
       ports:
