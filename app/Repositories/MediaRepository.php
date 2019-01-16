@@ -22,7 +22,7 @@ class MediaRepository extends BaseRepository
             ->getSearchResults();
     }
 
-    protected function getSearchResults()
+    public function getSearchResults()
     {
         $this->query->applyMediaPermissionRestrictions();
 

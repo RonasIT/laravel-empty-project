@@ -22,11 +22,24 @@ class SettingRepository extends BaseRepository
             ->getSearchResults();
     }
 
-    protected function getSearchResults()
+    public function getSearchResults()
     {
         $this->query->orderBy('name')
             ->applySettingPermissionRestrictions();
 
         return parent::getSearchResults();
+    }
+
+    public function update($where, $data = [])
+    {
+        $model = $this->model;
+
+        $entity = $model::where($where)->first();
+
+        $entity->fill($data);
+
+        $entity->save();
+
+        return $entity->toArray();
     }
 }
