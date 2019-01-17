@@ -3,7 +3,6 @@
 namespace App\Tests;
 
 use Symfony\Component\HttpFoundation\Response;
-use App\Repositories\RoleRepository;
 use App\Models\User;
 
 class UserTest extends TestCase

@@ -22,7 +22,7 @@ class SettingRepository extends BaseRepository
             ->getSearchResults();
     }
 
-    protected function getSearchResults()
+    public function getSearchResults()
     {
         $this->query->orderBy('name')
             ->applySettingPermissionRestrictions();
