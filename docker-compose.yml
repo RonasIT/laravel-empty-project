@@ -25,6 +25,7 @@ services:
           XDEBUG_REMOTE_CONNECT_BACK: 0
           XDEBUG_REMOTE_PORT: 9000
           XDEBUG_REMOTE_HOST: host.docker.internal
+          php.max_nesting_level: 250
 
   pgsql:
     image: postgres:latest
