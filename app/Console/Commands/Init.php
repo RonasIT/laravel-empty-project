@@ -122,7 +122,7 @@ class Init extends Command
             $result = $this->getPort(array_shift($defaultSettings[$connectionType]['ports']));
         }
 
-        if ($key == 'DB_HOST') {
+        if ($key === 'DB_HOST') {
             if ($connectionType === self::MYSQL_CONNECTION) {
                 $result = self::MYSQL_HOST;
             }
@@ -173,16 +173,20 @@ class Init extends Command
             $result = $environment[$settingsName];
         }
 
-        if ($key === 'DB_PORT') {
+        elseif ($key === 'DB_PORT') {
             $result = $this->getPort(array_shift($this->getTestService($connectionType, $defaultSettings)['ports']));
         }
 
-        if ($key === 'DB_HOST') {
+        elseif ($key === 'DB_HOST') {
             $result = $this->getTestingHost($connectionType);
         }
 
-        if ($key === 'DB_USERNAME') {
+        elseif ($key === 'DB_USERNAME') {
             $result = $this->prevSettings['DB_USERNAME'];
+        }
+
+        elseif ($key === 'DB_PASSWORD') {
+            $result = $this->prevSettings['DB_PASSWORD'];
         }
 
         return $result;
