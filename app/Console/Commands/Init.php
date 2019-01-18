@@ -2,16 +2,18 @@
 
 namespace App\Console\Commands;
 
-use Yaml;
-use Validator;
-use Illuminate\Support\Carbon;
-use Illuminate\Console\Command;
 use App\Repositories\RoleRepository;
+use Illuminate\Console\Command;
+use Illuminate\Support\Carbon;
+use Validator;
+use Yaml;
 
 class Init extends Command
 {
     const MYSQL_CONNECTION = 'mysql';
     const PGSQL_CONNECTION = 'pgsql';
+    const MYSQL_TEST_CONNECTION = 'mysql_test';
+    const PGSQL_TEST_CONNECTION = 'pgsql_test';
 
     const MYSQL_HOST = 'mysql';
     const PGSQL_HOST = 'pgsql';
@@ -116,7 +118,7 @@ class Init extends Command
             $result = $environment[$settingsName];
         }
 
-        if ($key == 'DB_PORT') {
+        if ($key === 'DB_PORT') {
             $result = $this->getPort(array_shift($defaultSettings[$connectionType]['ports']));
         }
 
@@ -171,12 +173,16 @@ class Init extends Command
             $result = $environment[$settingsName];
         }
 
-        if ($key == 'DB_PORT') {
-            $result = $this->getPort(array_shift($defaultSettings[$connectionType]['ports']));
+        if ($key === 'DB_PORT') {
+            $result = $this->getPort(array_shift($this->getTestService($connectionType, $defaultSettings)['ports']));
         }
 
-        if ($key == 'DB_HOST') {
+        if ($key === 'DB_HOST') {
             $result = $this->getTestingHost($connectionType);
+        }
+
+        if ($key === 'DB_USERNAME') {
+            $result = $this->prevSettings['DB_USERNAME'];
         }
 
         return $result;
@@ -286,5 +292,14 @@ class Init extends Command
         }
 
         return $result;
+    }
+
+    private function getTestService($connectionType, $defaultSettings)
+    {
+        if ($connectionType === self::MYSQL_CONNECTION) {
+            return $defaultSettings[self::MYSQL_TEST_CONNECTION];
+        } else {
+            return $defaultSettings[self::PGSQL_TEST_CONNECTION];
+        }
     }
 }
