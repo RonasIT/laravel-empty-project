@@ -4,14 +4,14 @@ namespace App\Services;
 
 use App\Repositories\MediaRepository;
 use RonasIT\Support\Services\EntityService;
-use RonasIT\Support\Traits\FilesTrait;
+use RonasIT\Support\Traits\FilesUploadTrait;
 
 /**
  * @property  MediaRepository $repository
  */
 class MediaService extends EntityService
 {
-    use FilesTrait;
+    use FilesUploadTrait;
 
     public function __construct()
     {

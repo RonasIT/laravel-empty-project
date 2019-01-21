@@ -2782,7 +2782,7 @@
                 },
                 {
                     "name": "Gert de Pagter",
-                    "email": "BackEndTea@gmail.com"
+                    "email": "backendtea@gmail.com"
                 }
             ],
             "description": "Symfony polyfill for ctype functions",
@@ -5285,16 +5285,16 @@
         },
         {
             "name": "ronasit/laravel-entity-generator",
-            "version": "1.1.3",
+            "version": "1.1.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RonasIT/laravel-entity-generator.git",
-                "reference": "5dc83ca0fe83815e1a46a96a3f8c16c3d78b3801"
+                "reference": "b7daf6c1c552e6bba8cf1d825b85ff716c03cb5f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RonasIT/laravel-entity-generator/zipball/5dc83ca0fe83815e1a46a96a3f8c16c3d78b3801",
-                "reference": "5dc83ca0fe83815e1a46a96a3f8c16c3d78b3801",
+                "url": "https://api.github.com/repos/RonasIT/laravel-entity-generator/zipball/b7daf6c1c552e6bba8cf1d825b85ff716c03cb5f",
+                "reference": "b7daf6c1c552e6bba8cf1d825b85ff716c03cb5f",
                 "shasum": ""
             },
             "require": {
@@ -5334,7 +5334,7 @@
                 "entity generator",
                 "laravel"
             ],
-            "time": "2018-12-10T11:13:20+00:00"
+            "time": "2019-01-21T07:31:43+00:00"
         },
         {
             "name": "ronasit/laravel-helpers",

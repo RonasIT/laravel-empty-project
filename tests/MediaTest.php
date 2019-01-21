@@ -5,13 +5,13 @@ namespace App\Tests;
 use App\Models\Media;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use RonasIT\Support\Traits\FilesTestTrait;
+use RonasIT\Support\Traits\FilesUploadTrait;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\User;
 
 class MediaTest extends TestCase
 {
-    use FilesTestTrait;
+    use FilesUploadTrait;
 
     protected $admin;
     protected $user;
@@ -79,7 +79,7 @@ class MediaTest extends TestCase
 
         Storage::disk('local')->assertExists($this->getFilePathFromUrl($responseData['link']));
 
-        $this->clearFolder();
+        $this->clearUploadedFilesFolder();
     }
 
     public function testCreateNoAuth()
