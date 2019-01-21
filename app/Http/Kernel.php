@@ -5,8 +5,6 @@ namespace App\Http;
 use Barryvdh\Cors\HandleCors;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use RonasIT\Support\AutoDoc\Http\Middleware\AutoDocMiddleware;
-use Tymon\JWTAuth\Middleware\GetUserFromToken;
-use Tymon\JWTAuth\Middleware\RefreshToken;
 
 class Kernel extends HttpKernel
 {
