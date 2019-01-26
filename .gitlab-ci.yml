@@ -100,9 +100,11 @@ stop:
     name: review/$CI_COMMIT_REF_NAME
     action: stop
   except:
+    - development
     - master
-    - release
-
+    - production
+    - tags
+    
 deploy_development:
   <<: *deploy
   environment:
