@@ -30,14 +30,14 @@ class MediaTest extends TestCase
     {
         $response = $this->actingAs($this->admin)->json('post', '/media', ['file' => $this->file]);
 
+        $response->assertStatus(Response::HTTP_OK);
+
         $responseData = $response->json();
 
         $this->assertDatabaseHas('media', [
             'id' => $responseData['id'],
             'is_public' => false
         ]);
-
-        $response->assertStatus(Response::HTTP_OK);
     }
 
 
