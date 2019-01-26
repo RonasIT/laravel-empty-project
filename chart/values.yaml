@@ -1,0 +1,28 @@
+replicaCount: 1
+
+persistence:
+  enabled: false
+  storage: 1Gi
+
+ingress:
+  enabled: true
+
+cronjobs:
+  enabled: true
+
+worker:
+  enabled: true
+  replicaCount: 1
+  cmd: "php /app/artisan queue:work --sleep=3 --tries=3"
+
+postgres:
+  enabled: true
+  postgresUser: 'pguser'
+  postgresPassword: 'bC&(HBIAcda'
+  postgresDatabase: 'pgdb'
+  persistence:
+    enabled: true
+    size: 1Gi
+    
+redis:
+  enabled: true
