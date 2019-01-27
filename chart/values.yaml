@@ -1,7 +1,7 @@
 replicaCount: 1
 
 persistence:
-  enabled: false
+  enabled: true
   storage: 1Gi
 
 ingress:
