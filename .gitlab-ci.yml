@@ -47,7 +47,7 @@ variables:
     GIT_STRATEGY: none
   stage: migrations
   script:
-    - echo "kubectl rollout status $(kubectl get deploy -l "app=${CI_ENVIRONMENT_SLUG}" -o name)"
+    - kubectl -n ${CI_PROJECT_NAME} rollout status $(kubectl -n ${CI_PROJECT_NAME} get deploy -l "app=${CI_ENVIRONMENT_SLUG}" -o name)
     - POD=$(kubectl -n ${CI_PROJECT_NAME} get pods --selector="app=${CI_ENVIRONMENT_SLUG}" | grep -m 1 -E  'Running' | awk '{print $1}')
     - kubectl -n ${CI_PROJECT_NAME} exec -i $POD --
       php artisan migrate --force
