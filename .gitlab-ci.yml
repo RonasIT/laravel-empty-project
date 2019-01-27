@@ -38,6 +38,7 @@ variables:
   stage: deploy
   script:
     - helm delete --purge api-${CI_COMMIT_REF_SLUG}
+    - kubectl delete ns ${CI_PROJECT_NAME}
   when: manual
   tags:
     - docker
@@ -76,9 +77,6 @@ tests:
     - php vendor/bin/phpunit --stop-on-failure ./tests/
   after_script:
     - cat storage/logs/*.log || true
-  only:
-    - development
-    - production
   tags:
     - docker
     - linux
