@@ -24,12 +24,13 @@ variables:
     - docker build -t ${DOCKER_CONTAINER_REGISTRY}:${CI_PIPELINE_ID} -f ${DOCKERFILE} .
     - docker push ${DOCKER_CONTAINER_REGISTRY}:${CI_PIPELINE_ID}
     - helm repo update
-    - helm upgrade --wait --install ${CI_PROJECT_NAME}-${CI_ENVIRONMENT_SLUG} ${CHART_REPO} --version ${CHART_VERSION} -f ${CHART_VALUES}
+    - helm upgrade --install ${CI_PROJECT_NAME}-${CI_ENVIRONMENT_SLUG} ${CHART_REPO} --version ${CHART_VERSION} -f ${CHART_VALUES}
       --namespace=${CI_PROJECT_NAME}
       --set environment=${CI_ENVIRONMENT_SLUG}
       --set ingress.host=$(echo "${CI_ENVIRONMENT_URL}" | awk -F/ '{print $3}')
       --set image.repository=${DOCKER_CONTAINER_REGISTRY}
       --set image.tag=${CI_PIPELINE_ID}
+      --wait
   tags:
     - docker
     - linux
