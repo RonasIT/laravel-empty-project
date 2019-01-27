@@ -5,5 +5,5 @@ ENV WEB_DOCUMENT_INDEX index.php
 
 WORKDIR /app
 COPY . /app
-RUN chown -R application:www-data /
+RUN chown -R application:www-data /app
 USER application
