@@ -37,8 +37,7 @@ variables:
 .stop_template: &stop
   stage: deploy
   script:
-    - helm delete --purge api-${CI_COMMIT_REF_SLUG}
-    - kubectl delete ns ${CI_PROJECT_NAME}
+    - helm delete --purge ${CI_PROJECT_NAME}-${CI_ENVIRONMENT_SLUG}
   when: manual
   tags:
     - docker
