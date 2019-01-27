@@ -19,6 +19,7 @@ variables:
   before_script:
     - cp ${ENVFILE} .env
   script:
+    - gcloud auth configure-docker
     - docker build -t ${DOCKER_CONTAINER_REGISTRY}:${CI_PIPELINE_ID} -f ${DOCKERFILE} .
     - docker push ${DOCKER_CONTAINER_REGISTRY}:${CI_PIPELINE_ID}
     - helm repo update
