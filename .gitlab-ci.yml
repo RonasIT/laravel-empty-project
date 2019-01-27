@@ -6,6 +6,7 @@ stages:
 image: projects.ronasit.com:4567/docker/gcloud-sdk:latest
 
 variables:
+  CI_PROJECT_NAME: laravel
   DOCKERFILE: ./Dockerfile
   CHART_REPO: ronasit/laravel
   CHART_VERSION: "2.0.6-beta"
