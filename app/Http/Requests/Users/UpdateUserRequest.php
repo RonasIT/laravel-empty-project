@@ -35,7 +35,7 @@ class UpdateUserRequest extends FormRequest
         }
 
         if ($this->has('role_id') && $this->user()->role_id !== RoleRepository::ADMIN_ROLE) {
-            throw new AccessDeniedHttpException(__('validation.exceptions.not_found', ['entity' => 'Setting']));
+            throw new AccessDeniedHttpException(__('validation.exceptions.not_found', ['entity' => 'User']));
         }
     }
 }
