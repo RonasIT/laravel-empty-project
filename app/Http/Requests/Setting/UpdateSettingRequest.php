@@ -26,7 +26,7 @@ class UpdateSettingRequest extends FormRequest
         $service = app(SettingService::class);
 
         if (!$service->exists(['name' => $this->route('name')])) {
-            throw new NotFoundHttpException('Setting does not exists');
+            throw new NotFoundHttpException(__('validation.exceptions.not_found', ['entity' => 'Setting']));
         }
     }
 }
