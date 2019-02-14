@@ -26,7 +26,7 @@ class DeleteUserRequest extends FormRequest
         $service = app(UserService::class);
 
         if (!$service->exists(['id' => $this->route('id')])) {
-            throw new NotFoundHttpException('User does not exist');
+            throw new NotFoundHttpException(__('validation.exceptions.not_found', ['entity' => 'User']));
         }
     }
 }

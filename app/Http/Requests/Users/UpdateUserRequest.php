@@ -31,11 +31,11 @@ class UpdateUserRequest extends FormRequest
         $service = app(UserService::class);
 
         if (!$service->exists(['id' => $this->route('id')])) {
-            throw new NotFoundHttpException('User does not exist');
+            throw new NotFoundHttpException(__('validation.exceptions.not_found', ['entity' => 'User']));
         }
 
         if ($this->has('role_id') && $this->user()->role_id !== RoleRepository::ADMIN_ROLE) {
-            throw new AccessDeniedHttpException('User does not exist');
+            throw new AccessDeniedHttpException(__('validation.exceptions.not_found', ['entity' => 'User']));
         }
     }
 }
