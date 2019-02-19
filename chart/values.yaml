@@ -24,5 +24,23 @@ postgres:
     enabled: true
     size: 1Gi
     
+mysql:
+  enabled: false
+  imageTag: "5.7.14"
+  mysqlRootPassword: 'eqihd#H!H#j2r32'
+  mysqlUser: 'pguser'
+  mysqlPassword: 'WRINI#FN$@i@@'
+  mysqlDatabase: 'pgdb'
+  persistence:
+    enabled: true
+    size: 1Gi
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 50m
+    limits:
+      memory: 512Mi
+      cpu: 150m
+
 redis:
   enabled: true

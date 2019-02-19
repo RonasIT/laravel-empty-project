@@ -112,7 +112,7 @@ deploy_development:
   <<: *deploy
   environment:
     name: "development"
-    url: https://dev.api.${DOMAIN}
+    url: https://dev.${DOMAIN}
   only:
     - development
 
