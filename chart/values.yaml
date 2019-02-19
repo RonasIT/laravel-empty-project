@@ -1,5 +1,9 @@
 replicaCount: 1
 
+image:
+  repository: ronasit/php-nginx
+  tag: 7.3
+
 persistence:
   enabled: true
   storage: 1Gi
