@@ -26,7 +26,7 @@ class DeleteMediaRequest extends FormRequest
         $service = app(MediaService::class);
 
         if (!$service->exists(['id' => $this->route('id')])) {
-            throw new NotFoundHttpException('Media does not exists');
+            throw new NotFoundHttpException(__('validation.exceptions.not_found', ['entity' => 'Media']));
         }
     }
 }

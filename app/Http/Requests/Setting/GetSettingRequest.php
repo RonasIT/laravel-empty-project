@@ -33,7 +33,7 @@ class GetSettingRequest extends FormRequest
         parent::validateResolved();
 
         if (empty($this->setting)) {
-            throw new NotFoundHttpException('Setting does not exists');
+            throw new NotFoundHttpException(__('validation.exceptions.not_found', ['entity' => 'Setting']));
         }
     }
 }
