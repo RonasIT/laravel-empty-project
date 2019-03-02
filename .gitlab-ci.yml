@@ -10,7 +10,7 @@ variables:
   DOMAIN: api.laravel.ronasit.com
   DOCKERFILE: ./Dockerfile
   CHART_REPO: ronasit/laravel
-  CHART_VERSION: "2.10.3"
+  CHART_VERSION: "2.10.4"
   CHART_VALUES: chart/values.yaml
   DOCKER_CONTAINER_REGISTRY: gcr.io/ronas-it-development/${CI_PROJECT_NAME}
 
