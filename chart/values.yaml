@@ -1,24 +1,24 @@
 replicaCount: 1
 
 persistence:
-  enabled: true
+  enabled: false
   storage: 1Gi
 
 ingress:
   enabled: true
 
 cronjobs:
-  enabled: true
+  enabled: false
 
 worker:
-  enabled: true
+  enabled: false
   replicaCount: 1
   cmd: "php /app/artisan queue:work --sleep=3 --tries=3"
 
 postgres:
   enabled: true
   persistence:
-    enabled: true
+    enabled: false
     size: 1Gi
     
 mysql:
@@ -29,4 +29,10 @@ mysql:
     size: 1Gi
 
 redis:
+  enabled: false
+
+elasticsearch:
   enabled: true
+  persistence:
+    enabled: false
+    size: 1Gi
