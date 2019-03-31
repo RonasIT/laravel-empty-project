@@ -10,7 +10,7 @@ variables:
   CI_PROJECT_NAME: laravel
   DOCKERFILE: ./Dockerfile
   CHART_REPO: ronasit/laravel
-  CHART_VERSION: "3.0.8-beta"
+  CHART_VERSION: "3.0.9-beta"
   CHART_VALUES: chart/values.yaml
   DOCKER_CONTAINER_REGISTRY: gcr.io/ronas-it-development/${CI_PROJECT_NAME}
 
@@ -32,6 +32,11 @@ variables:
       --set ingress.hosts[0]=$(echo "${CI_ENVIRONMENT_URL}" | awk -F/ '{print $3}')
       --set secret=${CI_PROJECT_NAME}-${CI_ENVIRONMENT_SLUG}
       --set image.repository=${DOCKER_CONTAINER_REGISTRY}
+      --set image.tag=${CI_PIPELINE_ID}
+      --set smtp.host=${MAIL_HOST}
+      --set smtp.port=${MAIL_PORT}
+      --set smtp.user=${MAIL_USERNAME}
+      --set smtp.password=${MAIL_PASSWORD}
       --set image.tag=${CI_PIPELINE_ID}
     - curl https://projects.ronasit.com/snippets/31/raw | bash
   tags:
