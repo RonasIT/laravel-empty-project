@@ -34,7 +34,7 @@ variables:
       --set image.repository=${DOCKER_CONTAINER_REGISTRY}
       --set image.tag=${CI_PIPELINE_ID}
       --set smtp.host=${MAIL_HOST}
-      --set smtp.port=${MAIL_PORT}
+      --set-string smtp.port=${MAIL_PORT}
       --set smtp.user=${MAIL_USERNAME}
       --set smtp.password=${MAIL_PASSWORD}
       --set image.tag=${CI_PIPELINE_ID}
