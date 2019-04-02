@@ -10,7 +10,7 @@ variables:
   CI_PROJECT_NAME: laravel
   DOCKERFILE: ./Dockerfile
   CHART_REPO: ronasit/laravel
-  CHART_VERSION: "3.0.9-beta"
+  CHART_VERSION: "3.0.10-beta"
   CHART_VALUES: chart/values.yaml
   DOCKER_CONTAINER_REGISTRY: gcr.io/ronas-it-development/${CI_PROJECT_NAME}
 
@@ -26,7 +26,7 @@ variables:
     - docker push ${DOCKER_CONTAINER_REGISTRY}:${CI_PIPELINE_ID}
     - helm repo update
     - curl https://projects.ronasit.com/k8s-tools/charts/laravel/raw/${CHART_VERSION}/helpers/secrets.sh | bash
-    - helm upgrade --wait --force --install ${CI_PROJECT_NAME}-${CI_ENVIRONMENT_SLUG} ${CHART_REPO} --version ${CHART_VERSION} -f ${CHART_VALUES}
+    - helm upgrade --wait --install ${CI_PROJECT_NAME}-${CI_ENVIRONMENT_SLUG} ${CHART_REPO} --version ${CHART_VERSION} -f ${CHART_VALUES}
       --namespace=${CI_PROJECT_NAME}
       --set environment=${CI_ENVIRONMENT_SLUG}
       --set ingress.hosts[0]=$(echo "${CI_ENVIRONMENT_URL}" | awk -F/ '{print $3}')
