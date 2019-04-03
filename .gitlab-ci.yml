@@ -6,11 +6,15 @@ stages:
 image: projects.ronasit.com:4567/docker/gcloud-sdk:latest
 
 variables:
-  DOMAIN: laravel3.ronasit.com
+  DOMAIN: laravel.ronasit.com
   CI_PROJECT_NAME: laravel
   DOCKERFILE: ./Dockerfile
   CHART_REPO: ronasit/laravel
+<<<<<<< HEAD
   CHART_VERSION: "3.0.10-beta"
+=======
+  CHART_VERSION: "3.0.14-beta"
+>>>>>>> 7ac51b8cb8b6b2d1a70762ad5e083c832019e923
   CHART_VALUES: chart/values.yaml
   DOCKER_CONTAINER_REGISTRY: gcr.io/ronas-it-development/${CI_PROJECT_NAME}
 
