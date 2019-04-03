@@ -10,7 +10,7 @@ variables:
   CI_PROJECT_NAME: laravel
   DOCKERFILE: ./Dockerfile
   CHART_REPO: ronasit/laravel
-  CHART_VERSION: "3.0.9-beta"
+  CHART_VERSION: "3.0.10-beta"
   CHART_VALUES: chart/values.yaml
   DOCKER_CONTAINER_REGISTRY: gcr.io/ronas-it-development/${CI_PROJECT_NAME}
 
@@ -59,10 +59,8 @@ variables:
     GIT_STRATEGY: none
   stage: migrations
   script:
-    - kubectl -n ${CI_PROJECT_NAME} rollout status $(kubectl -n ${CI_PROJECT_NAME} get deploy -l "app=${CI_ENVIRONMENT_SLUG}" -o name)
-    - POD=$(kubectl -n ${CI_PROJECT_NAME} get pods --selector="app=${CI_ENVIRONMENT_SLUG}" | grep -m 1 -E  'Running' | awk '{print $1}')
-    - kubectl -n ${CI_PROJECT_NAME} exec -i $POD --
-      php artisan migrate --force
+    - curl https://projects.ronasit.com/k8s-tools/charts/laravel/raw/${CHART_VERSION}/helpers/migrations.sh
+      | bash -s -- php artisan migrate
   tags:
     - docker
     - linux
