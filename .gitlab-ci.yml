@@ -6,11 +6,11 @@ stages:
 image: projects.ronasit.com:4567/docker/gcloud-sdk:latest
 
 variables:
+  DOMAIN: laravel.ronasit.com
   CI_PROJECT_NAME: laravel
-  DOMAIN: api.laravel.ronasit.com
   DOCKERFILE: ./Dockerfile
   CHART_REPO: ronasit/laravel
-  CHART_VERSION: "2.10.2"
+  CHART_VERSION: 3.0.17-beta
   CHART_VALUES: chart/values.yaml
   DOCKER_CONTAINER_REGISTRY: gcr.io/ronas-it-development/${CI_PROJECT_NAME}
 
@@ -18,18 +18,25 @@ variables:
   stage: deploy
   variables:
     ENVFILE: .env.dev
-  before_script:
-    - cp ${ENVFILE} .env
+    SECRET_PREFIX: K8S_SECRET_DEV_
   script:
+    - cp ${ENVFILE} .env
     - gcloud auth configure-docker
     - docker build -t ${DOCKER_CONTAINER_REGISTRY}:${CI_PIPELINE_ID} -f ${DOCKERFILE} .
     - docker push ${DOCKER_CONTAINER_REGISTRY}:${CI_PIPELINE_ID}
     - helm repo update
+    - curl https://projects.ronasit.com/k8s-tools/charts/laravel/raw/${CHART_VERSION}/helpers/secrets.sh | bash
     - helm upgrade --wait --install ${CI_PROJECT_NAME}-${CI_ENVIRONMENT_SLUG} ${CHART_REPO} --version ${CHART_VERSION} -f ${CHART_VALUES}
       --namespace=${CI_PROJECT_NAME}
       --set environment=${CI_ENVIRONMENT_SLUG}
-      --set ingress.host=$(echo "${CI_ENVIRONMENT_URL}" | awk -F/ '{print $3}')
+      --set ingress.hosts[0]=$(echo "${CI_ENVIRONMENT_URL}" | awk -F/ '{print $3}')
+      --set secret=${CI_PROJECT_NAME}-${CI_ENVIRONMENT_SLUG}
       --set image.repository=${DOCKER_CONTAINER_REGISTRY}
+      --set image.tag=${CI_PIPELINE_ID}
+      --set smtp.host=${MAIL_HOST}
+      --set-string smtp.port=${MAIL_PORT}
+      --set smtp.user=${MAIL_USERNAME}
+      --set smtp.password=${MAIL_PASSWORD}
       --set image.tag=${CI_PIPELINE_ID}
     - curl https://projects.ronasit.com/snippets/31/raw | bash
   tags:
@@ -52,10 +59,8 @@ variables:
     GIT_STRATEGY: none
   stage: migrations
   script:
-    - kubectl -n ${CI_PROJECT_NAME} rollout status $(kubectl -n ${CI_PROJECT_NAME} get deploy -l "app=${CI_ENVIRONMENT_SLUG}" -o name)
-    - POD=$(kubectl -n ${CI_PROJECT_NAME} get pods --selector="app=${CI_ENVIRONMENT_SLUG}" | grep -m 1 -E  'Running' | awk '{print $1}')
-    - kubectl -n ${CI_PROJECT_NAME} exec -i $POD --
-      php artisan migrate --force
+    - curl https://projects.ronasit.com/k8s-tools/charts/laravel/raw/${CHART_VERSION}/helpers/migrations.sh
+      | bash -s -- php artisan migrate
   tags:
     - docker
     - linux

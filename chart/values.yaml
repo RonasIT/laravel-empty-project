@@ -32,7 +32,7 @@ redis:
   enabled: false
 
 elasticsearch:
-  enabled: true
+  enabled: false
   persistence:
     enabled: false
     size: 1Gi
