@@ -87,11 +87,10 @@ tests:
     - vendor
     expire_in: 1 hour
   script:
-    - touch .env
+    - echo 'APP_KEY=' > .env
     - composer install
     - php artisan jwt:secret
     - php artisan key:generate
-    - cat .env
     - php vendor/bin/phpunit --stop-on-failure ./tests/
   after_script:
     - cat storage/logs/*.log || true
