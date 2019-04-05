@@ -17,10 +17,8 @@ variables:
 .deploy_template: &deploy
   stage: deploy
   variables:
-    ENVFILE: .env.dev
     SECRET_PREFIX: K8S_SECRET_DEV_
   script:
-    - cp ${ENVFILE} .env
     - gcloud auth configure-docker
     - docker build -t ${DOCKER_CONTAINER_REGISTRY}:${CI_PIPELINE_ID} -f ${DOCKERFILE} .
     - docker push ${DOCKER_CONTAINER_REGISTRY}:${CI_PIPELINE_ID}
@@ -81,14 +79,12 @@ tests:
   image: ronasit/php-nginx:7.1
   services:
     - postgres:11.1
-  before_script:
-    - cp .env.dev.testing .env.testing
-    - composer install
   artifacts:
     paths:
     - vendor
     expire_in: 1 hour
   script:
+    - composer install
     - php vendor/bin/phpunit --stop-on-failure ./tests/
   after_script:
     - cat storage/logs/*.log || true
