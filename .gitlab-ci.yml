@@ -87,6 +87,7 @@ tests:
     - vendor
     expire_in: 1 hour
   script:
+    - touch .env
     - composer install
     - php artisan jwt:secret
     - php artisan key:generate
