@@ -13,9 +13,6 @@ services:
       links:
         - pgsql
         - pgsql_test
-        - mysql
-        - mysql_test
-        - redis
       environment:
           XDEBUG_REMOTE_AUTOSTART: "on"
           XDEBUG_PROFILER_ENABLE: 0
@@ -50,29 +47,7 @@ services:
     - .:/app
     command: ["-c", "fsync=off"]
 
-  mysql:
-      ports:
-          - 3308:3306
-      image: mysql:5.7
-      volumes:
-          - ./:/app
-      environment:
-          MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-          MYSQL_DATABASE: "mysqldb"
-
-  mysql_test:
-      ports:
-          - 3307:3306
-      image: mysql:5.7
-      volumes:
-          - ./:/app
-      environment:
-        MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-        MYSQL_DATABASE: "mysqldb"
-
   redis:
-      ports:
-          - 6380:6379
-      image: redis:3.2
-      volumes:
-          - ./:/app
+    image: redis:4
+    ports:
+        - 6379:6379
