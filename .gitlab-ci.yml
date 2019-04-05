@@ -10,7 +10,7 @@ variables:
   CI_PROJECT_NAME: laravel
   DOCKERFILE: ./Dockerfile
   CHART_REPO: ronasit/laravel
-  CHART_VERSION: 3.0.17-beta
+  CHART_VERSION: 3.0.20-beta
   CHART_VALUES: chart/values.yaml
   DOCKER_CONTAINER_REGISTRY: gcr.io/ronas-it-development/${CI_PROJECT_NAME}
 
@@ -68,9 +68,16 @@ variables:
 tests:
   stage: tests
   variables:
-    POSTGRES_USER: pguser
+    POSTGRES_USER: forge
+    POSTGRES_DB: forge
     POSTGRES_PASSWORD: ""
-    POSTGRES_DB: pgdb
+    REDIS_HOST: "redis"
+    MAIL_DRIVER: log
+    FILESYSTEM_DRIVER: testing
+    APP_ENV: testing
+    APP_DEBUG: "true"
+    APP_LOG_LEVEL: debug
+    APP_URL: http://localhost
   image: ronasit/php-nginx:7.1
   services:
     - postgres:11.1
