@@ -27,6 +27,7 @@ variables:
     - helm upgrade --wait --install ${CI_PROJECT_NAME}-${CI_ENVIRONMENT_SLUG} ${CHART_REPO} --version ${CHART_VERSION} -f ${CHART_VALUES}
       --namespace=${CI_PROJECT_NAME}
       --set environment=${CI_ENVIRONMENT_SLUG}
+      --set appName=${CI_PROJECT_NAME}
       --set ingress.hosts[0]=$(echo "${CI_ENVIRONMENT_URL}" | awk -F/ '{print $3}')
       --set secret=${CI_PROJECT_NAME}-${CI_ENVIRONMENT_SLUG}
       --set image.repository=${DOCKER_CONTAINER_REGISTRY}
