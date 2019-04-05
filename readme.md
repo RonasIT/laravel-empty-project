@@ -28,4 +28,15 @@ docker-compose содержит конфигурацию для PHP 7.3 с postg
 
 После загрузки проекта в development ветку, автоматически начнется деплой, и приложение будет доступно по адресу https://dev.$DOMAIN
 
-Подробнее по конфигурации деплоя можно посмотреть в документации [Helm chart](https://projects.ronasit.com/k8s-tools/charts/laravel)
+Следующие переменные будут установлены автоматически и не нуждаются в ручной конфигурации:
+
+```
+APP_URL
+APP_NAME
+DATA_COLLECTOR_KEY
+MAIL_*
+DB_*
+REDIS_*
+```
+
+Необходимые сервисы настраиваются в `chart/values.yaml`, подробнее о Helm chart можно узнать в [документации](https://projects.ronasit.com/k8s-tools/charts/laravel)
