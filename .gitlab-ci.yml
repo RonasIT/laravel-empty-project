@@ -66,6 +66,8 @@ variables:
 tests:
   stage: tests
   variables:
+    DB_CONNECTION: pgsql
+    DB_HOST: postgres
     POSTGRES_USER: forge
     POSTGRES_DB: forge
     POSTGRES_PASSWORD: ""
