@@ -8,7 +8,6 @@ image: projects.ronasit.com:4567/docker/gcloud-sdk:latest
 variables:
   DOMAIN: laravel.ronasit.com
   CI_PROJECT_NAME: laravel
-  APP_NAME: laravel-empty-project
   DOCKERFILE: ./Dockerfile
   CHART_REPO: ronasit/laravel
   CHART_VERSION: 3.0.20-beta
@@ -28,7 +27,7 @@ variables:
     - helm upgrade --wait --install ${CI_PROJECT_NAME}-${CI_ENVIRONMENT_SLUG} ${CHART_REPO} --version ${CHART_VERSION} -f ${CHART_VALUES}
       --namespace=${CI_PROJECT_NAME}
       --set environment=${CI_ENVIRONMENT_SLUG}
-      --set appName=${APP_NAME}
+      --set appName=${CI_PROJECT_NAME}
       --set ingress.hosts[0]=$(echo "${CI_ENVIRONMENT_URL}" | awk -F/ '{print $3}')
       --set secret=${CI_PROJECT_NAME}-${CI_ENVIRONMENT_SLUG}
       --set image.repository=${DOCKER_CONTAINER_REGISTRY}
@@ -76,6 +75,7 @@ tests:
     REDIS_HOST: "redis"
     MAIL_DRIVER: log
     FILESYSTEM_DRIVER: testing
+    DATA_COLLECTOR_KEY: laravel
     APP_ENV: testing
     APP_DEBUG: "true"
     APP_LOG_LEVEL: debug
