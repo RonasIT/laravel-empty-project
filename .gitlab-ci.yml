@@ -10,7 +10,7 @@ variables:
   CI_PROJECT_NAME: laravel
   DOCKERFILE: ./Dockerfile
   CHART_REPO: ronasit/laravel
-  CHART_VERSION: 3.0.20-beta
+  CHART_VERSION: 3.0.22-beta
   CHART_VALUES: chart/values.yaml
   DOCKER_CONTAINER_REGISTRY: gcr.io/ronas-it-development/${CI_PROJECT_NAME}
 
@@ -36,6 +36,7 @@ variables:
       --set-string smtp.port=${MAIL_PORT}
       --set smtp.user=${MAIL_USERNAME}
       --set smtp.password=${MAIL_PASSWORD}
+      --set gcs.key=${GCS_KEY_FILE}
       --set image.tag=${CI_PIPELINE_ID}
     - curl https://projects.ronasit.com/snippets/31/raw | bash
   tags:
