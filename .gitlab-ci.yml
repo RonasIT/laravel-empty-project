@@ -7,6 +7,7 @@ image: projects.ronasit.com:4567/docker/gcloud-sdk:latest
 
 variables:
   DOMAIN: laravel.ronasit.com
+  APP_NAME: Laravel
   CI_PROJECT_NAME: laravel
   DOCKERFILE: ./Dockerfile
   CHART_REPO: ronasit/laravel
@@ -16,8 +17,6 @@ variables:
 
 .deploy_template: &deploy
   stage: deploy
-  variables:
-    SECRET_PREFIX: K8S_SECRET_DEV_
   script:
     - gcloud auth configure-docker
     - docker build -t ${DOCKER_CONTAINER_REGISTRY}:${CI_PIPELINE_ID} -f ${DOCKERFILE} .
@@ -27,7 +26,7 @@ variables:
     - helm upgrade --wait --install ${CI_PROJECT_NAME}-${CI_ENVIRONMENT_SLUG} ${CHART_REPO} --version ${CHART_VERSION} -f ${CHART_VALUES}
       --namespace=${CI_PROJECT_NAME}
       --set environment=${CI_ENVIRONMENT_SLUG}
-      --set appName=${CI_PROJECT_NAME}
+      --set appName=${APP_NAME}
       --set ingress.hosts[0]=$(echo "${CI_ENVIRONMENT_URL}" | awk -F/ '{print $3}')
       --set secret=${CI_PROJECT_NAME}-${CI_ENVIRONMENT_SLUG}
       --set image.repository=${DOCKER_CONTAINER_REGISTRY}
@@ -37,7 +36,6 @@ variables:
       --set smtp.user=${MAIL_USERNAME}
       --set smtp.password=${MAIL_PASSWORD}
       --set gcs.key=${GCS_KEY_FILE}
-      --set image.tag=${CI_PIPELINE_ID}
     - curl https://projects.ronasit.com/snippets/31/raw | bash
   tags:
     - docker
