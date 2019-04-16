@@ -10,7 +10,7 @@ variables:
   CI_PROJECT_NAME: laravel
   DOCKERFILE: ./Dockerfile
   CHART_REPO: ronasit/laravel
-  CHART_VERSION: 3.0.22-beta
+  CHART_VERSION: 3.1.0
   CHART_VALUES: chart/values.yaml
   DOCKER_CONTAINER_REGISTRY: gcr.io/ronas-it-development/${CI_PROJECT_NAME}
 
