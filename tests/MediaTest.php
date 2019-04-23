@@ -17,7 +17,7 @@ class MediaTest extends TestCase
     protected $user;
     protected $file;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

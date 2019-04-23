@@ -168,10 +168,8 @@ return [
          */
         Laravel\Tinker\TinkerServiceProvider::class,
         RonasIT\Support\HelpersServiceProvider::class,
-        RonasIT\Support\EntityGeneratorServiceProvider::class,
-        RonasIT\Support\AutoDoc\AutoDocServiceProvider::class,
-        RonasIT\Support\DataCollectors\RemoteDataCollectorServiceProvider::class,
         Barryvdh\Cors\ServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
 

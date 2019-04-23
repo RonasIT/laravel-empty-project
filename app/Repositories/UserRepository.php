@@ -2,8 +2,9 @@
 
 namespace App\Repositories;
 
-use RonasIT\Support\Repositories\BaseRepository;
 use App\Models\User;
+use Illuminate\Support\Arr;
+use RonasIT\Support\Repositories\BaseRepository;
 
 /**
  * @property  User $model
@@ -17,17 +18,26 @@ class UserRepository extends BaseRepository
 
     public function create($data)
     {
-        $user = User::create(array_only($data, User::getFields()));
+        $user = User::create(Arr::only($data, User::getFields()));
 
         return $user->toArray();
     }
 
+    public function prepareSearchQuery($filters)
+    {
+        $this
+            ->searchQuery($filters)
+            ->filterBy('role_id')
+            ->filterByQuery(['name', 'email']);
+
+        return $this->query;
+    }
+
     public function search($filters)
     {
-        return $this->searchQuery($filters)
-            ->filterBy('role_id')
-            ->filterByQuery(['name', 'email'])
-            ->getSearchResults();
+        $this->prepareSearchQuery($filters);
+
+        return $this->getSearchResults();
     }
 
     public function forceUpdate($where, $data)

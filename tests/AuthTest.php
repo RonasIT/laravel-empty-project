@@ -10,7 +10,7 @@ class AuthTest extends TestCase
     protected $admin;
     protected $users;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

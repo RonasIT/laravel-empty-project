@@ -2,15 +2,16 @@
 
 namespace App\Tests;
 
-use Symfony\Component\HttpFoundation\Response;
 use App\Models\User;
+use Illuminate\Support\Arr;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserTest extends TestCase
 {
     protected $admin;
     protected $user;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -26,8 +27,8 @@ class UserTest extends TestCase
 
         $response->assertStatus(Response::HTTP_OK);
 
-        $expect = array_except($data, ['id', 'password', 'updated_at', 'created_at']);
-        $actual = array_except($response->json(), ['id', 'updated_at', 'created_at']);
+        $expect = Arr::except($data, ['id', 'password', 'updated_at', 'created_at']);
+        $actual = Arr::except($response->json(), ['id', 'updated_at', 'created_at']);
 
         $this->assertEquals($expect, $actual);
     }
@@ -226,5 +227,14 @@ class UserTest extends TestCase
         $response->assertStatus(Response::HTTP_OK);
 
         $this->assertEqualsFixture($fixture, $response->json());
+    }
+
+    public function testExport()
+    {
+        $response = $this->actingAs($this->admin)->json('get', '/api/users_export');
+
+        $response->assertStatus(Response::HTTP_OK);
+
+        $this->assertEquals($this->getFixture('5cbdad57c1512.csv'), $this->getFixture('../../../..' . $response->json()));
     }
 }

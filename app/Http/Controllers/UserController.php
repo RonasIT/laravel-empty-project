@@ -70,4 +70,11 @@ class UserController extends Controller
 
         return response($result);
     }
+
+    public function export(SearchUserRequest $request, UserService $service)
+    {
+        $fileName = $service->export($request->all());
+
+        return response()->json($fileName);
+    }
 }

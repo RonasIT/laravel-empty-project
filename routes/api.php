@@ -35,6 +35,8 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Route::group(['middleware' => 'guest'], function () {
+    Route::get('/api/users_export', ['uses' => UserController::class.'@export']);
+
     Route::post('/login', ['uses' => AuthController::class . '@login']);
     Route::get('/auth/refresh', ['uses' => AuthController::class . '@refreshToken'])
         ->middleware(['jwt.refresh']);

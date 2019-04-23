@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Exporters\UserExporter;
 use App\Repositories\UserRepository;
 use App\Repositories\RoleRepository;
 use RonasIT\Support\Services\EntityService;
@@ -12,10 +13,13 @@ use Illuminate\Support\Facades\Hash;
  */
 class UserService extends EntityService
 {
+    protected $userExporter;
     protected $roleRepository;
 
     public function __construct()
     {
+        $this->userExporter = app(UserExporter::class);
+
         $this->setRepository(UserRepository::class);
     }
 
@@ -59,5 +63,12 @@ class UserService extends EntityService
             'password' => bcrypt($password),
             'reset_password_hash' => null
         ]);
+    }
+
+    public function export($filters = [])
+    {
+        $query = $this->repository->prepareSearchQuery($filters);
+
+        return $this->userExporter->setQuery($query)->export();
     }
 }
