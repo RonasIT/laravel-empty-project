@@ -2,10 +2,11 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Arr;
 use App\Repositories\UserRepository;
 use App\Repositories\RoleRepository;
-use RonasIT\Support\Services\EntityService;
 use Illuminate\Support\Facades\Hash;
+use RonasIT\Support\Services\EntityService;
 
 /**
  * @property  UserRepository $repository
@@ -21,7 +22,7 @@ class UserService extends EntityService
 
     public function create($data)
     {
-        $data['role_id'] = array_get($data, 'role_id', RoleRepository::USER_ROLE);
+        $data['role_id'] = Arr::get($data, 'role_id', RoleRepository::USER_ROLE);
         $data['password'] = Hash::make($data['password']);
 
         return $this->repository->create($data);
@@ -44,20 +45,24 @@ class UserService extends EntityService
     {
         $hash = uniqid();
 
-        $this->repository->forceUpdate([
-            'email' => $email
-        ], [
-            'reset_password_hash' => $hash
-        ]);
+        $this->repository
+            ->force()
+            ->update([
+                'email' => $email
+            ], [
+                'reset_password_hash' => $hash
+            ]);
     }
 
     public function restorePassword($token, $password)
     {
-        $this->repository->forceUpdate([
-            'reset_password_hash' => $token
-        ], [
-            'password' => bcrypt($password),
-            'reset_password_hash' => null
-        ]);
+        $this->repository
+            ->force()
+            ->update([
+                'reset_password_hash' => $token
+            ], [
+                'password' => bcrypt($password),
+                'reset_password_hash' => null
+            ]);
     }
 }

@@ -2,12 +2,12 @@
 
 namespace App\Tests;
 
-use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Contracts\Console\Kernel;
-use Illuminate\Support\Facades\DB;
-use RonasIT\Support\AutoDoc\Tests\AutoDocTestCase;
-use RonasIT\Support\Traits\FixturesTrait;
 use Tymon\JWTAuth\JWTAuth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Contracts\Console\Kernel;
+use RonasIT\Support\Traits\FixturesTrait;
+use Illuminate\Contracts\Auth\Authenticatable;
+use RonasIT\Support\AutoDoc\Tests\AutoDocTestCase;
 
 abstract class TestCase extends AutoDocTestCase
 {
@@ -16,11 +16,11 @@ abstract class TestCase extends AutoDocTestCase
     protected $jwt;
     protected $auth;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
-        $this->artisan("cache:clear");
+        $this->artisan('cache:clear');
         $this->artisan('migrate');
 
         $this->loadTestDump();
@@ -42,7 +42,7 @@ abstract class TestCase extends AutoDocTestCase
         return $app;
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->beforeApplicationDestroyed(function () {
             DB::disconnect();

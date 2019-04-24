@@ -2,12 +2,12 @@
 
 namespace App\Tests;
 
+use App\Models\User;
 use App\Models\Media;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use RonasIT\Support\Traits\FilesUploadTrait;
 use Symfony\Component\HttpFoundation\Response;
-use App\Models\User;
 
 class MediaTest extends TestCase
 {
@@ -17,7 +17,7 @@ class MediaTest extends TestCase
     protected $user;
     protected $file;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -209,9 +209,9 @@ class MediaTest extends TestCase
      * @dataProvider  getBadFiles
      *
      * @param  array $filter
-     * @param  string $fixture
      */
-    public function testUploadingBadFiles($filter){
+    public function testUploadingBadFiles($filter)
+    {
 
         $this->file = UploadedFile::fake()->create($filter['fileName'], 1024);
 
@@ -245,9 +245,9 @@ class MediaTest extends TestCase
      * @dataProvider  getGoodFiles
      *
      * @param  array $filter
-     * @param  string $fixture
      */
-    public function testUploadingGoodFiles($filter){
+    public function testUploadingGoodFiles($filter)
+    {
 
         $this->file = UploadedFile::fake()->image($filter['fileName'], 600, 600);
 

@@ -2,8 +2,8 @@
 
 namespace App\Repositories;
 
-use RonasIT\Support\Repositories\BaseRepository;
 use App\Models\Role;
+use RonasIT\Support\Repositories\BaseRepository;
 
 /**
  * @property  Role $model
@@ -20,7 +20,8 @@ class RoleRepository extends BaseRepository
 
     public function search($filters)
     {
-        return $this->searchQuery($filters)
+        return $this
+            ->searchQuery($filters)
             ->filterByQuery(['name'])
             ->getSearchResults();
     }

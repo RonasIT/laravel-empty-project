@@ -2,15 +2,16 @@
 
 namespace App\Tests;
 
-use Symfony\Component\HttpFoundation\Response;
 use App\Models\User;
+use Illuminate\Support\Arr;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserTest extends TestCase
 {
     protected $admin;
     protected $user;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -26,8 +27,8 @@ class UserTest extends TestCase
 
         $response->assertStatus(Response::HTTP_OK);
 
-        $expect = array_except($data, ['id', 'password', 'updated_at', 'created_at']);
-        $actual = array_except($response->json(), ['id', 'updated_at', 'created_at']);
+        $expect = Arr::except($data, ['id', 'password', 'updated_at', 'created_at']);
+        $actual = Arr::except($response->json(), ['id', 'updated_at', 'created_at']);
 
         $this->assertEquals($expect, $actual);
     }

@@ -10,7 +10,7 @@ class SettingTest extends TestCase
     protected $admin;
     protected $user;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

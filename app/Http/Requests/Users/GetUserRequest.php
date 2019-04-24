@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Users;
 
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use App\Services\UserService;
 use Illuminate\Foundation\Http\FormRequest;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class GetUserRequest extends FormRequest
 {
@@ -24,7 +24,7 @@ class GetUserRequest extends FormRequest
 
         $service = app(UserService::class);
 
-        if (!$service->exists(['id' => $this->route('id')])) {
+        if (!$service->exists($this->route('id'))) {
             throw new NotFoundHttpException(__('validation.exceptions.not_found', ['entity' => 'User']));
         }
     }

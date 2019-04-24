@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\SettingService;
+use Symfony\Component\HttpFoundation\Response;
 use App\Http\Requests\Setting\GetSettingRequest;
 use App\Http\Requests\Setting\SearchSettingRequest;
 use App\Http\Requests\Setting\UpdateSettingRequest;
-use App\Services\SettingService;
-use Symfony\Component\HttpFoundation\Response;
 
 class SettingController extends Controller
 {
     public function get(GetSettingRequest $request, SettingService $service, $key)
     {
-        $result = $service->first(['name' => $key]);
+        $result = $service->findBy('name', $key);
 
         return response()->json($result);
     }
@@ -27,11 +27,10 @@ class SettingController extends Controller
         return response('', Response::HTTP_NO_CONTENT);
     }
 
-
     public function search(SearchSettingRequest $request, SettingService $service)
     {
         $result = $service->search($request->all());
 
-        return response($result);
+        return response()->json($result);
     }
 }

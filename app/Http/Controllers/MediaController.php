@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\MediaService;
+use Symfony\Component\HttpFoundation\Response;
 use App\Http\Requests\Media\CreateMediaRequest;
 use App\Http\Requests\Media\DeleteMediaRequest;
 use App\Http\Requests\Media\SearchMediaRequest;
-use App\Services\MediaService;
-use Symfony\Component\HttpFoundation\Response;
 
 class MediaController extends Controller
 {
@@ -24,7 +24,7 @@ class MediaController extends Controller
 
     public function delete(DeleteMediaRequest $request, MediaService $service, $id)
     {
-        $service->delete(['id' => $id]);
+        $service->delete($id);
 
         return response('', Response::HTTP_NO_CONTENT);
     }
@@ -33,6 +33,6 @@ class MediaController extends Controller
     {
         $result = $service->search($request->all());
 
-        return response($result);
+        return response()->json($result);
     }
 }

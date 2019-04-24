@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Illuminate\Support\Arr;
 use App\Repositories\SettingRepository;
 use RonasIT\Support\Services\EntityService;
 
@@ -33,7 +34,7 @@ class SettingService extends EntityService
         array_unshift($explodedKey, 'value');
         $valuePath = implode('.', $explodedKey);
 
-        return array_get($setting, $valuePath);
+        return Arr::get($setting, $valuePath);
     }
 
     public function set($key, $value)
@@ -53,9 +54,11 @@ class SettingService extends EntityService
         array_unshift($explodedKey, 'value');
         $valuePath = implode('.', $explodedKey);
 
-        array_set($setting, $valuePath, $value);
+        Arr::set($setting, $valuePath, $value);
 
-        return $this->repository->update(['name' => $primaryKey], [
+        return $this->repository->update([
+            'name' => $primaryKey
+        ], [
             'value' => $setting['value']
         ]);
     }

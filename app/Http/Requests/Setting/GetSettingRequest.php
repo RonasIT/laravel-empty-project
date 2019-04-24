@@ -2,8 +2,9 @@
 
 namespace App\Http\Requests\Setting;
 
-use App\Repositories\RoleRepository;
+use Illuminate\Support\Arr;
 use App\Services\SettingService;
+use App\Repositories\RoleRepository;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -20,7 +21,7 @@ class GetSettingRequest extends FormRequest
             return true;
         }
 
-        return array_get($this->setting, 'is_public');
+        return Arr::get($this->setting, 'is_public');
     }
 
     public function rules()

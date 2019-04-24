@@ -3,8 +3,6 @@
 namespace App\Http\Requests\Media;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Repositories\RoleRepository;
-use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 class CreateMediaRequest extends FormRequest
 {

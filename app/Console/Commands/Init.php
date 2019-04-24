@@ -2,11 +2,12 @@
 
 namespace App\Console\Commands;
 
-use App\Repositories\RoleRepository;
-use Illuminate\Console\Command;
-use Illuminate\Support\Carbon;
-use Validator;
 use Yaml;
+use Validator;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Carbon;
+use Illuminate\Console\Command;
+use App\Repositories\RoleRepository;
 
 class Init extends Command
 {
@@ -112,8 +113,8 @@ class Init extends Command
     {
         $result = '';
 
-        if (array_get($this->dockerVariables[$connectionType], $key, false)) {
-            $settingsName = array_get($this->dockerVariables[$connectionType], $key, false);
+        if (Arr::get($this->dockerVariables[$connectionType], $key, false)) {
+            $settingsName = Arr::get($this->dockerVariables[$connectionType], $key, false);
 
             $result = $environment[$settingsName];
         }
@@ -167,8 +168,8 @@ class Init extends Command
     {
         $result = '';
 
-        if (array_get($this->dockerVariables[$connectionType], $key, false)) {
-            $settingsName = array_get($this->dockerVariables[$connectionType], $key, false);
+        if (Arr::get($this->dockerVariables[$connectionType], $key, false)) {
+            $settingsName = Arr::get($this->dockerVariables[$connectionType], $key, false);
 
             $result = $environment[$settingsName];
         }
