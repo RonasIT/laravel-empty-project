@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests\Setting;
 
-use App\Repositories\RoleRepository;
 use Illuminate\Foundation\Http\FormRequest;
 
 class SearchSettingRequest extends FormRequest

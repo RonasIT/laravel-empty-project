@@ -23,31 +23,12 @@ class UserRepository extends BaseRepository
         return $user->toArray();
     }
 
-    public function prepareSearchQuery($filters)
-    {
-        $this
-            ->searchQuery($filters)
-            ->filterBy('role_id')
-            ->filterByQuery(['name', 'email']);
-
-        return $this->query;
-    }
-
     public function search($filters)
     {
-        $this->prepareSearchQuery($filters);
-
-        return $this->getSearchResults();
-    }
-
-    public function forceUpdate($where, $data)
-    {
-        $user = User::where($where)->first();
-
-        $user->forceFill($data);
-
-        $user->save();
-
-        return $user->toArray();
+        return $this
+            ->searchQuery($filters)
+            ->filterBy('role_id')
+            ->filterByQuery(['name', 'email'])
+            ->getSearchResults();
     }
 }

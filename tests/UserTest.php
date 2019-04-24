@@ -228,13 +228,4 @@ class UserTest extends TestCase
 
         $this->assertEqualsFixture($fixture, $response->json());
     }
-
-    public function testExport()
-    {
-        $response = $this->actingAs($this->admin)->json('get', '/api/users_export');
-
-        $response->assertStatus(Response::HTTP_OK);
-
-        $this->assertEquals($this->getFixture('5cbdad57c1512.csv'), $this->getFixture('../../../..' . $response->json()));
-    }
 }

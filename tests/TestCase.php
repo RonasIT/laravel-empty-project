@@ -2,16 +2,14 @@
 
 namespace App\Tests;
 
-use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Contracts\Console\Kernel;
-use Illuminate\Support\Facades\DB;
-//todo return
-use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
-use RonasIT\Support\Traits\FixturesTrait;
 use Tymon\JWTAuth\JWTAuth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Contracts\Console\Kernel;
+use RonasIT\Support\Traits\FixturesTrait;
+use Illuminate\Contracts\Auth\Authenticatable;
+use RonasIT\Support\AutoDoc\Tests\AutoDocTestCase;
 
-//todo return
-abstract class TestCase extends BaseTestCase
+abstract class TestCase extends AutoDocTestCase
 {
     use FixturesTrait;
 
@@ -23,7 +21,6 @@ abstract class TestCase extends BaseTestCase
         parent::setUp();
 
         $this->artisan('cache:clear');
-        $this->artisan('optimize');
         $this->artisan('migrate');
 
         $this->loadTestDump();

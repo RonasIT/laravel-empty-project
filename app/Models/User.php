@@ -18,6 +18,10 @@ class User extends Authenticatable implements JWTSubject
         'role_id'
     ];
 
+    protected $guarded = [
+        'reset_password_hash'
+    ];
+
     protected $hidden = [
         'password',
         'remember_token',

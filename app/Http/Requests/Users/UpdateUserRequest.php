@@ -2,11 +2,11 @@
 
 namespace App\Http\Requests\Users;
 
+use App\Services\UserService;
+use App\Repositories\RoleRepository;
+use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use App\Services\UserService;
-use Illuminate\Foundation\Http\FormRequest;
-use App\Repositories\RoleRepository;
 
 class UpdateUserRequest extends FormRequest
 {
@@ -30,7 +30,7 @@ class UpdateUserRequest extends FormRequest
 
         $service = app(UserService::class);
 
-        if (!$service->exists(['id' => $this->route('id')])) {
+        if (!$service->exists($this->route('id'))) {
             throw new NotFoundHttpException(__('validation.exceptions.not_found', ['entity' => 'User']));
         }
 

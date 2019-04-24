@@ -9,9 +9,7 @@ class SearchUserRequest extends FormRequest
 {
     public function authorize()
     {
-        //TODO revert irt
-//        return $this->user()->role_id == RoleRepository::ADMIN_ROLE;
-        return true;
+        return $this->user()->role_id == RoleRepository::ADMIN_ROLE;
     }
 
     public function rules()

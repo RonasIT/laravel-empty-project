@@ -3,11 +3,11 @@
 namespace App\Jobs;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use App;
 
 class SendMailJob implements ShouldQueue
 {
@@ -45,7 +45,7 @@ class SendMailJob implements ShouldQueue
      */
     public function handle()
     {
-        \Mail::send($this->template, $this->data, function ($m) {
+        Mail::send($this->template, $this->data, function ($m) {
             $m->from($this->from, $this->subject);
             $m->to($this->to)->subject($this->subject);
         });
