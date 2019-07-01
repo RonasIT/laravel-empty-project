@@ -25,7 +25,7 @@ services:
           php.xdebug.max_nesting_level: 250
 
   pgsql:
-    image: postgres:latest
+    image: ronasit/postgres:9.6
     ports:
         - 5432:5432
     environment:
@@ -36,7 +36,7 @@ services:
       - .:/app
 
   pgsql_test:
-    image: postgres:latest
+    image: ronasit/postgres:9.6
     ports:
         - 5433:5432
     environment:
