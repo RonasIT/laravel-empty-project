@@ -6,14 +6,14 @@ stages:
 image: projects.ronasit.com:4567/docker/gcloud-sdk:latest
 
 variables:
-  DOMAIN: laravel.ronasit.com
-  APP_NAME: Laravel
   CI_PROJECT_NAME: laravel
+  DOMAIN: laravel-empty-project.ronasit.com
   DOCKERFILE: ./Dockerfile
   CHART_REPO: ronasit/laravel
-  CHART_VERSION: 3.1.0
-  CHART_VALUES: chart/values.yaml
+  CHART_VERSION: 3.4.0-beta
+  CHART_VALUES: k8s/values.yaml
   DOCKER_CONTAINER_REGISTRY: gcr.io/ronas-it-development/${CI_PROJECT_NAME}
+  APP_NAME: Laravel
 
 .deploy_template: &deploy
   stage: deploy
@@ -28,6 +28,8 @@ variables:
       --set environment=${CI_ENVIRONMENT_SLUG}
       --set appName=${APP_NAME}
       --set ingress.hosts[0]=$(echo "${CI_ENVIRONMENT_URL}" | awk -F/ '{print $3}')
+      --set ingress.tls[0].secretName=${CI_PROJECT_NAME}-${CI_ENVIRONMENT_SLUG}-tls
+      --set ingress.tls[0].hosts[0]=$(echo "${CI_ENVIRONMENT_URL}" | awk -F/ '{print $3}')
       --set secret=${CI_PROJECT_NAME}-${CI_ENVIRONMENT_SLUG}
       --set image.repository=${DOCKER_CONTAINER_REGISTRY}
       --set image.tag=${CI_PIPELINE_ID}
@@ -36,6 +38,7 @@ variables:
       --set smtp.user=${MAIL_USERNAME}
       --set smtp.password=${MAIL_PASSWORD}
       --set gcs.key=${GCS_KEY_FILE}
+      --set image.tag=${CI_PIPELINE_ID}
     - curl https://projects.ronasit.com/snippets/31/raw | bash
   tags:
     - docker
@@ -74,14 +77,15 @@ tests:
     REDIS_HOST: "redis"
     MAIL_DRIVER: log
     FILESYSTEM_DRIVER: testing
-    DATA_COLLECTOR_KEY: laravel
     APP_ENV: testing
     APP_DEBUG: "true"
     APP_LOG_LEVEL: debug
     APP_URL: http://localhost
+    DATA_COLLECTOR_KEY: laravel
   image: ronasit/php-nginx:7.1
   services:
-    - postgres:11.1
+    - name: ronasit/postgres:9.6
+      alias: postgres
   artifacts:
     paths:
     - vendor
@@ -137,3 +141,21 @@ migrations_development:
     name: "development"
   only:
     - development
+
+deploy_staging:
+  <<: *deploy
+  variables:
+    DOCKER_CONTAINER_REGISTRY: gcr.io/ronas-it-development/${CI_PROJECT_NAME}-stg
+    SECRET_PREFIX: K8S_SECRET_STG_
+  environment:
+    name: "staging"
+    url: https://stg.${DOMAIN}
+  only:
+    - master
+
+migrations_staging:
+  <<: *migrations
+  environment:
+    name: "staging"
+  only:
+    - master
