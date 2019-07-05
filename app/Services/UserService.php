@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Jobs\SendMailJob;
+use App\Mails\ForgotPasswordMail;
 use Illuminate\Support\Arr;
 use App\Repositories\UserRepository;
 use App\Repositories\RoleRepository;
@@ -43,7 +45,7 @@ class UserService extends EntityService
 
     public function forgotPassword($email)
     {
-        $hash = uniqid();
+        $hash = $this->generateUniqueHash();
 
         $this->repository
             ->force()
@@ -52,6 +54,9 @@ class UserService extends EntityService
             ], [
                 'reset_password_hash' => $hash
             ]);
+
+        $mail = new ForgotPasswordMail($email, ['hash' => $hash]);
+        dispatch(new SendMailJob($mail));
     }
 
     public function restorePassword($token, $password)
@@ -64,5 +69,10 @@ class UserService extends EntityService
                 'password' => bcrypt($password),
                 'reset_password_hash' => null
             ]);
+    }
+
+    protected function generateUniqueHash($length = 16)
+    {
+        return bin2hex(openssl_random_pseudo_bytes($length));
     }
 }

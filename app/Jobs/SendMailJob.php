@@ -6,48 +6,31 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
 class SendMailJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $data = [];
-    protected $template = '';
-    protected $from = '';
-    protected $to = '';
-    protected $subject = '';
-    protected $optionService;
+    protected $mails;
 
-    /**
-     * Create a new job instance.
-     *
-     * @param string $template
-     * @param string $subject
-     * @param string $from
-     * @param string $to
-     * @param array $data
-     */
-    public function __construct($template, $subject, $from, $to, $data)
+    public $tries = 5;
+
+    public function __construct($mailables)
     {
-        $this->data = $data;
-        $this->template = $template;
-        $this->from = $from;
-        $this->to = $to;
-        $this->subject = $subject;
+        if (!is_array($mailables)){
+            $mailables = [$mailables];
+        }
+
+        $this->mails = $mailables;
+        $this->onQueue('mails');
     }
 
-    /**
-     * Execute the job.
-     *
-     * @return void
-     */
     public function handle()
     {
-        Mail::send($this->template, $this->data, function ($m) {
-            $m->from($this->from, $this->subject);
-            $m->to($this->to)->subject($this->subject);
-        });
+        foreach ($this->mails as $mailable) {
+            Mail::send($mailable);
+        }
     }
 }

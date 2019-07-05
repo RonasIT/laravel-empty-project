@@ -2,6 +2,7 @@
 
 namespace App\Tests;
 
+use Illuminate\Support\Facades\Mail;
 use Tymon\JWTAuth\JWTAuth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\Console\Kernel;
@@ -25,6 +26,7 @@ abstract class TestCase extends AutoDocTestCase
 
         $this->loadTestDump();
         $this->auth = app(JWTAuth::class);
+        Mail::fake();
     }
 
     /**
@@ -75,4 +77,37 @@ abstract class TestCase extends AutoDocTestCase
         return $this;
     }
 
+    protected function assertMailEquals($mailableClass, $data)
+    {
+        $index = 0;
+
+        Mail::assertSent($mailableClass, function ($mail) use ($data, &$index) {
+            $sentEmails = array_pluck($mail->to, 'address');
+            $currentMail = array_get($data, $index);
+            $emails = array_wrap($currentMail['emails']);
+            $subject = array_get($currentMail, 'subject');
+
+            if (!empty($subject)) {
+                $this->assertEquals($currentMail['subject'], $mail->subject);
+            }
+
+            $this->assertEquals(count($mail->to), count($emails));
+
+            $emailList = implode(',', $sentEmails);
+
+            foreach ($emails as $email) {
+                $this->assertContains($email, $sentEmails, "Block \"To\" on {$index} step don't contains {$email}. Contains only {$emailList}.");
+            }
+
+            $this->assertEquals(
+                $this->getFixture($currentMail['fixture']),
+                view($mail->view, $mail->getData())->render(),
+                "Fixture {$currentMail['fixture']} does not equals rendered mail."
+            );
+
+            $index++;
+
+            return true;
+        });
+    }
 }
