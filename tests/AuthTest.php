@@ -2,6 +2,8 @@
 
 namespace App\Tests;
 
+use App\Mails\ForgotPasswordMail;
+use App\Tests\Support\AuthTestTrait;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\User;
 
@@ -9,7 +11,7 @@ class AuthTest extends TestCase
 {
     protected $admin;
     protected $users;
-
+    use AuthTestTrait;
     public function setUp(): void
     {
         parent::setUp();
@@ -80,6 +82,8 @@ class AuthTest extends TestCase
 
     public function testForgotPassword()
     {
+        $this->mockUniqueTokenGeneration('some_token');
+
         $response = $this->json('post', '/auth/forgot-password', [
             'email' => 'fidel.kutch@example.com'
         ]);
@@ -89,6 +93,13 @@ class AuthTest extends TestCase
         $this->assertDatabaseMissing('users', [
             'email' => 'fidel.kutch@example.com',
             'reset_password_hash' => null
+        ]);
+
+        $this->assertMailEquals(ForgotPasswordMail::class, [
+            [
+                'emails' => 'fidel.kutch@example.com',
+                'fixture' => 'forgot_password_email.html'
+            ]
         ]);
     }
 
