@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\StatusController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MediaController;
@@ -42,4 +43,6 @@ Route::group(['middleware' => 'guest'], function () {
     Route::post('/auth/forgot-password', ['uses' => AuthController::class . '@forgotPassword']);
     Route::post('/auth/restore-password', ['uses' => AuthController::class . '@restorePassword']);
     Route::post('/auth/token/check', ['uses' => AuthController::class . '@checkRestoreToken']);
+
+    Route::get('/status', ['uses' => StatusController::class . '@status']);
 });
