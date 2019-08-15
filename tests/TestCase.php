@@ -9,6 +9,7 @@ use Illuminate\Contracts\Console\Kernel;
 use RonasIT\Support\Traits\FixturesTrait;
 use Illuminate\Contracts\Auth\Authenticatable;
 use RonasIT\Support\AutoDoc\Tests\AutoDocTestCase;
+use Illuminate\Support\Arr;
 
 abstract class TestCase extends AutoDocTestCase
 {
@@ -82,10 +83,10 @@ abstract class TestCase extends AutoDocTestCase
         $index = 0;
 
         Mail::assertSent($mailableClass, function ($mail) use ($data, &$index) {
-            $sentEmails = array_pluck($mail->to, 'address');
-            $currentMail = array_get($data, $index);
-            $emails = array_wrap($currentMail['emails']);
-            $subject = array_get($currentMail, 'subject');
+            $sentEmails = Arr::pluck($mail->to, 'address');
+            $currentMail = Arr::get($data, $index);
+            $emails = Arr::wrap($currentMail['emails']);
+            $subject = Arr::get($currentMail, 'subject');
 
             if (!empty($subject)) {
                 $this->assertEquals($currentMail['subject'], $mail->subject);

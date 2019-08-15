@@ -2,6 +2,8 @@
 
 namespace App\Tests\Support;
 
+use Illuminate\Support\Arr;
+
 trait MockClassTrait
 {
     /**
@@ -19,7 +21,7 @@ trait MockClassTrait
      */
     public function mockClass(string $class, array $callChain)
     {
-        $methods = array_pluck($callChain, 'method');
+        $methods = Arr::pluck($callChain, 'method');
         $mock = $this
             ->getMockBuilder($class)
             ->setMethods($methods)
