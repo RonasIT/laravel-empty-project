@@ -2,8 +2,8 @@
 
 namespace App\Http\Requests\Users;
 
+use App\Models\Role;
 use App\Services\UserService;
-use App\Repositories\RoleRepository;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -11,7 +11,7 @@ class DeleteUserRequest extends FormRequest
 {
     public function authorize()
     {
-        return $this->user()->role_id == RoleRepository::ADMIN_ROLE;
+        return $this->user()->role_id == Role::ADMIN;
     }
 
     public function rules()

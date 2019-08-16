@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Setting;
 
+use App\Models\Role;
 use Illuminate\Support\Arr;
 use App\Services\SettingService;
-use App\Repositories\RoleRepository;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -17,7 +17,7 @@ class GetSettingRequest extends FormRequest
         $service = app(SettingService::class);
         $this->setting = $service->findBy('name', $this->route('name'));
 
-        if ($this->user()->role_id == RoleRepository::ADMIN_ROLE) {
+        if ($this->user()->role_id == Role::ADMIN) {
             return true;
         }
 

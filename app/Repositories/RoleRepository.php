@@ -10,9 +10,6 @@ use RonasIT\Support\Repositories\BaseRepository;
 */
 class RoleRepository extends BaseRepository
 {
-    const ADMIN_ROLE = 1;
-    const USER_ROLE = 2;
-
     public function __construct()
     {
         $this->setModel(Role::class);
