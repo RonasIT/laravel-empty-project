@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Repositories\RoleRepository;
 use RonasIT\Support\Traits\ModelTrait;
 use Illuminate\Database\Eloquent\Model;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -34,7 +33,7 @@ class Media extends Model
 
         $user = JWTAuth::toUser();
 
-        if ($user->role_id !== RoleRepository::ADMIN_ROLE) {
+        if ($user->role_id !== Role::ADMIN) {
             $query->where(function ($query) use ($user) {
                 $query->where('is_public', true)
                     ->orWhere('owner_id', $user->id);

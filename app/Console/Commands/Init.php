@@ -2,12 +2,12 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Role;
 use Yaml;
 use Validator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Console\Command;
-use App\Repositories\RoleRepository;
 
 class Init extends Command
 {
@@ -230,7 +230,7 @@ class Init extends Command
         $admin['name'] = $this->ask('Please enter admin name', $data['name']);
         $admin['email'] = $this->ask('Please enter admin email', $data['email']);
         $admin['password'] = $this->ask('Please enter admin password', $data['password']);
-        $admin['role'] = RoleRepository::ADMIN_ROLE;
+        $admin['role'] = Role::ADMIN;
 
         $validator = Validator::make($admin, [
             'name' => 'required',

@@ -2,14 +2,14 @@
 
 namespace App\Http\Requests\Users;
 
+use App\Models\Role;
 use Illuminate\Foundation\Http\FormRequest;
-use App\Repositories\RoleRepository;
 
 class SearchUserRequest extends FormRequest
 {
     public function authorize()
     {
-        return $this->user()->role_id == RoleRepository::ADMIN_ROLE;
+        return $this->user()->role_id == Role::ADMIN;
     }
 
     public function rules()

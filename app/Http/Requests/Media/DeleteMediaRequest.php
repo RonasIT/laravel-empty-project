@@ -2,16 +2,16 @@
 
 namespace App\Http\Requests\Media;
 
+use App\Models\Role;
 use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use App\Services\MediaService;
-use App\Repositories\RoleRepository;
 
 class DeleteMediaRequest extends FormRequest
 {
     public function authorize()
     {
-        return $this->user()->role_id == RoleRepository::ADMIN_ROLE;
+        return $this->user()->role_id == Role::ADMIN;
     }
 
     public function rules()

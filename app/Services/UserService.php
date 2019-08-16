@@ -4,9 +4,9 @@ namespace App\Services;
 
 use App\Jobs\SendMailJob;
 use App\Mails\ForgotPasswordMail;
+use App\Models\Role;
 use Illuminate\Support\Arr;
 use App\Repositories\UserRepository;
-use App\Repositories\RoleRepository;
 use Illuminate\Support\Facades\Hash;
 use RonasIT\Support\Services\EntityService;
 
@@ -24,7 +24,7 @@ class UserService extends EntityService
 
     public function create($data)
     {
-        $data['role_id'] = Arr::get($data, 'role_id', RoleRepository::USER_ROLE);
+        $data['role_id'] = Arr::get($data, 'role_id', Role::USER);
         $data['password'] = Hash::make($data['password']);
 
         return $this->repository->create($data);
@@ -33,7 +33,7 @@ class UserService extends EntityService
     public function update($where, $data)
     {
         if (empty($data['role_id'])) {
-            $data['role_id'] = RoleRepository::USER_ROLE;
+            $data['role_id'] = Role::USER;
         }
 
         if (!empty($data['password'])) {
