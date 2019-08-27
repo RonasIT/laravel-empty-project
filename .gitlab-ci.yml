@@ -14,6 +14,10 @@ variables:
   CHART_VALUES: k8s/values.yaml
   DOCKER_CONTAINER_REGISTRY: gcr.io/ronas-it-development/${CI_PROJECT_NAME}
   APP_NAME: Laravel
+  FILESYSTEM_DRIVER: local
+  GOOGLE_CLOUD_STORAGE_BUCKET: ronasit-development
+  GOOGLE_CLOUD_PROJECT_ID: ronas-it-development
+  GOOGLE_CLOUD_KEY_FILE: gcs.key
 
 .deploy_template: &deploy
   stage: deploy
