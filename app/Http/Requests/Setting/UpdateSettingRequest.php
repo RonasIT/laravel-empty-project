@@ -2,12 +2,12 @@
 
 namespace App\Http\Requests\Setting;
 
+use App\Http\Requests\Request;
 use App\Models\Role;
 use App\Services\SettingService;
-use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class UpdateSettingRequest extends FormRequest
+class UpdateSettingRequest extends Request
 {
     public function authorize()
     {

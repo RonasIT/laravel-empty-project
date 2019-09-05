@@ -16,7 +16,7 @@ class UserController extends Controller
 {
     public function create(CreateUserRequest $request, UserService $service)
     {
-        $data = $request->all();
+        $data = $request->onlyValidated();
 
         $result = $service->create($data);
 
@@ -32,7 +32,7 @@ class UserController extends Controller
 
     public function update(UpdateUserRequest $request, UserService $service, $id)
     {
-        $service->update($id, $request->except('password'));
+        $service->update($id, $request->onlyValidated());
 
         return response('', Response::HTTP_NO_CONTENT);
     }
@@ -46,7 +46,7 @@ class UserController extends Controller
 
     public function updateProfile(UpdateProfileRequest $request, UserService $service)
     {
-        $service->update($request->user()->id, $request->all());
+        $service->update($request->user()->id, $request->onlyValidated());
 
         return response('', Response::HTTP_NO_CONTENT);
     }
@@ -60,7 +60,7 @@ class UserController extends Controller
 
     public function search(SearchUserRequest $request, UserService $service)
     {
-        $result = $service->search($request->all());
+        $result = $service->search($request->onlyValidated());
 
         return response()->json($result);
     }

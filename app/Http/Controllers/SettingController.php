@@ -21,7 +21,7 @@ class SettingController extends Controller
     {
         $service->update(
             ['name' => $key],
-            ['value' => $request->all()]
+            ['value' => $request->onlyValidated()]
         );
 
         return response('', Response::HTTP_NO_CONTENT);
@@ -29,7 +29,7 @@ class SettingController extends Controller
 
     public function search(SearchSettingRequest $request, SettingService $service)
     {
-        $result = $service->search($request->all());
+        $result = $service->search($request->onlyValidated());
 
         return response()->json($result);
     }

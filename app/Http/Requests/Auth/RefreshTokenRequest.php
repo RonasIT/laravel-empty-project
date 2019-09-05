@@ -2,15 +2,10 @@
 
 namespace App\Http\Requests\Auth;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\Request;
 
-class RefreshTokenRequest extends FormRequest
+class RefreshTokenRequest extends Request
 {
-    public function authorize()
-    {
-        return true;
-    }
-
     public function rules()
     {
         return [];

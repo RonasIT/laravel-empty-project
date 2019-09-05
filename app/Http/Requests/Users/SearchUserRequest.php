@@ -2,10 +2,10 @@
 
 namespace App\Http\Requests\Users;
 
+use App\Http\Requests\Request;
 use App\Models\Role;
-use Illuminate\Foundation\Http\FormRequest;
 
-class SearchUserRequest extends FormRequest
+class SearchUserRequest extends Request
 {
     public function authorize()
     {
@@ -20,6 +20,8 @@ class SearchUserRequest extends FormRequest
             'per_page' => 'integer|nullable',
             'all' => 'integer|nullable',
             'query' => 'string|nullable',
+            'order_by' => 'string|nullable',
+            'desc' => 'boolean|nullable',
         ];
     }
 }

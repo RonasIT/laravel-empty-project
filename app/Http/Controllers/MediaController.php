@@ -13,7 +13,7 @@ class MediaController extends Controller
     public function create(CreateMediaRequest $request, MediaService $service)
     {
         $file = $request->file('file');
-        $data = $request->all();
+        $data = $request->onlyValidated();
 
         $content = file_get_contents($file->getPathname());
 
@@ -31,7 +31,7 @@ class MediaController extends Controller
 
     public function search(SearchMediaRequest $request, MediaService $service)
     {
-        $result = $service->search($request->all());
+        $result = $service->search($request->onlyValidated());
 
         return response()->json($result);
     }

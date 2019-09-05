@@ -2,15 +2,10 @@
 
 namespace App\Http\Requests\Users;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\Request;
 
-class UpdateProfileRequest extends FormRequest
+class UpdateProfileRequest extends Request
 {
-    public function authorize()
-    {
-        return true;
-    }
-
     public function rules()
     {
         return [

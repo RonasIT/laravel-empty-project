@@ -2,15 +2,10 @@
 
 namespace App\Http\Requests\Setting;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\Request;
 
-class SearchSettingRequest extends FormRequest
+class SearchSettingRequest extends Request
 {
-    public function authorize()
-    {
-        return true;
-    }
-
     public function rules()
     {
         return [
