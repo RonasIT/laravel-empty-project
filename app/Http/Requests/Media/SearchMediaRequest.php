@@ -2,15 +2,10 @@
 
 namespace App\Http\Requests\Media;
 
-use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\Request;
 
-class SearchMediaRequest extends FormRequest
+class SearchMediaRequest extends Request
 {
-    public function authorize()
-    {
-        return true;
-    }
-
     public function rules()
     {
         return [

@@ -2,12 +2,12 @@
 
 namespace App\Http\Requests\Users;
 
+use App\Http\Requests\Request;
 use App\Models\Role;
 use App\Services\UserService;
-use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class DeleteUserRequest extends FormRequest
+class DeleteUserRequest extends Request
 {
     public function authorize()
     {

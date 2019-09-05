@@ -2,11 +2,11 @@
 
 namespace App\Http\Requests\Users;
 
+use App\Http\Requests\Request;
 use App\Models\Role;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Illuminate\Foundation\Http\FormRequest;
 
-class CreateUserRequest extends FormRequest
+class CreateUserRequest extends Request
 {
     public function authorize()
     {

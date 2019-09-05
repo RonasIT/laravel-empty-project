@@ -2,17 +2,12 @@
 
 namespace App\Http\Requests\Users;
 
+use App\Http\Requests\Request;
 use App\Services\UserService;
-use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class GetUserRequest extends FormRequest
+class GetUserRequest extends Request
 {
-    public function authorize()
-    {
-        return true;
-    }
-
     public function rules()
     {
         return [];

@@ -2,12 +2,12 @@
 
 namespace App\Http\Requests\Media;
 
+use App\Http\Requests\Request;
 use App\Models\Role;
-use Illuminate\Foundation\Http\FormRequest;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use App\Services\MediaService;
 
-class DeleteMediaRequest extends FormRequest
+class DeleteMediaRequest extends Request
 {
     public function authorize()
     {

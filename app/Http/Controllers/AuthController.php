@@ -40,7 +40,7 @@ class AuthController extends Controller
 
     public function register(RegisterUserRequest $request, UserService $service, JWTAuth $auth)
     {
-        $user = $service->create($request->all());
+        $user = $service->create($request->onlyValidated());
 
         $credentials = $this->credentials($request);
         $token = $auth->attempt($credentials);
