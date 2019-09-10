@@ -31,6 +31,8 @@ class UserTest extends TestCase
         $actual = Arr::except($response->json(), ['id', 'updated_at', 'created_at']);
 
         $this->assertEquals($expect, $actual);
+
+        $this->assertDatabaseHas('users', $expect);
     }
 
     public function testCreateNoAuth()
@@ -40,15 +42,19 @@ class UserTest extends TestCase
         $response = $this->json('post', '/users', $data);
 
         $response->assertStatus(Response::HTTP_UNAUTHORIZED);
+
+        $this->assertDatabaseMissing('users', Arr::except($data, ['password']));
     }
 
     public function testCreateNoPermission()
     {
-        $data = $this->getJsonFixture('user.json');
+        $data = $this->getJsonFixture('create_user.json');
 
         $response = $this->actingAs($this->user)->json('post', '/users', $data);
 
         $response->assertStatus(Response::HTTP_FORBIDDEN);
+
+        $this->assertDatabaseMissing('users', Arr::except($data, ['password']));
     }
 
     public function testCreateUserExists()
@@ -65,15 +71,23 @@ class UserTest extends TestCase
         $response = $this->actingAs($this->admin)->json('put', '/users/2', $data);
 
         $response->assertStatus(Response::HTTP_NO_CONTENT);
+
+        $this->assertDatabaseHas('users', $data);
     }
 
     public function testUpdateNoPermission()
     {
-        $data = $this->getJsonFixture('user.json');
+        $data = $this->getJsonFixture('update_user.json');
 
         $response = $this->actingAs($this->user)->json('put', '/users/1', $data);
 
         $response->assertStatus(Response::HTTP_FORBIDDEN);
+
+        $this->assertDatabaseMissing('users', [
+            'id' => 1,
+            'name' => $data['name'],
+            'email' => $data['email']
+        ]);
     }
 
     public function testUpdateWithEmailOfAnotherUser()
@@ -83,6 +97,11 @@ class UserTest extends TestCase
         ]);
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+
+        $this->assertDatabaseMissing('users', [
+            'id' => 2,
+            'email' => 'admin@example.com'
+        ]);
     }
 
     public function testUpdateNotExists()
@@ -101,6 +120,8 @@ class UserTest extends TestCase
         $response = $this->json('put', '/users/1', $data);
 
         $response->assertStatus(Response::HTTP_UNAUTHORIZED);
+
+        $this->assertDatabaseMissing('users', $data);
     }
 
     public function testUpdateProfile()
@@ -112,6 +133,8 @@ class UserTest extends TestCase
         $response = $this->actingAs($this->admin)->json('put', '/profile', $data);
 
         $response->assertStatus(Response::HTTP_NO_CONTENT);
+
+        $this->assertDatabaseHas('users', $data);
     }
 
     public function testUpdateProfileNoAuth()
@@ -121,6 +144,8 @@ class UserTest extends TestCase
         $response = $this->json('put', '/profile', $data);
 
         $response->assertStatus(Response::HTTP_UNAUTHORIZED);
+
+        $this->assertDatabaseMissing('users', $data);
     }
 
     public function testDelete()
@@ -128,6 +153,10 @@ class UserTest extends TestCase
         $response = $this->actingAs($this->admin)->json('delete', '/users/1');
 
         $response->assertStatus(Response::HTTP_NO_CONTENT);
+
+        $this->assertDatabaseMissing('users', [
+            'id' => 1
+        ]);
     }
 
     public function testDeleteNotExists()
@@ -142,6 +171,10 @@ class UserTest extends TestCase
         $response = $this->json('delete', '/users/1');
 
         $response->assertStatus(Response::HTTP_UNAUTHORIZED);
+
+        $this->assertDatabaseHas('users', [
+            'id' => 1
+        ]);
     }
 
     public function testGetProfile()
@@ -177,12 +210,11 @@ class UserTest extends TestCase
                 'result' => 'search_by_all_user.json'
             ],
             [
-                'filter' => ['page' => 1],
-                'result' => 'search_by_page_user.json'
-            ],
-            [
-                'filter' => ['per_page' => 1],
-                'result' => 'search_by_per_page_user.json'
+                'filter' => [
+                    'page' => 1,
+                    'per_page' => 2,
+                ],
+                'result' => 'search_by_page_per_page_user.json'
             ],
             [
                 'filter' => ['query' => 'Another User'],
@@ -217,8 +249,8 @@ class UserTest extends TestCase
     /**
      * @dataProvider  getSearchFilters
      *
-     * @param  array $filter
-     * @param  string $fixture
+     * @param array $filter
+     * @param string $fixture
      */
     public function testSearch($filter, $fixture)
     {

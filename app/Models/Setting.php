@@ -32,9 +32,7 @@ class Setting extends Model
         $user = JWTAuth::toUser();
 
         if ($user->role_id !== Role::ADMIN) {
-            $query->where(function ($query) {
-                $query->where('is_public', true);
-            });
+            $query->where('is_public', true);
         }
     }
 }
