@@ -21,7 +21,7 @@ class SettingController extends Controller
     {
         $service->update(
             ['name' => $key],
-            ['value' => $request->onlyValidated()]
+            ['value' => $request->all()]
         );
 
         return response('', Response::HTTP_NO_CONTENT);

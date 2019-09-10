@@ -94,6 +94,10 @@ class MediaTest extends TestCase
         $response = $this->actingAs($this->admin)->json('delete', '/media/1');
 
         $response->assertStatus(Response::HTTP_NO_CONTENT);
+
+        $this->assertDatabaseMissing('media', [
+            'id' => 1
+        ]);
     }
 
     public function testDeleteNotExists()
@@ -101,6 +105,10 @@ class MediaTest extends TestCase
         $response = $this->actingAs($this->admin)->json('delete', '/media/0');
 
         $response->assertStatus(Response::HTTP_NOT_FOUND);
+
+        $this->assertDatabaseMissing('media', [
+            'id' => 0
+        ]);
     }
 
     public function testDeleteNoPermission()
@@ -108,6 +116,10 @@ class MediaTest extends TestCase
         $response = $this->actingAs($this->user)->json('delete', '/media/1');
 
         $response->assertStatus(Response::HTTP_FORBIDDEN);
+
+        $this->assertDatabaseHas('media', [
+            'id' => 1
+        ]);
     }
 
     public function testDeleteNoAuth()
@@ -115,6 +127,10 @@ class MediaTest extends TestCase
         $response = $this->json('delete', '/media/1');
 
         $response->assertStatus(Response::HTTP_UNAUTHORIZED);
+
+        $this->assertDatabaseHas('media', [
+            'id' => 1
+        ]);
     }
 
     public function getSearchFilters()

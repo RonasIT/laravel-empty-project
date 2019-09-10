@@ -34,8 +34,9 @@ class Media extends Model
         $user = JWTAuth::toUser();
 
         if ($user->role_id !== Role::ADMIN) {
-            $query->where(function ($query) use ($user) {
-                $query->where('is_public', true)
+            $query->where(function ($subQuery) use ($user) {
+                $subQuery
+                    ->where('is_public', true)
                     ->orWhere('owner_id', $user->id);
             });
         }

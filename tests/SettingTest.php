@@ -25,6 +25,11 @@ class SettingTest extends TestCase
         $response = $this->actingAs($this->admin)->json('put', "/settings/{$setting['name']}", $setting['value']);
 
         $response->assertStatus(Response::HTTP_NO_CONTENT);
+
+        $this->assertDatabaseHas('settings', [
+            'name' => $setting['name'],
+            'value' => json_encode($setting['value'])
+        ]);
     }
 
     public function testUpdateNotExists()
@@ -40,18 +45,28 @@ class SettingTest extends TestCase
     {
         $setting = $this->getJsonFixture('update_setting.json');
 
-        $response = $this->json('put', '/settings/1', $setting);
+        $response = $this->json('put', "/settings/{$setting['name']}", $setting['value']);
 
         $response->assertStatus(Response::HTTP_UNAUTHORIZED);
+
+        $this->assertDatabaseMissing('settings', [
+            'name' => $setting['name'],
+            'value' => json_encode($setting['value'])
+        ]);
     }
 
     public function testUpdateNoPermission()
     {
         $setting = $this->getJsonFixture('update_setting.json');
 
-        $response = $this->actingAs($this->user)->json('put', '/settings/1', $setting);
+        $response = $this->actingAs($this->user)->json('put', "/settings/{$setting['name']}", $setting['value']);
 
         $response->assertStatus(Response::HTTP_FORBIDDEN);
+
+        $this->assertDatabaseMissing('settings', [
+            'name' => $setting['name'],
+            'value' => json_encode($setting['value'])
+        ]);
     }
 
     public function testGetAsAdmin()
@@ -128,8 +143,8 @@ class SettingTest extends TestCase
     /**
      * @dataProvider  getSearchFilters
      *
-     * @param  array $filter
-     * @param  string $fixture
+     * @param array $filter
+     * @param string $fixture
      */
     public function testSearch($filter, $fixture)
     {
@@ -153,8 +168,8 @@ class SettingTest extends TestCase
     /**
      * @dataProvider  getUserSearchFilters
      *
-     * @param  array $filter
-     * @param  string $fixture
+     * @param array $filter
+     * @param string $fixture
      */
     public function testSearchByUser($filter, $fixture)
     {

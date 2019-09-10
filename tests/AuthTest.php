@@ -9,9 +9,11 @@ use App\Models\User;
 
 class AuthTest extends TestCase
 {
+    use AuthTestTrait;
+
     protected $admin;
     protected $users;
-    use AuthTestTrait;
+
     public function setUp(): void
     {
         parent::setUp();

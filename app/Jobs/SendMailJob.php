@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -19,11 +20,7 @@ class SendMailJob implements ShouldQueue
 
     public function __construct($mailables)
     {
-        if (!is_array($mailables)){
-            $mailables = [$mailables];
-        }
-
-        $this->mails = $mailables;
+        $this->mails = Arr::wrap($mailables);
         $this->onQueue('mails');
     }
 
