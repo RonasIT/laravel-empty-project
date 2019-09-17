@@ -2,6 +2,7 @@ replicaCount: 1
 
 persistence:
   enabled: false
+  existingClaim: ""
   storage: 1Gi
 
 ingress:
@@ -13,12 +14,37 @@ ingress:
     certmanager.k8s.io/cluster-issuer: letsencrypt-staging  #letsencrypt-prod for production
 
 cronjobs:
-  enabled: true
+  enabled: false
 
 worker:
-  enabled: true
+  enabled: false
   replicaCount: 1
   cmd: "php /app/artisan queue:work --sleep=3 --tries=3"
+
+migrate:
+  enabled: true
+  timeout: 260
+  cmd: "php artisan migrate --force"
+
+# For Google Cloud Storage
+gcs:
+  enabled: false
+  projectId: "ronas-it-development"
+  bucketName: "ronasit-development"
+  apiUri: "https://storage.googleapis.com/ronasit-development"
+  key: "secret"
+
+# For Google Cloud SQL
+sqlproxy:
+  enabled: false
+  serviceAccountKey: ""
+  instance: ""
+  project: ""
+  region: ""
+  port: "5432"
+  sqlUser: ""
+  sqlPassword: ""
+  sqlDatabase: ""
 
 postgres:
   enabled: true
@@ -28,7 +54,8 @@ postgres:
     
 mysql:
   enabled: false
-  imageTag: "5.7.14"
+  image: "ronasit/mysql"
+  imageTag: "5.7-lowmem"
   persistence:
     enabled: true
     size: 1Gi

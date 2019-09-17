@@ -1,4 +1,5 @@
 stages:
+  - prepare
   - tests
   - deploy
   - migrations
@@ -8,19 +9,31 @@ variables:
   DOMAIN: laravel-empty-project.ronasit.com
   DOCKERFILE: ./Dockerfile
   CHART_REPO: ronasit/laravel
-  CHART_VERSION: &ref 5.2.3-alpha
+  CHART_VERSION: &ref 6.0.1-alpha
   CHART_VALUES: k8s/values.yaml
-  DOCKER_CONTAINER_REGISTRY: gcr.io/ronas-it-development/${CI_PROJECT_NAME}
+  DOCKER_CONTAINER_REGISTRY: gcr.io/ronas-it-development/${CI_PROJECT_NAME}-${CI_ENVIRONMENT_SLUG}
   APP_NAME: Laravel
   FILESYSTEM_DRIVER: local
   GOOGLE_CLOUD_STORAGE_BUCKET: ronasit-development
   GOOGLE_CLOUD_PROJECT_ID: ronas-it-development
-  GOOGLE_CLOUD_KEY_FILE: gcs.key
 
 include:
   - project: 'k8s-tools/charts/laravel'
     ref: *ref
     file: '/helpers/.gitlab-ci-template.yml'
+
+php_dependencies:
+  stage: prepare
+  image: ronasit/php-nginx:7.3
+  artifacts:
+    paths:
+    - vendor
+    expire_in: 1 hour
+  script:
+    - composer install
+  tags:
+    - docker
+    - linux
 
 tests:
   stage: tests
@@ -91,17 +104,9 @@ deploy_development:
   only:
     - development
 
-migrations_development:
-  extends: .migrations
-  environment:
-    name: "development"
-  only:
-    - development
-
 deploy_staging:
   extends: .deploy
   variables:
-    DOCKER_CONTAINER_REGISTRY: gcr.io/ronas-it-development/${CI_PROJECT_NAME}-stg
     SECRET_PREFIX: K8S_SECRET_STG_
   environment:
     name: "staging"
@@ -109,9 +114,3 @@ deploy_staging:
   only:
     - master
 
-migrations_staging:
-  extends: .migrations
-  environment:
-    name: "staging"
-  only:
-    - master
