@@ -4,6 +4,7 @@ namespace App\Tests;
 
 use App\Mails\ForgotPasswordMail;
 use App\Tests\Support\AuthTestTrait;
+use Illuminate\Support\Arr;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\User;
 
@@ -63,6 +64,9 @@ class AuthTest extends TestCase
         $response = $this->json('post', '/register', $data);
 
         $response->assertStatus(Response::HTTP_OK);
+
+        $this->assertDatabaseHas('users', $response->json('user'));
+        $this->assertDatabaseHas('users', Arr::only($data, ['email', 'name']));
     }
 
     public function testRefreshToken()

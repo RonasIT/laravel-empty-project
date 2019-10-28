@@ -17,7 +17,10 @@ class StatusTest extends TestCase
 
     public function testStatusServiceUnavailable()
     {
+        $connection = $this->getConnection();
+
         DB::shouldReceive('disconnect')->andReturnNull();
+        DB::shouldReceive('connection')->andReturn($connection);
         DB::shouldReceive('getPdo')->andThrow(Exception::class);
 
         $response = $this->json('get', '/status');

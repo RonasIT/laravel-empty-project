@@ -37,7 +37,7 @@ $factory->define(App\Models\Media::class, function (Faker\Generator $faker) {
         'name' => $faker->word
     ];
 });
-$factory->define(App\Models\Option::class, function (Faker\Generator $faker) {
+$factory->define(App\Models\Setting::class, function (Faker\Generator $faker) {
     return [
         'key' => $faker->word,
         'value' => $faker->word
