@@ -15,14 +15,6 @@ class MediaRepository extends BaseRepository
         $this->setModel(Media::class);
     }
 
-    public function search($filters)
-    {
-        return $this
-            ->searchQuery($filters)
-            ->filterByQuery(['name'])
-            ->getSearchResults();
-    }
-
     public function getSearchResults()
     {
         $this->query->applyMediaPermissionRestrictions();

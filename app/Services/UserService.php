@@ -22,6 +22,15 @@ class UserService extends EntityService
         $this->setRepository(UserRepository::class);
     }
 
+    public function search($filters)
+    {
+        return $this->repository
+            ->searchQuery($filters)
+            ->filterBy('role_id')
+            ->filterByQuery(['name', 'email'])
+            ->getSearchResults();
+    }
+
     public function create($data)
     {
         $data['role_id'] = Arr::get($data, 'role_id', Role::USER);

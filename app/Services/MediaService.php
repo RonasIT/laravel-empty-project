@@ -18,6 +18,14 @@ class MediaService extends EntityService
         $this->setRepository(MediaRepository::class);
     }
 
+    public function search($filters)
+    {
+        return $this->repository
+            ->searchQuery($filters)
+            ->filterByQuery(['name'])
+            ->getSearchResults();
+    }
+
     public function create($content, $fileName, $data = [])
     {
         $url = $this->saveFile($fileName, $content, true);

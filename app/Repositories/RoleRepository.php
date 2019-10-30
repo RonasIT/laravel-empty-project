@@ -14,12 +14,4 @@ class RoleRepository extends BaseRepository
     {
         $this->setModel(Role::class);
     }
-
-    public function search($filters)
-    {
-        return $this
-            ->searchQuery($filters)
-            ->filterByQuery(['name'])
-            ->getSearchResults();
-    }
 }

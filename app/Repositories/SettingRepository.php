@@ -15,15 +15,6 @@ class SettingRepository extends BaseRepository
         $this->setModel(Setting::class);
     }
 
-    public function search($filters)
-    {
-        return $this
-            ->searchQuery($filters)
-            ->filterByQuery(['name'])
-            ->orderBy('name')
-            ->getSearchResults();
-    }
-
     public function getSearchResults()
     {
         $this->query->applySettingPermissionRestrictions();

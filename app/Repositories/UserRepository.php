@@ -22,13 +22,4 @@ class UserRepository extends BaseRepository
 
         return $user->toArray();
     }
-
-    public function search($filters)
-    {
-        return $this
-            ->searchQuery($filters)
-            ->filterBy('role_id')
-            ->filterByQuery(['name', 'email'])
-            ->getSearchResults();
-    }
 }
