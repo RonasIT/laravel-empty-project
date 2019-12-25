@@ -2,14 +2,13 @@ stages:
   - prepare
   - tests
   - deploy
-  - migrations
 
 variables:
   CI_PROJECT_NAME: laravel
   DOMAIN: laravel-empty-project.ronasit.com
   DOCKERFILE: ./Dockerfile
   CHART_REPO: ronasit/laravel
-  CHART_VERSION: &ref 7.0.3-alpha
+  CHART_VERSION: &ref 7.0.7
   CHART_VALUES: k8s/values.yaml
   DOCKER_CONTAINER_REGISTRY: gcr.io/ronas-it-development/${CI_PROJECT_NAME}-${CI_ENVIRONMENT_SLUG}
   APP_NAME: Laravel
