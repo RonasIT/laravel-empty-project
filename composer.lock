@@ -2798,16 +2798,16 @@
         },
         {
             "name": "ronasit/laravel-helpers",
-            "version": "1.4.0-beta",
+            "version": "1.4.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RonasIT/laravel-helpers.git",
-                "reference": "f5dbfa3c24868ffd2fad7bf4ade0cd51c353164a"
+                "reference": "221b1120821b5feb2ce02dd20dc083e32e7f2007"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RonasIT/laravel-helpers/zipball/f5dbfa3c24868ffd2fad7bf4ade0cd51c353164a",
-                "reference": "f5dbfa3c24868ffd2fad7bf4ade0cd51c353164a",
+                "url": "https://api.github.com/repos/RonasIT/laravel-helpers/zipball/221b1120821b5feb2ce02dd20dc083e32e7f2007",
+                "reference": "221b1120821b5feb2ce02dd20dc083e32e7f2007",
                 "shasum": ""
             },
             "require": {
@@ -2816,7 +2816,7 @@
                 "maatwebsite/excel": "3.*",
                 "minime/annotations": "2.3.1",
                 "php": ">=7.0",
-                "tecnick.com/tcpdf": "~6.0.0",
+                "tecnickcom/tcpdf": "~6.0.0",
                 "tymon/jwt-auth": "0.5.* || 1.0.*"
             },
             "require-dev": {
@@ -2856,7 +2856,7 @@
                 "helpers",
                 "laravel"
             ],
-            "time": "2019-10-18T07:07:53+00:00"
+            "time": "2020-01-20T08:38:36+00:00"
         },
         {
             "name": "superbalist/flysystem-google-storage",
@@ -4498,7 +4498,7 @@
             "time": "2019-09-11T15:41:19+00:00"
         },
         {
-            "name": "tecnick.com/tcpdf",
+            "name": "tecnickcom/tcpdf",
             "version": "6.0.099",
             "source": {
                 "type": "git",
@@ -4558,7 +4558,6 @@
                 "pdf417",
                 "qrcode"
             ],
-            "abandoned": "tecnickcom/tcpdf",
             "time": "2014-11-15T12:35:49+00:00"
         },
         {
@@ -4801,12 +4800,12 @@
             "version": "v0.11.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/barryvdh/laravel-cors.git",
+                "url": "https://github.com/fruitcake/laravel-cors.git",
                 "reference": "03492f1a3bc74a05de23f93b94ac7cc5c173eec9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/barryvdh/laravel-cors/zipball/03492f1a3bc74a05de23f93b94ac7cc5c173eec9",
+                "url": "https://api.github.com/repos/fruitcake/laravel-cors/zipball/03492f1a3bc74a05de23f93b94ac7cc5c173eec9",
                 "reference": "03492f1a3bc74a05de23f93b94ac7cc5c173eec9",
                 "shasum": ""
             },
@@ -7116,6 +7115,70 @@
             "description": "Symfony Filesystem Component",
             "homepage": "https://symfony.com",
             "time": "2019-08-20T14:07:54+00:00"
+        },
+        {
+            "name": "tecnick.com/tcpdf",
+            "version": "6.0.099",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tecnickcom/TCPDF.git",
+                "reference": "75e7ad39458e060d0cae6fcb7d50a2c9f3af1b01"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tecnickcom/TCPDF/zipball/75e7ad39458e060d0cae6fcb7d50a2c9f3af1b01",
+                "reference": "75e7ad39458e060d0cae6fcb7d50a2c9f3af1b01",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "fonts",
+                    "config",
+                    "include",
+                    "tcpdf.php",
+                    "tcpdf_parser.php",
+                    "tcpdf_import.php",
+                    "tcpdf_barcodes_1d.php",
+                    "tcpdf_barcodes_2d.php",
+                    "include/tcpdf_colors.php",
+                    "include/tcpdf_filters.php",
+                    "include/tcpdf_font_data.php",
+                    "include/tcpdf_fonts.php",
+                    "include/tcpdf_images.php",
+                    "include/tcpdf_static.php",
+                    "include/barcodes/datamatrix.php",
+                    "include/barcodes/pdf417.php",
+                    "include/barcodes/qrcode.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "LGPLv3"
+            ],
+            "authors": [
+                {
+                    "name": "Nicola Asuni",
+                    "email": "info@tecnick.com",
+                    "homepage": "http://nicolaasuni.tecnick.com"
+                }
+            ],
+            "description": "TCPDF is a PHP class for generating PDF documents and barcodes.",
+            "homepage": "http://www.tcpdf.org/",
+            "keywords": [
+                "PDFD32000-2008",
+                "TCPDF",
+                "barcodes",
+                "datamatrix",
+                "pdf",
+                "pdf417",
+                "qrcode"
+            ],
+            "abandoned": "tecnickcom/tcpdf",
+            "time": "2014-11-15T12:35:49+00:00"
         },
         {
             "name": "theseer/tokenizer",
