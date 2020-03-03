@@ -41,10 +41,6 @@ class UserService extends EntityService
 
     public function update($where, $data)
     {
-        if (empty($data['role_id'])) {
-            $data['role_id'] = Role::USER;
-        }
-
         if (!empty($data['password'])) {
             $data['password'] = Hash::make($data['password']);
         }
