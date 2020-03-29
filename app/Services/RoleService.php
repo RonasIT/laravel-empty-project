@@ -6,7 +6,7 @@ use App\Repositories\RoleRepository;
 use RonasIT\Support\Services\EntityService;
 
 /**
- * @property  RoleRepository $repository
+ * @property RoleRepository $repository
  */
 class RoleService extends EntityService
 {

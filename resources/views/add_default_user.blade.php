@@ -1,5 +1,6 @@
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\Hash;
 use RonasIT\Support\Traits\MigrationTrait;
 
 class AddDefaultUser extends Migration
@@ -12,7 +13,7 @@ class AddDefaultUser extends Migration
             User::create([
                 'name'     => '{{$name}}',
                 'email'    => '{{$email}}',
-                'password' => bcrypt('{{$password}}'),
+                'password' => Hash::make('{{$password}}'),
                 'role_id'  => '{{$role}}'
             ]);
         }
