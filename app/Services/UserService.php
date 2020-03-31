@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use RonasIT\Support\Services\EntityService;
 
 /**
- * @property  UserRepository $repository
+ * @property UserRepository $repository
  */
 class UserService extends EntityService
 {
@@ -71,7 +71,7 @@ class UserService extends EntityService
             ->update([
                 'reset_password_hash' => $token
             ], [
-                'password' => bcrypt($password),
+                'password' => Hash::make($password),
                 'reset_password_hash' => null
             ]);
     }

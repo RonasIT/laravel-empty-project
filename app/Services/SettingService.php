@@ -7,7 +7,7 @@ use App\Repositories\SettingRepository;
 use RonasIT\Support\Services\EntityService;
 
 /**
- * @property  SettingRepository $repository
+ * @property SettingRepository $repository
  */
 class SettingService extends EntityService
 {
