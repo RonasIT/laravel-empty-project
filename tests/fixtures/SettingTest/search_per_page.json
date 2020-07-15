@@ -2,8 +2,8 @@
     "current_page": 1,
     "data": [
         {
-            "created_at": "2016-10-20 11:05:00",
-            "updated_at": "2016-10-20 11:06:00",
+            "created_at": "2016-10-20T11:05:00.000000Z",
+            "updated_at": "2016-10-20T11:06:00.000000Z",
             "name": "attribute",
             "value": {
                 "name": "color",
@@ -12,8 +12,8 @@
             "is_public": true
         },
         {
-            "created_at": "2016-10-20 11:07:00",
-            "updated_at": "2016-10-20 11:08:00",
+            "created_at": "2016-10-20T11:07:00.000000Z",
+            "updated_at": "2016-10-20T11:08:00.000000Z",
             "name": "mailgun",
             "value": {
                 "api_key": "superKey",
