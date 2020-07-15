@@ -2,7 +2,7 @@
 
 namespace App\Http;
 
-use Barryvdh\Cors\HandleCors;
+use Fruitcake\Cors\HandleCors;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use RonasIT\Support\AutoDoc\Http\Middleware\AutoDocMiddleware;
 

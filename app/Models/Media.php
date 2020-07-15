@@ -21,6 +21,10 @@ class Media extends Model
         'is_public' => 'boolean'
     ];
 
+    protected $dates = [
+        'deleted_at'
+    ];
+
     protected $hidden = ['pivot'];
 
     public function scopeApplyMediaPermissionRestrictions($query)

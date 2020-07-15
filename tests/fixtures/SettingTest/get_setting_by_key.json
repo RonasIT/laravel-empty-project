@@ -2,8 +2,8 @@
     "current_page": 1,
     "data": [
         {
-            "created_at": "2016-10-20 11:08:00",
-            "updated_at": "2016-10-20 11:09:00",
+            "created_at": "2016-10-20T11:08:00.000000Z",
+            "updated_at": "2016-10-20T11:09:00.000000Z",
             "name": "states",
             "value": [
                 "NSW",
