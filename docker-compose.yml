@@ -3,7 +3,7 @@ version: '3'
 services:
 
   nginx:
-      image: ronasit/php-nginx-dev:7.3
+      image: ronasit/php-nginx-dev:7.4
       working_dir: /app
       ports:
           - 80:80
