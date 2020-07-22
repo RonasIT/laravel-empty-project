@@ -128,13 +128,38 @@ class UserTest extends TestCase
     {
         $data = $this->getJsonFixture('update_user.json');
 
-        $data['email'] = 'test@example.com';
-
         $response = $this->actingAs($this->admin)->json('put', '/profile', $data);
 
         $response->assertStatus(Response::HTTP_NO_CONTENT);
 
         $this->assertDatabaseHas('users', $data);
+    }
+
+    public function testUpdateProfileWithPassword()
+    {
+        $data = $this->getJsonFixture('update_profile_with_password.json');
+
+        $response = $this->actingAs($this->user)->json('put', '/profile', $data);
+
+        $response->assertStatus(Response::HTTP_NO_CONTENT);
+    }
+
+    public function testUpdateProfileWithPasswordEmptyOldPassword()
+    {
+        $data = $this->getJsonFixture('update_profile_with_password_without_old.json');
+
+        $response = $this->actingAs($this->user)->json('put', '/profile', $data);
+
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    public function testUpdateProfileWithPasswordWrongOldPassword()
+    {
+        $data = $this->getJsonFixture('update_profile_with_password_with_wrong_old.json');
+
+        $response = $this->actingAs($this->user)->json('put', '/profile', $data);
+
+        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     public function testUpdateProfileNoAuth()
