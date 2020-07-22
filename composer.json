@@ -8,24 +8,24 @@
   "license": "MIT",
   "type": "project",
   "require": {
-    "php": "^7.2.5",
+    "php": "^7.4",
     "doctrine/dbal": "^2.10",
-    "laravel/framework": "^7.19",
+    "laravel/framework": "^7.21",
     "laravel/tinker": "^2.4",
     "laravel/ui": "^2.1",
     "superbalist/laravel-google-cloud-storage": "^2.2",
-    "symfony/yaml": "^4.1",
+    "symfony/yaml": "^4.4",
     "ronasit/laravel-helpers":  "1.4.*@beta"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.4",
-    "mockery/mockery": "0.9.*",
+    "mockery/mockery": "^1.4",
     "phpunit/phpunit": "^8.5",
-    "ronasit/laravel-entity-generator": ">=1.3.2",
-    "ronasit/laravel-swagger": ">=1.4.3@beta",
-    "ronasit/laravel-remote-data-collector": ">=1.0",
+    "ronasit/laravel-entity-generator": ">=1.3.4",
+    "ronasit/laravel-swagger": ">=1.4.5@beta",
+    "ronasit/laravel-remote-data-collector": ">=1.3",
     "fruitcake/laravel-cors": "^1.0",
-    "barryvdh/laravel-ide-helper": "^2.2"
+    "barryvdh/laravel-ide-helper": "^2.7"
   },
   "autoload": {
     "classmap": [

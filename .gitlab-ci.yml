@@ -23,7 +23,7 @@ include:
 
 php_dependencies:
   stage: prepare
-  image: ronasit/php-nginx:7.3
+  image: ronasit/php-nginx:7.4
   artifacts:
     paths:
     - vendor
@@ -50,7 +50,7 @@ tests:
     APP_LOG_LEVEL: debug
     APP_URL: http://localhost
     DATA_COLLECTOR_KEY: laravel
-  image: ronasit/php-nginx:7.3
+  image: ronasit/php-nginx:7.4
   services:
     - name: ronasit/postgres:9.6
       alias: postgres
