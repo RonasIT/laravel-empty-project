@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\MediaRepository;
+use Illuminate\Support\Facades\Auth;
 use RonasIT\Support\Services\EntityService;
 use RonasIT\Support\Traits\FilesUploadTrait;
 
@@ -30,6 +31,8 @@ class MediaService extends EntityService
     {
         $url = $this->saveFile($fileName, $content, true);
         $data['link'] = str_replace(config('app.url'), '', $url);
+        $data['name'] = $fileName;
+        $data['owner_id'] = Auth::user()->id;;
 
         return $this->repository->create($data);
     }
