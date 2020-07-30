@@ -5,17 +5,17 @@
             "id": 1,
             "name": "Mr Admin",
             "email": "admin@example.com",
-            "created_at": "2016-10-20 11:05:00",
-            "updated_at": "2016-10-20 11:05:00",
-            "role_id": 1
+            "role_id": 1,
+            "created_at": "2016-10-20T11:05:00.000000Z",
+            "updated_at": "2016-10-20T11:05:00.000000Z"
         },
         {
             "id": 2,
             "name": "Another User",
             "email": "user@example.com",
-            "created_at": "2016-10-20 11:05:00",
-            "updated_at": "2016-10-20 11:05:00",
-            "role_id": 2
+            "role_id": 2,
+            "created_at": "2016-10-20T11:05:00.000000Z",
+            "updated_at": "2016-10-20T11:05:00.000000Z"
         }
     ],
     "first_page_url": "http:\/\/localhost\/users?page=1",

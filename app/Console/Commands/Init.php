@@ -269,7 +269,7 @@ class Init extends Command
             self::PGSQL_CONNECTION
         ];
 
-        if ($this->prevSettings['DB_CONNECTION']) {
+        if (!empty($this->prevSettings['DB_CONNECTION'])) {
             return $this->prevSettings['DB_CONNECTION'];
         } else {
             return $this->choice('Please select database connection type', $connectionTypes, '1');

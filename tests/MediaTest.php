@@ -36,6 +36,8 @@ class MediaTest extends TestCase
 
         $this->assertDatabaseHas('media', [
             'id' => $responseData['id'],
+            'name' => 'file.png',
+            'owner_id' => $this->admin->id,
             'is_public' => false
         ]);
     }
@@ -43,16 +45,18 @@ class MediaTest extends TestCase
 
     public function testCreatePublic()
     {
-        $response = $this->actingAs($this->admin)->json(
-            'post',
-            '/media',
-            ['file' => $this->file, 'is_public' => true]
+        $response = $this->actingAs($this->user)->json('post', '/media', [
+                'file' => $this->file,
+                'is_public' => true,
+            ]
         );
 
         $responseData = $response->json();
 
         $this->assertDatabaseHas('media', [
             'id' => $responseData['id'],
+            'name' => 'file.png',
+            'owner_id' => $this->user->id,
             'is_public' => true
         ]);
 
