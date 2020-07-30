@@ -99,7 +99,7 @@ class MediaTest extends TestCase
 
         $response->assertStatus(Response::HTTP_NO_CONTENT);
 
-        $this->assertDatabaseMissing('media', [
+        $this->assertSoftDeleted('media', [
             'id' => 1
         ]);
     }
@@ -141,7 +141,7 @@ class MediaTest extends TestCase
     {
         return [
             [
-                'filter' => ['query' => 'Deleted photo'],
+                'filter' => ['query' => 'main'],
                 'result' => 'get_medias_by_name.json'
             ],
             [
