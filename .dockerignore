@@ -1,0 +1,7 @@
+.git*
+Dockerfile
+docker-compose.yml
+*md
+test*
+k8s
+docker

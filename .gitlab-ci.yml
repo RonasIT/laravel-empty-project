@@ -8,7 +8,7 @@ variables:
   DOMAIN: laravel-empty-project.ronasit.com
   DOCKERFILE: ./Dockerfile
   CHART_REPO: ronasit/laravel
-  CHART_VERSION: &ref 8.0.2
+  CHART_VERSION: &ref 8.0.6
   CHART_VALUES: k8s/values.yaml
   DOCKER_CONTAINER_REGISTRY: gcr.io/ronas-it-development/${CI_PROJECT_NAME}-${CI_ENVIRONMENT_SLUG}
   APP_NAME: Laravel
@@ -52,7 +52,7 @@ tests:
     DATA_COLLECTOR_KEY: laravel
   image: ronasit/php-nginx:7.4
   services:
-    - name: ronasit/postgres:9.6
+    - name: ronasit/postgres:11.1
       alias: postgres
   artifacts:
     paths:
@@ -105,11 +105,8 @@ deploy_development:
     
 deploy_staging:
   extends: .deploy
-  variables:
-    SECRET_PREFIX: K8S_SECRET_STG_
   environment:
     name: "staging"
     url: https://stg.${DOMAIN}
   only:
     - web
-
