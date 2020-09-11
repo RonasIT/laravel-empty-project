@@ -38,7 +38,7 @@ tests:
   stage: tests
   variables:
     DB_CONNECTION: pgsql
-    DB_HOST: postgres
+    DB_HOST: pgsql_test
     POSTGRES_USER: forge
     POSTGRES_DB: forge
     POSTGRES_PASSWORD: ""
@@ -53,7 +53,7 @@ tests:
   image: ronasit/php-nginx:7.4
   services:
     - name: ronasit/postgres:11.1
-      alias: postgres
+      alias: pgsql_test
   artifacts:
     paths:
     - vendor
