@@ -6,7 +6,7 @@ services:
       image: ronasit/php-nginx-dev:7.4
       working_dir: /app
       command: >
-        bash -c "chmod +x ./docker/entrypoint.sh && ./docker/entrypoint.sh && supervisord"
+        bash -c "chmod +x ./docker/entrypoint.sh && ./docker/entrypoint.sh && cd /opt/docker && supervisord"
       ports:
           - 80:80
           - 443:443
