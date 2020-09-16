@@ -4,7 +4,7 @@
 
 ### Локальный запуск
 
-docker-compose содержит конфигурацию для PHP 7.3 с postgres, redis
+docker-compose содержит конфигурацию для PHP 7.4 с postgres, redis
 
 Для генерации пользователя с ролью админ и файлов .env и .env.testing, необходимо запустить команду php artisan init и следовать инструкциям
 
@@ -20,6 +20,7 @@ docker-compose содержит конфигурацию для PHP 7.3 с postg
    K8S_SECRET_OTHER_VARIABLE
    ```
    Соответсвующие переменные будут проброшены в контейнер.
+   
 3) Установить в .gitlab-ci.yml переменные:
    ```
    CI_PROJECT_NAME=`название проекта`

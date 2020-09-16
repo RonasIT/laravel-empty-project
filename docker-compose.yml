@@ -5,6 +5,8 @@ services:
   nginx:
       image: ronasit/php-nginx-dev:7.4
       working_dir: /app
+      command: >
+        bash -c "chmod +x ./docker/entrypoint.sh && ./docker/entrypoint.sh && cd /opt/docker && supervisord"
       ports:
           - 80:80
           - 443:443
@@ -25,7 +27,7 @@ services:
           php.xdebug.max_nesting_level: 250
 
   pgsql:
-    image: ronasit/postgres:9.6
+    image: ronasit/postgres:11.1
     ports:
         - 5432:5432
     environment:
@@ -36,13 +38,13 @@ services:
       - .:/app
 
   pgsql_test:
-    image: ronasit/postgres:9.6
+    image: ronasit/postgres:11.1
     ports:
         - 5433:5432
     environment:
       POSTGRES_PASSWORD: ""
-      POSTGRES_USER: pguser
-      POSTGRES_DB: pgdb
+      POSTGRES_USER: forge
+      POSTGRES_DB: forge
     volumes:
     - .:/app
     command: ["-c", "fsync=off"]
