@@ -50,7 +50,7 @@ tests:
     APP_LOG_LEVEL: debug
     APP_URL: http://localhost
     DATA_COLLECTOR_KEY: laravel
-    FAIL_EXPORT_JSON: true
+    FAIL_EXPORT_JSON: "true"
   image: ronasit/php-nginx:7.4
   services:
     - name: ronasit/postgres:11.1
