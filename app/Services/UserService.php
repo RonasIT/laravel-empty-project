@@ -15,8 +15,6 @@ use RonasIT\Support\Services\EntityService;
  */
 class UserService extends EntityService
 {
-    protected $roleRepository;
-
     public function __construct()
     {
         $this->setRepository(UserRepository::class);

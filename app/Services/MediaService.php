@@ -32,7 +32,7 @@ class MediaService extends EntityService
         $url = $this->saveFile($fileName, $content, true);
         $data['link'] = str_replace(config('app.url'), '', $url);
         $data['name'] = $fileName;
-        $data['owner_id'] = Auth::user()->id;;
+        $data['owner_id'] = Auth::user()->id;
 
         return $this->repository->create($data);
     }
