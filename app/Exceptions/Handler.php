@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
+use PHPUnit\Framework\ExpectationFailedException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -73,6 +74,10 @@ class Handler extends ExceptionHandler
                 ['error' => $exception->getMessage()],
                 Response::HTTP_FORBIDDEN
             );
+        }
+
+        if (app()->runningUnitTests() && ($exception instanceof ExpectationFailedException)) {
+            throw $exception;
         }
 
         return parent::render($request, $exception);
