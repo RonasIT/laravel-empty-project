@@ -21,6 +21,9 @@ migrate:
   timeout: 260
   cmd: "php artisan migrate --force"
 
+smtp:
+  enabled: false
+
 # For Google Cloud Storage
 gcs:
   enabled: false
