@@ -48,7 +48,7 @@ class UserService extends EntityService
 
     public function forgotPassword($email)
     {
-        $hash = $this->generateUniqueHash();
+        $hash = $this->generateHash();
 
         $this->repository
             ->force()
@@ -74,8 +74,10 @@ class UserService extends EntityService
             ]);
     }
 
-    protected function generateUniqueHash($length = 16)
+    protected function generateHash($length = 32)
     {
+        $length /= 2;
+
         return bin2hex(openssl_random_pseudo_bytes($length));
     }
 }
