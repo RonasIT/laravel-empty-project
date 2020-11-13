@@ -15,11 +15,4 @@ class UserRepository extends BaseRepository
     {
         $this->setModel(User::class);
     }
-
-    public function create($data)
-    {
-        $user = User::create(Arr::only($data, User::getFields()));
-
-        return $user->toArray();
-    }
 }
