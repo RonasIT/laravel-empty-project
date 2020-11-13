@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Console\Command;
 
 class ClearResetPasswordHash extends Command
@@ -13,7 +13,7 @@ class ClearResetPasswordHash extends Command
 
     public function handle()
     {
-        User::query()->update(['reset_password_hash' => null]);
+        app(UserService::class)->updateResetPasswordHashToNull();
 
         $this->line('Reset password hash was cleared');
     }

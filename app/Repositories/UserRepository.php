@@ -15,4 +15,9 @@ class UserRepository extends BaseRepository
     {
         $this->setModel(User::class);
     }
+
+    public function updateResetPasswordHashToNull()
+    {
+        return $this->getQuery([])->update(['reset_password_hash' => null]);
+    }
 }
