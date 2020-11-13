@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Repositories\MediaRepository;
 use Illuminate\Support\Facades\Auth;
-use RonasIT\Support\Repositories\BaseRepository;
 use RonasIT\Support\Services\EntityService;
 use RonasIT\Support\Traits\FilesUploadTrait;
 
