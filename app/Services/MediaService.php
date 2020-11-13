@@ -9,6 +9,7 @@ use RonasIT\Support\Traits\FilesUploadTrait;
 
 /**
  * @property MediaRepository $repository
+ * @mixin MediaRepository
  */
 class MediaService extends EntityService
 {
