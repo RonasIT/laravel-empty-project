@@ -12,7 +12,7 @@ class ClearResetPasswordHash extends Command
      *
      * @var string
      */
-    protected $signature = 'clear:reset_password_hash';
+    protected $signature = 'clear:reset-password-hash';
 
     /**
      * The console command description.
