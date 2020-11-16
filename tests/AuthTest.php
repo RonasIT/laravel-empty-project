@@ -98,7 +98,8 @@ class AuthTest extends TestCase
 
         $this->assertDatabaseMissing('users', [
             'email' => 'fidel.kutch@example.com',
-            'set_password_hash' => null
+            'set_password_hash' => null,
+            'password_hash_created_at' => null
         ]);
 
         $this->assertMailEquals(ForgotPasswordMail::class, [

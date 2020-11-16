@@ -7,9 +7,9 @@ use Illuminate\Console\Command;
 
 class ClearResetPasswordHash extends Command
 {
-    protected $signature = 'clear:reset-password-hash';
+    protected $signature = 'clear:set-password-hash';
 
-    protected $description = 'Clear reset_password_hash in users table';
+    protected $description = 'Clear set_password_hash in users table';
 
     public function handle()
     {
