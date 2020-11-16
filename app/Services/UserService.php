@@ -55,7 +55,7 @@ class UserService extends EntityService
             ->update([
                 'email' => $email
             ], [
-                'reset_password_hash' => $hash
+                'set_password_hash' => $hash
             ]);
 
         $mail = new ForgotPasswordMail($email, ['hash' => $hash]);
@@ -67,10 +67,10 @@ class UserService extends EntityService
         $this->repository
             ->force()
             ->update([
-                'reset_password_hash' => $token
+                'set_password_hash' => $token
             ], [
                 'password' => Hash::make($password),
-                'reset_password_hash' => null
+                'set_password_hash' => null
             ]);
     }
 
