@@ -11,7 +11,7 @@ trait AuthTestTrait
     public function mockUniqueTokenGeneration($hash)
     {
         $this->mockClass(UserService::class, [
-            ['method' => 'generateUniqueHash', 'result' => $hash]
+            ['method' => 'generateHash', 'result' => $hash]
         ]);
     }
 }

@@ -49,14 +49,14 @@ class UserService extends EntityService
 
     public function forgotPassword($email)
     {
-        $hash = $this->generateUniqueHash();
+        $hash = $this->generateHash();
 
         $this->repository
             ->force()
             ->update([
                 'email' => $email
             ], [
-                'reset_password_hash' => $hash
+                'set_password_hash' => $hash
             ]);
 
         $mail = new ForgotPasswordMail($email, ['hash' => $hash]);
@@ -68,15 +68,17 @@ class UserService extends EntityService
         $this->repository
             ->force()
             ->update([
-                'reset_password_hash' => $token
+                'set_password_hash' => $token
             ], [
                 'password' => Hash::make($password),
-                'reset_password_hash' => null
+                'set_password_hash' => null
             ]);
     }
 
-    protected function generateUniqueHash($length = 16)
+    protected function generateHash($length = 32)
     {
+        $length /= 2;
+
         return bin2hex(openssl_random_pseudo_bytes($length));
     }
 }

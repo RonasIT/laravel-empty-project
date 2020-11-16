@@ -19,13 +19,13 @@ class User extends Authenticatable implements JWTSubject
     ];
 
     protected $guarded = [
-        'reset_password_hash'
+        'set_password_hash'
     ];
 
     protected $hidden = [
         'password',
         'remember_token',
-        'reset_password_hash'
+        'set_password_hash'
     ];
 
     public function getJWTIdentifier()
