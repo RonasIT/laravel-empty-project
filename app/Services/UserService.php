@@ -58,7 +58,7 @@ class UserService extends EntityService
                 'email' => $email
             ], [
                 'set_password_hash' => $hash,
-                'password_hash_created_at' => Carbon::now()
+                'set_password_hash_created_at' => Carbon::now()
             ]);
 
         $mail = new ForgotPasswordMail($email, ['hash' => $hash]);
