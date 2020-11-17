@@ -3,11 +3,10 @@
 namespace App\Tests;
 
 use App\Mails\ForgotPasswordMail;
-use App\Services\UserService;
 use App\Tests\Support\AuthTestTrait;
 use Carbon\Carbon;
-use Carbon\CarbonInterval;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Artisan;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\User;
 
@@ -93,17 +92,16 @@ class AuthTest extends TestCase
     {
         Carbon::setTestNow('2018-10-20 11:05:00');
 
-        $usersWithHashes = app(UserService::class)->getNotEmptyHashes();
-        $result = [];
+        Artisan::call('clear:set-password-hash');
 
-        foreach ($usersWithHashes as $usersWithHash) {
-            $timeDifferenceInSeconds = Carbon::now()->diffInSeconds($usersWithHash['set_password_hash_created_at']);
+        $expectedIds = [2, 4, 5];
 
-            $passwordHashLifetimeInSeconds = CarbonInterval::hours(config('defaults.password_hash_lifetime'))->totalSeconds;
-
-            if ($timeDifferenceInSeconds > $passwordHashLifetimeInSeconds) {
-                $result[] = app(UserService::class)->clearSetPasswordHash($usersWithHash['id']);
-            }
+        foreach ($expectedIds as $id)
+        {
+            $this->assertDatabaseHas('users', [
+                'id' => $id,
+                'set_password_hash_created_at' => null,
+            ]);
         }
     }
 
@@ -120,7 +118,7 @@ class AuthTest extends TestCase
         $this->assertDatabaseMissing('users', [
             'email' => 'fidel.kutch@example.com',
             'set_password_hash' => null,
-            'password_hash_created_at' => null
+            'set_password_hash_created_at' => null
         ]);
 
         $this->assertMailEquals(ForgotPasswordMail::class, [

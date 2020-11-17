@@ -30,6 +30,6 @@ class UserRepository extends BaseRepository
     {
         return $this
             ->getQuery(['id' => $id])
-            ->update(['set_password_hash' => null]);
+            ->update(['set_password_hash' => null, 'set_password_hash_created_at' => null]);
     }
 }
