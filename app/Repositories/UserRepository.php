@@ -16,10 +16,20 @@ class UserRepository extends BaseRepository
         $this->setModel(User::class);
     }
 
-    public function updateResetPasswordHashToNull()
+    public function getNotEmptyHashes()
     {
-        return $this->getQuery([])
-            ->where('password_hash_created_at', '>', Carbon::now()->addMinutes(config('defaults.password_hash_lifetime')))
+        return $this
+            ->getQuery()
+            ->where('set_password_hash_created_at', '!=', null)
+            ->where('set_password_hash', '!=', null)
+            ->get()
+            ->toArray();
+    }
+
+    public function clearSetPasswordHash($id)
+    {
+        return $this
+            ->getQuery(['id' => $id])
             ->update(['set_password_hash' => null]);
     }
 }

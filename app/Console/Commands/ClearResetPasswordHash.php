@@ -13,8 +13,8 @@ class ClearResetPasswordHash extends Command
 
     public function handle()
     {
-        app(UserService::class)->updateResetPasswordHashToNull();
+        $usersWithHashes = app(UserService::class)->clearSetPasswordHash();
 
-        $this->line('Reset password hash was cleared');
+        $this->line('Set password hash was cleared');
     }
 }

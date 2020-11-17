@@ -16,7 +16,7 @@ class User extends Authenticatable implements JWTSubject
         'email',
         'password',
         'role_id',
-        'password_hash_created_at'
+        'set_password_hash_created_at'
     ];
 
     protected $guarded = [
@@ -26,12 +26,12 @@ class User extends Authenticatable implements JWTSubject
     protected $hidden = [
         'password',
         'remember_token',
-        'set_password_hash',
-        'password_hash_created_at'
+//        'set_password_hash',
+//        'set_password_hash_created_at'
     ];
 
     protected $dates = [
-        'password_hash_created_at'
+        'set_password_hash_created_at'
     ];
 
     public function getJWTIdentifier()

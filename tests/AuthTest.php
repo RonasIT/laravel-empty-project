@@ -3,7 +3,10 @@
 namespace App\Tests;
 
 use App\Mails\ForgotPasswordMail;
+use App\Services\UserService;
 use App\Tests\Support\AuthTestTrait;
+use Carbon\Carbon;
+use Carbon\CarbonInterval;
 use Illuminate\Support\Arr;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\User;
@@ -84,6 +87,24 @@ class AuthTest extends TestCase
         $explodedHeader = explode(' ', $auth);
 
         $this->assertNotEquals($this->jwt, last($explodedHeader));
+    }
+
+    public function testClearPasswordHash()
+    {
+        Carbon::setTestNow('2018-10-20 11:05:00');
+
+        $usersWithHashes = app(UserService::class)->getNotEmptyHashes();
+        $result = [];
+
+        foreach ($usersWithHashes as $usersWithHash) {
+            $timeDifferenceInSeconds = Carbon::now()->diffInSeconds($usersWithHash['set_password_hash_created_at']);
+
+            $passwordHashLifetimeInSeconds = CarbonInterval::hours(config('defaults.password_hash_lifetime'))->totalSeconds;
+
+            if ($timeDifferenceInSeconds > $passwordHashLifetimeInSeconds) {
+                $result[] = app(UserService::class)->clearSetPasswordHash($usersWithHash['id']);
+            }
+        }
     }
 
     public function testForgotPassword()
