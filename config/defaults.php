@@ -6,11 +6,10 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Password hash lifetime
+    | Password hash lifetime, hours
     |--------------------------------------------------------------------------
     |
     | Here you can set when you should clear set password hash.
-    | Value can be set in hours.
     |
     */
 

@@ -1,0 +1,9 @@
+{
+  "id": 3,
+  "name": "Another User",
+  "email": "createuser@example.com",
+  "role_id": 2,
+  "set_password_hash_created_at": null,
+  "created_at": "2018-11-11T11:11:11.000000Z",
+  "updated_at": "2018-11-11T11:11:11.000000Z"
+}

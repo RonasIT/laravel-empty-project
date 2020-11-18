@@ -4,7 +4,6 @@ namespace App\Tests;
 
 use App\Mails\ForgotPasswordMail;
 use App\Tests\Support\AuthTestTrait;
-use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Artisan;
 use Symfony\Component\HttpFoundation\Response;
@@ -90,19 +89,17 @@ class AuthTest extends TestCase
 
     public function testClearPasswordHash()
     {
-        Carbon::setTestNow('2018-10-20 11:05:00');
-
         Artisan::call('clear:set-password-hash');
 
-        $expectedIds = [2, 4, 5];
+        User::setForceVisibleFields(['set_password_hash']);
 
-        foreach ($expectedIds as $id)
-        {
-            $this->assertDatabaseHas('users', [
-                'id' => $id,
-                'set_password_hash_created_at' => null,
-            ]);
-        }
+        $usersWithClearedHash = User::whereIn('id', [2, 4, 5])->get()->toArray();
+
+        $this->assertEqualsFixture('users_without_set_password_hash.json', $usersWithClearedHash);
+
+        $usersWithSetPasswordHash = User::whereIn('id', [1, 3])->get()->toArray();
+
+        $this->assertEqualsFixture('users_with_set_password_hash.json', $usersWithSetPasswordHash);
     }
 
     public function testForgotPassword()
