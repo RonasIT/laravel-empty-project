@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\User;
-use Illuminate\Support\Arr;
+use Carbon\Carbon;
 use RonasIT\Support\Repositories\BaseRepository;
 
 /**
@@ -14,5 +14,16 @@ class UserRepository extends BaseRepository
     public function __construct()
     {
         $this->setModel(User::class);
+    }
+
+    public function clearSetPasswordHash()
+    {
+        return $this
+            ->getQuery()
+            ->where('set_password_hash_created_at', '<', Carbon::now()->subHours(config('defaults.password_hash_lifetime')))
+            ->update([
+                'set_password_hash' => null,
+                'set_password_hash_created_at' => null
+            ]);
     }
 }

@@ -27,12 +27,9 @@ class UserTest extends TestCase
 
         $response->assertStatus(Response::HTTP_OK);
 
-        $expect = Arr::except($data, ['id', 'password', 'updated_at', 'created_at']);
-        $actual = Arr::except($response->json(), ['id', 'updated_at', 'created_at']);
+        $this->assertEqualsFixture('user_created.json', $response->json());
 
-        $this->assertEquals($expect, $actual);
-
-        $this->assertDatabaseHas('users', $expect);
+        $this->assertDatabaseHas('users', $this->getJsonFixture('user_created_database.json'));
     }
 
     public function testCreateNoAuth()

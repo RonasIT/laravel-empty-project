@@ -5,6 +5,7 @@ namespace App\Tests;
 use App\Mails\ForgotPasswordMail;
 use App\Tests\Support\AuthTestTrait;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Artisan;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\User;
 
@@ -86,6 +87,21 @@ class AuthTest extends TestCase
         $this->assertNotEquals($this->jwt, last($explodedHeader));
     }
 
+    public function testClearPasswordHash()
+    {
+        Artisan::call('clear:set-password-hash');
+
+        User::setForceVisibleFields(['set_password_hash']);
+
+        $usersWithClearedHash = User::whereIn('id', [2, 4, 5])->get()->toArray();
+
+        $this->assertEqualsFixture('users_without_set_password_hash.json', $usersWithClearedHash);
+
+        $usersWithSetPasswordHash = User::whereIn('id', [1, 3])->get()->toArray();
+
+        $this->assertEqualsFixture('users_with_set_password_hash.json', $usersWithSetPasswordHash);
+    }
+
     public function testForgotPassword()
     {
         $this->mockUniqueTokenGeneration('some_token');
@@ -98,7 +114,8 @@ class AuthTest extends TestCase
 
         $this->assertDatabaseMissing('users', [
             'email' => 'fidel.kutch@example.com',
-            'set_password_hash' => null
+            'set_password_hash' => null,
+            'set_password_hash_created_at' => null
         ]);
 
         $this->assertMailEquals(ForgotPasswordMail::class, [

@@ -2,6 +2,7 @@
 
 namespace App\Tests;
 
+use App\Models\User;
 use Illuminate\Contracts\Console\Kernel;
 use RonasIT\Support\Tests\TestCase as BaseTestCase;
 use RonasIT\Support\AutoDoc\Tests\AutoDocTestCaseTrait;
@@ -23,5 +24,13 @@ abstract class TestCase extends BaseTestCase
         $app->make(Kernel::class)->bootstrap();
 
         return $app;
+    }
+
+    public function tearDown(): void
+    {
+        User::setForceVisibleFields([]);
+        User::setForceHiddenFields([]);
+
+        parent::tearDown();
     }
 }

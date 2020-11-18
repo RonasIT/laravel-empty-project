@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Jobs\SendMailJob;
 use App\Mails\ForgotPasswordMail;
 use App\Models\Role;
+use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Hash;
@@ -56,7 +57,8 @@ class UserService extends EntityService
             ->update([
                 'email' => $email
             ], [
-                'set_password_hash' => $hash
+                'set_password_hash' => $hash,
+                'set_password_hash_created_at' => Carbon::now()
             ]);
 
         $mail = new ForgotPasswordMail($email, ['hash' => $hash]);
