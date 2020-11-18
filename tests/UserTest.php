@@ -21,8 +21,6 @@ class UserTest extends TestCase
 
     public function testCreate()
     {
-        User::setForceHiddenFields(['set_password_hash']);
-
         $data = $this->getJsonFixture('create_user.json');
 
         $response = $this->actingAs($this->admin)->json('post', '/users', $data);
@@ -33,7 +31,7 @@ class UserTest extends TestCase
 
         $this->assertEqualsFixture('user_created.json', $actual);
 
-        $this->assertDatabaseHas('users', $this->getJsonFixture('user_created.json'));
+        $this->assertDatabaseHas('users', $this->getJsonFixture('user_created_database.json'));
     }
 
     public function testCreateNoAuth()
