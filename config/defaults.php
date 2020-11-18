@@ -9,7 +9,7 @@ return [
     | Password hash lifetime, hours
     |--------------------------------------------------------------------------
     |
-    | Here you can set when you should clear set password hash.
+    | Here you can set how often "set_password_hash" field of "users" table will be clearing.
     |
     */
 
