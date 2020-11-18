@@ -25,11 +25,9 @@ class UserTest extends TestCase
 
         $response = $this->actingAs($this->admin)->json('post', '/users', $data);
 
-        $actual = $response->json();
-
         $response->assertStatus(Response::HTTP_OK);
 
-        $this->assertEqualsFixture('user_created.json', $actual);
+        $this->assertEqualsFixture('user_created.json', $response->json());
 
         $this->assertDatabaseHas('users', $this->getJsonFixture('user_created_database.json'));
     }
