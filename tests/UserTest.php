@@ -21,6 +21,8 @@ class UserTest extends TestCase
 
     public function testCreate()
     {
+        User::setForceHiddenFields(['set_password_hash']);
+
         $data = $this->getJsonFixture('create_user.json');
 
         $response = $this->actingAs($this->admin)->json('post', '/users', $data);
