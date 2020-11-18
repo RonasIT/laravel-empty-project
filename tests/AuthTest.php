@@ -100,6 +100,8 @@ class AuthTest extends TestCase
         $usersWithSetPasswordHash = User::whereIn('id', [1, 3])->get()->toArray();
 
         $this->assertEqualsFixture('users_with_set_password_hash.json', $usersWithSetPasswordHash);
+
+        User::setForceHiddenFields(['set_password_hash']);
     }
 
     public function testForgotPassword()
