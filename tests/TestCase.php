@@ -31,6 +31,8 @@ abstract class TestCase extends BaseTestCase
         User::setForceVisibleFields([]);
         User::setForceHiddenFields([]);
 
+        $this->saveDocumentation();
+
         parent::tearDown();
     }
 }
