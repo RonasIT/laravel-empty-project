@@ -1,6 +1,7 @@
 stages:
   - prepare
   - tests
+  - push
   - deploy
 
 variables:
@@ -8,7 +9,7 @@ variables:
   DOMAIN: laravel-empty-project.ronasit.com
   DOCKERFILE: ./Dockerfile
   CHART_REPO: ronasit/laravel
-  CHART_VERSION: &ref 8.0.6
+  CHART_VERSION: &ref 8.0.8
   CHART_VALUES: k8s/values.yaml
   DOCKER_CONTAINER_REGISTRY: gcr.io/ronas-it-development/${CI_PROJECT_NAME}-${CI_ENVIRONMENT_SLUG}
   APP_NAME: Laravel
@@ -21,13 +22,17 @@ include:
     ref: *ref
     file: '/helpers/.gitlab-ci-template.yml'
 
+cache: &global_cache
+  paths:
+    - ./vendor
+  policy: pull
+
 php_dependencies:
   stage: prepare
   image: ronasit/php-nginx:7.4
-  artifacts:
-    paths:
-    - vendor
-    expire_in: 1 hour
+  cache:
+    <<: *global_cache
+    policy: pull-push
   script:
     - composer install
   tags:
@@ -55,10 +60,6 @@ tests:
   services:
     - name: ronasit/postgres:11.1
       alias: pgsql_test
-  artifacts:
-    paths:
-    - vendor
-    expire_in: 1 hour
   script:
     - composer install
     - php artisan jwt:secret --env=testing
@@ -93,7 +94,14 @@ stop:
     - master
     - production
     - tags
-        
+
+push:
+  extends: .push_gcr
+  environment:
+    name: "development"
+  only:
+    - development
+
 deploy_development:
   extends: .deploy
   environment:
