@@ -17,7 +17,7 @@ class CreateUsersTable extends Migration
                 ->foreignId('role_id')
                 ->references('id')
                 ->on('roles')
-                ->onDelete('cascade');
+                ->onUpdate('cascade');
             $table->string('set_password_hash')->unique()->nullable();
             $table->dateTime('set_password_hash_created_at')->nullable();
             $table->rememberToken();
