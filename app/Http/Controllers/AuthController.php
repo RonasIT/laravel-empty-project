@@ -9,17 +9,14 @@ use App\Http\Requests\Auth\RefreshTokenRequest;
 use App\Http\Requests\Auth\RegisterUserRequest;
 use App\Http\Requests\Auth\RestorePasswordRequest;
 use App\Services\UserService;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Response;
 use Tymon\JWTAuth\JWTAuth;
 
 class AuthController extends Controller
 {
-    use AuthenticatesUsers;
-
     public function login(LoginRequest $request, UserService $service, JWTAuth $auth)
     {
-        $credentials = $this->credentials($request);
+        $credentials = $request->only('email', 'password');
         $token = $auth->attempt($credentials);
 
         if ($token === false) {
@@ -42,7 +39,7 @@ class AuthController extends Controller
     {
         $user = $service->create($request->onlyValidated());
 
-        $credentials = $this->credentials($request);
+        $credentials = $request->only('email', 'password');
         $token = $auth->attempt($credentials);
 
         return response()->json([
@@ -76,10 +73,5 @@ class AuthController extends Controller
     public function checkRestoreToken(CheckRestoreTokenRequest $request)
     {
         return response('', Response::HTTP_NO_CONTENT);
-    }
-
-    public function username()
-    {
-        return 'email';
     }
 }
