@@ -12,7 +12,6 @@
     "doctrine/dbal": "^2.10",
     "laravel/framework": "^7.21",
     "laravel/tinker": "^2.4",
-    "laravel/ui": "^2.1",
     "superbalist/laravel-google-cloud-storage": "^2.2",
     "symfony/yaml": "^4.4",
     "ronasit/laravel-helpers":  "1.5.*@beta"
