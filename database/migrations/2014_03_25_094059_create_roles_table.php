@@ -43,11 +43,11 @@ class CreateRolesTable extends Migration
     {
         $roles = [
             [
-                'id' => Role::ADMIN,
+                'id' => 1,
                 'name' => 'administrator'
             ],
             [
-                'id' => Role::USER,
+                'id' => 2,
                 'name' => 'user'
             ]
         ];
