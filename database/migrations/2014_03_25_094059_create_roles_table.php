@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Role;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -43,11 +42,11 @@ class CreateRolesTable extends Migration
     {
         $roles = [
             [
-                'id' => Role::ADMIN,
+                'id' => 1,
                 'name' => 'administrator'
             ],
             [
-                'id' => Role::USER,
+                'id' => 2,
                 'name' => 'user'
             ]
         ];
