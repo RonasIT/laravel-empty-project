@@ -42,6 +42,8 @@ sqlproxy:
 
 postgres:
   enabled: true
+  image: "postgres"
+  imageTag: "12.5"
   persistence:
     enabled: true
     size: 1Gi
