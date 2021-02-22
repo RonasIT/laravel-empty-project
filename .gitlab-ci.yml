@@ -58,7 +58,7 @@ tests:
     FAIL_EXPORT_JSON: "true"
   image: ronasit/php-nginx:7.4
   services:
-    - name: ronasit/postgres:11.1
+    - name: ronasit/postgres:12.5
       alias: pgsql_test
   script:
     - composer install

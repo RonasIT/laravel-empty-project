@@ -39,7 +39,7 @@ services:
       - .:/app
 
   pgsql_test:
-    image: ronasit/postgres:11.9
+    image: ronasit/postgres:12.5
     ports:
         - 5433:5432
     environment:
