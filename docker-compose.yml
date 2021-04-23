@@ -16,15 +16,15 @@ services:
         - pgsql
         - pgsql_test
       environment:
-          XDEBUG_REMOTE_AUTOSTART: "on"
-          XDEBUG_PROFILER_ENABLE: 0
           WEB_DOCUMENT_ROOT: /app/public
           WEB_DOCUMENT_INDEX: index.php
           REDIS_PORT: "6379"
-          XDEBUG_REMOTE_CONNECT_BACK: 0
-          XDEBUG_REMOTE_PORT: 9000
-          XDEBUG_REMOTE_HOST: host.docker.internal
           php.xdebug.max_nesting_level: 250
+          XDEBUG_PROFILER_ENABLE: 0
+          XDEBUG_START_WITH_REQUEST: 1
+          XDEBUG_DISCOVER_CLIENT_HOST: 0
+          XDEBUG_CLIENT_PORT: 9000
+          XDEBUG_CLIENT_HOST: host.docker.internal
 
   pgsql:
     image: ronasit/postgres:11.9
