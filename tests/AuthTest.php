@@ -34,6 +34,7 @@ class AuthTest extends TestCase
         $response->assertStatus(Response::HTTP_OK);
 
         $this->assertArrayHasKey('token', $response->json());
+        $response->assertCookie('token');
     }
 
     public function testLoginWrongCredentials()
@@ -56,6 +57,7 @@ class AuthTest extends TestCase
         $response->assertStatus(Response::HTTP_OK);
 
         $this->assertArrayHasKey('token', $response->json());
+        $response->assertCookie('token');
     }
 
     public function testRegisterFromGuestUser()
@@ -66,6 +68,9 @@ class AuthTest extends TestCase
 
         $response->assertStatus(Response::HTTP_OK);
 
+        $this->assertArrayHasKey('token', $response->json());
+        $response->assertCookie('token');
+
         $this->assertDatabaseHas('users', $response->json('user'));
         $this->assertDatabaseHas('users', Arr::only($data, ['email', 'name']));
     }
@@ -74,17 +79,34 @@ class AuthTest extends TestCase
     {
         $response = $this->actingAs($this->admin)->json('get', '/auth/refresh');
 
-        $response->assertStatus(Response::HTTP_NO_CONTENT);
+        $response->assertStatus(Response::HTTP_OK);
+
+        $this->assertArrayHasKey('token', $response->json());
 
         $this->assertNotEmpty(
             $response->headers->get('authorization')
         );
 
-        $auth = $response->headers->get('authorization');
-
-        $explodedHeader = explode(' ', $auth);
+        $authHeader = $response->headers->get('authorization');
+        $explodedHeader = explode(' ', $authHeader);
 
         $this->assertNotEquals($this->jwt, last($explodedHeader));
+
+        $response->assertCookie('token');
+
+        $authCookie = $response->headers->get('cookie');
+        $explodedCookie = explode('=', $authCookie);
+
+        $this->assertNotEquals($this->jwt, last($explodedCookie));
+    }
+
+    public function testLogout()
+    {
+        $response = $this->actingAs($this->admin)->json('post', '/auth/logout');
+
+        $response->assertStatus(Response::HTTP_NO_CONTENT);
+
+        $response->assertCookieExpired('token');
     }
 
     public function testClearPasswordHash()
