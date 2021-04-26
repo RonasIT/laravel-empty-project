@@ -114,13 +114,20 @@ class AuthController extends Controller
         return response('', Response::HTTP_NO_CONTENT);
     }
 
-    private function authorizationTokenCookie(string $token)
+    private function authorizationTokenCookie($token)
     {
-        return cookie('token', $token, 0, null, null, true, true, false, 'None');
+        return $this->makeAuthorizationTokenCookie($token);
     }
 
     private function authorizationForgetTokenCookie()
     {
-        return cookie()->forget('token');
+        return $this->makeAuthorizationTokenCookie(null, true);
+    }
+
+    private function makeAuthorizationTokenCookie(string $token, bool $forget = false)
+    {
+        $minutes = $forget ? -2628000 : 0;
+
+        return cookie('token', $token, $minutes, null, null, true, true, false, 'None');
     }
 }
