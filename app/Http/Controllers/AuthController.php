@@ -124,7 +124,7 @@ class AuthController extends Controller
         return $this->makeAuthorizationTokenCookie(null, true);
     }
 
-    private function makeAuthorizationTokenCookie(string $token, bool $forget = false)
+    private function makeAuthorizationTokenCookie($token, $forget = false)
     {
         $minutes = $forget ? -2628000 : 0;
 
