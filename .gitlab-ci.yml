@@ -6,16 +6,13 @@ stages:
 
 variables:
   CI_PROJECT_NAME: laravel
-  DOMAIN: laravel-empty-project.ronasit.com
+  DOMAIN: laravel.ronasit.com
   DOCKERFILE: ./Dockerfile
   CHART_REPO: ronasit/laravel
-  CHART_VERSION: &ref 8.0.8
+  CHART_VERSION: &ref 8.2.0
   CHART_VALUES: k8s/values.yaml
   DOCKER_CONTAINER_REGISTRY: gcr.io/ronas-it-development/${CI_PROJECT_NAME}-${CI_ENVIRONMENT_SLUG}
   APP_NAME: Laravel
-  FILESYSTEM_DRIVER: local
-  GOOGLE_CLOUD_STORAGE_BUCKET: ronasit-development
-  GOOGLE_CLOUD_PROJECT_ID: ronas-it-development
 
 include:
   - project: 'k8s-tools/charts/laravel'
@@ -95,7 +92,7 @@ stop:
     - production
     - tags
 
-push:
+push_development:
   extends: .push_gcr
   environment:
     name: "development"
@@ -109,11 +106,3 @@ deploy_development:
     url: https://dev.${DOMAIN}
   only:
     - development
-    
-deploy_staging:
-  extends: .deploy
-  environment:
-    name: "staging"
-    url: https://stg.${DOMAIN}
-  only:
-    - web

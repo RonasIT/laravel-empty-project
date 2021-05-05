@@ -5,6 +5,21 @@ persistence:
   existingClaim: ""
   storage: 1Gi
 
+resources:
+  limits:
+    cpu: 200m
+    memory: 350Mi
+  requests:
+    cpu: 10m
+    memory: 128Mi
+
+autoscale:
+  enabled: false
+  min: 2
+  max: 5
+  CPULimit: 70
+  MemoryLimit: 512Mi
+
 ingress:
   enabled: true
 
@@ -14,7 +29,13 @@ cronjobs:
 worker:
   enabled: false
   replicaCount: 1
-  cmd: "php /app/artisan queue:work --sleep=3 --tries=3 --queue=default"
+  autoscale:
+    enabled: false
+    min: 3
+    max: 6
+    CPULimit: 70
+    MemoryLimit: 1568Mi
+  cmd: "php /app/artisan queue:work --sleep=3 --tries=3 --queue=default --memory=128"
 
 migrate:
   enabled: true
@@ -22,7 +43,7 @@ migrate:
   cmd: "php artisan migrate --force"
 
 smtp:
-  enabled: false
+  enabled: true
 
 # For Google Cloud Storage
 gcs:

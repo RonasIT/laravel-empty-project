@@ -27,7 +27,7 @@ services:
           XDEBUG_CLIENT_HOST: host.docker.internal
 
   pgsql:
-    image: ronasit/postgres:11.9
+    image: ronasit/postgres:12.5
     ports:
         - 5432:5432
     environment:
@@ -52,6 +52,6 @@ services:
     command: ["-c", "fsync=off"]
 
   redis:
-    image: redis:4
+    image: redis:6.2.3
     ports:
         - 6379:6379
