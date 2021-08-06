@@ -20,6 +20,8 @@ class AuthController extends Controller
     public function login(LoginRequest $request, UserService $service, JWTAuth $auth)
     {
         $credentials = $request->only('email', 'password');
+        $remember = $request->input('remember', false);
+
         $token = $auth->attempt($credentials);
 
         if ($token === false) {
@@ -30,7 +32,7 @@ class AuthController extends Controller
 
         $user = $service->first(['email' => $request->input('email')]);
 
-        $tokenCookie = $this->authorizationTokenCookie($token);
+        $tokenCookie = $this->authorizationTokenCookie($token, $remember);
 
         return response()
             ->json([
@@ -53,6 +55,8 @@ class AuthController extends Controller
         return response()
             ->json([
                 'token' => $token,
+                'ttl' => config('jwt.ttl'),
+                'refresh_ttl' => config('jwt.refresh_ttl'),
                 'user' => $user
             ])
             ->withCookie($tokenCookie);
@@ -114,19 +118,19 @@ class AuthController extends Controller
         return response('', Response::HTTP_NO_CONTENT);
     }
 
-    private function authorizationTokenCookie($token)
+    private function authorizationTokenCookie($token, bool $remember = false)
     {
-        return $this->makeAuthorizationTokenCookie($token);
+        return $this->makeAuthorizationTokenCookie($token, $remember);
     }
 
     private function authorizationForgetTokenCookie()
     {
-        return $this->makeAuthorizationTokenCookie(null, true);
+        return $this->makeAuthorizationTokenCookie(null, false, true);
     }
 
-    private function makeAuthorizationTokenCookie($token, $forget = false)
+    private function makeAuthorizationTokenCookie($token, bool $remember = false, $forget = false)
     {
-        $minutes = $forget ? -2628000 : 0;
+        $minutes = $forget ? -2628000 : ($remember ? config('jwt.ttl') + config('jwt.refresh_ttl') : 0);
 
         return cookie('token', $token, $minutes, null, null, true, true, false, 'None');
     }
