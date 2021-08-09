@@ -47,6 +47,32 @@ class AuthTest extends TestCase
         $response->assertStatus(Response::HTTP_UNAUTHORIZED);
     }
 
+    public function testLoginWithRemember()
+    {
+        $response = $this->json('post', '/login', [
+            'email' => $this->users[1]['email'],
+            'password' => $this->users[1]['password'],
+            'remember' => true
+        ]);
+
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertCookie('token');
+        $response->assertCookieNotExpired('token');
+    }
+
+    public function testLoginWithoutRemember()
+    {
+        $response = $this->json('post', '/login', [
+            'email' => $this->users[1]['email'],
+            'password' => $this->users[1]['password'],
+            'remember' => false
+        ]);
+
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertCookie('token');
+        $response->assertCookieExpired('token');
+    }
+
     public function testLoginAsRegisteredUser()
     {
         $response = $this->json('post', '/login', [
