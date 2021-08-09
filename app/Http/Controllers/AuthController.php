@@ -130,7 +130,7 @@ class AuthController extends Controller
 
     private function makeAuthorizationTokenCookie($token, bool $remember = false, $forget = false)
     {
-        $minutes = $forget ? -2628000 : ($remember ? config('jwt.ttl') + config('jwt.refresh_ttl') : 0);
+        $minutes = $forget ? -2628000 : ($remember ? config('jwt.refresh_ttl') : 0);
 
         return cookie('token', $token, $minutes, null, null, true, true, false, 'None');
     }
