@@ -41,13 +41,17 @@
   },
   "scripts": {
     "post-install-cmd": [
-      "php artisan clear-compiled"
+      "php artisan clear-compiled",
+      "php artisan ide-helper:generate",
+      "php artisan ide-helper:meta",
+      "php artisan ide-helper:models -N"
     ],
     "post-update-cmd": [
       "Illuminate\\Foundation\\ComposerScripts::postUpdate",
       "php artisan clear-compiled",
       "php artisan ide-helper:generate",
-      "php artisan ide-helper:meta"
+      "php artisan ide-helper:meta",
+      "php artisan ide-helper:models -N"
     ],
     "post-root-package-install": [
       "php -r \"copy('.env.example', '.env');\""
