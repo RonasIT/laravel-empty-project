@@ -14,7 +14,7 @@
     "laravel/tinker": "^2.4",
     "superbalist/laravel-google-cloud-storage": "^2.2",
     "symfony/yaml": "^4.4",
-    "ronasit/laravel-helpers":  "1.5.*@beta"
+    "ronasit/laravel-helpers": "1.5.*@beta"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.4",
