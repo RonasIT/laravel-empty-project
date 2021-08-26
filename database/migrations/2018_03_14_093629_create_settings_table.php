@@ -18,7 +18,7 @@ class CreateSettingsTable extends Migration
             }
 
             $table->boolean('is_public')->default(false);
-            $table->primary("name");
+            $table->primary('name');
         });
     }
 

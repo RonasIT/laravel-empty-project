@@ -12,21 +12,13 @@ class CreateRolesTable extends Migration
 
     public function up()
     {
-        DB::beginTransaction();
-
         $this->createTable();
         $this->addRoles();
-
-        DB::commit();
     }
 
     public function down()
     {
-        DB::beginTransaction();
-
         Schema::drop('roles');
-
-        DB::commit();
     }
 
     public function createTable()
