@@ -14,7 +14,7 @@
     "laravel/tinker": "^2.4",
     "superbalist/laravel-google-cloud-storage": "^2.2",
     "symfony/yaml": "^4.4",
-    "ronasit/laravel-helpers":  "1.5.*@beta"
+    "ronasit/laravel-helpers": "1.5.*@beta"
   },
   "require-dev": {
     "fzaninotto/faker": "~1.4",
@@ -41,13 +41,17 @@
   },
   "scripts": {
     "post-install-cmd": [
-      "php artisan clear-compiled"
+      "php artisan clear-compiled",
+      "php artisan ide-helper:generate",
+      "php artisan ide-helper:meta",
+      "php artisan ide-helper:models -N"
     ],
     "post-update-cmd": [
       "Illuminate\\Foundation\\ComposerScripts::postUpdate",
       "php artisan clear-compiled",
       "php artisan ide-helper:generate",
-      "php artisan ide-helper:meta"
+      "php artisan ide-helper:meta",
+      "php artisan ide-helper:models -N"
     ],
     "post-root-package-install": [
       "php -r \"copy('.env.example', '.env');\""
