@@ -70,7 +70,7 @@ class AuthTest extends TestCase
 
         $response->assertStatus(Response::HTTP_OK);
         $response->assertCookie('token');
-        $response->assertCookieExpired('token');
+        $this->assertEquals(0, $response->getCookie('token')->getExpiresTime());
     }
 
     public function testLoginAsRegisteredUser()

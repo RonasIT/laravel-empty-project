@@ -6,15 +6,32 @@
             "name": "Another User",
             "email": "user@example.com",
             "role_id": 2,
+            "set_password_hash_created_at": null,
             "created_at": "2016-10-20T11:05:00.000000Z",
-            "updated_at": "2016-10-20T11:05:00.000000Z",
-            "set_password_hash_created_at" : null
+            "updated_at": "2016-10-20T11:05:00.000000Z"
         }
     ],
     "first_page_url": "http:\/\/localhost\/users?page=1",
     "from": 1,
     "last_page": 1,
     "last_page_url": "http:\/\/localhost\/users?page=1",
+    "links": [
+        {
+            "url": null,
+            "label": "&laquo; Previous",
+            "active": false
+        },
+        {
+            "url": "http:\/\/localhost\/users?page=1",
+            "label": "1",
+            "active": true
+        },
+        {
+            "url": null,
+            "label": "Next &raquo;",
+            "active": false
+        }
+    ],
     "next_page_url": null,
     "path": "http:\/\/localhost\/users",
     "per_page": 10,
