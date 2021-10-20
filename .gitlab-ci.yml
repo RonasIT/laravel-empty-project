@@ -9,7 +9,7 @@ variables:
   DOMAIN: laravel.ronasit.com
   DOCKERFILE: ./Dockerfile
   CHART_REPO: ronasit/laravel
-  CHART_VERSION: &ref 8.2.0
+  CHART_VERSION: &ref 8.2.7
   CHART_VALUES: k8s/values.yaml
   DOCKER_CONTAINER_REGISTRY: gcr.io/ronas-it-development/${CI_PROJECT_NAME}-${CI_ENVIRONMENT_SLUG}
   APP_NAME: Laravel
