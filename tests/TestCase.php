@@ -2,7 +2,7 @@
 
 namespace App\Tests;
 
-use App\Models\User;
+use Illuminate\Foundation\Application;
 use Illuminate\Contracts\Console\Kernel;
 use RonasIT\Support\Tests\TestCase as BaseTestCase;
 use RonasIT\Support\AutoDoc\Tests\AutoDocTestCaseTrait;
@@ -14,9 +14,9 @@ abstract class TestCase extends BaseTestCase
     /**
      * Creates the application.
      *
-     * @return \Illuminate\Foundation\Application
+     * @return Application
      */
-    public function createApplication()
+    public function createApplication(): Application
     {
         $app = require __DIR__ . '/../bootstrap/app.php';
 
@@ -28,9 +28,6 @@ abstract class TestCase extends BaseTestCase
 
     public function tearDown(): void
     {
-        User::setForceVisibleFields([]);
-        User::setForceHiddenFields([]);
-
         $this->saveDocumentation();
 
         parent::tearDown();

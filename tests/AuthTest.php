@@ -139,13 +139,11 @@ class AuthTest extends TestCase
     {
         Artisan::call('clear:set-password-hash');
 
-        User::setForceVisibleFields(['set_password_hash']);
-
-        $usersWithClearedHash = User::whereIn('id', [2, 4, 5])->get()->toArray();
+        $usersWithClearedHash = User::whereIn('id', [2, 4, 5])->get()->makeVisible('set_password_hash')->toArray();
 
         $this->assertEqualsFixture('users_without_set_password_hash.json', $usersWithClearedHash);
 
-        $usersWithSetPasswordHash = User::whereIn('id', [1, 3])->get()->toArray();
+        $usersWithSetPasswordHash = User::whereIn('id', [1, 3])->get()->makeVisible('set_password_hash')->toArray();
 
         $this->assertEqualsFixture('users_with_set_password_hash.json', $usersWithSetPasswordHash);
     }

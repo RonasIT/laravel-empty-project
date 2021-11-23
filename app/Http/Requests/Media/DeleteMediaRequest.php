@@ -9,14 +9,9 @@ use App\Services\MediaService;
 
 class DeleteMediaRequest extends Request
 {
-    public function authorize()
+    public function authorize(): bool
     {
         return $this->user()->role_id == Role::ADMIN;
-    }
-
-    public function rules()
-    {
-        return [];
     }
 
     public function validateResolved()

@@ -7,12 +7,12 @@ use App\Models\Role;
 
 class SearchUserRequest extends Request
 {
-    public function authorize()
+    public function authorize(): bool
     {
         return $this->user()->role_id == Role::ADMIN;
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             'role_id' => 'integer|nullable',

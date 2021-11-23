@@ -9,14 +9,9 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class UpdateSettingRequest extends Request
 {
-    public function authorize()
+    public function authorize(): bool
     {
         return $this->user()->role_id == Role::ADMIN;
-    }
-
-    public function rules()
-    {
-        return [];
     }
 
     public function validateResolved()

@@ -6,8 +6,4 @@ use App\Http\Requests\Request;
 
 class LogoutRequest extends Request
 {
-    public function rules()
-    {
-        return [];
-    }
 }
