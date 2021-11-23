@@ -6,7 +6,7 @@ use App\Http\Requests\Request;
 
 class RegisterUserRequest extends Request
 {
-    public function rules()
+    public function rules(): array
     {
         return [
             'name' => 'required|string',

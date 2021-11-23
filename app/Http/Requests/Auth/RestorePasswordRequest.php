@@ -6,7 +6,7 @@ use App\Http\Requests\Request;
 
 class RestorePasswordRequest extends Request
 {
-    public function rules()
+    public function rules(): array
     {
         return [
             'token' => 'required|string|exists:users,set_password_hash',

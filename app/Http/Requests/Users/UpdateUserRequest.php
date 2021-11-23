@@ -10,12 +10,12 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class UpdateUserRequest extends Request
 {
-    public function authorize()
+    public function authorize(): bool
     {
         return ($this->user()->role_id === Role::ADMIN) || ($this->user()->id === $this->route('id'));
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             'email' => "string|email|unique:users,email,{$this->route('id')}",

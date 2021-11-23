@@ -8,12 +8,12 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class CreateUserRequest extends Request
 {
-    public function authorize()
+    public function authorize(): bool
     {
         return $this->user()->role_id == Role::ADMIN;
     }
 
-    public function rules()
+    public function rules(): array
     {
         return [
             'role_id' => 'integer|exists:roles,id',

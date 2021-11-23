@@ -6,7 +6,7 @@ use App\Http\Requests\Request;
 
 class CreateMediaRequest extends Request
 {
-    public function rules()
+    public function rules(): array
     {
         $types = implode(',', config('defaults.permitted_media_types'));
 

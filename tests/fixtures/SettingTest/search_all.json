@@ -51,8 +51,25 @@
     "from": 1,
     "last_page": 1,
     "last_page_url": "http:\/\/localhost\/settings?page=1",
+    "links": [
+        {
+            "url": null,
+            "label": "&laquo; Previous",
+            "active": false
+        },
+        {
+            "url": "http:\/\/localhost\/settings?page=1",
+            "label": "1",
+            "active": true
+        },
+        {
+            "url": null,
+            "label": "Next &raquo;",
+            "active": false
+        }
+    ],
     "next_page_url": null,
-    "path": "settings",
+    "path": "http:\/\/localhost\/settings",
     "per_page": 4,
     "prev_page_url": null,
     "to": 4,

@@ -4,15 +4,16 @@ namespace App\Http\Requests\Setting;
 
 use App\Http\Requests\Request;
 use App\Models\Role;
+use App\Models\Setting;
 use Illuminate\Support\Arr;
 use App\Services\SettingService;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class GetSettingRequest extends Request
 {
-    protected $setting;
+    protected ?Setting $setting;
 
-    public function authorize()
+    public function authorize(): bool
     {
         $service = app(SettingService::class);
         $this->setting = $service->findBy('name', $this->route('name'));
@@ -22,11 +23,6 @@ class GetSettingRequest extends Request
         }
 
         return Arr::get($this->setting, 'is_public');
-    }
-
-    public function rules()
-    {
-        return [];
     }
 
     public function validateResolved()

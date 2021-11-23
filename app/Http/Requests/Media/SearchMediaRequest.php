@@ -6,7 +6,7 @@ use App\Http\Requests\Request;
 
 class SearchMediaRequest extends Request
 {
-    public function rules()
+    public function rules(): array
     {
         return [
             'page' => 'integer',

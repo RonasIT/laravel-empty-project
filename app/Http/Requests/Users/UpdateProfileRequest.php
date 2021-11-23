@@ -6,7 +6,7 @@ use App\Http\Requests\Request;
 
 class UpdateProfileRequest extends Request
 {
-    public function rules()
+    public function rules(): array
     {
         return [
             'old_password' => 'required_with:password|string|password',
