@@ -170,6 +170,24 @@ class UserTest extends TestCase
         $this->assertDatabaseMissing('users', $data);
     }
 
+    public function testDeleteProfile()
+    {
+        $response = $this->actingAs($this->user)->json('delete', '/profile');
+
+        $response->assertStatus(Response::HTTP_NO_CONTENT);
+
+        $this->assertDatabaseMissing('users', [
+            'id' => 2
+        ]);
+    }
+
+    public function testDeleteProfileNoAuth()
+    {
+        $response = $this->json('delete', '/profile');
+
+        $response->assertStatus(Response::HTTP_UNAUTHORIZED);
+    }
+
     public function testDelete()
     {
         $response = $this->actingAs($this->admin)->json('delete', '/users/1');
