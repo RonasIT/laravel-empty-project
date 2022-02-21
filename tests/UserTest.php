@@ -172,6 +172,8 @@ class UserTest extends TestCase
 
     public function testDeleteProfile()
     {
+        $originMedia = $this->getDataSet('media');
+
         $response = $this->actingAs($this->user)->json('delete', '/profile');
 
         $response->assertStatus(Response::HTTP_NO_CONTENT);
@@ -179,6 +181,8 @@ class UserTest extends TestCase
         $this->assertDatabaseMissing('users', [
             'id' => 2
         ]);
+
+        $this->assertChangesEqualsFixture('media', 'delete_user_profile_user_media_deleted.json', $originMedia);
     }
 
     public function testDeleteProfileNoAuth()
