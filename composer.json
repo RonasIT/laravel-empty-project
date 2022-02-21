@@ -10,18 +10,18 @@
   "require": {
     "php": "^7.4",
     "doctrine/dbal": "^2.10",
+    "facade/ignition": "^2.3.6",
+    "fakerphp/faker": "^1.19",
     "laravel/framework": "^8.0",
+    "laravel/legacy-factories": "^1.1",
     "laravel/tinker": "^2.4",
     "laravel/ui": "^3.0",
-    "superbalist/laravel-google-cloud-storage": "^2.2",
-    "symfony/yaml": "^4.4",
+    "nunomaduro/collision": "^5.0",
     "ronasit/laravel-helpers": "2.0.0-beta",
-    "laravel/legacy-factories": "^1.1",
-    "facade/ignition": "^2.3.6",
-    "nunomaduro/collision": "^5.0"
+    "superbalist/laravel-google-cloud-storage": "^2.2",
+    "symfony/yaml": "^4.4"
   },
   "require-dev": {
-    "fzaninotto/faker": "~1.4",
     "mockery/mockery": "^1.4",
     "phpunit/phpunit": "^9.0",
     "fruitcake/laravel-cors": "^2.0",
