@@ -172,8 +172,6 @@ class UserTest extends TestCase
 
     public function testDeleteProfile()
     {
-        $originMedia = $this->getDataSet('media');
-
         $response = $this->actingAs($this->user)->json('delete', '/profile');
 
         $response->assertStatus(Response::HTTP_NO_CONTENT);
