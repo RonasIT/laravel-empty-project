@@ -25,6 +25,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/users', ['uses' => UserController::class . '@search']);
     Route::get('/profile', ['uses' => UserController::class . '@profile']);
     Route::put('/profile', ['uses' => UserController::class . '@updateProfile']);
+    Route::delete('/profile', ['uses' => UserController::class . '@deleteProfile']);
 
     Route::post('/media', ['uses' => MediaController::class . '@create']);
     Route::delete('/media/{id}', ['uses' => MediaController::class . '@delete']);
