@@ -181,7 +181,7 @@ class UserTest extends TestCase
         ]);
 
         $this->assertDatabaseMissing('media', [
-            'user_id' => 2
+            'owner_id' => 2
         ]);
     }
 
