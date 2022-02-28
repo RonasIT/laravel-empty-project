@@ -182,7 +182,9 @@ class UserTest extends TestCase
             'id' => 2
         ]);
 
-        $this->assertChangesEqualsFixture('media', 'delete_user_profile_user_media_deleted.json', $originMedia);
+        $this->assertDatabaseMissing('media', [
+            'user_id' => 2
+        ]);
     }
 
     public function testDeleteProfileNoAuth()
