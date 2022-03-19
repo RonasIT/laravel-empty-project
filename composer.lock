@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4c6bf07021999260de9e603530f0d7fa",
+    "content-hash": "589b8a21055770a98f2dd611ab58d5da",
     "packages": [
         {
             "name": "brick/math",
@@ -4558,16 +4558,16 @@
         },
         {
             "name": "ronasit/laravel-helpers",
-            "version": "2.0.0-beta",
+            "version": "2.0.1-beta",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RonasIT/laravel-helpers.git",
-                "reference": "ecbfdc3134474f5079754b505d709cbeda467310"
+                "reference": "bef4c90170480362628ad32b4ad897ac53d1392b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RonasIT/laravel-helpers/zipball/ecbfdc3134474f5079754b505d709cbeda467310",
-                "reference": "ecbfdc3134474f5079754b505d709cbeda467310",
+                "url": "https://api.github.com/repos/RonasIT/laravel-helpers/zipball/bef4c90170480362628ad32b4ad897ac53d1392b",
+                "reference": "bef4c90170480362628ad32b4ad897ac53d1392b",
                 "shasum": ""
             },
             "require": {
@@ -4593,13 +4593,13 @@
                 }
             },
             "autoload": {
-                "psr-4": {
-                    "RonasIT\\Support\\Tests\\": "tests/",
-                    "RonasIT\\Support\\": "src/"
-                },
                 "files": [
                     "src/helpers.php"
-                ]
+                ],
+                "psr-4": {
+                    "RonasIT\\Support\\": "src/",
+                    "RonasIT\\Support\\Tests\\": "tests/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -4618,9 +4618,9 @@
             ],
             "support": {
                 "issues": "https://github.com/RonasIT/laravel-helpers/issues",
-                "source": "https://github.com/RonasIT/laravel-helpers/tree/2.0.0-beta"
+                "source": "https://github.com/RonasIT/laravel-helpers/tree/2.0.1-beta"
             },
-            "time": "2021-11-22T10:45:38+00:00"
+            "time": "2022-03-19T12:12:30+00:00"
         },
         {
             "name": "superbalist/flysystem-google-storage",
@@ -10789,5 +10789,5 @@
         "php": "^7.4"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.1.0"
 }
