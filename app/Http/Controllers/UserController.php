@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Users\DeleteProfileRequest;
 use App\Services\UserService;
 use App\Http\Requests\Users\GetUserRequest;
 use App\Http\Requests\Users\CreateUserRequest;
@@ -47,6 +48,13 @@ class UserController extends Controller
     public function updateProfile(UpdateProfileRequest $request, UserService $service)
     {
         $service->update($request->user()->id, $request->onlyValidated());
+
+        return response('', Response::HTTP_NO_CONTENT);
+    }
+
+    public function deleteProfile(DeleteProfileRequest $request, UserService $service)
+    {
+        $service->delete($request->user()->id);
 
         return response('', Response::HTTP_NO_CONTENT);
     }
