@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "38ec0dd8459bdbbf658eb3fea2bfd1d9",
+    "content-hash": "8e76a94a7c7edb91b51815fbedf6759d",
     "packages": [
         {
             "name": "brick/math",
@@ -1034,73 +1034,6 @@
                 "source": "https://github.com/facade/ignition-contracts/tree/1.0.2"
             },
             "time": "2020-10-16T08:27:54+00:00"
-        },
-        {
-            "name": "fakerphp/faker",
-            "version": "v1.19.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/FakerPHP/Faker.git",
-                "reference": "d7f08a622b3346766325488aa32ddc93ccdecc75"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/FakerPHP/Faker/zipball/d7f08a622b3346766325488aa32ddc93ccdecc75",
-                "reference": "d7f08a622b3346766325488aa32ddc93ccdecc75",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.1 || ^8.0",
-                "psr/container": "^1.0 || ^2.0",
-                "symfony/deprecation-contracts": "^2.2 || ^3.0"
-            },
-            "conflict": {
-                "fzaninotto/faker": "*"
-            },
-            "require-dev": {
-                "bamarni/composer-bin-plugin": "^1.4.1",
-                "doctrine/persistence": "^1.3 || ^2.0",
-                "ext-intl": "*",
-                "symfony/phpunit-bridge": "^4.4 || ^5.2"
-            },
-            "suggest": {
-                "doctrine/orm": "Required to use Faker\\ORM\\Doctrine",
-                "ext-curl": "Required by Faker\\Provider\\Image to download images.",
-                "ext-dom": "Required by Faker\\Provider\\HtmlLorem for generating random HTML.",
-                "ext-iconv": "Required by Faker\\Provider\\ru_RU\\Text::realText() for generating real Russian text.",
-                "ext-mbstring": "Required for multibyte Unicode string functionality."
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-main": "v1.19-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Faker\\": "src/Faker/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "François Zaninotto"
-                }
-            ],
-            "description": "Faker is a PHP library that generates fake data for you.",
-            "keywords": [
-                "data",
-                "faker",
-                "fixtures"
-            ],
-            "support": {
-                "issues": "https://github.com/FakerPHP/Faker/issues",
-                "source": "https://github.com/FakerPHP/Faker/tree/v1.19.0"
-            },
-            "time": "2022-02-02T17:38:57+00:00"
         },
         {
             "name": "filp/whoops",
@@ -8420,6 +8353,73 @@
             "time": "2020-11-10T18:47:58+00:00"
         },
         {
+            "name": "fakerphp/faker",
+            "version": "v1.19.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/FakerPHP/Faker.git",
+                "reference": "d7f08a622b3346766325488aa32ddc93ccdecc75"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/FakerPHP/Faker/zipball/d7f08a622b3346766325488aa32ddc93ccdecc75",
+                "reference": "d7f08a622b3346766325488aa32ddc93ccdecc75",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1 || ^8.0",
+                "psr/container": "^1.0 || ^2.0",
+                "symfony/deprecation-contracts": "^2.2 || ^3.0"
+            },
+            "conflict": {
+                "fzaninotto/faker": "*"
+            },
+            "require-dev": {
+                "bamarni/composer-bin-plugin": "^1.4.1",
+                "doctrine/persistence": "^1.3 || ^2.0",
+                "ext-intl": "*",
+                "symfony/phpunit-bridge": "^4.4 || ^5.2"
+            },
+            "suggest": {
+                "doctrine/orm": "Required to use Faker\\ORM\\Doctrine",
+                "ext-curl": "Required by Faker\\Provider\\Image to download images.",
+                "ext-dom": "Required by Faker\\Provider\\HtmlLorem for generating random HTML.",
+                "ext-iconv": "Required by Faker\\Provider\\ru_RU\\Text::realText() for generating real Russian text.",
+                "ext-mbstring": "Required for multibyte Unicode string functionality."
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "v1.19-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Faker\\": "src/Faker/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "François Zaninotto"
+                }
+            ],
+            "description": "Faker is a PHP library that generates fake data for you.",
+            "keywords": [
+                "data",
+                "faker",
+                "fixtures"
+            ],
+            "support": {
+                "issues": "https://github.com/FakerPHP/Faker/issues",
+                "source": "https://github.com/FakerPHP/Faker/tree/v1.19.0"
+            },
+            "time": "2022-02-02T17:38:57+00:00"
+        },
+        {
             "name": "fruitcake/laravel-cors",
             "version": "v2.0.4",
             "source": {
@@ -9669,22 +9669,22 @@
         },
         {
             "name": "ronasit/laravel-remote-data-collector",
-            "version": "1.7.1",
+            "version": "2.0.2-beta",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RonasIT/laravel-remote-data-collector.git",
-                "reference": "8bb0838cc0a002c494252bbd5afa4a3fee19e83c"
+                "reference": "c9539386ad4f51a8f6f20630385732e17cf556a9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RonasIT/laravel-remote-data-collector/zipball/8bb0838cc0a002c494252bbd5afa4a3fee19e83c",
-                "reference": "8bb0838cc0a002c494252bbd5afa4a3fee19e83c",
+                "url": "https://api.github.com/repos/RonasIT/laravel-remote-data-collector/zipball/c9539386ad4f51a8f6f20630385732e17cf556a9",
+                "reference": "c9539386ad4f51a8f6f20630385732e17cf556a9",
                 "shasum": ""
             },
             "require": {
                 "laravel/framework": ">=5.3.0",
-                "minime/annotations": "~3.0",
                 "php": ">=5.6",
+                "ronasit/laravel-helpers": "2.0.1-beta",
                 "ronasit/laravel-swagger": "1.6.*"
             },
             "type": "library",
@@ -9720,22 +9720,22 @@
             ],
             "support": {
                 "issues": "https://github.com/RonasIT/laravel-remote-data-collector/issues",
-                "source": "https://github.com/RonasIT/laravel-remote-data-collector/tree/1.7.1"
+                "source": "https://github.com/RonasIT/laravel-remote-data-collector/tree/2.0.2-beta"
             },
-            "time": "2021-11-22T11:18:54+00:00"
+            "time": "2022-03-28T08:51:20+00:00"
         },
         {
             "name": "ronasit/laravel-swagger",
-            "version": "1.6.0",
+            "version": "1.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RonasIT/laravel-swagger.git",
-                "reference": "ae5f987ee67eb38f6999d14b69732fc32530bfe2"
+                "reference": "c49d9e984453dd07de4b3913eca5683d8806b4eb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RonasIT/laravel-swagger/zipball/ae5f987ee67eb38f6999d14b69732fc32530bfe2",
-                "reference": "ae5f987ee67eb38f6999d14b69732fc32530bfe2",
+                "url": "https://api.github.com/repos/RonasIT/laravel-swagger/zipball/c49d9e984453dd07de4b3913eca5683d8806b4eb",
+                "reference": "c49d9e984453dd07de4b3913eca5683d8806b4eb",
                 "shasum": ""
             },
             "require": {
@@ -9744,6 +9744,13 @@
                 "php": ">=7.1.0"
             },
             "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "RonasIT\\Support\\AutoDoc\\AutoDocServiceProvider"
+                    ]
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "RonasIT\\Support\\AutoDoc\\": "src/"
@@ -9772,9 +9779,9 @@
             ],
             "support": {
                 "issues": "https://github.com/RonasIT/laravel-swagger/issues",
-                "source": "https://github.com/RonasIT/laravel-swagger/tree/1.6.0"
+                "source": "https://github.com/RonasIT/laravel-swagger/tree/1.6.1"
             },
-            "time": "2020-12-01T13:58:00+00:00"
+            "time": "2021-12-22T10:28:15+00:00"
         },
         {
             "name": "sebastian/code-unit",
@@ -10793,7 +10800,8 @@
     "aliases": [],
     "minimum-stability": "beta",
     "stability-flags": {
-        "ronasit/laravel-helpers": 10
+        "ronasit/laravel-helpers": 10,
+        "ronasit/laravel-remote-data-collector": 10
     },
     "prefer-stable": false,
     "prefer-lowest": false,
