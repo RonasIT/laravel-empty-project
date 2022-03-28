@@ -35,5 +35,6 @@ return [
             '404' => 'This entity not found'
         ]
     ],
+    'display_environments' => ['development', 'local'],
     'data_collector' => \RonasIT\Support\DataCollectors\RemoteDataCollector::class
 ];
