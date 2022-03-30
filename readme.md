@@ -15,8 +15,8 @@ docker-compose содержит конфигурацию для PHP 7.4 с postg
 1) Создать репозиторий, куда необходимо скопировать laravel-empty-project
 2) Установить переменные в Settings-CI/CD-Secure Variables:
    ```
-   K8S_SECRET_APP_KEY
-   K8S_SECRET_JWT_SECRET
+   APP_NAME
+   DATA_COLLECTOR_KEY
    K8S_SECRET_OTHER_VARIABLE
    ```
    Соответсвующие переменные будут проброшены в контейнер.
@@ -33,8 +33,6 @@ docker-compose содержит конфигурацию для PHP 7.4 с postg
 
 ```
 APP_URL
-APP_NAME
-DATA_COLLECTOR_KEY
 MAIL_*
 DB_*
 REDIS_*

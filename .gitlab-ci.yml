@@ -9,10 +9,11 @@ variables:
   DOMAIN: laravel.ronasit.com
   DOCKERFILE: ./Dockerfile
   CHART_REPO: ronasit/laravel
-  CHART_VERSION: &ref 8.4.2
+  CHART_VERSION: &ref 8.4.3
   CHART_VALUES: k8s/values.yaml
   DOCKER_CONTAINER_REGISTRY: gcr.io/ronas-it-development/${CI_PROJECT_NAME}-${CI_ENVIRONMENT_SLUG}
   APP_NAME: Laravel
+  DATA_COLLECTOR_KEY: laravel
 
 include:
   - project: 'k8s-tools/charts/laravel'
@@ -49,10 +50,6 @@ tests:
     MAIL_DRIVER: log
     FILESYSTEM_DRIVER: testing
     APP_ENV: testing
-    APP_DEBUG: "true"
-    APP_LOG_LEVEL: debug
-    APP_URL: http://localhost
-    DATA_COLLECTOR_KEY: laravel
     FAIL_EXPORT_JSON: "true"
   image: ronasit/php-nginx:7.4
   services:
