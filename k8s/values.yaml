@@ -27,15 +27,24 @@ cronjobs:
   enabled: false
 
 worker:
-  enabled: false
-  replicaCount: 1
+  enabled: true
   autoscale:
     enabled: false
-    min: 3
-    max: 6
-    CPULimit: 70
-    MemoryLimit: 1568Mi
-  cmd: "php /app/artisan queue:work --sleep=3 --tries=3 --queue=default,mails --memory=128"
+  workers:
+    - name: default
+      replicaCount: 1
+      cmd: "php /app/artisan queue:work --sleep=3 --tries=3"
+# Example with multiple workers
+    # - name: second-worker
+    #   replicaCount: 1
+    #   cmd: "php /app/artisan queue:work --queue=email --sleep=3 --tries=3"
+  resources: # <- default value
+    limits:
+      cpu: 200m
+      memory: 512Mi
+    requests:
+      cpu: 10m
+      memory: 128Mi
 
 migrate:
   enabled: true
