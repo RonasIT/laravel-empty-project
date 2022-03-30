@@ -32,7 +32,7 @@ php_dependencies:
     policy: pull-push
   script:
     - composer install
-     - !reference [.add_laravel_secrets]
+    - !reference [.add_laravel_secrets]
   tags:
     - docker
     - linux
