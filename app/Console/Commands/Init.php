@@ -30,7 +30,7 @@ class Init extends Command
 
         $this->updateConfigFile('.gitlab-ci.yml', ': ', [
             'CI_PROJECT_NAME' => $kebabName,
-            'DOMAIN' => "{$kebabName}.ronasit.com",
+            'DOMAIN' => "api.{$kebabName}.ronasit.com",
             'APP_NAME' => $appName,
             'DATA_COLLECTOR_KEY' => $kebabName
         ]);

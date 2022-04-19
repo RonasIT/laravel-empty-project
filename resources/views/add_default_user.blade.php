@@ -11,10 +11,10 @@ class AddDefaultUser extends Migration
     {
         if (config('app.env') !== 'testing') {
             User::create([
-                'name'     => '{{$name}}',
-                'email'    => '{{$email}}',
+                'name' => '{{$name}}',
+                'email' => '{{$email}}',
                 'password' => Hash::make('{{$password}}'),
-                'role_id'  => '{{$role_id}}'
+                'role_id' => '{{$role_id}}'
             ]);
         }
     }
