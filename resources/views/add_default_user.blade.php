@@ -9,19 +9,19 @@ class AddDefaultUser extends Migration
 
     public function up()
     {
-        if (config('app.env') != 'testing') {
+        if (config('app.env') !== 'testing') {
             User::create([
                 'name'     => '{{$name}}',
                 'email'    => '{{$email}}',
                 'password' => Hash::make('{{$password}}'),
-                'role_id'  => '{{$role}}'
+                'role_id'  => '{{$role_id}}'
             ]);
         }
     }
 
     public function down()
     {
-        if (config('app.env') != 'testing') {
+        if (config('app.env') !== 'testing') {
             User::where('email', '{{$email}}')->delete();
         }
     }
