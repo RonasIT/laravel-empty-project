@@ -5,15 +5,15 @@ stages:
   - deploy
 
 variables:
-  CI_PROJECT_NAME: laravel
-  DOMAIN: laravel.ronasit.com
+  CI_PROJECT_NAME: photoclaim-crypto-blog
+  DOMAIN: photoclaim-crypto-blog.ronasit.com
   DOCKERFILE: ./Dockerfile
   CHART_REPO: ronasit/laravel
   CHART_VERSION: &ref 8.4.4
   CHART_VALUES: k8s/values.yaml
   DOCKER_CONTAINER_REGISTRY: gcr.io/ronas-it-development/${CI_PROJECT_NAME}-${CI_ENVIRONMENT_SLUG}
-  APP_NAME: Laravel
-  DATA_COLLECTOR_KEY: laravel
+  APP_NAME: "Photoclaim Crypto Blog"
+  DATA_COLLECTOR_KEY: photoclaim-crypto-blog
 
 include:
   - project: 'k8s-tools/charts/laravel'
