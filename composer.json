@@ -17,8 +17,7 @@
     "laravel/ui": "^3.0",
     "nunomaduro/collision": "^5.0",
     "ronasit/laravel-helpers": "2.0.1-beta",
-    "superbalist/laravel-google-cloud-storage": "^2.2",
-    "symfony/yaml": "^4.4"
+    "superbalist/laravel-google-cloud-storage": "^2.2"
   },
   "require-dev": {
     "mockery/mockery": "^1.4",
