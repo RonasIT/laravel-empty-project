@@ -9,23 +9,23 @@ use Illuminate\Console\Command;
 
 class Init extends Command
 {
-    protected $signature = 'init';
+    protected $signature = 'init {application-name : The application name }';
 
     protected $description = 'Initialize required project parameters to run DEV environment';
 
     public function handle()
     {
-        $appName = $this->ask('Please set application name');
+        $appName = $this->argument('application-name');
         $kebabName = Str::kebab($appName);
 
         $this->updateConfigFile('.env.testing', '=', [
             'APP_NAME' => $appName,
-            'DATA_COLLECTOR_KEY' => $kebabName
+            'DATA_COLLECTOR_KEY' => "{$kebabName}-local"
         ]);
 
         $this->updateConfigFile('.env', '=', [
             'APP_NAME' => $appName,
-            'DATA_COLLECTOR_KEY' => $kebabName
+            'DATA_COLLECTOR_KEY' => "{$kebabName}-local"
         ]);
 
         $this->updateConfigFile('.gitlab-ci.yml', ': ', [
@@ -36,17 +36,17 @@ class Init extends Command
         ]);
 
         if ($this->confirm('Do you want generate admin user?', true)) {
-            $this->createAdminUser("admin@{$kebabName}.com");
+            $this->createAdminUser($kebabName);
         }
     }
 
-    protected function createAdminUser($defaultEmail)
+    protected function createAdminUser($kebabName)
     {
         $defaultPassword = substr(md5(uniqid()), 0, 8);
 
         $this->publishMigration([
             'name' => $this->ask('Please enter admin name', 'Admin'),
-            'email' => $this->ask('Please enter admin email', $defaultEmail),
+            'email' => $this->ask('Please enter admin email', "admin@{$kebabName}.com"),
             'password' => $this->ask('Please enter admin password', $defaultPassword),
             'role_id' => Role::ADMIN
         ]);
