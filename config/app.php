@@ -196,7 +196,6 @@ return [
         RonasIT\Support\HelpersServiceProvider::class,
         RonasIT\Support\EntityGeneratorServiceProvider::class,
         RonasIT\Support\AutoDoc\AutoDocServiceProvider::class,
-        RonasIT\Support\DataCollectors\RemoteDataCollectorServiceProvider::class,
         FruitCake\Cors\CorsServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
