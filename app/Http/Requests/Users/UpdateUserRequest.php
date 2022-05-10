@@ -12,7 +12,7 @@ class UpdateUserRequest extends Request
 {
     public function authorize(): bool
     {
-        return ($this->user()->role_id === Role::ADMIN) || ($this->user()->id === $this->route('id'));
+        return ($this->user()->role_id === Role::ADMIN) || ($this->user()->id === (int) $this->route('id'));
     }
 
     public function rules(): array
@@ -20,6 +20,7 @@ class UpdateUserRequest extends Request
         return [
             'email' => "string|email|unique:users,email,{$this->route('id')}",
             'name' => 'string',
+            'role_id' => 'integer|exists:roles,id'
         ];
     }
 
@@ -34,7 +35,7 @@ class UpdateUserRequest extends Request
         }
 
         if ($this->has('role_id') && $this->user()->role_id !== Role::ADMIN) {
-            throw new AccessDeniedHttpException(__('validation.exceptions.not_found', ['entity' => 'User']));
+            throw new AccessDeniedHttpException(__('validation.custom.role_id.access_denied'));
         }
     }
 }
