@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use RonasIT\Support\Traits\ModelTrait;
 use Illuminate\Database\Eloquent\Model;
+use RonasIT\Support\Traits\ModelTrait;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class Setting extends Model

@@ -2,8 +2,8 @@
 
 namespace App\Tests;
 
-use App\Models\User;
 use App\Models\Media;
+use App\Models\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use RonasIT\Support\Traits\FilesUploadTrait;

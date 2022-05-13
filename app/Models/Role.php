@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use RonasIT\Support\Traits\ModelTrait;
 use Illuminate\Database\Eloquent\Model;
+use RonasIT\Support\Traits\ModelTrait;
 
 class Role extends Model
 {

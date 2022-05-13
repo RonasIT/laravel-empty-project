@@ -1,0 +1,9 @@
+{
+  "disabled": ["TrailingCommasOnArrays", "SpaceAfterSoleNotOperator"],
+  "excluded": ["_ide_helper.php", "_ide_helper_models.php", ".phpstorm.meta.php"],
+  "paths": [
+    {
+      "controllers": ["app/Domain/Http/Controllers"]
+    }
+  ]
+}

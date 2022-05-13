@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Arr;
 use App\Repositories\SettingRepository;
+use Illuminate\Support\Arr;
 use RonasIT\Support\Services\EntityService;
 
 /**

@@ -3,11 +3,11 @@
 namespace App\Tests;
 
 use App\Mails\ForgotPasswordMail;
+use App\Models\User;
 use App\Tests\Support\AuthTestTrait;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Artisan;
 use Symfony\Component\HttpFoundation\Response;
-use App\Models\User;
 
 class AuthTest extends TestCase
 {

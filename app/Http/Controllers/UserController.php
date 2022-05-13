@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Users\DeleteProfileRequest;
-use App\Services\UserService;
-use App\Http\Requests\Users\GetUserRequest;
 use App\Http\Requests\Users\CreateUserRequest;
-use App\Http\Requests\Users\UpdateUserRequest;
+use App\Http\Requests\Users\DeleteProfileRequest;
 use App\Http\Requests\Users\DeleteUserRequest;
-use App\Http\Requests\Users\SearchUserRequest;
-use Symfony\Component\HttpFoundation\Response;
-use App\Http\Requests\Users\UpdateProfileRequest;
 use App\Http\Requests\Users\GetUserProfileRequest;
+use App\Http\Requests\Users\GetUserRequest;
+use App\Http\Requests\Users\SearchUserRequest;
+use App\Http\Requests\Users\UpdateProfileRequest;
+use App\Http\Requests\Users\UpdateUserRequest;
+use App\Services\UserService;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {

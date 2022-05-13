@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\MediaService;
-use Symfony\Component\HttpFoundation\Response;
 use App\Http\Requests\Media\CreateMediaRequest;
 use App\Http\Requests\Media\DeleteMediaRequest;
 use App\Http\Requests\Media\SearchMediaRequest;
+use App\Services\MediaService;
+use Symfony\Component\HttpFoundation\Response;
 
 class MediaController extends Controller
 {

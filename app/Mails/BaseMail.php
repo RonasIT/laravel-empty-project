@@ -10,11 +10,11 @@ class BaseMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $data;
+    protected array $data;
 
     public function __construct($to, array $data, $subject, $view)
     {
-        $this->to($to);
+        $this->to = $to;
         $this->data = $data;
         $this->subject = $subject;
         $this->view = $view;
@@ -23,6 +23,7 @@ class BaseMail extends Mailable
     public function build()
     {
         return $this
+            ->to($this->to)
             ->view($this->view)
             ->subject($this->subject)
             ->with($this->data);

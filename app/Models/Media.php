@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use RonasIT\Support\Traits\ModelTrait;
 use Illuminate\Database\Eloquent\Model;
-use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use RonasIT\Support\Traits\ModelTrait;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class Media extends Model
 {
@@ -19,11 +19,8 @@ class Media extends Model
     ];
 
     protected $casts = [
-        'is_public' => 'boolean'
-    ];
-
-    protected $dates = [
-        'deleted_at'
+        'is_public' => 'boolean',
+        'deleted_at' => 'date'
     ];
 
     protected $hidden = ['pivot'];

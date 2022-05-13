@@ -3,9 +3,9 @@
 namespace App\Console\Commands;
 
 use App\Models\Role;
-use Illuminate\Support\Str;
-use Illuminate\Support\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
 
 class Init extends Command
 {

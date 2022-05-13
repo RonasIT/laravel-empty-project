@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use RonasIT\Support\Traits\ModelTrait;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
@@ -29,8 +29,9 @@ class User extends Authenticatable implements JWTSubject
         'set_password_hash'
     ];
 
-    protected $dates = [
-        'set_password_hash_created_at'
+    protected $casts = [
+        'is_public' => 'boolean',
+        'set_password_hash_created_at' => 'date'
     ];
 
     public function getJWTIdentifier()
