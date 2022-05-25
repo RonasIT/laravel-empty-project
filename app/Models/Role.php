@@ -9,9 +9,9 @@ class Role extends Model
 {
     use ModelTrait;
 
-    const ADMIN = 1;
-    const USER = 2;
-    
+    public const ADMIN = 1;
+    public const USER = 2;
+
     protected $fillable = [
         'name',
     ];

@@ -8,7 +8,8 @@ use Illuminate\Queue\SerializesModels;
 
 class BaseMail extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     protected array $data;
 

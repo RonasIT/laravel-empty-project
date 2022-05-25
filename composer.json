@@ -23,6 +23,7 @@
   "require-dev": {
     "barryvdh/laravel-ide-helper": "^2.7",
     "fakerphp/faker": "^1.19",
+    "friendsofphp/php-cs-fixer": "^3.8",
     "fruitcake/laravel-cors": "^2.0",
     "mockery/mockery": "^1.4",
     "phpunit/phpunit": "^9.0",

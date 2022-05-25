@@ -45,7 +45,10 @@ class MediaTest extends TestCase
 
     public function testCreatePublic()
     {
-        $response = $this->actingAs($this->user)->json('post', '/media', [
+        $response = $this->actingAs($this->user)->json(
+            'post',
+            '/media',
+            [
                 'file' => $this->file,
                 'is_public' => true,
             ]
@@ -232,7 +235,6 @@ class MediaTest extends TestCase
      */
     public function testUploadingBadFiles($filter)
     {
-
         $this->file = UploadedFile::fake()->create($filter['fileName'], 1024);
 
         $response = $this->actingAs($this->user)->json('post', '/media', ['file' => $this->file]);
@@ -268,7 +270,6 @@ class MediaTest extends TestCase
      */
     public function testUploadingGoodFiles($filter)
     {
-
         $this->file = UploadedFile::fake()->image($filter['fileName'], 600, 600);
 
         $response = $this->actingAs($this->user)->json('post', '/media', ['file' => $this->file]);
