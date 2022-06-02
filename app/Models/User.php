@@ -32,7 +32,7 @@ class User extends Authenticatable implements JWTSubject
 
     protected $casts = [
         'is_public' => 'boolean',
-        'set_password_hash_created_at' => 'date'
+        'set_password_hash_created_at' => 'datetime'
     ];
 
     public function getJWTIdentifier()

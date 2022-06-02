@@ -20,19 +20,19 @@ class Init extends Command
 
         $this->updateConfigFile('.env.testing', '=', [
             'APP_NAME' => $appName,
-            'DATA_COLLECTOR_KEY' => "{$kebabName}-local"
+            'SWAGGER_REMOTE_DRIVER_KEY' => "{$kebabName}-local"
         ]);
 
         $this->updateConfigFile('.env', '=', [
             'APP_NAME' => $appName,
-            'DATA_COLLECTOR_KEY' => "{$kebabName}-local"
+            'SWAGGER_REMOTE_DRIVER_KEY' => "{$kebabName}-local"
         ]);
 
         $this->updateConfigFile('.gitlab-ci.yml', ': ', [
             'CI_PROJECT_NAME' => $kebabName,
             'DOMAIN' => "api.{$kebabName}.ronasit.com",
             'APP_NAME' => $appName,
-            'DATA_COLLECTOR_KEY' => $kebabName
+            'SWAGGER_REMOTE_DRIVER_KEY' => $kebabName
         ]);
 
         if ($this->confirm('Do you want generate admin user?', true)) {

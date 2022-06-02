@@ -25,11 +25,4 @@ abstract class TestCase extends BaseTestCase
 
         return $app;
     }
-
-    public function tearDown(): void
-    {
-        $this->saveDocumentation();
-
-        parent::tearDown();
-    }
 }

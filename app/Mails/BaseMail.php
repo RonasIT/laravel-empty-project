@@ -15,7 +15,8 @@ class BaseMail extends Mailable
 
     public function __construct($to, array $data, $subject, $view)
     {
-        $this->to = $to;
+        // TODO: Remove this workaround after implementing https://github.com/RonasIT/laravel-empty-project/issues/10
+        $this->to[] = ['address' => $to];
         $this->data = $data;
         $this->subject = $subject;
         $this->view = $view;

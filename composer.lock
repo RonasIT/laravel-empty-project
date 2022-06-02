@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "48430e0b99dd1dd5bc726dabb2978f5a",
+    "content-hash": "d9b34c69ad086287f44d5014e4f2257f",
     "packages": [
         {
             "name": "brick/math",
@@ -9764,16 +9764,16 @@
         },
         {
             "name": "ronasit/laravel-swagger",
-            "version": "2.0.3-beta",
+            "version": "2.0.4-beta",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RonasIT/laravel-swagger.git",
-                "reference": "4fa28cab69fbd67b9380dda5a52481ecf74ac42f"
+                "reference": "9e493222099b249f97a3d2be93b0b0d9ff484811"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RonasIT/laravel-swagger/zipball/4fa28cab69fbd67b9380dda5a52481ecf74ac42f",
-                "reference": "4fa28cab69fbd67b9380dda5a52481ecf74ac42f",
+                "url": "https://api.github.com/repos/RonasIT/laravel-swagger/zipball/9e493222099b249f97a3d2be93b0b0d9ff484811",
+                "reference": "9e493222099b249f97a3d2be93b0b0d9ff484811",
                 "shasum": ""
             },
             "require": {
@@ -9817,9 +9817,9 @@
             ],
             "support": {
                 "issues": "https://github.com/RonasIT/laravel-swagger/issues",
-                "source": "https://github.com/RonasIT/laravel-swagger/tree/2.0.3-beta"
+                "source": "https://github.com/RonasIT/laravel-swagger/tree/2.0.4-beta"
             },
-            "time": "2022-05-03T12:59:05+00:00"
+            "time": "2022-05-12T01:20:43+00:00"
         },
         {
             "name": "sebastian/code-unit",

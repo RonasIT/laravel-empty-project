@@ -8,6 +8,9 @@
          convertWarningsToExceptions="true"
          processIsolation="false"
          stopOnFailure="false">
+    <extensions>
+        <extension class="RonasIT\Support\AutoDoc\Tests\PhpUnitExtensions\SwaggerExtension"/>
+    </extensions>
     <testsuites>
         <testsuite name="Tests">
             <directory suffix="Test.php">./tests</directory>
