@@ -103,6 +103,9 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'role_id' => [
+            'access_denied' => 'You are not able to change user role'
+        ]
     ],
 
     /*

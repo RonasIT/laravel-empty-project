@@ -87,6 +87,22 @@ class UserTest extends TestCase
         ]);
     }
 
+    public function testUpdateRoleIdByUser()
+    {
+        $data = $this->getJsonFixture('update_user_role.json');
+
+        $response = $this->actingAs($this->user)->json('put', '/users/2', $data);
+
+        $response->assertJson(['error' => 'You are not able to change user role']);
+
+        $this->assertDatabaseMissing('users', [
+            'id' => 1,
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'role_id' => $data['role_id']
+        ]);
+    }
+
     public function testUpdateWithEmailOfAnotherUser()
     {
         $response = $this->actingAs($this->admin)->json('put', '/users/2', [
