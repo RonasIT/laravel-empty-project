@@ -22,6 +22,7 @@
   },
   "require-dev": {
     "barryvdh/laravel-ide-helper": "^2.7",
+    "brainmaestro/composer-git-hooks": "^2.8",
     "fakerphp/faker": "^1.19",
     "friendsofphp/php-cs-fixer": "^3.8",
     "fruitcake/laravel-cors": "^2.0",
@@ -50,26 +51,40 @@
       "php artisan clear-compiled",
       "php artisan ide-helper:generate",
       "php artisan ide-helper:meta",
-      "php artisan ide-helper:models -N"
+      "php artisan ide-helper:models -N",
+      "cghooks add --ignore-lock"
     ],
     "post-update-cmd": [
       "Illuminate\\Foundation\\ComposerScripts::postUpdate",
       "php artisan clear-compiled",
       "php artisan ide-helper:generate",
       "php artisan ide-helper:meta",
-      "php artisan ide-helper:models -N"
+      "php artisan ide-helper:models -N",
+      "cghooks update"
     ],
     "post-root-package-install": [
       "php -r \"copy('.env.example', '.env');\""
     ],
     "post-create-project-cmd": [
       "php artisan key:generate"
-    ]
+    ],
+    "cghooks": "vendor/bin/cghooks"
   },
   "config": {
     "preferred-install": "dist",
     "sort-packages": true,
     "optimize-autoloader": true
+  },
+  "extra": {
+    "hooks": {
+      "config": {
+        "stop-on-failure": ["pre-commit"]
+      },
+      "pre-commit": [
+        "echo committing as $(git config user.name)",
+        "tlint lint --diff"
+      ]
+    }
   },
   "minimum-stability": "beta"
 }
