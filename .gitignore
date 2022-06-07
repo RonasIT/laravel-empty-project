@@ -16,3 +16,5 @@ _ide_helper_models.php
 storage/app
 .phpunit.result.cache
 .php-cs-fixer.cache
+cghooks.lock
+

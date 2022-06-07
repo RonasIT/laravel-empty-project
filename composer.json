@@ -80,10 +80,7 @@
       "config": {
         "stop-on-failure": ["pre-commit"]
       },
-      "pre-commit": [
-        "echo committing as $(git config user.name)",
-        "tlint lint --diff"
-      ]
+      "pre-commit": ["./vendor/bin/tlint"]
     }
   },
   "minimum-stability": "beta"
