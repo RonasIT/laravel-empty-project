@@ -118,7 +118,7 @@ class AuthController extends Controller
         return response('', Response::HTTP_NO_CONTENT);
     }
 
-    private function getCookieWithForgottenToken()
+    private function makeAuthorizationTokenExpiredCookie()
     {
         return $this->makeAuthorizationTokenCookie(null, false, true);
     }
