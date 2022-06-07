@@ -32,7 +32,7 @@ class AuthController extends Controller
 
         $user = $service->first(['email' => $request->input('email')]);
 
-        $tokenCookie = $this->authorizationTokenCookie($token, $remember);
+        $tokenCookie = $this->makeAuthorizationTokenCookie($token, $remember);
 
         return response()
             ->json([
@@ -50,7 +50,7 @@ class AuthController extends Controller
 
         $credentials = $request->only('email', 'password');
         $token = $auth->attempt($credentials);
-        $tokenCookie = $this->authorizationTokenCookie($token);
+        $tokenCookie = $this->makeAuthorizationTokenCookie($token);
 
         return response()
             ->json([
@@ -66,7 +66,7 @@ class AuthController extends Controller
     {
         try {
             $token = $auth->parseToken()->refresh();
-            $tokenCookie = $this->authorizationTokenCookie($token);
+            $tokenCookie = $this->makeAuthorizationTokenCookie($token);
 
             return response()
                 ->json([
@@ -88,7 +88,7 @@ class AuthController extends Controller
             $auth->invalidate(true);
             $auth->unsetToken();
 
-            $tokenCookie = $this->authorizationForgetTokenCookie();
+            $tokenCookie = $this->makeAuthorizationTokenExpiredCookie();
 
             return response('', Response::HTTP_NO_CONTENT)->withCookie($tokenCookie);
         } catch (JWTException $e) {
@@ -118,12 +118,7 @@ class AuthController extends Controller
         return response('', Response::HTTP_NO_CONTENT);
     }
 
-    private function authorizationTokenCookie($token, bool $remember = false)
-    {
-        return $this->makeAuthorizationTokenCookie($token, $remember);
-    }
-
-    private function authorizationForgetTokenCookie()
+    private function makeAuthorizationTokenExpiredCookie()
     {
         return $this->makeAuthorizationTokenCookie(null, false, true);
     }
