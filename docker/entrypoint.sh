@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 composer install
 
 if [[ -f .env ]]

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b0e456b9234a4a019e7517d22029b781",
+    "content-hash": "8f96bd29d84613a1b930e87a041301dd",
     "packages": [
         {
             "name": "brick/math",
@@ -4622,6 +4622,58 @@
                 "source": "https://github.com/RonasIT/laravel-helpers/tree/2.0.1-beta"
             },
             "time": "2022-03-19T12:12:30+00:00"
+        },
+        {
+            "name": "ronasit/laravel-swagger",
+            "version": "1.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/RonasIT/laravel-swagger.git",
+                "reference": "ae5f987ee67eb38f6999d14b69732fc32530bfe2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/RonasIT/laravel-swagger/zipball/ae5f987ee67eb38f6999d14b69732fc32530bfe2",
+                "reference": "ae5f987ee67eb38f6999d14b69732fc32530bfe2",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": ">=5.3.0",
+                "minime/annotations": "~3.0",
+                "php": ">=7.1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "RonasIT\\Support\\AutoDoc\\": "src/"
+                },
+                "exclude-from-classmap": [
+                    "src/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Roman Dubrovin",
+                    "email": "rdubrovin@ronasit.com"
+                }
+            ],
+            "description": "Provided middleware for generating of swagger-documentation file by run testing of RESTful API.",
+            "keywords": [
+                "auto-documentation",
+                "laravel",
+                "rest-api",
+                "swagger",
+                "testing"
+            ],
+            "support": {
+                "issues": "https://github.com/RonasIT/laravel-swagger/issues",
+                "source": "https://github.com/RonasIT/laravel-swagger/tree/1.6.0"
+            },
+            "time": "2020-12-01T13:58:00+00:00"
         },
         {
             "name": "superbalist/flysystem-google-storage",
@@ -9709,65 +9761,6 @@
                 "source": "https://github.com/RonasIT/laravel-remote-data-collector/tree/2.0.2-beta"
             },
             "time": "2022-03-28T08:51:20+00:00"
-        },
-        {
-            "name": "ronasit/laravel-swagger",
-            "version": "1.6.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/RonasIT/laravel-swagger.git",
-                "reference": "c49d9e984453dd07de4b3913eca5683d8806b4eb"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/RonasIT/laravel-swagger/zipball/c49d9e984453dd07de4b3913eca5683d8806b4eb",
-                "reference": "c49d9e984453dd07de4b3913eca5683d8806b4eb",
-                "shasum": ""
-            },
-            "require": {
-                "laravel/framework": ">=5.3.0",
-                "minime/annotations": "~3.0",
-                "php": ">=7.1.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "RonasIT\\Support\\AutoDoc\\AutoDocServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "RonasIT\\Support\\AutoDoc\\": "src/"
-                },
-                "exclude-from-classmap": [
-                    "src/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Roman Dubrovin",
-                    "email": "rdubrovin@ronasit.com"
-                }
-            ],
-            "description": "Provided middleware for generating of swagger-documentation file by run testing of RESTful API.",
-            "keywords": [
-                "auto-documentation",
-                "laravel",
-                "rest-api",
-                "swagger",
-                "testing"
-            ],
-            "support": {
-                "issues": "https://github.com/RonasIT/laravel-swagger/issues",
-                "source": "https://github.com/RonasIT/laravel-swagger/tree/1.6.1"
-            },
-            "time": "2021-12-22T10:28:15+00:00"
         },
         {
             "name": "sebastian/code-unit",
