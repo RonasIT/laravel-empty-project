@@ -88,7 +88,7 @@ class AuthController extends Controller
             $auth->invalidate(true);
             $auth->unsetToken();
 
-            $tokenCookie = $this->getCookieWithForgottenToken();
+            $tokenCookie = $this->makeAuthorizationTokenExpiredCookie();
 
             return response('', Response::HTTP_NO_CONTENT)->withCookie($tokenCookie);
         } catch (JWTException $e) {
