@@ -9,7 +9,8 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 class Media extends Model
 {
-    use ModelTrait, SoftDeletes;
+    use ModelTrait;
+    use SoftDeletes;
 
     protected $fillable = [
         'link',
