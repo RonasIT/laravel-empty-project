@@ -80,7 +80,9 @@
       "config": {
         "stop-on-failure": ["pre-commit"]
       },
-      "pre-commit": ["./vendor/bin/tlint"]
+      "pre-commit": [
+        "docker-compose up -d && docker-compose exec -T nginx vendor/bin/tlint"
+      ]
     }
   },
   "minimum-stability": "beta"
