@@ -18,10 +18,14 @@ abstract class TestCase extends BaseTestCase
      */
     public function createApplication(): Application
     {
+        /** @var Application $app */
         $app = require __DIR__ . '/../bootstrap/app.php';
 
         $app->loadEnvironmentFrom('.env.testing');
         $app->make(Kernel::class)->bootstrap();
+
+        $this->truncateExceptTables[] = 'roles';
+        $this->prepareSequencesExceptTables[] = 'roles';
 
         return $app;
     }
