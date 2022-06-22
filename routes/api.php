@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\SettingController;
 
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
