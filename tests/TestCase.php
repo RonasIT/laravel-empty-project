@@ -24,8 +24,8 @@ abstract class TestCase extends BaseTestCase
         $app->loadEnvironmentFrom('.env.testing');
         $app->make(Kernel::class)->bootstrap();
 
-        $this->truncateExceptTables[] = 'roles';
-        $this->prepareSequencesExceptTables[] = 'roles';
+        $this->truncateExceptTables = ['migrations', 'password_resets', 'roles'];
+        $this->prepareSequencesExceptTables = ['migrations', 'password_resets', 'settings', 'roles'];
 
         return $app;
     }
