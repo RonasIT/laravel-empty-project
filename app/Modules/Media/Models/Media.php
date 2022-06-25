@@ -1,11 +1,14 @@
 <?php
 
-namespace App\Models;
+namespace App\Modules\Media\Models;
 
-use RonasIT\Support\Traits\ModelTrait;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
-use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use RonasIT\Support\Traits\ModelTrait;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class Media extends Model
 {
@@ -28,7 +31,7 @@ class Media extends Model
 
     protected $hidden = ['pivot'];
 
-    public function scopeApplyMediaPermissionRestrictions($query)
+    public function scopeApplyMediaPermissionRestrictions($query): void
     {
         if (!JWTAuth::getToken()) {
             $query->where('is_public', true);
@@ -36,6 +39,7 @@ class Media extends Model
             return;
         }
 
+        /** @var User $user */
         $user = JWTAuth::toUser();
 
         if ($user->role_id !== Role::ADMIN) {
@@ -47,7 +51,7 @@ class Media extends Model
         }
     }
 
-    public function owner()
+    public function owner(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }

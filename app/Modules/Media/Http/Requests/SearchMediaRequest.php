@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Media;
+namespace App\Modules\Media\Http\Requests;
 
-use App\Http\Requests\Request;
+use RonasIT\Support\BaseRequest;
 
-class SearchMediaRequest extends Request
+class SearchMediaRequest extends BaseRequest
 {
     public function rules(): array
     {

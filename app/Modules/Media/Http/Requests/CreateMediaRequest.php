@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Requests\Media;
+namespace App\Modules\Media\Http\Requests;
 
-use App\Http\Requests\Request;
+use RonasIT\Support\BaseRequest;
 
-class CreateMediaRequest extends Request
+class CreateMediaRequest extends BaseRequest
 {
     public function rules(): array
     {
-        $types = implode(',', config('defaults.permitted_media_types'));
+        $types = implode(',', config('media.permitted_types'));
 
         return [
             'file' => "file|required|max:5120|mimes:{$types}",

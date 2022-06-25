@@ -1,21 +1,22 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\Modules\Media;
 
 use App\Models\User;
-use App\Models\Media;
+use App\Modules\Media\Models\Media;
+use Illuminate\Http\Testing\File;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use RonasIT\Support\Traits\FilesUploadTrait;
 use Symfony\Component\HttpFoundation\Response;
 
-class MediaTest extends TestCase
+class MediaTest extends ModuleTestCase
 {
     use FilesUploadTrait;
 
     protected $admin;
     protected $user;
-    protected $file;
+    protected File $file;
 
     public function setUp(): void
     {
@@ -26,7 +27,7 @@ class MediaTest extends TestCase
         $this->file = UploadedFile::fake()->image('file.png', 600, 600);
     }
 
-    public function testCreate()
+    public function testCreate(): void
     {
         $response = $this->actingAs($this->admin)->json('post', '/media', ['file' => $this->file]);
 
@@ -43,7 +44,7 @@ class MediaTest extends TestCase
     }
 
 
-    public function testCreatePublic()
+    public function testCreatePublic(): void
     {
         $response = $this->actingAs($this->user)->json('post', '/media', [
                 'file' => $this->file,
@@ -63,14 +64,14 @@ class MediaTest extends TestCase
         $response->assertStatus(Response::HTTP_OK);
     }
 
-    public function testCreateCheckUrls()
+    public function testCreateCheckUrls(): void
     {
         $this->actingAs($this->admin)->json('post', '/media', ['file' => $this->file]);
 
         $this->assertEquals(1, Media::where('link', 'like', '/%')->count());
     }
 
-    public function testCreateCheckResponse()
+    public function testCreateCheckResponse(): void
     {
         $response = $this->actingAs($this->admin)->json('post', '/media', ['file' => $this->file]);
 
@@ -86,14 +87,14 @@ class MediaTest extends TestCase
         $this->clearUploadedFilesFolder();
     }
 
-    public function testCreateNoAuth()
+    public function testCreateNoAuth(): void
     {
         $response = $this->json('post', '/media', ['file' => $this->file]);
 
         $response->assertStatus(Response::HTTP_UNAUTHORIZED);
     }
 
-    public function testDelete()
+    public function testDelete(): void
     {
         $response = $this->actingAs($this->admin)->json('delete', '/media/1');
 
@@ -104,7 +105,7 @@ class MediaTest extends TestCase
         ]);
     }
 
-    public function testDeleteNotExists()
+    public function testDeleteNotExists(): void
     {
         $response = $this->actingAs($this->admin)->json('delete', '/media/0');
 
@@ -115,7 +116,7 @@ class MediaTest extends TestCase
         ]);
     }
 
-    public function testDeleteNoPermission()
+    public function testDeleteNoPermission(): void
     {
         $response = $this->actingAs($this->user)->json('delete', '/media/1');
 
@@ -126,7 +127,7 @@ class MediaTest extends TestCase
         ]);
     }
 
-    public function testDeleteNoAuth()
+    public function testDeleteNoAuth(): void
     {
         $response = $this->json('delete', '/media/1');
 
@@ -137,7 +138,7 @@ class MediaTest extends TestCase
         ]);
     }
 
-    public function getSearchFilters()
+    public function getSearchFilters(): array
     {
         return [
             [
@@ -160,7 +161,7 @@ class MediaTest extends TestCase
         ];
     }
 
-    public function getUserSearchFilters()
+    public function getUserSearchFilters(): array
     {
         return [
             [
@@ -186,10 +187,10 @@ class MediaTest extends TestCase
     /**
      * @dataProvider  getSearchFilters
      *
-     * @param  array $filter
-     * @param  string $fixture
+     * @param array $filter
+     * @param string $fixture
      */
-    public function testSearch($filter, $fixture)
+    public function testSearch(array $filter, string $fixture): void
     {
         $response = $this->actingAs($this->admin)->json('get', '/media', $filter);
 
@@ -201,10 +202,10 @@ class MediaTest extends TestCase
     /**
      * @dataProvider  getUserSearchFilters
      *
-     * @param  array $filter
-     * @param  string $fixture
+     * @param array $filter
+     * @param string $fixture
      */
-    public function testSearchByUser($filter, $fixture)
+    public function testSearchByUser(array $filter, string $fixture): void
     {
         $response = $this->actingAs($this->user)->json('get', '/media', $filter);
 
@@ -228,9 +229,9 @@ class MediaTest extends TestCase
     /**
      * @dataProvider  getBadFiles
      *
-     * @param  array $filter
+     * @param array $filter
      */
-    public function testUploadingBadFiles($filter)
+    public function testUploadingBadFiles(array $filter): void
     {
 
         $this->file = UploadedFile::fake()->create($filter['fileName'], 1024);
@@ -246,7 +247,7 @@ class MediaTest extends TestCase
         ]);
     }
 
-    public function getGoodFiles()
+    public function getGoodFiles(): array
     {
         return [
             [
@@ -264,9 +265,9 @@ class MediaTest extends TestCase
     /**
      * @dataProvider  getGoodFiles
      *
-     * @param  array $filter
+     * @param array $filter
      */
-    public function testUploadingGoodFiles($filter)
+    public function testUploadingGoodFiles(array $filter)
     {
 
         $this->file = UploadedFile::fake()->image($filter['fileName'], 600, 600);

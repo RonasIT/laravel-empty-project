@@ -1,20 +1,22 @@
 <?php
 
-namespace App\Http\Requests\Media;
+namespace App\Modules\Media\Http\Requests;
 
-use App\Http\Requests\Request;
 use App\Models\Role;
+use App\Modules\Media\Services\MediaService;
+use RonasIT\Support\BaseRequest;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use App\Services\MediaService;
+use function __;
+use function app;
 
-class DeleteMediaRequest extends Request
+class DeleteMediaRequest extends BaseRequest
 {
     public function authorize(): bool
     {
         return $this->user()->role_id == Role::ADMIN;
     }
 
-    public function validateResolved()
+    public function validateResolved(): void
     {
         parent::validateResolved();
 

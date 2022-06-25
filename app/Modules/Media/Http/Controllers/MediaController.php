@@ -1,16 +1,19 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Modules\Media\Http\Controllers;
 
-use App\Services\MediaService;
+use App\Modules\Media\Http\Requests\CreateMediaRequest;
+use App\Modules\Media\Http\Requests\DeleteMediaRequest;
+use App\Modules\Media\Http\Requests\SearchMediaRequest;
+use App\Modules\Media\Services\MediaService;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Routing\Controller;
 use Symfony\Component\HttpFoundation\Response;
-use App\Http\Requests\Media\CreateMediaRequest;
-use App\Http\Requests\Media\DeleteMediaRequest;
-use App\Http\Requests\Media\SearchMediaRequest;
+use function response;
 
 class MediaController extends Controller
 {
-    public function create(CreateMediaRequest $request, MediaService $service)
+    public function create(CreateMediaRequest $request, MediaService $service): JsonResponse
     {
         $file = $request->file('file');
         $data = $request->onlyValidated();
@@ -29,7 +32,7 @@ class MediaController extends Controller
         return response('', Response::HTTP_NO_CONTENT);
     }
 
-    public function search(SearchMediaRequest $request, MediaService $service)
+    public function search(SearchMediaRequest $request, MediaService $service): JsonResponse
     {
         $result = $service->search($request->onlyValidated());
 

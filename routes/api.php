@@ -1,10 +1,10 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\MediaController;
-use App\Http\Controllers\SettingController;
+use App\Modules\Media\Http\Controllers\MediaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,10 +26,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/profile', ['uses' => UserController::class . '@profile']);
     Route::put('/profile', ['uses' => UserController::class . '@updateProfile']);
     Route::delete('/profile', ['uses' => UserController::class . '@deleteProfile']);
-
-    Route::post('/media', ['uses' => MediaController::class . '@create']);
-    Route::delete('/media/{id}', ['uses' => MediaController::class . '@delete']);
-    Route::get('/media', ['uses' => MediaController::class . '@search']);
 
     Route::put('/settings/{name}', ['uses' => SettingController::class . '@update']);
     Route::get('/settings/{name}', ['uses' => SettingController::class . '@get']);

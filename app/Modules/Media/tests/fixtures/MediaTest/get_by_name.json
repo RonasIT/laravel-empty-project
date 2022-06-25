@@ -1,0 +1,42 @@
+{
+    "current_page": 1,
+    "data": [
+        {
+            "id": 1,
+            "created_at": "2016-10-20T11:05:00.000000Z",
+            "updated_at": "2016-10-20T11:05:00.000000Z",
+            "deleted_at": null,
+            "link": "http:\/\/localhost\/test.jpg",
+            "name": "Product main photo",
+            "is_public": true,
+            "owner_id": 1
+        }
+    ],
+    "first_page_url": "http:\/\/localhost\/media?page=1",
+    "from": 1,
+    "last_page": 1,
+    "last_page_url": "http:\/\/localhost\/media?page=1",
+    "links": [
+        {
+            "url": null,
+            "label": "&laquo; Previous",
+            "active": false
+        },
+        {
+            "url": "http:\/\/localhost\/media?page=1",
+            "label": "1",
+            "active": true
+        },
+        {
+            "url": null,
+            "label": "Next &raquo;",
+            "active": false
+        }
+    ],
+    "next_page_url": null,
+    "path": "http:\/\/localhost\/media",
+    "per_page": 10,
+    "prev_page_url": null,
+    "to": 1,
+    "total": 1
+}

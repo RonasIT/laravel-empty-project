@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Notifications\Notifiable;
+use App\Modules\Media\Models\Media;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 use RonasIT\Support\Traits\ModelTrait;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 

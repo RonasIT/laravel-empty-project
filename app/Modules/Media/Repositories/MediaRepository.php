@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Modules\Media\Repositories;
 
-use App\Models\Media;
+use App\Modules\Media\Models\Media;
 use Illuminate\Pagination\LengthAwarePaginator;
 use RonasIT\Support\Repositories\BaseRepository;
 
 /**
- * @property  Media $model
+ * @property Media $model
  */
 class MediaRepository extends BaseRepository
 {

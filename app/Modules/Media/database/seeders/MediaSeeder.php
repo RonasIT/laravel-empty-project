@@ -1,9 +1,10 @@
 <?php
-namespace Database\Seeders;
+namespace App\Modules\Media\database\seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\User;
-use App\Models\Media;
+use App\Modules\Media\Models\Media;
+use Illuminate\Database\Seeder;
+use function factory;
 
 class MediaSeeder extends Seeder
 {
