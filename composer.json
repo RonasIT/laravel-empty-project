@@ -46,9 +46,9 @@
   "scripts": {
     "post-install-cmd": [
       "php artisan clear-compiled",
-      "php artisan ide-helper:generate",
-      "php artisan ide-helper:meta",
-      "php artisan ide-helper:models -N"
+      "[ $COMPOSER_DEV_MODE -eq 0 ] || php artisan ide-helper:generate",
+      "[ $COMPOSER_DEV_MODE -eq 0 ] || php artisan ide-helper:meta",
+      "[ $COMPOSER_DEV_MODE -eq 0 ] || php artisan ide-helper:models -N"
     ],
     "post-update-cmd": [
       "Illuminate\\Foundation\\ComposerScripts::postUpdate",
