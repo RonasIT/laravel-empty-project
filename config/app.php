@@ -194,11 +194,9 @@ return [
          */
         Laravel\Tinker\TinkerServiceProvider::class,
         RonasIT\Support\HelpersServiceProvider::class,
-        RonasIT\Support\EntityGeneratorServiceProvider::class,
         RonasIT\Support\AutoDoc\AutoDocServiceProvider::class,
         RonasIT\Support\DataCollectors\RemoteDataCollectorServiceProvider::class,
         FruitCake\Cors\CorsServiceProvider::class,
-        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
 
         /*
@@ -209,6 +207,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\DevDependenciesServiceProvider::class
 
     ],
 
@@ -224,7 +223,6 @@ return [
     */
 
     'aliases' => [
-
         'App' => Illuminate\Support\Facades\App::class,
         'Arr' => Illuminate\Support\Arr::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
@@ -260,8 +258,7 @@ return [
         'Str' => Illuminate\Support\Str::class,
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
-        'View' => Illuminate\Support\Facades\View::class,
-        'Yaml' => Symfony\Component\Yaml\Yaml::class
+        'View' => Illuminate\Support\Facades\View::class
     ],
 
 ];
