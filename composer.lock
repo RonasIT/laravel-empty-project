@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8f96bd29d84613a1b930e87a041301dd",
+    "content-hash": "ef40dc3e7e42ecc8f2855b35484ba0e7",
     "packages": [
         {
             "name": "brick/math",
@@ -4622,6 +4622,64 @@
                 "source": "https://github.com/RonasIT/laravel-helpers/tree/2.0.1-beta"
             },
             "time": "2022-03-19T12:12:30+00:00"
+        },
+        {
+            "name": "ronasit/laravel-remote-data-collector",
+            "version": "2.0.3-beta",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/RonasIT/laravel-remote-data-collector.git",
+                "reference": "a0f1c9cd1c06713bb2501bfee1081909678fa476"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/RonasIT/laravel-remote-data-collector/zipball/a0f1c9cd1c06713bb2501bfee1081909678fa476",
+                "reference": "a0f1c9cd1c06713bb2501bfee1081909678fa476",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": ">=5.3.0",
+                "php": ">=5.6",
+                "ronasit/laravel-helpers": ">=2.0.1-beta",
+                "ronasit/laravel-swagger": "1.6.*"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "RonasIT\\Support\\DataCollectors\\RemoteDataCollectorServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "RonasIT\\Support\\DataCollectors\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Roman Dubrovin",
+                    "email": "rdubrovin@ronasit.com"
+                }
+            ],
+            "description": "Provides service for data collecting for ronasit/laravel-swagger plugin",
+            "keywords": [
+                "auto-documentation",
+                "laravel",
+                "rest-api",
+                "ronasit",
+                "swagger"
+            ],
+            "support": {
+                "issues": "https://github.com/RonasIT/laravel-remote-data-collector/issues",
+                "source": "https://github.com/RonasIT/laravel-remote-data-collector/tree/2.0.3-beta"
+            },
+            "abandoned": "ronasit/laravel-swagger",
+            "time": "2022-04-13T08:47:48+00:00"
         },
         {
             "name": "ronasit/laravel-swagger",
@@ -9704,63 +9762,6 @@
                 "source": "https://github.com/RonasIT/laravel-entity-generator/tree/2.0.2-beta"
             },
             "time": "2022-04-18T05:07:25+00:00"
-        },
-        {
-            "name": "ronasit/laravel-remote-data-collector",
-            "version": "2.0.2-beta",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/RonasIT/laravel-remote-data-collector.git",
-                "reference": "c9539386ad4f51a8f6f20630385732e17cf556a9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/RonasIT/laravel-remote-data-collector/zipball/c9539386ad4f51a8f6f20630385732e17cf556a9",
-                "reference": "c9539386ad4f51a8f6f20630385732e17cf556a9",
-                "shasum": ""
-            },
-            "require": {
-                "laravel/framework": ">=5.3.0",
-                "php": ">=5.6",
-                "ronasit/laravel-helpers": "2.0.1-beta",
-                "ronasit/laravel-swagger": "1.6.*"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "RonasIT\\Support\\DataCollectors\\RemoteDataCollectorServiceProvider"
-                    ]
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "RonasIT\\Support\\DataCollectors\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Roman Dubrovin",
-                    "email": "rdubrovin@ronasit.com"
-                }
-            ],
-            "description": "Provides service for data collecting for ronasit/laravel-swagger plugin",
-            "keywords": [
-                "auto-documentation",
-                "laravel",
-                "rest-api",
-                "ronasit",
-                "swagger"
-            ],
-            "support": {
-                "issues": "https://github.com/RonasIT/laravel-remote-data-collector/issues",
-                "source": "https://github.com/RonasIT/laravel-remote-data-collector/tree/2.0.2-beta"
-            },
-            "time": "2022-03-28T08:51:20+00:00"
         },
         {
             "name": "sebastian/code-unit",

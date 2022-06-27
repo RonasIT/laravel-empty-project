@@ -17,6 +17,7 @@
     "laravel/ui": "^3.0",
     "nunomaduro/collision": "^5.0",
     "ronasit/laravel-helpers": "2.0.1-beta",
+    "ronasit/laravel-remote-data-collector": "^2.0@beta",
     "ronasit/laravel-swagger": ">=1.6",
     "superbalist/laravel-google-cloud-storage": "^2.2"
   },
@@ -25,7 +26,6 @@
     "phpunit/phpunit": "^9.0",
     "fruitcake/laravel-cors": "^2.0",
     "ronasit/laravel-entity-generator": ">=1.3.4",
-    "ronasit/laravel-remote-data-collector": "2.0.2-beta",
     "barryvdh/laravel-ide-helper": "^2.7",
     "fakerphp/faker": "^1.19"
   },
