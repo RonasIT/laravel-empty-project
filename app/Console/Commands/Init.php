@@ -28,6 +28,26 @@ class Init extends Command
             'DATA_COLLECTOR_KEY' => "{$kebabName}-local"
         ]);
 
+		$this->updateConfigFile('.env.dev', '=', [
+			'APP_NAME' => $appName,
+			'DATA_COLLECTOR_KEY' => "{$kebabName}"
+		]);
+
+		$this->updateConfigFile('.env.dev.testing', '=', [
+			'APP_NAME' => $appName,
+			'DATA_COLLECTOR_KEY' => "{$kebabName}"
+		]);
+
+		$this->info('Project initialized successfully');
+	}
+
+	private function updateConfigFile($file, $operator, $data)
+	{
+		$config = file_get_contents($file);
+		$config = str_replace(array_keys($data), array_values($data), $config);
+		file_put_contents($file, $config);
+	}
+
 		if ($this->confirm('Do you want generate admin user?', true)) {
             $this->createAdminUser($kebabName);
         }
