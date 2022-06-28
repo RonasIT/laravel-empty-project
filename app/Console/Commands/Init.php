@@ -28,12 +28,17 @@ class Init extends Command
             'DATA_COLLECTOR_KEY' => "{$kebabName}-local"
         ]);
 
-        $this->updateConfigFile('.gitlab-ci.yml', ': ', [
-            'CI_PROJECT_NAME' => $kebabName,
-            'DOMAIN' => "api.{$kebabName}.ronasit.com",
+        $this->updateConfigFile('.env.dev', '=', [
             'APP_NAME' => $appName,
-            'DATA_COLLECTOR_KEY' => $kebabName
+            'DATA_COLLECTOR_KEY' => "{$kebabName}"
         ]);
+
+        $this->updateConfigFile('.env.dev.testing', '=', [
+            'APP_NAME' => $appName,
+            'DATA_COLLECTOR_KEY' => "{$kebabName}"
+        ]);
+
+        $this->info('Project initialized successfully');
 
         if ($this->confirm('Do you want generate admin user?', true)) {
             $this->createAdminUser($kebabName);
