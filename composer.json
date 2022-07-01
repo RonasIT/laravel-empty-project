@@ -81,7 +81,7 @@
         "stop-on-failure": ["pre-commit"]
       },
       "pre-commit": [
-        "docker-compose up -d && docker-compose exec -T nginx vendor/bin/tlint"
+        "docker-compose up -d php && docker-compose exec -T php vendor/bin/tlint"
       ]
     }
   },
