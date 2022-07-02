@@ -17,7 +17,7 @@ class SettingService extends EntityService
         $this->setRepository(SettingRepository::class);
     }
 
-    public function search($filters)
+    public function search(array $filters)
     {
         return $this->repository
             ->searchQuery($filters)

@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Mails\ForgotPasswordMail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Mail;
@@ -16,15 +17,15 @@ class SendMailJob implements ShouldQueue
 
     protected $mails;
 
-    public $tries = 5;
+    public int $tries = 5;
 
-    public function __construct($mailables)
+    public function __construct(ForgotPasswordMail $mailables)
     {
         $this->mails = Arr::wrap($mailables);
         $this->onQueue('mails');
     }
 
-    public function handle()
+    public function handle(): void
     {
         foreach ($this->mails as $mailable) {
             Mail::send($mailable);
