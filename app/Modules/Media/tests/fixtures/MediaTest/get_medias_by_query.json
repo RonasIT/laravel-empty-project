@@ -9,6 +9,7 @@
             "link": "http:\/\/localhost\/test.jpg",
             "name": "Product main photo",
             "is_public": true,
+            "meta": null,
             "owner_id": 1
         }
     ],

@@ -18,7 +18,8 @@ class Media extends Model
         'link',
         'name',
         'owner_id',
-        'is_public'
+        'is_public',
+        'meta'
     ];
 
     protected $casts = [

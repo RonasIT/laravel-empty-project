@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\Factory;
 $factory->define(Media::class, function (Faker\Generator $faker) {
     return [
         'link' => $faker->word,
-        'name' => $faker->word
+        'name' => $faker->word,
+        'meta' => $faker->word
     ];
 });

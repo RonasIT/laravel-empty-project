@@ -12,6 +12,7 @@ class CreateMediaRequest extends BaseRequest
 
         return [
             'file' => "file|required|max:5120|mimes:{$types}",
+            'meta' => 'string',
             'is_public' => 'boolean',
         ];
     }

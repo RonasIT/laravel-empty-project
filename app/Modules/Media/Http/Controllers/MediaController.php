@@ -2,6 +2,7 @@
 
 namespace App\Modules\Media\Http\Controllers;
 
+use App\Modules\Media\Http\Requests\CreateMediaBulkRequest;
 use App\Modules\Media\Http\Requests\CreateMediaRequest;
 use App\Modules\Media\Http\Requests\DeleteMediaRequest;
 use App\Modules\Media\Http\Requests\SearchMediaRequest;
@@ -35,6 +36,13 @@ class MediaController extends Controller
     public function search(SearchMediaRequest $request, MediaService $service): JsonResponse
     {
         $result = $service->search($request->onlyValidated());
+
+        return response()->json($result);
+    }
+
+    public function bulkCreate(CreateMediaBulkRequest $request, MediaService $mediaService): JsonResponse
+    {
+        $result = $mediaService->bulkCreate($request->onlyValidated('media'));
 
         return response()->json($result);
     }

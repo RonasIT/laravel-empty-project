@@ -94,6 +94,41 @@ class MediaTest extends ModuleTestCase
         $response->assertStatus(Response::HTTP_UNAUTHORIZED);
     }
 
+    public function testBulkCreate(): void
+    {
+        $response = $this->actingAs($this->admin)->json('post', '/media/bulk', [
+            'media' => [
+                [
+                    'file' => $this->file,
+                    'meta' => 'test1'
+                ],
+                [
+                    'file' => $this->file,
+                    'meta' => 'test2'
+                ]
+            ]
+        ]);
+
+        $response->assertStatus(Response::HTTP_OK);
+
+        $responseData = $response->json();
+
+        $this->assertDatabaseHas('media', [
+            'id' => $responseData[0]['id'],
+            'name' => 'file.png',
+            'owner_id' => $this->admin->id,
+            'meta' => 'test1',
+            'is_public' => false
+        ]);
+        $this->assertDatabaseHas('media', [
+            'id' => $responseData[1]['id'],
+            'name' => 'file.png',
+            'owner_id' => $this->admin->id,
+            'meta' => 'test2',
+            'is_public' => false
+        ]);
+    }
+
     public function testDelete(): void
     {
         $response = $this->actingAs($this->admin)->json('delete', '/media/1');

@@ -9,6 +9,7 @@
             "link": "http:\/\/localhost\/test1.jpg",
             "name": "Category Photo photo",
             "is_public": false,
+            "meta": null,
             "owner_id": 1
         },
         {
@@ -19,6 +20,7 @@
             "link": "http:\/\/localhost\/test4.jpg",
             "name": "Photo",
             "is_public": true,
+            "meta": null,
             "owner_id": 2
         }
     ],
