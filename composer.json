@@ -18,8 +18,7 @@
     "laravel/ui": "^3.0",
     "nunomaduro/collision": "^5.0",
     "ronasit/laravel-helpers": "2.0.1-beta",
-    "ronasit/laravel-remote-data-collector": "^2.0@beta",
-    "ronasit/laravel-swagger": ">=1.6",
+    "ronasit/laravel-swagger": ">=2.0.4-beta",
     "superbalist/laravel-google-cloud-storage": "^2.2"
   },
   "require-dev": {
