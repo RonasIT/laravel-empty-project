@@ -3,13 +3,14 @@
 namespace App\Modules\Media\Http\Requests;
 
 use App\Models\Role;
+use App\Modules\Media\Contracts\Requests\DeleteMediaRequestContract;
 use App\Modules\Media\Services\MediaService;
 use RonasIT\Support\BaseRequest;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use function __;
 use function app;
 
-class DeleteMediaRequest extends BaseRequest
+class DeleteMediaRequest extends BaseRequest implements DeleteMediaRequestContract
 {
     public function authorize(): bool
     {

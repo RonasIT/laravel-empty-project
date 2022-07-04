@@ -42,5 +42,4 @@ abstract class ModuleTestCase extends TestCase
 
         return base_path("tests/Modules/Media/fixtures/{$className}/{$fixtureName}");
     }
-
 }

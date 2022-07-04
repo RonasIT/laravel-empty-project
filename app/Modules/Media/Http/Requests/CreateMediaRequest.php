@@ -2,9 +2,10 @@
 
 namespace App\Modules\Media\Http\Requests;
 
+use App\Modules\Media\Contracts\Requests\CreateMediaRequestContract;
 use RonasIT\Support\BaseRequest;
 
-class CreateMediaRequest extends BaseRequest
+class CreateMediaRequest extends BaseRequest implements CreateMediaRequestContract
 {
     public function rules(): array
     {
@@ -13,7 +14,7 @@ class CreateMediaRequest extends BaseRequest
         return [
             'file' => "file|required|max:5120|mimes:{$types}",
             'meta' => 'string',
-            'is_public' => 'boolean',
+            'is_public' => 'boolean'
         ];
     }
 }

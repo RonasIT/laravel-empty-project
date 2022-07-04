@@ -2,45 +2,46 @@
 
 namespace App\Modules\Media\Http\Controllers;
 
-use App\Modules\Media\Http\Requests\CreateMediaBulkRequest;
-use App\Modules\Media\Http\Requests\CreateMediaRequest;
-use App\Modules\Media\Http\Requests\DeleteMediaRequest;
-use App\Modules\Media\Http\Requests\SearchMediaRequest;
-use App\Modules\Media\Services\MediaService;
+use App\Modules\Media\Contracts\Controllers\MediaControllerContract;
+use App\Modules\Media\Contracts\Requests\BulkCreateMediaRequestContract;
+use App\Modules\Media\Contracts\Requests\CreateMediaRequestContract;
+use App\Modules\Media\Contracts\Requests\DeleteMediaRequestContract;
+use App\Modules\Media\Contracts\Requests\SearchMediaRequestContract;
+use App\Modules\Media\Contracts\Services\MediaServiceContract;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use function response;
 
-class MediaController extends Controller
+class MediaController extends Controller implements MediaControllerContract
 {
-    public function create(CreateMediaRequest $request, MediaService $service): JsonResponse
+    public function create(CreateMediaRequestContract $request, MediaServiceContract $mediaService): JsonResponse
     {
         $file = $request->file('file');
         $data = $request->onlyValidated();
 
         $content = file_get_contents($file->getPathname());
 
-        $media = $service->create($content, $file->getClientOriginalName(), $data);
+        $media = $mediaService->create($content, $file->getClientOriginalName(), $data);
 
         return response()->json($media);
     }
 
-    public function delete(DeleteMediaRequest $request, MediaService $service, $id)
+    public function delete(DeleteMediaRequestContract $request, MediaServiceContract $mediaService, int $id)
     {
-        $service->delete($id);
+        $mediaService->delete($id);
 
         return response('', Response::HTTP_NO_CONTENT);
     }
 
-    public function search(SearchMediaRequest $request, MediaService $service): JsonResponse
+    public function search(SearchMediaRequestContract $request, MediaServiceContract $mediaService): JsonResponse
     {
-        $result = $service->search($request->onlyValidated());
+        $result = $mediaService->search($request->onlyValidated());
 
         return response()->json($result);
     }
 
-    public function bulkCreate(CreateMediaBulkRequest $request, MediaService $mediaService): JsonResponse
+    public function bulkCreate(BulkCreateMediaRequestContract $request, MediaServiceContract $mediaService): JsonResponse
     {
         $result = $mediaService->bulkCreate($request->onlyValidated('media'));
 

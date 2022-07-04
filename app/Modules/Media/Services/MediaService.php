@@ -2,6 +2,7 @@
 
 namespace App\Modules\Media\Services;
 
+use App\Modules\Media\Contracts\Services\MediaServiceContract;
 use App\Modules\Media\Repositories\MediaRepository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
@@ -14,7 +15,7 @@ use RonasIT\Support\Traits\FilesUploadTrait;
  * @property MediaRepository $repository
  * @mixin MediaRepository
  */
-class MediaService extends EntityService
+class MediaService extends EntityService implements MediaServiceContract
 {
     use FilesUploadTrait;
 
@@ -23,7 +24,7 @@ class MediaService extends EntityService
         $this->setRepository(MediaRepository::class);
     }
 
-    public function search($filters): LengthAwarePaginator
+    public function search(array $filters): LengthAwarePaginator
     {
         return $this->repository
             ->searchQuery($filters)
@@ -54,5 +55,10 @@ class MediaService extends EntityService
         }
 
         return $result;
+    }
+
+    public function delete($where): int
+    {
+        return $this->repository->delete($where);
     }
 }

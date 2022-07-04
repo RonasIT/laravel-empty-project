@@ -10,13 +10,9 @@ interface RequestContract
      *
      * @return array;
      */
-    function onlyValidated($keys = null, $default = null);
+    function onlyValidated($keys = null, $default = null): array;
 
     function rules(): array;
 
-    function authorize();
-
-    function validateResolved();
-
-    function input();
+    function authorize(): bool;
 }

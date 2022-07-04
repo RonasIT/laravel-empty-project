@@ -2,9 +2,10 @@
 
 namespace App\Modules\Media\Http\Requests;
 
+use App\Modules\Media\Contracts\Requests\SearchMediaRequestContract;
 use RonasIT\Support\BaseRequest;
 
-class SearchMediaRequest extends BaseRequest
+class SearchMediaRequest extends BaseRequest implements SearchMediaRequestContract
 {
     public function rules(): array
     {

@@ -249,7 +249,7 @@ class MediaTest extends ModuleTestCase
         $this->assertEqualsFixture($fixture, $response->json());
     }
 
-    public function getBadFiles()
+    public function getBadFiles(): array
     {
         return [
             [
@@ -268,7 +268,6 @@ class MediaTest extends ModuleTestCase
      */
     public function testUploadingBadFiles(array $filter): void
     {
-
         $this->file = UploadedFile::fake()->create($filter['fileName'], 1024);
 
         $response = $this->actingAs($this->user)->json('post', '/media', ['file' => $this->file]);
@@ -302,9 +301,8 @@ class MediaTest extends ModuleTestCase
      *
      * @param array $filter
      */
-    public function testUploadingGoodFiles(array $filter)
+    public function testUploadingGoodFiles(array $filter): void
     {
-
         $this->file = UploadedFile::fake()->image($filter['fileName'], 600, 600);
 
         $response = $this->actingAs($this->user)->json('post', '/media', ['file' => $this->file]);

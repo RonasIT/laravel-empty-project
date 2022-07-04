@@ -2,9 +2,10 @@
 
 namespace App\Modules\Media\Http\Requests;
 
+use App\Modules\Media\Contracts\Requests\BulkCreateMediaRequestContract;
 use RonasIT\Support\BaseRequest;
 
-class CreateMediaBulkRequest extends BaseRequest
+class BulkCreateMediaRequest extends BaseRequest implements BulkCreateMediaRequestContract
 {
     public function rules(): array
     {
