@@ -19,7 +19,7 @@ class SendMailJob implements ShouldQueue
 
     public int $tries = 5;
 
-    public function __construct(ForgotPasswordMail $mailables)
+    public function __construct($mailables)
     {
         $this->mails = Arr::wrap($mailables);
         $this->onQueue('mails');
