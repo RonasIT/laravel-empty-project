@@ -1,0 +1,7 @@
+variables:
+  CD_PROJECT_ID: 1717
+
+include:
+  - project: 'spaces/gitlab-ci-cd/templates'
+    ref: main
+    file: 'laravel-template.yaml'
