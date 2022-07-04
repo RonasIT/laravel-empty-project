@@ -2,7 +2,6 @@
 
 namespace App\Jobs;
 
-use App\Mails\ForgotPasswordMail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Mail;
