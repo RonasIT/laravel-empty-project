@@ -19,7 +19,6 @@ class Init extends Command
         $kebabName = Str::kebab($appName);
 
         $this->updateConfigFile('.env.testing', '=', [
-            'APP_NAME' => $appName,
             'DATA_COLLECTOR_KEY' => "{$kebabName}-local"
         ]);
 
@@ -34,7 +33,6 @@ class Init extends Command
         ]);
 
         $this->updateConfigFile('.env.dev.testing', '=', [
-            'APP_NAME' => $appName,
             'DATA_COLLECTOR_KEY' => "{$kebabName}"
         ]);
 
