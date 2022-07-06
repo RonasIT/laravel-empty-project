@@ -14,9 +14,9 @@ class SendMailJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $mails;
+    protected array $mails;
 
-    public $tries = 5;
+    public int $tries = 5;
 
     public function __construct($mailables)
     {
@@ -24,7 +24,7 @@ class SendMailJob implements ShouldQueue
         $this->onQueue('mails');
     }
 
-    public function handle()
+    public function handle(): void
     {
         foreach ($this->mails as $mailable) {
             Mail::send($mailable);

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use RonasIT\Support\Traits\ModelTrait;
 use Illuminate\Database\Eloquent\Model;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -27,7 +28,7 @@ class Setting extends Model
     ];
 
 
-    public function scopeApplySettingPermissionRestrictions($query)
+    public function scopeApplySettingPermissionRestrictions(Builder $query): void
     {
         $user = JWTAuth::toUser();
 

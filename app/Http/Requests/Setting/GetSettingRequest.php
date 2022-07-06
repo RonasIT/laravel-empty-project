@@ -25,7 +25,7 @@ class GetSettingRequest extends Request
         return Arr::get($this->setting, 'is_public');
     }
 
-    public function validateResolved()
+    public function validateResolved(): void
     {
         parent::validateResolved();
 
