@@ -168,7 +168,8 @@ class AuthTest extends TestCase
         ]);
 
         Mail::assertQueued(ForgotPasswordMail::class, function ($mail) {
-            return $mail->hasTo('fidel.kutch@example.com');
+            return $mail->hasTo('fidel.kutch@example.com')  &&
+                   $mail->subject == 'Forgot password?';
         });
     }
 
