@@ -61,7 +61,7 @@ class UserService extends EntityService
                 'set_password_hash_created_at' => Carbon::now()
             ]);
 
-        Mail::to($email)->send(new ForgotPasswordMail(['hash' => $hash]));
+        Mail::to($email)->send(new ForgotPasswordMail(['hash' => $hash]))
     }
 
     public function restorePassword(string $token, string $password)
