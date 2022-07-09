@@ -13,11 +13,14 @@ class BaseMail extends Mailable implements ShouldQueue
 
     protected array $data;
 
-    public function __construct(array $data, $subject, $view)
+    public $tries = 5;
+
+    public function __construct(array $data, $subject, $view, $queue)
     {
         $this->data = $data;
         $this->subject = $subject;
         $this->view = $view;
+        $this->onQueue($queue);
     }
 
     public function build()
