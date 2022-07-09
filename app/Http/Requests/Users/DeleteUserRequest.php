@@ -14,7 +14,7 @@ class DeleteUserRequest extends Request
         return $this->user()->role_id == Role::ADMIN;
     }
 
-    public function validateResolved()
+    public function validateResolved(): void
     {
         parent::validateResolved();
 

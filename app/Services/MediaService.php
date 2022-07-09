@@ -20,7 +20,7 @@ class MediaService extends EntityService
         $this->setRepository(MediaRepository::class);
     }
 
-    public function search($filters)
+    public function search(array $filters)
     {
         return $this->repository
             ->searchQuery($filters)
@@ -28,7 +28,7 @@ class MediaService extends EntityService
             ->getSearchResults();
     }
 
-    public function create($content, $fileName, $data = [])
+    public function create($content, string $fileName, array $data = [])
     {
         $url = $this->saveFile($fileName, $content, true);
         $data['link'] = str_replace(config('app.url'), '', $url);

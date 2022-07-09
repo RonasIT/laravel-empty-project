@@ -16,7 +16,7 @@ class RoleService extends EntityService
         $this->setRepository(RoleRepository::class);
     }
 
-    public function search($filters)
+    public function search(array $filters)
     {
         return $this->repository
             ->searchQuery($filters)

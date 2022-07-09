@@ -11,7 +11,7 @@ class BaseMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    protected $data;
+    protected array $data;
 
     public function __construct(array $data, $subject, $view)
     {
@@ -28,7 +28,7 @@ class BaseMail extends Mailable implements ShouldQueue
             ->with($this->data);
     }
 
-    public function getData()
+    public function getData(): array
     {
         return $this->data;
     }

@@ -22,7 +22,7 @@ class UserService extends EntityService
         $this->setRepository(UserRepository::class);
     }
 
-    public function search($filters)
+    public function search(array $filters)
     {
         return $this->repository
             ->searchQuery($filters)
@@ -31,7 +31,7 @@ class UserService extends EntityService
             ->getSearchResults();
     }
 
-    public function create($data)
+    public function create(array $data)
     {
         $data['role_id'] = Arr::get($data, 'role_id', Role::USER);
         $data['password'] = Hash::make($data['password']);
@@ -39,7 +39,7 @@ class UserService extends EntityService
         return $this->repository->create($data);
     }
 
-    public function update($where, $data)
+    public function update($where, array $data)
     {
         if (!empty($data['password'])) {
             $data['password'] = Hash::make($data['password']);
@@ -48,7 +48,7 @@ class UserService extends EntityService
         return $this->repository->update($where, $data);
     }
 
-    public function forgotPassword($email)
+    public function forgotPassword(string $email)
     {
         $hash = $this->generateHash();
 
@@ -64,7 +64,7 @@ class UserService extends EntityService
         Mail::to($email)->send(new ForgotPasswordMail(['hash' => $hash]));
     }
 
-    public function restorePassword($token, $password)
+    public function restorePassword(string $token, string $password)
     {
         $this->repository
             ->force()
@@ -76,7 +76,7 @@ class UserService extends EntityService
             ]);
     }
 
-    protected function generateHash($length = 32)
+    protected function generateHash(int $length = 32)
     {
         $length /= 2;
 
