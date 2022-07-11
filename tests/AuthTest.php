@@ -167,10 +167,12 @@ class AuthTest extends TestCase
             'set_password_hash_created_at' => null
         ]);
 
-        Mail::assertQueued(ForgotPasswordMail::class, function ($mail) {
-            return $mail->hasTo('fidel.kutch@example.com')  &&
-                   $mail->subject == 'Forgot password?';
-        });
+        $this->assertMailEquals(ForgotPasswordMail::class, [
+            [
+                'emails' => 'fidel.kutch@example.com',
+                'fixture' => 'forgot_password_email.html'
+            ]
+        ]);
     }
 
     public function testForgotPasswordUserDoesNotExists()
