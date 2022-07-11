@@ -67,8 +67,7 @@
     ],
     "post-create-project-cmd": [
       "php artisan key:generate"
-    ],
-    "cghooks": "vendor/bin/cghooks"
+    ]
   },
   "config": {
     "preferred-install": "dist",
