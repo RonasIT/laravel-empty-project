@@ -3,21 +3,24 @@
 namespace App\Mails;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class BaseMail extends Mailable
+class BaseMail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
     protected array $data;
 
-    public function __construct($to, array $data, $subject, $view)
+    public int $tries = 5;
+
+    public function __construct(array $data, $subject, $view)
     {
-        $this->to($to);
         $this->data = $data;
         $this->subject = $subject;
         $this->view = $view;
+        $this->onQueue('mails');
     }
 
     public function build()
