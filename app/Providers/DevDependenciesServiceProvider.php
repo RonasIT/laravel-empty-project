@@ -4,16 +4,15 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
-use RonasIT\Support\EntityGeneratorServiceProvider;
-use Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider;
 
 class DevDependenciesServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
         if (config('app.env') === 'local') {
-            App::register(EntityGeneratorServiceProvider::class);
-            App::register(IdeHelperServiceProvider::class);
+            // To use "require-dev" dependencies, their providers should be registered via full namespace
+            App::register(\RonasIT\Support\EntityGeneratorServiceProvider::class);
+            App::register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
         }
     }
 
