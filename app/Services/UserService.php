@@ -6,6 +6,8 @@ use App\Jobs\SendMailJob;
 use App\Mails\ForgotPasswordMail;
 use App\Models\Role;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
 use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Hash;
@@ -22,16 +24,16 @@ class UserService extends EntityService
         $this->setRepository(UserRepository::class);
     }
 
-    public function search(array $filters)
+    public function search(array $filters): LengthAwarePaginator
     {
-        return $this->repository
+        return $this
             ->searchQuery($filters)
             ->filterBy('role_id')
             ->filterByQuery(['name', 'email'])
             ->getSearchResults();
     }
 
-    public function create(array $data)
+    public function create(array $data): Model
     {
         $data['role_id'] = Arr::get($data, 'role_id', Role::USER);
         $data['password'] = Hash::make($data['password']);
@@ -39,7 +41,7 @@ class UserService extends EntityService
         return $this->repository->create($data);
     }
 
-    public function update($where, array $data)
+    public function update($where, array $data): Model
     {
         if (!empty($data['password'])) {
             $data['password'] = Hash::make($data['password']);
@@ -48,7 +50,7 @@ class UserService extends EntityService
         return $this->repository->update($where, $data);
     }
 
-    public function forgotPassword(string $email)
+    public function forgotPassword(string $email): void
     {
         $hash = $this->generateHash();
 
@@ -65,7 +67,7 @@ class UserService extends EntityService
         dispatch(new SendMailJob($mail));
     }
 
-    public function restorePassword(string $token, string $password)
+    public function restorePassword(string $token, string $password): void
     {
         $this->repository
             ->force()
@@ -77,7 +79,7 @@ class UserService extends EntityService
             ]);
     }
 
-    protected function generateHash(int $length = 32)
+    protected function generateHash(int $length = 32): string
     {
         $length /= 2;
 

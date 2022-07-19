@@ -18,7 +18,7 @@ class GetSettingRequest extends Request
         $service = app(SettingService::class);
         $this->setting = $service->findBy('name', $this->route('name'));
 
-        if ($this->user()->role_id == Role::ADMIN) {
+        if ($this->user()->role_id === Role::ADMIN) {
             return true;
         }
 
