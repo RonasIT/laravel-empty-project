@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use RonasIT\Support\Traits\ModelTrait;
 use Tymon\JWTAuth\Facades\JWTAuth;
@@ -26,7 +28,7 @@ class Media extends Model
 
     protected $hidden = ['pivot'];
 
-    public function scopeApplyMediaPermissionRestrictions($query)
+    public function scopeApplyMediaPermissionRestrictions(Builder $query): void
     {
         if (!JWTAuth::getToken()) {
             $query->where('is_public', true);
@@ -45,7 +47,7 @@ class Media extends Model
         }
     }
 
-    public function owner()
+    public function owner(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }

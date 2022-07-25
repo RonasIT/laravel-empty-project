@@ -19,8 +19,7 @@ class Init extends Command
         $kebabName = Str::kebab($appName);
 
         $this->updateConfigFile('.env.testing', '=', [
-            'APP_NAME' => $appName,
-            'SWAGGER_REMOTE_DRIVER_KEY' => "{$kebabName}-local"
+            'DATA_COLLECTOR_KEY' => "{$kebabName}-local"
         ]);
 
         $this->updateConfigFile('.env', '=', [
@@ -28,12 +27,16 @@ class Init extends Command
             'SWAGGER_REMOTE_DRIVER_KEY' => "{$kebabName}-local"
         ]);
 
-        $this->updateConfigFile('.gitlab-ci.yml', ': ', [
-            'CI_PROJECT_NAME' => $kebabName,
-            'DOMAIN' => "api.{$kebabName}.ronasit.com",
+        $this->updateConfigFile('.env.dev', '=', [
             'APP_NAME' => $appName,
-            'SWAGGER_REMOTE_DRIVER_KEY' => $kebabName
+            'DATA_COLLECTOR_KEY' => "{$kebabName}"
         ]);
+
+        $this->updateConfigFile('.env.dev.testing', '=', [
+            'DATA_COLLECTOR_KEY' => "{$kebabName}"
+        ]);
+
+        $this->info('Project initialized successfully');
 
         if ($this->confirm('Do you want generate admin user?', true)) {
             $this->createAdminUser($kebabName);

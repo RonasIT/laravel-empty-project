@@ -24,7 +24,7 @@ class UpdateUserRequest extends Request
         ];
     }
 
-    public function validateResolved()
+    public function validateResolved(): void
     {
         parent::validateResolved();
 

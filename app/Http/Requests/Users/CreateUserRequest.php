@@ -10,7 +10,7 @@ class CreateUserRequest extends Request
 {
     public function authorize(): bool
     {
-        return $this->user()->role_id == Role::ADMIN;
+        return $this->user()->role_id === Role::ADMIN;
     }
 
     public function rules(): array
@@ -23,7 +23,7 @@ class CreateUserRequest extends Request
         ];
     }
 
-    public function validateResolved()
+    public function validateResolved(): void
     {
         parent::validateResolved();
 

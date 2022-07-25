@@ -9,7 +9,7 @@ use Illuminate\Routing\Controller as BaseController;
 
 class StatusController extends BaseController
 {
-    public function status()
+    public function status(): Response
     {
         try {
             DB::getPdo();
