@@ -2,10 +2,9 @@
 
 namespace App\Services;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Repositories\SettingRepository;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
-use App\Repositories\SettingRepository;
 use RonasIT\Support\Services\EntityService;
 
 /**

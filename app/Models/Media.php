@@ -3,15 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use RonasIT\Support\Traits\ModelTrait;
 use Illuminate\Database\Eloquent\Model;
-use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use RonasIT\Support\Traits\ModelTrait;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class Media extends Model
 {
-    use ModelTrait, SoftDeletes;
+    use ModelTrait;
+    use SoftDeletes;
 
     protected $fillable = [
         'link',
@@ -21,11 +22,8 @@ class Media extends Model
     ];
 
     protected $casts = [
-        'is_public' => 'boolean'
-    ];
-
-    protected $dates = [
-        'deleted_at'
+        'is_public' => 'boolean',
+        'deleted_at' => 'date'
     ];
 
     protected $hidden = ['pivot'];

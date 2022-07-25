@@ -8,13 +8,15 @@ use Illuminate\Queue\SerializesModels;
 
 class BaseMail extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
     protected array $data;
 
     public function __construct($to, array $data, $subject, $view)
     {
-        $this->to($to);
+        // TODO: Remove this workaround after implementing https://github.com/RonasIT/laravel-empty-project/issues/10
+        $this->to[] = ['address' => $to];
         $this->data = $data;
         $this->subject = $subject;
         $this->view = $view;
@@ -23,6 +25,7 @@ class BaseMail extends Mailable
     public function build()
     {
         return $this
+            ->to($this->to)
             ->view($this->view)
             ->subject($this->subject)
             ->with($this->data);

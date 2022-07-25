@@ -2,10 +2,10 @@
 
 namespace App\Tests;
 
-use Illuminate\Foundation\Application;
 use Illuminate\Contracts\Console\Kernel;
-use RonasIT\Support\Tests\TestCase as BaseTestCase;
+use Illuminate\Foundation\Application;
 use RonasIT\Support\AutoDoc\Tests\AutoDocTestCaseTrait;
+use RonasIT\Support\Tests\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {

@@ -11,10 +11,10 @@ class AddDefaultUser extends Migration
     {
         if (config('app.env') !== 'testing') {
             User::create([
-                'name' => '{{$name}}',
-                'email' => '{{$email}}',
-                'password' => Hash::make('{{$password}}'),
-                'role_id' => '{{$role_id}}'
+                'name' => '{{ $name }}',
+                'email' => '{{ $email }}',
+                'password' => Hash::make('{{ $password }}'),
+                'role_id' => '{{ $role_id }}'
             ]);
         }
     }
@@ -22,7 +22,7 @@ class AddDefaultUser extends Migration
     public function down()
     {
         if (config('app.env') !== 'testing') {
-            User::where('email', '{{$email}}')->delete();
+            User::where('email', '{{ $email }}')->delete();
         }
     }
 }

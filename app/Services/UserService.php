@@ -5,11 +5,11 @@ namespace App\Services;
 use App\Jobs\SendMailJob;
 use App\Mails\ForgotPasswordMail;
 use App\Models\Role;
+use App\Repositories\UserRepository;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
-use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Hash;
 use RonasIT\Support\Services\EntityService;
 

@@ -4,8 +4,8 @@ namespace App\Http\Requests\Media;
 
 use App\Http\Requests\Request;
 use App\Models\Role;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use App\Services\MediaService;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DeleteMediaRequest extends Request
 {

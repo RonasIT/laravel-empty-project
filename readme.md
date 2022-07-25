@@ -16,7 +16,7 @@ docker-compose содержит конфигурацию для PHP 7.4 с postg
 2) Установить переменные в Settings-CI/CD-Secure Variables:
    ```
    APP_NAME
-   DATA_COLLECTOR_KEY
+   SWAGGER_REMOTE_DRIVER_KEY
    K8S_SECRET_OTHER_VARIABLE
    ```
    Соответсвующие переменные будут проброшены в контейнер.
