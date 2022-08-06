@@ -16,7 +16,7 @@ class UserRepository extends BaseRepository
         $this->setModel(User::class);
     }
 
-    public function clearSetPasswordHash()
+    public function clearSetPasswordHash(): int
     {
         return $this
             ->getQuery()
