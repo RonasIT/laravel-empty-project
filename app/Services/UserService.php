@@ -28,7 +28,6 @@ class UserService extends EntityService
     {
         return $this
             ->searchQuery($filters)
-            ->filterBy('role_id')
             ->filterByQuery(['name', 'email'])
             ->getSearchResults();
     }
