@@ -6,6 +6,7 @@ use App\Mails\ForgotPasswordMail;
 use App\Tests\Support\AuthTestTrait;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Mail;
 use Symfony\Component\HttpFoundation\Response;
 use App\Models\User;
 
@@ -150,6 +151,8 @@ class AuthTest extends TestCase
 
     public function testForgotPassword()
     {
+        Mail::fake();
+
         $this->mockUniqueTokenGeneration('some_token');
 
         $response = $this->json('post', '/auth/forgot-password', [
