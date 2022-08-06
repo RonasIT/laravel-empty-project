@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e79cbd3a5116fc1d6005de9a26184f83",
+    "content-hash": "0ae717aaac7fac5de57682c04ca8953c",
     "packages": [
         {
             "name": "brick/math",
@@ -5563,16 +5563,16 @@
         },
         {
             "name": "ronasit/laravel-helpers",
-            "version": "2.0.3-beta",
+            "version": "2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RonasIT/laravel-helpers.git",
-                "reference": "d4427c163e6b6654164cc4e25a874c5c5c1881c5"
+                "reference": "658187a1a065a758f0014b0253efa828e340ad2e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RonasIT/laravel-helpers/zipball/d4427c163e6b6654164cc4e25a874c5c5c1881c5",
-                "reference": "d4427c163e6b6654164cc4e25a874c5c5c1881c5",
+                "url": "https://api.github.com/repos/RonasIT/laravel-helpers/zipball/658187a1a065a758f0014b0253efa828e340ad2e",
+                "reference": "658187a1a065a758f0014b0253efa828e340ad2e",
                 "shasum": ""
             },
             "require": {
@@ -5580,8 +5580,7 @@
                 "laravel/framework": ">=5.4.0",
                 "maatwebsite/excel": "3.*",
                 "php": ">=7.1",
-                "tecnickcom/tcpdf": "~6.0.0",
-                "tymon/jwt-auth": "0.5.* || 1.0.*"
+                "tecnickcom/tcpdf": "~6.0.0"
             },
             "require-dev": {
                 "fzaninotto/faker": "~1.4",
@@ -5622,9 +5621,9 @@
             ],
             "support": {
                 "issues": "https://github.com/RonasIT/laravel-helpers/issues",
-                "source": "https://github.com/RonasIT/laravel-helpers/tree/2.0.3-beta"
+                "source": "https://github.com/RonasIT/laravel-helpers/tree/2.1"
             },
-            "time": "2022-04-11T11:32:31+00:00"
+            "time": "2022-07-18T07:52:41+00:00"
         },
         {
             "name": "ronasit/laravel-swagger",
@@ -10041,7 +10040,6 @@
     "aliases": [],
     "minimum-stability": "beta",
     "stability-flags": {
-        "ronasit/laravel-helpers": 10,
         "ronasit/laravel-swagger": 10
     },
     "prefer-stable": false,
