@@ -6,6 +6,7 @@ use App\Repositories\MediaRepository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use RonasIT\Support\Services\EntityService;
 use RonasIT\Support\Traits\FilesUploadTrait;
 
@@ -32,9 +33,9 @@ class MediaService extends EntityService
 
     public function create($content, string $fileName, array $data = []): Model
     {
-        $url = $this->saveFile($fileName, $content, true);
-        $data['link'] = str_replace(config('app.url'), '', $url);
+        $fileName = $this->saveFile($fileName, $content);
         $data['name'] = $fileName;
+        $data['link'] = Storage::url($data['name']);
         $data['owner_id'] = Auth::user()->id;
 
         return $this->repository->create($data);

@@ -3,7 +3,7 @@
 namespace App\Tests;
 
 use App\Models\User;
-use App\Models\Media;
+use App\Tests\Support\MediaTestTrait;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use RonasIT\Support\Traits\FilesUploadTrait;
@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class MediaTest extends TestCase
 {
-    use FilesUploadTrait;
+    use FilesUploadTrait, MediaTestTrait;
 
     protected $admin;
     protected $user;
@@ -24,6 +24,8 @@ class MediaTest extends TestCase
         $this->admin = User::find(1);
         $this->user = User::find(2);
         $this->file = UploadedFile::fake()->image('file.png', 600, 600);
+
+        $this->mockGenerateFilename();
     }
 
     public function testCreate()
@@ -38,7 +40,8 @@ class MediaTest extends TestCase
             'id' => $responseData['id'],
             'name' => 'file.png',
             'owner_id' => $this->admin->id,
-            'is_public' => false
+            'is_public' => false,
+            'link' => '/storage/file.png'
         ]);
     }
 
@@ -57,17 +60,11 @@ class MediaTest extends TestCase
             'id' => $responseData['id'],
             'name' => 'file.png',
             'owner_id' => $this->user->id,
-            'is_public' => true
+            'is_public' => true,
+            'link' => '/storage/file.png'
         ]);
 
         $response->assertStatus(Response::HTTP_OK);
-    }
-
-    public function testCreateCheckUrls()
-    {
-        $this->actingAs($this->admin)->json('post', '/media', ['file' => $this->file]);
-
-        $this->assertEquals(1, Media::where('link', 'like', '/%')->count());
     }
 
     public function testCreateCheckResponse()
