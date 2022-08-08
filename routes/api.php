@@ -18,7 +18,6 @@ use App\Http\Controllers\SettingController;
 */
 
 Route::group(['middleware' => 'auth_group'], function () {
-    Route::get('/auth/refresh', [AuthController::class, 'refreshToken']);
     Route::post('/auth/logout', [AuthController::class, 'logout']);
 
     Route::post('/users', [UserController::class, 'create']);
@@ -42,6 +41,7 @@ Route::group(['middleware' => 'auth_group'], function () {
 Route::group(['middleware' => 'guest_group'], function () {
     Route::post('/login', [AuthController::class, 'login']);
     Route::post('/register', [AuthController::class, 'register']);
+    Route::get('/auth/refresh', [AuthController::class, 'refreshToken']);
     Route::post('/auth/forgot-password', [AuthController::class, 'forgotPassword']);
     Route::post('/auth/restore-password', [AuthController::class, 'restorePassword']);
     Route::post('/auth/token/check', [AuthController::class, 'checkRestoreToken']);
