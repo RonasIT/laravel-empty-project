@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Jobs\SendMailJob;
 use App\Mails\ForgotPasswordMail;
 use App\Models\Role;
 use Carbon\Carbon;
@@ -12,6 +11,7 @@ use Illuminate\Support\Arr;
 use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Hash;
 use RonasIT\Support\Services\EntityService;
+use Illuminate\Support\Facades\Mail;
 
 /**
  * @property UserRepository $repository
@@ -28,7 +28,6 @@ class UserService extends EntityService
     {
         return $this
             ->searchQuery($filters)
-            ->filterBy('role_id')
             ->filterByQuery(['name', 'email'])
             ->getSearchResults();
     }
@@ -63,8 +62,7 @@ class UserService extends EntityService
                 'set_password_hash_created_at' => Carbon::now()
             ]);
 
-        $mail = new ForgotPasswordMail($email, ['hash' => $hash]);
-        dispatch(new SendMailJob($mail));
+        Mail::to($email)->send(new ForgotPasswordMail(['hash' => $hash]));
     }
 
     public function restorePassword(string $token, string $password): void
