@@ -2,11 +2,11 @@
 
 namespace App\Tests;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Testing\TestResponse;
-use Illuminate\Contracts\Auth\Authenticatable;
-use Tymon\JWTAuth\JWTAuth;
 use Illuminate\Foundation\Application;
 use Illuminate\Contracts\Console\Kernel;
+use Illuminate\Contracts\Auth\Authenticatable;
 use RonasIT\Support\Tests\TestCase as BaseTestCase;
 use RonasIT\Support\AutoDoc\Tests\AutoDocTestCaseTrait;
 
@@ -14,8 +14,7 @@ abstract class TestCase extends BaseTestCase
 {
     use AutoDocTestCaseTrait;
 
-    protected $jwt;
-    protected $auth;
+    protected string $token;
 
     /**
      * Creates the application.

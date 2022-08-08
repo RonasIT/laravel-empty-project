@@ -196,7 +196,7 @@ return [
         RonasIT\Support\HelpersServiceProvider::class,
         RonasIT\Support\AutoDoc\AutoDocServiceProvider::class,
         FruitCake\Cors\CorsServiceProvider::class,
-        Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+        PHPOpenSourceSaver\JWTAuth\Providers\LaravelServiceProvider::class,
 
         /*
          * Application Service Providers...
