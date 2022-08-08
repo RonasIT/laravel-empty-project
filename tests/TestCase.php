@@ -35,9 +35,9 @@ abstract class TestCase extends BaseTestCase
         return $app;
     }
 
-    public function actingAs(Authenticatable $user, $driver = null): self
+    public function actingAs(Authenticatable $user, $guard = null): self
     {
-        $this->jwt = $this->auth->fromUser($user);
+        $this->jwt = Auth::guard($guard)->fromUser($user);
 
         return $this;
     }
@@ -49,12 +49,5 @@ abstract class TestCase extends BaseTestCase
         }
 
         return parent::call($method, $uri, $parameters, $cookies, $files, $server, $content);
-    }
-
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        $this->auth = app(JWTAuth::class);
     }
 }
