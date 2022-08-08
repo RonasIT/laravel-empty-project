@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use RonasIT\Support\Traits\ModelTrait;
@@ -32,13 +33,13 @@ class Media extends Model
 
     public function scopeApplyMediaPermissionRestrictions(Builder $query): void
     {
-        if (!JWTAuth::getToken()) {
+        if (!Auth::check()) {
             $query->where('is_public', true);
 
             return;
         }
 
-        $user = JWTAuth::toUser();
+        $user = Auth::user();
 
         if ($user->role_id !== Role::ADMIN) {
             $query->where(function ($subQuery) use ($user) {

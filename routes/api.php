@@ -17,7 +17,10 @@ use App\Http\Controllers\SettingController;
 |
 */
 
-Route::group(['middleware' => 'auth:api'], function () {
+Route::group(['middleware' => 'auth_group'], function () {
+    Route::get('/auth/refresh', [AuthController::class, 'refreshToken']);
+    Route::post('/auth/logout', [AuthController::class, 'logout']);
+
     Route::post('/users', [UserController::class, 'create']);
     Route::put('/users/{id}', [UserController::class, 'update']);
     Route::delete('/users/{id}', [UserController::class, 'delete']);
@@ -31,15 +34,13 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::delete('/media/{id}', [MediaController::class, 'delete']);
     Route::get('/media', [MediaController::class, 'search']);
 
-    Route::put('/settings/{name}', ['uses' => SettingController::class . '@update']);
-    Route::get('/settings/{name}', ['uses' => SettingController::class . '@get']);
-    Route::get('/settings', ['uses' => SettingController::class . '@search']);
+    Route::put('/settings/{name}', [SettingController::class, 'update']);
+    Route::get('/settings/{name}', [SettingController::class, 'get']);
+    Route::get('/settings', [SettingController::class, 'search']);
 });
 
-Route::group(['middleware' => 'guest'], function () {
+Route::group(['middleware' => 'guest_group'], function () {
     Route::post('/login', [AuthController::class, 'login']);
-    Route::get('/auth/refresh', [AuthController::class, 'refreshToken']);
-    Route::post('/auth/logout', [AuthController::class, 'logout']);
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/auth/forgot-password', [AuthController::class, 'forgotPassword']);
     Route::post('/auth/restore-password', [AuthController::class, 'restorePassword']);
