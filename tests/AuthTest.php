@@ -117,14 +117,14 @@ class AuthTest extends TestCase
         $authHeader = $response->headers->get('authorization');
         $explodedHeader = explode(' ', $authHeader);
 
-        $this->assertNotEquals($this->jwt, last($explodedHeader));
+        $this->assertNotEquals($this->token, last($explodedHeader));
 
         $response->assertCookie('token');
 
         $authCookie = $response->headers->get('cookie');
         $explodedCookie = explode('=', $authCookie);
 
-        $this->assertNotEquals($this->jwt, last($explodedCookie));
+        $this->assertNotEquals($this->token, last($explodedCookie));
     }
 
     public function testLogout()

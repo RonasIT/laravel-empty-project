@@ -14,8 +14,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
-use Tymon\JWTAuth\Exceptions\JWTException;
-use Tymon\JWTAuth\JWTAuth;
+use PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException;
+use PHPOpenSourceSaver\JWTAuth\JWTAuth;
 
 class AuthController extends Controller
 {
@@ -27,9 +27,7 @@ class AuthController extends Controller
         $token = $auth->attempt($credentials);
 
         if ($token === false) {
-            return response()->json([
-                'message' => 'Authorization failed'
-            ], Response::HTTP_UNAUTHORIZED);
+            return response()->json(['message' => 'Authorization failed'], Response::HTTP_UNAUTHORIZED);
         }
 
         $user = $service->first(['email' => $request->input('email')]);
@@ -71,12 +69,8 @@ class AuthController extends Controller
             $tokenCookie = $this->makeAuthorizationTokenCookie($token);
 
             return response()
-                ->json([
-                    'token' => $token
-                ])
-                ->withHeaders([
-                    'Authorization' => "Bearer {$token}"
-                ])
+                ->json(['token' => $token])
+                ->withHeaders(['Authorization' => "Bearer {$token}"])
                 ->withCookie($tokenCookie);
         } catch (JWTException $e) {
             throw new UnauthorizedHttpException('jwt-auth', $e->getMessage(), $e, $e->getCode());
