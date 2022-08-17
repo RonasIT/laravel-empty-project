@@ -49,8 +49,10 @@ class AuthController extends Controller
         $user = $service->create($request->onlyValidated());
 
         $credentials = $request->only('email', 'password');
+        $remember = $request->input('remember', false);
+
         $token = $auth->attempt($credentials);
-        $tokenCookie = $this->makeAuthorizationTokenCookie($token);
+        $tokenCookie = $this->makeAuthorizationTokenCookie($token, $remember);
 
         return response()
             ->json([
@@ -64,9 +66,11 @@ class AuthController extends Controller
 
     public function refreshToken(RefreshTokenRequest $request, JWTAuth $auth): JsonResponse
     {
+        $remember = $request->input('remember', false);
+
         try {
             $token = $auth->parseToken()->refresh();
-            $tokenCookie = $this->makeAuthorizationTokenCookie($token);
+            $tokenCookie = $this->makeAuthorizationTokenCookie($token, $remember);
 
             return response()
                 ->json(['token' => $token])
