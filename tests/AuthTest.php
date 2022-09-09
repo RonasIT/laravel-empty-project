@@ -145,7 +145,9 @@ class AuthTest extends TestCase
 
     public function testRefreshTokenWithRemember()
     {
-        $response = $this->actingAs($this->admin)->json('get', '/auth/refresh');
+        $response = $this->actingAs($this->admin)->json('get', '/auth/refresh', [
+            'remember' => true
+        ]);
 
         $response->assertStatus(Response::HTTP_OK);
 
