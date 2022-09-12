@@ -16,7 +16,11 @@ class CreateMediaTable extends Migration
             $table->string('name')->nullable();
             $table->boolean('is_public')->default(false);
             $table->integer('owner_id')->nullable();
-            $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');
+            $table
+                ->foreign('owner_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
         });
     }
 
