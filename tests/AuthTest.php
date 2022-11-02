@@ -71,7 +71,7 @@ class AuthTest extends TestCase
 
         $response->assertStatus(Response::HTTP_OK);
         $response->assertCookie('token');
-        $this->assertEquals(0, $response->getCookie('token')->getExpiresTime());
+        $this->assertEquals(0, $response->getCookie('token', false)->getExpiresTime());
     }
 
     public function testLoginAsRegisteredUser()
@@ -97,7 +97,7 @@ class AuthTest extends TestCase
 
         $this->assertArrayHasKey('token', $response->json());
         $response->assertCookie('token');
-        $this->assertEquals(0, $response->getCookie('token')->getExpiresTime());
+        $this->assertEquals(0, $response->getCookie('token', false)->getExpiresTime());
 
         $this->assertDatabaseHas('users', $response->json('user'));
         $this->assertDatabaseHas('users', Arr::only($data, ['email', 'name']));
@@ -135,7 +135,7 @@ class AuthTest extends TestCase
         $this->assertNotEquals($this->token, last($explodedHeader));
 
         $response->assertCookie('token');
-        $this->assertEquals(0, $response->getCookie('token')->getExpiresTime());
+        $this->assertEquals(0, $response->getCookie('token', false)->getExpiresTime());
 
         $authCookie = $response->headers->get('cookie');
         $explodedCookie = explode('=', $authCookie);
