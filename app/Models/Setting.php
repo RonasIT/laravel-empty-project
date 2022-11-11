@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 use RonasIT\Support\Traits\ModelTrait;
-use Tymon\JWTAuth\Facades\JWTAuth;
 
 class Setting extends Model
 {
@@ -27,12 +28,11 @@ class Setting extends Model
         'is_public' => 'boolean'
     ];
 
-
     public function scopeApplySettingPermissionRestrictions(Builder $query): void
     {
-        $user = JWTAuth::toUser();
+        $user = Auth::user();
 
-        if ($user->role_id !== Role::ADMIN) {
+        if (Arr::get($user, 'role_id') !== Role::ADMIN) {
             $query->where('is_public', true);
         }
     }

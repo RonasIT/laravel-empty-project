@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 use RonasIT\Support\Traits\ModelTrait;
-use Tymon\JWTAuth\Facades\JWTAuth;
 
 class Media extends Model
 {
@@ -30,13 +30,13 @@ class Media extends Model
 
     public function scopeApplyMediaPermissionRestrictions(Builder $query): void
     {
-        if (!JWTAuth::getToken()) {
+        if (!Auth::check()) {
             $query->where('is_public', true);
 
             return;
         }
 
-        $user = JWTAuth::toUser();
+        $user = Auth::user();
 
         if ($user->role_id !== Role::ADMIN) {
             $query->where(function ($subQuery) use ($user) {

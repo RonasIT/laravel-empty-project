@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Tests\Support\AuthTestTrait;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Mail;
 use Symfony\Component\HttpFoundation\Response;
 
 class AuthTest extends TestCase
@@ -96,9 +97,24 @@ class AuthTest extends TestCase
 
         $this->assertArrayHasKey('token', $response->json());
         $response->assertCookie('token');
+        $this->assertEquals(0, $response->getCookie('token')->getExpiresTime());
 
         $this->assertDatabaseHas('users', $response->json('user'));
         $this->assertDatabaseHas('users', Arr::only($data, ['email', 'name']));
+    }
+
+    public function testRegisterFromGuestUserWithRemember()
+    {
+        $data = $this->getJsonFixture('new_user.json');
+
+        $response = $this->json('post', '/register', array_merge(
+            $data,
+            ['remember' => true]
+        ));
+
+        $response->assertStatus(Response::HTTP_OK);
+        $response->assertCookie('token');
+        $response->assertCookieNotExpired('token');
     }
 
     public function testRefreshToken()
@@ -116,14 +132,25 @@ class AuthTest extends TestCase
         $authHeader = $response->headers->get('authorization');
         $explodedHeader = explode(' ', $authHeader);
 
-        $this->assertNotEquals($this->jwt, last($explodedHeader));
+        $this->assertNotEquals($this->token, last($explodedHeader));
 
         $response->assertCookie('token');
+        $this->assertEquals(0, $response->getCookie('token')->getExpiresTime());
 
         $authCookie = $response->headers->get('cookie');
         $explodedCookie = explode('=', $authCookie);
 
-        $this->assertNotEquals($this->jwt, last($explodedCookie));
+        $this->assertNotEquals($this->token, last($explodedCookie));
+    }
+
+    public function testRefreshTokenWithRemember()
+    {
+        $response = $this->actingAs($this->admin)->json('get', '/auth/refresh');
+
+        $response->assertStatus(Response::HTTP_OK);
+
+        $response->assertCookie('token');
+        $response->assertCookieNotExpired('token');
     }
 
     public function testLogout()
@@ -156,6 +183,8 @@ class AuthTest extends TestCase
 
     public function testForgotPassword()
     {
+        Mail::fake();
+
         $this->mockUniqueTokenGeneration('some_token');
 
         $response = $this->json('post', '/auth/forgot-password', [

@@ -60,12 +60,12 @@ class Kernel extends HttpKernel
             'bindings'
         ],
 
-        'auth' => [
-            'jwt.auth',
+        'auth_group' => [
+            'auth',
             'maintenance'
         ],
 
-        'guest' => [
+        'guest_group' => [
             'maintenance'
         ],
     ];

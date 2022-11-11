@@ -3,20 +3,21 @@
 namespace App\Mails;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class BaseMail extends Mailable
+class BaseMail extends Mailable implements ShouldQueue
 {
     use Queueable;
     use SerializesModels;
 
+    public int $tries = 5;
+
     protected array $data;
 
-    public function __construct($to, array $data, $subject, $view)
+    public function __construct(array $data, $subject, $view)
     {
-        // TODO: Remove this workaround after implementing https://github.com/RonasIT/laravel-empty-project/issues/10
-        $this->to[] = ['address' => $to];
         $this->data = $data;
         $this->subject = $subject;
         $this->view = $view;
@@ -25,10 +26,10 @@ class BaseMail extends Mailable
     public function build()
     {
         return $this
-            ->to($this->to)
             ->view($this->view)
             ->subject($this->subject)
-            ->with($this->data);
+            ->with($this->data)
+            ->onQueue('mails');
     }
 
     public function getData(): array

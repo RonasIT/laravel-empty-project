@@ -11,7 +11,7 @@ class LoginRequest extends Request
         return [
             'email' => 'required',
             'password' => 'required',
-            'remember' => 'boolean',
+            'remember' => 'boolean'
         ];
     }
 }
