@@ -6,7 +6,7 @@
   ],
   "paths": [
     {
-      "controllers": ["app/Domain/Http/Controllers"]
+      "controllers": ["app/Http/Services", "app/Http/Repositories"]
     }
   ]
 }

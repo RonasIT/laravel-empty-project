@@ -11,7 +11,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class MediaTest extends TestCase
 {
-    use FilesUploadTrait, MediaTestTrait;
+    use FilesUploadTrait;
+    use MediaTestTrait;
 
     protected $admin;
     protected $user;
