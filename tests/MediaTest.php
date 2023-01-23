@@ -49,10 +49,7 @@ class MediaTest extends TestCase
 
     public function testCreatePublic()
     {
-        $response = $this->actingAs($this->user)->json(
-            'post',
-            '/media',
-            [
+        $response = $this->actingAs($this->user)->json('post', '/media', [
                 'file' => $this->file,
                 'is_public' => true,
             ]
