@@ -55,3 +55,10 @@ services:
     image: redis:6.2.3
     ports:
         - 6379:6379
+
+  php:
+    image: webdevops/php:8.1-alpine
+    working_dir: /app
+    volumes:
+      - ./:/app
+

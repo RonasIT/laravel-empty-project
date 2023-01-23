@@ -3,12 +3,12 @@
 namespace App\Tests;
 
 use App\Mails\ForgotPasswordMail;
+use App\Models\User;
 use App\Tests\Support\AuthTestTrait;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Mail;
 use Symfony\Component\HttpFoundation\Response;
-use App\Models\User;
 
 class AuthTest extends TestCase
 {
@@ -168,11 +168,17 @@ class AuthTest extends TestCase
     {
         Artisan::call('clear:set-password-hash');
 
-        $usersWithClearedHash = User::whereIn('id', [2, 4, 5])->get()->makeVisible('set_password_hash')->toArray();
+        $usersWithClearedHash = User::whereIn('id', [2, 4, 5])
+            ->get()
+            ->makeVisible('set_password_hash')
+            ->toArray();
 
         $this->assertEqualsFixture('users_without_set_password_hash.json', $usersWithClearedHash);
 
-        $usersWithSetPasswordHash = User::whereIn('id', [1, 3])->get()->makeVisible('set_password_hash')->toArray();
+        $usersWithSetPasswordHash = User::whereIn('id', [1, 3])
+            ->get()
+            ->makeVisible('set_password_hash')
+            ->toArray();
 
         $this->assertEqualsFixture('users_with_set_password_hash.json', $usersWithSetPasswordHash);
     }

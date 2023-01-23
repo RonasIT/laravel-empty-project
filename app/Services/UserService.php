@@ -4,14 +4,14 @@ namespace App\Services;
 
 use App\Mails\ForgotPasswordMail;
 use App\Models\Role;
+use App\Repositories\UserRepository;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
-use App\Repositories\UserRepository;
 use Illuminate\Support\Facades\Hash;
-use RonasIT\Support\Services\EntityService;
 use Illuminate\Support\Facades\Mail;
+use RonasIT\Support\Services\EntityService;
 
 /**
  * @property UserRepository $repository

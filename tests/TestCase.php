@@ -2,20 +2,21 @@
 
 namespace App\Tests;
 
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Contracts\Console\Kernel;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Testing\TestResponse;
-use Illuminate\Foundation\Application;
-use Illuminate\Contracts\Console\Kernel;
-use Illuminate\Contracts\Auth\Authenticatable;
-use RonasIT\Support\Tests\TestCase as BaseTestCase;
 use RonasIT\Support\AutoDoc\Tests\AutoDocTestCaseTrait;
+use RonasIT\Support\Tests\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {
     use AutoDocTestCaseTrait;
 
-    protected string $token;
     protected static bool $isJwtGuard;
+
+    protected string $token;
 
     public function setUp(): void
     {

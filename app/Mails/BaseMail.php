@@ -9,18 +9,18 @@ use Illuminate\Queue\SerializesModels;
 
 class BaseMail extends Mailable implements ShouldQueue
 {
-    use Queueable, SerializesModels;
-
-    protected array $data;
+    use Queueable;
+    use SerializesModels;
 
     public int $tries = 5;
+
+    protected array $data;
 
     public function __construct(array $data, $subject, $view)
     {
         $this->data = $data;
         $this->subject = $subject;
         $this->view = $view;
-        $this->onQueue('mails');
     }
 
     public function build()
@@ -28,7 +28,8 @@ class BaseMail extends Mailable implements ShouldQueue
         return $this
             ->view($this->view)
             ->subject($this->subject)
-            ->with($this->data);
+            ->with($this->data)
+            ->onQueue('mails');
     }
 
     public function getData(): array

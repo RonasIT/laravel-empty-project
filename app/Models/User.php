@@ -4,14 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use RonasIT\Support\Traits\ModelTrait;
+use Illuminate\Notifications\Notifiable;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
+use RonasIT\Support\Traits\ModelTrait;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use Notifiable, ModelTrait;
+    use Notifiable;
+    use ModelTrait;
 
     protected $fillable = [
         'name',
@@ -31,8 +32,9 @@ class User extends Authenticatable implements JWTSubject
         'set_password_hash'
     ];
 
-    protected $dates = [
-        'set_password_hash_created_at'
+    protected $casts = [
+        'is_public' => 'boolean',
+        'set_password_hash_created_at' => 'datetime'
     ];
 
     public function getJWTIdentifier(): int

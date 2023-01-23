@@ -11,7 +11,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class MediaTest extends TestCase
 {
-    use FilesUploadTrait, MediaTestTrait;
+    use FilesUploadTrait;
+    use MediaTestTrait;
 
     protected $admin;
     protected $user;
@@ -229,7 +230,6 @@ class MediaTest extends TestCase
      */
     public function testUploadingBadFiles($filter)
     {
-
         $this->file = UploadedFile::fake()->create($filter['fileName'], 1024);
 
         $response = $this->actingAs($this->user)->json('post', '/media', ['file' => $this->file]);
@@ -265,7 +265,6 @@ class MediaTest extends TestCase
      */
     public function testUploadingGoodFiles($filter)
     {
-
         $this->file = UploadedFile::fake()->image($filter['fileName'], 600, 600);
 
         $response = $this->actingAs($this->user)->json('post', '/media', ['file' => $this->file]);

@@ -5,8 +5,8 @@ namespace App\Http\Requests\Setting;
 use App\Http\Requests\Request;
 use App\Models\Role;
 use App\Models\Setting;
-use Illuminate\Support\Arr;
 use App\Services\SettingService;
+use Illuminate\Support\Arr;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class GetSettingRequest extends Request

@@ -3,9 +3,9 @@
 namespace App\Console\Commands;
 
 use App\Models\Role;
-use Illuminate\Support\Str;
-use Illuminate\Support\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Str;
 
 class Init extends Command
 {
@@ -24,7 +24,7 @@ class Init extends Command
 
         $this->updateConfigFile('.env', '=', [
             'APP_NAME' => $appName,
-            'DATA_COLLECTOR_KEY' => "{$kebabName}-local"
+            'SWAGGER_REMOTE_DRIVER_KEY' => "{$kebabName}-local"
         ]);
 
         $this->updateConfigFile('.env.dev', '=', [

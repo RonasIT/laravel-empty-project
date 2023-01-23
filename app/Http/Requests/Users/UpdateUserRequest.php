@@ -5,8 +5,8 @@ namespace App\Http\Requests\Users;
 use App\Http\Requests\Request;
 use App\Models\Role;
 use App\Services\UserService;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class UpdateUserRequest extends Request
 {
