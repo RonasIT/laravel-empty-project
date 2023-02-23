@@ -23,7 +23,7 @@ trait AuthTestTrait
                 str_replace(
                     '_',
                     '/',
-                    str_replace('-','+',explode('.', $token)[1])
+                    str_replace('-', '+', explode('.', $token)[1])
                 )
             )
         );
