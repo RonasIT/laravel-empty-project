@@ -69,7 +69,14 @@ class AuthController extends Controller
         $remember = $request->input('remember', false);
 
         try {
-            $token = $auth->parseToken()->refresh();
+            $user = $auth->user();
+
+            $auth->parseToken();
+            $auth->invalidate(true);
+            $auth->unsetToken();
+
+            $token = $auth->fromUser($user);
+
             $tokenCookie = $this->makeAuthorizationTokenCookie($token, $remember);
 
             return response()

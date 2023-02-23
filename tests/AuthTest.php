@@ -155,6 +155,25 @@ class AuthTest extends TestCase
         $response->assertCookieNotExpired('token');
     }
 
+    public function testRefreshTokenIat()
+    {
+        $request = $this->actingAs($this->admin);
+
+        $currentTokenIat = $this->decodeJWTToken($this->token)->iat;
+
+        $this->travel(1)->second();
+
+        $response = $request->json('get', '/auth/refresh');
+
+        $authHeader = $response->headers->get('authorization');
+        $explodedHeader = explode(' ', $authHeader);
+
+        $this->assertNotEquals(
+            $currentTokenIat,
+            $this->decodeJWTToken(last($explodedHeader))->iat
+        );
+    }
+
     public function testLogout()
     {
         $response = $this->actingAs($this->admin)->json('post', '/auth/logout');

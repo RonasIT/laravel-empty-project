@@ -15,4 +15,17 @@ trait AuthTestTrait
             ['method' => 'generateHash', 'result' => $hash]
         ]);
     }
+
+    public function decodeJWTToken($token)
+    {
+        return json_decode(
+            base64_decode(
+                str_replace(
+                    '_',
+                    '/',
+                    str_replace('-','+',explode('.', $token)[1])
+                )
+            )
+        );
+    }
 }
