@@ -124,6 +124,8 @@ class AuthTest extends TestCase
         $response->assertStatus(Response::HTTP_OK);
 
         $this->assertArrayHasKey('token', $response->json());
+        $this->assertArrayHasKey('ttl', $response->json());
+        $this->assertArrayHasKey('refresh_ttl', $response->json());
 
         $this->assertNotEmpty(
             $response->headers->get('authorization')
