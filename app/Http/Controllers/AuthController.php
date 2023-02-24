@@ -73,7 +73,11 @@ class AuthController extends Controller
             $tokenCookie = $this->makeAuthorizationTokenCookie($token, $remember);
 
             return response()
-                ->json(['token' => $token])
+                ->json([
+                    'token' => $token,
+                    'ttl' => config('jwt.ttl'),
+                    'refresh_ttl' => config('jwt.refresh_ttl')
+                ])
                 ->withHeaders(['Authorization' => "Bearer {$token}"])
                 ->withCookie($tokenCookie);
         } catch (JWTException $e) {

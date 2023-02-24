@@ -8,6 +8,7 @@ use App\Tests\Support\AuthTestTrait;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Testing\Fluent\AssertableJson;
 use Symfony\Component\HttpFoundation\Response;
 
 class AuthTest extends TestCase
@@ -123,7 +124,7 @@ class AuthTest extends TestCase
 
         $response->assertStatus(Response::HTTP_OK);
 
-        $this->assertArrayHasKey('token', $response->json());
+        $response->assertJson(fn (AssertableJson $json) => $json->hasAll(['token', 'ttl', 'refresh_ttl']));
 
         $this->assertNotEmpty(
             $response->headers->get('authorization')
