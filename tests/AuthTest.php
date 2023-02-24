@@ -164,11 +164,11 @@ class AuthTest extends TestCase
         $response = $request->json('get', '/auth/refresh');
 
         $authHeader = $response->headers->get('authorization');
-        $explodedHeader = explode(' ', $authHeader);
+        list(, $newToken) = explode(' ', $authHeader);
 
         $this->assertNotEquals(
             $this->decodeJWTToken($this->token)->iat,
-            $this->decodeJWTToken(last($explodedHeader))->iat
+            $this->decodeJWTToken($newToken)->iat
         );
     }
 
