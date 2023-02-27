@@ -87,7 +87,7 @@ class AuthController extends Controller
                     'ttl' => config('jwt.ttl'),
                     'refresh_ttl' => config('jwt.refresh_ttl')
                 ])
-                ->withHeaders(['Authorization' => "Bearer {$token}"])
+                ->withHeaders(['Authorization' => "Bearer {$newToken}"])
                 ->withCookie($tokenCookie);
         } catch (JWTException $e) {
             throw new UnauthorizedHttpException('jwt-auth', $e->getMessage(), $e, $e->getCode());
