@@ -147,6 +147,17 @@ class AuthTest extends TestCase
         $this->assertNotEquals($this->token, last($explodedCookie));
     }
 
+    public function refreshTokenAfterRefreshTTL()
+    {
+        $request = $this->actingAs($this->admin);
+
+        $this->travel(config('jwt.refresh_ttl') + 1)->minutes();
+
+        $response = $request->json('get', '/auth/refresh');
+
+        $response->assertStatus(Response::HTTP_UNAUTHORIZED);
+    }
+
     public function testRefreshTokenWithRemember()
     {
         $response = $this->actingAs($this->admin)->json('get', '/auth/refresh', [
