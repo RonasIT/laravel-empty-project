@@ -119,7 +119,11 @@ class AuthTest extends TestCase
 
     public function testRefreshToken()
     {
-        $response = $this->actingAs($this->admin)->json('get', '/auth/refresh');
+        $request = $this->actingAs($this->admin);
+
+        $this->travel(config('jwt.ttl') + 1)->minutes();
+
+        $response = $request->json('get', '/auth/refresh');
 
         $response->assertStatus(Response::HTTP_OK);
 

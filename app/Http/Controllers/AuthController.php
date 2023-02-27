@@ -69,19 +69,21 @@ class AuthController extends Controller
         $remember = $request->input('remember', false);
 
         try {
+            $refreshedOldToken = $auth->parseToken()->refresh();
+            $auth->setToken($refreshedOldToken);
+            $auth->authenticate();
+
             $user = $auth->user();
 
-            $auth->parseToken();
             $auth->invalidate(true);
             $auth->unsetToken();
 
-            $token = $auth->fromUser($user);
-
-            $tokenCookie = $this->makeAuthorizationTokenCookie($token, $remember);
+            $newToken = $auth->fromUser($user);
+            $tokenCookie = $this->makeAuthorizationTokenCookie($newToken, $remember);
 
             return response()
-                ->json(['token' => $token])
-                ->withHeaders(['Authorization' => "Bearer {$token}"])
+                ->json(['token' => $newToken])
+                ->withHeaders(['Authorization' => "Bearer {$newToken}"])
                 ->withCookie($tokenCookie);
         } catch (JWTException $e) {
             throw new UnauthorizedHttpException('jwt-auth', $e->getMessage(), $e, $e->getCode());
