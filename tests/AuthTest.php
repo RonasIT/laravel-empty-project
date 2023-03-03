@@ -120,7 +120,11 @@ class AuthTest extends TestCase
 
     public function testRefreshToken()
     {
-        $response = $this->actingAs($this->admin)->json('get', '/auth/refresh');
+        $request = $this->actingAs($this->admin);
+
+        $this->travel(config('jwt.ttl') + 1)->minutes();
+
+        $response = $request->json('get', '/auth/refresh');
 
         $response->assertStatus(Response::HTTP_OK);
 
@@ -144,6 +148,17 @@ class AuthTest extends TestCase
         $this->assertNotEquals($this->token, last($explodedCookie));
     }
 
+    public function refreshTokenAfterRefreshTTL()
+    {
+        $request = $this->actingAs($this->admin);
+
+        $this->travel(config('jwt.refresh_ttl') + 1)->minutes();
+
+        $response = $request->json('get', '/auth/refresh');
+
+        $response->assertStatus(Response::HTTP_UNAUTHORIZED);
+    }
+
     public function testRefreshTokenWithRemember()
     {
         $response = $this->actingAs($this->admin)->json('get', '/auth/refresh', [
@@ -154,6 +169,23 @@ class AuthTest extends TestCase
 
         $response->assertCookie('token');
         $response->assertCookieNotExpired('token');
+    }
+
+    public function testRefreshTokenIat()
+    {
+        $request = $this->actingAs($this->admin);
+
+        $this->travel(1)->second();
+
+        $response = $request->json('get', '/auth/refresh');
+
+        $authHeader = $response->headers->get('authorization');
+        list(, $newToken) = explode(' ', $authHeader);
+
+        $this->assertNotEquals(
+            $this->decodeJWTToken($this->token)->iat,
+            $this->decodeJWTToken($newToken)->iat
+        );
     }
 
     public function testLogout()
