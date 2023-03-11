@@ -52,6 +52,12 @@
       "App\\Tests\\": "tests/"
     }
   },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://nova.laravel.com"
+    }
+  ],
   "scripts": {
     "post-install-cmd": [
       "php artisan clear-compiled",
