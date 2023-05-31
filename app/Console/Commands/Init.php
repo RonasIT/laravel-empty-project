@@ -27,7 +27,7 @@ class Init extends Command
             'SWAGGER_REMOTE_DRIVER_KEY' => "{$kebabName}-local"
         ]);
 
-        $this->updateConfigFile('.env.development', '=', [
+        $this->updateConfigFile('.env.dev', '=', [
             'APP_NAME' => $appName,
             'DATA_COLLECTOR_KEY' => "{$kebabName}"
         ]);
