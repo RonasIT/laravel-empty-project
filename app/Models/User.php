@@ -56,4 +56,14 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasMany(Media::class, 'owner_id');
     }
+
+    public function isAdmin(): bool
+    {
+        return $this->role_id === Role::ADMIN;
+    }
+
+    public function isUser(): bool
+    {
+        return $this->role_id === Role::USER;
+    }
 }

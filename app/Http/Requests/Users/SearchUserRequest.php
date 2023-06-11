@@ -3,13 +3,12 @@
 namespace App\Http\Requests\Users;
 
 use App\Http\Requests\Request;
-use App\Models\Role;
 
 class SearchUserRequest extends Request
 {
     public function authorize(): bool
     {
-        return $this->user()->role_id === Role::ADMIN;
+        return $this->user()->isAdmin();
     }
 
     public function rules(): array
