@@ -3,7 +3,6 @@
 namespace App\Tests;
 
 use App\Models\User;
-use Symfony\Component\HttpFoundation\Response;
 
 class SettingTest extends TestCase
 {
@@ -24,7 +23,7 @@ class SettingTest extends TestCase
 
         $response = $this->actingAs($this->admin)->json('put', "/settings/{$setting['name']}", $setting['value']);
 
-        $response->assertStatus(Response::HTTP_NO_CONTENT);
+        $response->assertNoContent();
 
         $this->assertDatabaseHas('settings', [
             'name' => $setting['name'],
@@ -38,7 +37,7 @@ class SettingTest extends TestCase
 
         $response = $this->actingAs($this->admin)->json('put', "/settings/not-exists", $setting['value']);
 
-        $response->assertStatus(Response::HTTP_NOT_FOUND);
+        $response->assertNotFound();
     }
 
     public function testUpdateNoAuth()
@@ -47,7 +46,7 @@ class SettingTest extends TestCase
 
         $response = $this->json('put', "/settings/{$setting['name']}", $setting['value']);
 
-        $response->assertStatus(Response::HTTP_UNAUTHORIZED);
+        $response->assertUnauthorized();
 
         $this->assertDatabaseMissing('settings', [
             'name' => $setting['name'],
@@ -61,7 +60,7 @@ class SettingTest extends TestCase
 
         $response = $this->actingAs($this->user)->json('put', "/settings/{$setting['name']}", $setting['value']);
 
-        $response->assertStatus(Response::HTTP_FORBIDDEN);
+        $response->assertForbidden();
 
         $this->assertDatabaseMissing('settings', [
             'name' => $setting['name'],
@@ -73,21 +72,21 @@ class SettingTest extends TestCase
     {
         $response = $this->actingAs($this->admin)->json('get', '/settings/states');
 
-        $response->assertStatus(Response::HTTP_OK);
+        $response->assertOk();
     }
 
     public function testGetAsUser()
     {
         $response = $this->actingAs($this->user)->json('get', '/settings/states');
 
-        $response->assertStatus(Response::HTTP_OK);
+        $response->assertOk();
     }
 
     public function testGetNoPermission()
     {
         $response = $this->actingAs($this->user)->json('get', '/settings/mailgun');
 
-        $response->assertStatus(Response::HTTP_FORBIDDEN);
+        $response->assertForbidden();
     }
 
     public function testGetCheckResponse()
@@ -101,7 +100,7 @@ class SettingTest extends TestCase
     {
         $response = $this->actingAs($this->admin)->json('get', '/settings/0');
 
-        $response->assertStatus(Response::HTTP_NOT_FOUND);
+        $response->assertNotFound();
     }
 
     public function getSearchFilters()
@@ -150,7 +149,7 @@ class SettingTest extends TestCase
     {
         $response = $this->actingAs($this->admin)->json('get', '/settings', $filter);
 
-        $response->assertStatus(Response::HTTP_OK);
+        $response->assertOk();
 
         $this->assertEqualsFixture($fixture, $response->json());
     }
@@ -175,7 +174,7 @@ class SettingTest extends TestCase
     {
         $response = $this->actingAs($this->user)->json('get', '/settings', $filter);
 
-        $response->assertStatus(Response::HTTP_OK);
+        $response->assertOk();
 
         $this->assertEqualsFixture($fixture, $response->json());
     }

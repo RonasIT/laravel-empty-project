@@ -4,7 +4,6 @@ namespace App\Tests;
 
 use App\Models\User;
 use Illuminate\Support\Arr;
-use Symfony\Component\HttpFoundation\Response;
 
 class UserTest extends TestCase
 {
@@ -25,7 +24,7 @@ class UserTest extends TestCase
 
         $response = $this->actingAs($this->admin)->json('post', '/users', $data);
 
-        $response->assertStatus(Response::HTTP_OK);
+        $response->assertOk();
 
         $this->assertEqualsFixture('user_created.json', $response->json());
 
@@ -38,7 +37,7 @@ class UserTest extends TestCase
 
         $response = $this->json('post', '/users', $data);
 
-        $response->assertStatus(Response::HTTP_UNAUTHORIZED);
+        $response->assertUnauthorized();
 
         $this->assertDatabaseMissing('users', Arr::except($data, ['password']));
     }
@@ -49,7 +48,7 @@ class UserTest extends TestCase
 
         $response = $this->actingAs($this->user)->json('post', '/users', $data);
 
-        $response->assertStatus(Response::HTTP_FORBIDDEN);
+        $response->assertForbidden();
 
         $this->assertDatabaseMissing('users', Arr::except($data, ['password']));
     }
@@ -58,7 +57,7 @@ class UserTest extends TestCase
     {
         $response = $this->actingAs($this->admin)->json('post', '/users', $this->user->toArray());
 
-        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+        $response->assertUnprocessable();
     }
 
     public function testUpdate()
@@ -67,7 +66,7 @@ class UserTest extends TestCase
 
         $response = $this->actingAs($this->admin)->json('put', '/users/2', $data);
 
-        $response->assertStatus(Response::HTTP_NO_CONTENT);
+        $response->assertNoContent();
 
         $this->assertDatabaseHas('users', $data);
     }
@@ -78,7 +77,7 @@ class UserTest extends TestCase
 
         $response = $this->actingAs($this->user)->json('put', '/users/1', $data);
 
-        $response->assertStatus(Response::HTTP_FORBIDDEN);
+        $response->assertForbidden();
 
         $this->assertDatabaseMissing('users', [
             'id' => 1,
@@ -109,7 +108,7 @@ class UserTest extends TestCase
             'email' => 'admin@example.com'
         ]);
 
-        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+        $response->assertUnprocessable();
 
         $this->assertDatabaseMissing('users', [
             'id' => 2,
@@ -123,7 +122,7 @@ class UserTest extends TestCase
 
         $response = $this->actingAs($this->admin)->json('put', '/users/0', $data);
 
-        $response->assertStatus(Response::HTTP_NOT_FOUND);
+        $response->assertNotFound();
     }
 
     public function testUpdateNoAuth()
@@ -132,7 +131,7 @@ class UserTest extends TestCase
 
         $response = $this->json('put', '/users/1', $data);
 
-        $response->assertStatus(Response::HTTP_UNAUTHORIZED);
+        $response->assertUnauthorized();
 
         $this->assertDatabaseMissing('users', $data);
     }
@@ -143,7 +142,7 @@ class UserTest extends TestCase
 
         $response = $this->actingAs($this->admin)->json('put', '/profile', $data);
 
-        $response->assertStatus(Response::HTTP_NO_CONTENT);
+        $response->assertNoContent();
 
         $this->assertDatabaseHas('users', $data);
     }
@@ -154,7 +153,7 @@ class UserTest extends TestCase
 
         $response = $this->actingAs($this->user)->json('put', '/profile', $data);
 
-        $response->assertStatus(Response::HTTP_NO_CONTENT);
+        $response->assertNoContent();
     }
 
     public function testUpdateProfileWithPasswordEmptyOldPassword()
@@ -163,7 +162,7 @@ class UserTest extends TestCase
 
         $response = $this->actingAs($this->user)->json('put', '/profile', $data);
 
-        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+        $response->assertUnprocessable();
     }
 
     public function testUpdateProfileWithPasswordWrongOldPassword()
@@ -172,7 +171,7 @@ class UserTest extends TestCase
 
         $response = $this->actingAs($this->user)->json('put', '/profile', $data);
 
-        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+        $response->assertUnprocessable();
     }
 
     public function testUpdateProfileNoAuth()
@@ -181,7 +180,7 @@ class UserTest extends TestCase
 
         $response = $this->json('put', '/profile', $data);
 
-        $response->assertStatus(Response::HTTP_UNAUTHORIZED);
+        $response->assertUnauthorized();
 
         $this->assertDatabaseMissing('users', $data);
     }
@@ -190,7 +189,7 @@ class UserTest extends TestCase
     {
         $response = $this->actingAs($this->user)->json('delete', '/profile');
 
-        $response->assertStatus(Response::HTTP_NO_CONTENT);
+        $response->assertNoContent();
 
         $this->assertDatabaseMissing('users', [
             'id' => 2
@@ -205,14 +204,14 @@ class UserTest extends TestCase
     {
         $response = $this->json('delete', '/profile');
 
-        $response->assertStatus(Response::HTTP_UNAUTHORIZED);
+        $response->assertUnauthorized();
     }
 
     public function testDelete()
     {
         $response = $this->actingAs($this->admin)->json('delete', '/users/1');
 
-        $response->assertStatus(Response::HTTP_NO_CONTENT);
+        $response->assertNoContent();
 
         $this->assertDatabaseMissing('users', [
             'id' => 1
@@ -223,14 +222,14 @@ class UserTest extends TestCase
     {
         $response = $this->actingAs($this->admin)->json('delete', '/users/0');
 
-        $response->assertStatus(Response::HTTP_NOT_FOUND);
+        $response->assertNotFound();
     }
 
     public function testDeleteNoAuth()
     {
         $response = $this->json('delete', '/users/1');
 
-        $response->assertStatus(Response::HTTP_UNAUTHORIZED);
+        $response->assertUnauthorized();
 
         $this->assertDatabaseHas('users', [
             'id' => 1
@@ -241,7 +240,7 @@ class UserTest extends TestCase
     {
         $response = $this->actingAs($this->admin)->json('get', '/profile');
 
-        $response->assertStatus(Response::HTTP_OK);
+        $response->assertOk();
 
         $this->assertEqualsFixture('get_user.json', $response->json());
     }
@@ -250,7 +249,7 @@ class UserTest extends TestCase
     {
         $response = $this->actingAs($this->admin)->json('get', '/users/1');
 
-        $response->assertStatus(Response::HTTP_OK);
+        $response->assertOk();
 
         $this->assertEqualsFixture('get_user.json', $response->json());
     }
@@ -259,7 +258,7 @@ class UserTest extends TestCase
     {
         $response = $this->actingAs($this->admin)->json('get', '/users/0');
 
-        $response->assertStatus(Response::HTTP_NOT_FOUND);
+        $response->assertNotFound();
     }
 
     public function getSearchFilters()
@@ -316,7 +315,7 @@ class UserTest extends TestCase
     {
         $response = $this->actingAs($this->admin)->json('get', '/users', $filter);
 
-        $response->assertStatus(Response::HTTP_OK);
+        $response->assertOk();
 
         $this->assertEqualsFixture($fixture, $response->json());
     }
