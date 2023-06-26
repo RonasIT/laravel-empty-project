@@ -31,7 +31,7 @@ class Setting extends Model
     {
         $user = Auth::user();
 
-        if (!$user->isAdmin()) {
+        if ($user && !$user->isAdmin()) {
             $query->where('is_public', true);
         }
     }
