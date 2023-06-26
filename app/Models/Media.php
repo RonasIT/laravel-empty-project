@@ -38,7 +38,7 @@ class Media extends Model
 
         $user = Auth::user();
 
-        if ($user->role_id !== Role::ADMIN) {
+        if (!$user->isAdmin()) {
             $query->where(function ($subQuery) use ($user) {
                 $subQuery
                     ->where('is_public', true)
