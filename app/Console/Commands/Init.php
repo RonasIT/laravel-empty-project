@@ -32,7 +32,7 @@ class Init extends Command
             'DATA_COLLECTOR_KEY' => "{$kebabName}"
         ]);
 
-        $this->updateConfigFile('.env.development.testing', '=', [
+        $this->updateConfigFile('.env.ci-testing', '=', [
             'DATA_COLLECTOR_KEY' => "{$kebabName}"
         ]);
 
