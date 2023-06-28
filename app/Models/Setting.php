@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use RonasIT\Support\Traits\ModelTrait;
@@ -10,6 +11,7 @@ use RonasIT\Support\Traits\ModelTrait;
 class Setting extends Model
 {
     use ModelTrait;
+    use HasFactory;
 
     public $incrementing = false;
 
