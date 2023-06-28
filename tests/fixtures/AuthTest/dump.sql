@@ -4,6 +4,3 @@ INSERT INTO users(id, name, email, password, remember_token, set_password_hash, 
   (3, 'Alien East', 'alien.ease@example.com', 'old_password', null, 'good_token2', 2, '2016-10-20 11:05:00', '2016-10-20 11:05:00', '2018-11-11 10:35:00'),
   (4, 'Alien North', 'alien.north@example.com', 'old_password', null, 'bad_token1', 2, '2016-10-20 11:05:00', '2016-10-20 11:05:00', '2018-11-11 8:06:00'),
   (5, 'Alien South', 'alien.south@example.com', 'old_password', null, 'bad_token2', 2, '2016-10-20 11:05:00', '2016-10-20 11:05:00', '2018-11-11 9:04:00');
-
-
-
