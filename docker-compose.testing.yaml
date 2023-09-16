@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  nginx:
+    image: webdevops/php-nginx-dev:8.1-alpine
+    working_dir: /app
+    volumes:
+      - .:/app
+    environment:
+      WEB_DOCUMENT_ROOT: /app/public
+      WEB_DOCUMENT_INDEX: index.php
+      XDEBUG_MODE: coverage
+
+  pgsql_test:
+    image: postgres:11.9-alpine
+    environment:
+      POSTGRES_PASSWORD: ""
+      POSTGRES_USER: forge
+      POSTGRES_DB: forge
+      POSTGRES_HOST_AUTH_METHOD: trust
+    volumes:
+      - .:/app
+    command: ["-c", "fsync=off"]

@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Users;
 
 use App\Http\Requests\Request;
-use App\Models\Role;
 use App\Services\UserService;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -11,10 +10,10 @@ class DeleteUserRequest extends Request
 {
     public function authorize(): bool
     {
-        return $this->user()->role_id == Role::ADMIN;
+        return $this->user()->isAdmin();
     }
 
-    public function validateResolved()
+    public function validateResolved(): void
     {
         parent::validateResolved();
 

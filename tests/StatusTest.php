@@ -12,7 +12,7 @@ class StatusTest extends TestCase
     {
         $response = $this->json('get', '/status');
 
-        $response->assertStatus(Response::HTTP_OK);
+        $response->assertOk();
     }
 
     public function testStatusServiceUnavailable()

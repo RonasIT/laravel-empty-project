@@ -3,14 +3,19 @@
 namespace App\Models;
 
 use App\Modules\Media\Models\Media;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 use RonasIT\Support\Traits\ModelTrait;
-use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use Notifiable, ModelTrait;
+    use Notifiable;
+    use ModelTrait;
+    use HasFactory;
 
     protected $fillable = [
         'name',
@@ -30,27 +35,38 @@ class User extends Authenticatable implements JWTSubject
         'set_password_hash'
     ];
 
-    protected $dates = [
-        'set_password_hash_created_at'
+    protected $casts = [
+        'is_public' => 'boolean',
+        'set_password_hash_created_at' => 'datetime'
     ];
 
-    public function getJWTIdentifier()
+    public function getJWTIdentifier(): int
     {
         return $this->getKey();
     }
 
-    public function getJWTCustomClaims()
+    public function getJWTCustomClaims(): array
     {
         return [];
     }
 
-    public function role()
+    public function role(): BelongsTo
     {
         return $this->belongsTo(Role::class);
     }
 
-    public function media()
+    public function media(): HasMany
     {
         return $this->hasMany(Media::class, 'owner_id');
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role_id === Role::ADMIN;
+    }
+
+    public function isUser(): bool
+    {
+        return $this->role_id === Role::USER;
     }
 }

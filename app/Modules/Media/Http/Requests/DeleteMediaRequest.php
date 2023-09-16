@@ -2,19 +2,16 @@
 
 namespace App\Modules\Media\Http\Requests;
 
-use App\Models\Role;
+use App\Http\Requests\Request;
 use App\Modules\Media\Contracts\Requests\DeleteMediaRequestContract;
 use App\Modules\Media\Services\MediaService;
-use RonasIT\Support\BaseRequest;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use function __;
-use function app;
 
-class DeleteMediaRequest extends BaseRequest implements DeleteMediaRequestContract
+class DeleteMediaRequest extends Request implements DeleteMediaRequestContract
 {
     public function authorize(): bool
     {
-        return $this->user()->role_id == Role::ADMIN;
+        return $this->user()->isAdmin();
     }
 
     public function validateResolved(): void

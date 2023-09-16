@@ -3,11 +3,12 @@
 namespace App\Tests;
 
 use App\Mails\ForgotPasswordMail;
+use App\Models\User;
 use App\Tests\Support\AuthTestTrait;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Artisan;
-use Symfony\Component\HttpFoundation\Response;
-use App\Models\User;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Testing\Fluent\AssertableJson;
 
 class AuthTest extends TestCase
 {
@@ -31,7 +32,7 @@ class AuthTest extends TestCase
             'password' => $this->users[1]['password']
         ]);
 
-        $response->assertStatus(Response::HTTP_OK);
+        $response->assertOk();
 
         $this->assertArrayHasKey('token', $response->json());
         $response->assertCookie('token');
@@ -44,7 +45,7 @@ class AuthTest extends TestCase
             'password' => 'wrong password'
         ]);
 
-        $response->assertStatus(Response::HTTP_UNAUTHORIZED);
+        $response->assertUnauthorized();
     }
 
     public function testLoginWithRemember()
@@ -55,7 +56,7 @@ class AuthTest extends TestCase
             'remember' => true
         ]);
 
-        $response->assertStatus(Response::HTTP_OK);
+        $response->assertOk();
         $response->assertCookie('token');
         $response->assertCookieNotExpired('token');
     }
@@ -68,9 +69,9 @@ class AuthTest extends TestCase
             'remember' => false
         ]);
 
-        $response->assertStatus(Response::HTTP_OK);
+        $response->assertOk();
         $response->assertCookie('token');
-        $this->assertEquals(0, $response->getCookie('token')->getExpiresTime());
+        $this->assertEquals(0, $response->getCookie('token', false)->getExpiresTime());
     }
 
     public function testLoginAsRegisteredUser()
@@ -80,7 +81,7 @@ class AuthTest extends TestCase
             'password' => $this->users[0]['password']
         ]);
 
-        $response->assertStatus(Response::HTTP_OK);
+        $response->assertOk();
 
         $this->assertArrayHasKey('token', $response->json());
         $response->assertCookie('token');
@@ -92,22 +93,41 @@ class AuthTest extends TestCase
 
         $response = $this->json('post', '/register', $data);
 
-        $response->assertStatus(Response::HTTP_OK);
+        $response->assertOk();
 
         $this->assertArrayHasKey('token', $response->json());
         $response->assertCookie('token');
+        $this->assertEquals(0, $response->getCookie('token', false)->getExpiresTime());
 
         $this->assertDatabaseHas('users', $response->json('user'));
         $this->assertDatabaseHas('users', Arr::only($data, ['email', 'name']));
     }
 
+    public function testRegisterFromGuestUserWithRemember()
+    {
+        $data = $this->getJsonFixture('new_user.json');
+
+        $response = $this->json('post', '/register', array_merge(
+            $data,
+            ['remember' => true]
+        ));
+
+        $response->assertOk();
+        $response->assertCookie('token');
+        $response->assertCookieNotExpired('token');
+    }
+
     public function testRefreshToken()
     {
-        $response = $this->actingAs($this->admin)->json('get', '/auth/refresh');
+        $request = $this->actingAs($this->admin);
 
-        $response->assertStatus(Response::HTTP_OK);
+        $this->travel(config('jwt.ttl') + 1)->minutes();
 
-        $this->assertArrayHasKey('token', $response->json());
+        $response = $request->json('get', '/auth/refresh');
+
+        $response->assertOk();
+
+        $response->assertJson(fn (AssertableJson $json) => $json->hasAll(['token', 'ttl', 'refresh_ttl']));
 
         $this->assertNotEmpty(
             $response->headers->get('authorization')
@@ -116,21 +136,62 @@ class AuthTest extends TestCase
         $authHeader = $response->headers->get('authorization');
         $explodedHeader = explode(' ', $authHeader);
 
-        $this->assertNotEquals($this->jwt, last($explodedHeader));
+        $this->assertNotEquals($this->token, last($explodedHeader));
 
         $response->assertCookie('token');
+        $this->assertEquals(0, $response->getCookie('token', false)->getExpiresTime());
 
         $authCookie = $response->headers->get('cookie');
         $explodedCookie = explode('=', $authCookie);
 
-        $this->assertNotEquals($this->jwt, last($explodedCookie));
+        $this->assertNotEquals($this->token, last($explodedCookie));
+    }
+
+    public function refreshTokenAfterRefreshTTL()
+    {
+        $request = $this->actingAs($this->admin);
+
+        $this->travel(config('jwt.refresh_ttl') + 1)->minutes();
+
+        $response = $request->json('get', '/auth/refresh');
+
+        $response->assertUnauthorized();
+    }
+
+    public function testRefreshTokenWithRemember()
+    {
+        $response = $this->actingAs($this->admin)->json('get', '/auth/refresh', [
+            'remember' => true
+        ]);
+
+        $response->assertOk();
+
+        $response->assertCookie('token');
+        $response->assertCookieNotExpired('token');
+    }
+
+    public function testRefreshTokenIat()
+    {
+        $request = $this->actingAs($this->admin);
+
+        $this->travel(1)->second();
+
+        $response = $request->json('get', '/auth/refresh');
+
+        $authHeader = $response->headers->get('authorization');
+        list(, $newToken) = explode(' ', $authHeader);
+
+        $this->assertNotEquals(
+            $this->decodeJWTToken($this->token)->iat,
+            $this->decodeJWTToken($newToken)->iat
+        );
     }
 
     public function testLogout()
     {
         $response = $this->actingAs($this->admin)->json('post', '/auth/logout');
 
-        $response->assertStatus(Response::HTTP_NO_CONTENT);
+        $response->assertNoContent();
 
         $response->assertCookieExpired('token');
     }
@@ -139,24 +200,32 @@ class AuthTest extends TestCase
     {
         Artisan::call('clear:set-password-hash');
 
-        $usersWithClearedHash = User::whereIn('id', [2, 4, 5])->get()->makeVisible('set_password_hash')->toArray();
+        $usersWithClearedHash = User::whereIn('id', [2, 4, 5])
+            ->get()
+            ->makeVisible('set_password_hash')
+            ->toArray();
 
         $this->assertEqualsFixture('users_without_set_password_hash.json', $usersWithClearedHash);
 
-        $usersWithSetPasswordHash = User::whereIn('id', [1, 3])->get()->makeVisible('set_password_hash')->toArray();
+        $usersWithSetPasswordHash = User::whereIn('id', [1, 3])
+            ->get()
+            ->makeVisible('set_password_hash')
+            ->toArray();
 
         $this->assertEqualsFixture('users_with_set_password_hash.json', $usersWithSetPasswordHash);
     }
 
     public function testForgotPassword()
     {
+        Mail::fake();
+
         $this->mockUniqueTokenGeneration('some_token');
 
         $response = $this->json('post', '/auth/forgot-password', [
             'email' => 'fidel.kutch@example.com'
         ]);
 
-        $response->assertStatus(Response::HTTP_NO_CONTENT);
+        $response->assertNoContent();
 
         $this->assertDatabaseMissing('users', [
             'email' => 'fidel.kutch@example.com',
@@ -178,7 +247,7 @@ class AuthTest extends TestCase
             'email' => 'not_exists@example.com'
         ]);
 
-        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+        $response->assertUnprocessable();
     }
 
     public function testRestorePassword()
@@ -188,7 +257,7 @@ class AuthTest extends TestCase
             'token' => 'restore_token',
         ]);
 
-        $response->assertStatus(Response::HTTP_NO_CONTENT);
+        $response->assertNoContent();
 
         $this->assertDatabaseMissing('users', [
             'email' => 'fidel.kutch@example.com',
@@ -208,7 +277,7 @@ class AuthTest extends TestCase
             'token' => 'incorrect_token',
         ]);
 
-        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+        $response->assertUnprocessable();
     }
 
     public function testCheckRestoreToken()
@@ -217,7 +286,7 @@ class AuthTest extends TestCase
             'token' => 'restore_token',
         ]);
 
-        $response->assertStatus(Response::HTTP_NO_CONTENT);
+        $response->assertNoContent();
     }
 
     public function testCheckRestoreWrongToken()
@@ -226,6 +295,6 @@ class AuthTest extends TestCase
             'token' => 'wrong_token',
         ]);
 
-        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+        $response->assertUnprocessable();
     }
 }

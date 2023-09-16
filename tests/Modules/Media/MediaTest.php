@@ -4,15 +4,16 @@ namespace App\Tests\Modules\Media;
 
 use App\Models\User;
 use App\Modules\Media\Models\Media;
+use App\Tests\Support\MediaTestTrait;
 use Illuminate\Http\Testing\File;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use RonasIT\Support\Traits\FilesUploadTrait;
-use Symfony\Component\HttpFoundation\Response;
 
 class MediaTest extends ModuleTestCase
 {
     use FilesUploadTrait;
+    use MediaTestTrait;
 
     protected $admin;
     protected $user;
@@ -25,13 +26,15 @@ class MediaTest extends ModuleTestCase
         $this->admin = User::find(1);
         $this->user = User::find(2);
         $this->file = UploadedFile::fake()->image('file.png', 600, 600);
+
+        $this->mockGenerateFilename();
     }
 
     public function testCreate(): void
     {
         $response = $this->actingAs($this->admin)->json('post', '/media', ['file' => $this->file]);
 
-        $response->assertStatus(Response::HTTP_OK);
+        $response->assertOk();
 
         $responseData = $response->json();
 
@@ -39,7 +42,8 @@ class MediaTest extends ModuleTestCase
             'id' => $responseData['id'],
             'name' => 'file.png',
             'owner_id' => $this->admin->id,
-            'is_public' => false
+            'is_public' => false,
+            'link' => '/storage/file.png'
         ]);
     }
 
@@ -58,10 +62,11 @@ class MediaTest extends ModuleTestCase
             'id' => $responseData['id'],
             'name' => 'file.png',
             'owner_id' => $this->user->id,
-            'is_public' => true
+            'is_public' => true,
+            'link' => '/storage/file.png'
         ]);
 
-        $response->assertStatus(Response::HTTP_OK);
+        $response->assertOk();
     }
 
     public function testCreateCheckUrls(): void
@@ -91,7 +96,7 @@ class MediaTest extends ModuleTestCase
     {
         $response = $this->json('post', '/media', ['file' => $this->file]);
 
-        $response->assertStatus(Response::HTTP_UNAUTHORIZED);
+        $response->assertUnauthorized();
     }
 
     public function testBulkCreate(): void
@@ -133,7 +138,7 @@ class MediaTest extends ModuleTestCase
     {
         $response = $this->actingAs($this->admin)->json('delete', '/media/1');
 
-        $response->assertStatus(Response::HTTP_NO_CONTENT);
+        $response->assertNoContent();
 
         $this->assertSoftDeleted('media', [
             'id' => 1
@@ -144,7 +149,7 @@ class MediaTest extends ModuleTestCase
     {
         $response = $this->actingAs($this->admin)->json('delete', '/media/0');
 
-        $response->assertStatus(Response::HTTP_NOT_FOUND);
+        $response->assertNotFound();
 
         $this->assertDatabaseMissing('media', [
             'id' => 0
@@ -155,7 +160,7 @@ class MediaTest extends ModuleTestCase
     {
         $response = $this->actingAs($this->user)->json('delete', '/media/1');
 
-        $response->assertStatus(Response::HTTP_FORBIDDEN);
+        $response->assertForbidden();
 
         $this->assertDatabaseHas('media', [
             'id' => 1
@@ -166,7 +171,7 @@ class MediaTest extends ModuleTestCase
     {
         $response = $this->json('delete', '/media/1');
 
-        $response->assertStatus(Response::HTTP_UNAUTHORIZED);
+        $response->assertUnauthorized();
 
         $this->assertDatabaseHas('media', [
             'id' => 1
@@ -229,7 +234,7 @@ class MediaTest extends ModuleTestCase
     {
         $response = $this->actingAs($this->admin)->json('get', '/media', $filter);
 
-        $response->assertStatus(Response::HTTP_OK);
+        $response->assertOk();
 
         $this->assertEqualsFixture($fixture, $response->json());
     }
@@ -244,7 +249,7 @@ class MediaTest extends ModuleTestCase
     {
         $response = $this->actingAs($this->user)->json('get', '/media', $filter);
 
-        $response->assertStatus(Response::HTTP_OK);
+        $response->assertOk();
 
         $this->assertEqualsFixture($fixture, $response->json());
     }
@@ -272,7 +277,7 @@ class MediaTest extends ModuleTestCase
 
         $response = $this->actingAs($this->user)->json('post', '/media', ['file' => $this->file]);
 
-        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+        $response->assertUnprocessable();
 
         $response->assertJson([
             'errors' => [

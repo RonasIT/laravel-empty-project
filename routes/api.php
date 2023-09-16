@@ -4,7 +4,6 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\StatusController;
 use App\Http\Controllers\UserController;
-use App\Modules\Media\Http\Controllers\MediaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,29 +16,30 @@ use App\Modules\Media\Http\Controllers\MediaController;
 |
 */
 
-Route::group(['middleware' => 'auth'], function () {
-    Route::post('/users', ['uses' => UserController::class . '@create']);
-    Route::put('/users/{id}', ['uses' => UserController::class . '@update']);
-    Route::delete('/users/{id}', ['uses' => UserController::class . '@delete']);
-    Route::get('/users/{id}', ['uses' => UserController::class . '@get']);
-    Route::get('/users', ['uses' => UserController::class . '@search']);
-    Route::get('/profile', ['uses' => UserController::class . '@profile']);
-    Route::put('/profile', ['uses' => UserController::class . '@updateProfile']);
-    Route::delete('/profile', ['uses' => UserController::class . '@deleteProfile']);
+Route::group(['middleware' => 'auth_group'], function () {
+    Route::post('auth/logout', [AuthController::class, 'logout']);
 
-    Route::put('/settings/{name}', ['uses' => SettingController::class . '@update']);
-    Route::get('/settings/{name}', ['uses' => SettingController::class . '@get']);
-    Route::get('/settings', ['uses' => SettingController::class . '@search']);
+    Route::post('users', [UserController::class, 'create']);
+    Route::put('users/{id}', [UserController::class, 'update']);
+    Route::delete('users/{id}', [UserController::class, 'delete']);
+    Route::get('users/{id}', [UserController::class, 'get']);
+    Route::get('users', [UserController::class, 'search']);
+    Route::get('profile', [UserController::class, 'profile']);
+    Route::put('profile', [UserController::class, 'updateProfile']);
+    Route::delete('profile', [UserController::class, 'deleteProfile']);
+
+    Route::put('settings/{name}', [SettingController::class, 'update']);
+    Route::get('settings/{name}', [SettingController::class, 'get']);
+    Route::get('settings', [SettingController::class, 'search']);
 });
 
-Route::group(['middleware' => 'guest'], function () {
-    Route::post('/login', ['uses' => AuthController::class . '@login']);
-    Route::get('/auth/refresh', ['uses' => AuthController::class . '@refreshToken']);
-    Route::post('/auth/logout', ['uses' => AuthController::class . '@logout']);
-    Route::post('/register', ['uses' => AuthController::class . '@register']);
-    Route::post('/auth/forgot-password', ['uses' => AuthController::class . '@forgotPassword']);
-    Route::post('/auth/restore-password', ['uses' => AuthController::class . '@restorePassword']);
-    Route::post('/auth/token/check', ['uses' => AuthController::class . '@checkRestoreToken']);
+Route::group(['middleware' => 'guest_group'], function () {
+    Route::post('login', [AuthController::class, 'login']);
+    Route::post('register', [AuthController::class, 'register']);
+    Route::get('auth/refresh', [AuthController::class, 'refreshToken']);
+    Route::post('auth/forgot-password', [AuthController::class, 'forgotPassword']);
+    Route::post('auth/restore-password', [AuthController::class, 'restorePassword']);
+    Route::post('auth/token/check', [AuthController::class, 'checkRestoreToken']);
 
-    Route::get('/status', ['uses' => StatusController::class . '@status']);
+    Route::get('status', [StatusController::class, 'status']);
 });

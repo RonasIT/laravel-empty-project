@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateMediaTable extends Migration
 {
@@ -16,7 +16,11 @@ class CreateMediaTable extends Migration
             $table->string('name')->nullable();
             $table->boolean('is_public')->default(false);
             $table->integer('owner_id')->nullable();
-            $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');
+            $table
+                ->foreign('owner_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
         });
     }
 

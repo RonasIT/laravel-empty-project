@@ -3,10 +3,9 @@
 namespace App\Http\Requests\Setting;
 
 use App\Http\Requests\Request;
-use App\Models\Role;
 use App\Models\Setting;
-use Illuminate\Support\Arr;
 use App\Services\SettingService;
+use Illuminate\Support\Arr;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class GetSettingRequest extends Request
@@ -18,14 +17,10 @@ class GetSettingRequest extends Request
         $service = app(SettingService::class);
         $this->setting = $service->findBy('name', $this->route('name'));
 
-        if ($this->user()->role_id == Role::ADMIN) {
-            return true;
-        }
-
-        return Arr::get($this->setting, 'is_public');
+        return $this->user()->isAdmin() || Arr::get($this->setting, 'is_public');
     }
 
-    public function validateResolved()
+    public function validateResolved(): void
     {
         parent::validateResolved();
 

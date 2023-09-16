@@ -2,8 +2,9 @@
 
 namespace App\Services;
 
-use Illuminate\Support\Arr;
 use App\Repositories\SettingRepository;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Arr;
 use RonasIT\Support\Services\EntityService;
 
 /**
@@ -17,9 +18,9 @@ class SettingService extends EntityService
         $this->setRepository(SettingRepository::class);
     }
 
-    public function search($filters)
+    public function search(array $filters): LengthAwarePaginator
     {
-        return $this->repository
+        return $this
             ->searchQuery($filters)
             ->filterByQuery(['name'])
             ->orderBy('name')

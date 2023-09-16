@@ -3,18 +3,21 @@
 namespace App\Mails;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class BaseMail extends Mailable
+class BaseMail extends Mailable implements ShouldQueue
 {
-    use Queueable, SerializesModels;
+    use Queueable;
+    use SerializesModels;
 
-    protected $data;
+    public int $tries = 5;
 
-    public function __construct($to, array $data, $subject, $view)
+    protected array $data;
+
+    public function __construct(array $data, $subject, $view)
     {
-        $this->to($to);
         $this->data = $data;
         $this->subject = $subject;
         $this->view = $view;
@@ -25,10 +28,11 @@ class BaseMail extends Mailable
         return $this
             ->view($this->view)
             ->subject($this->subject)
-            ->with($this->data);
+            ->with($this->data)
+            ->onQueue('mails');
     }
 
-    public function getData()
+    public function getData(): array
     {
         return $this->data;
     }

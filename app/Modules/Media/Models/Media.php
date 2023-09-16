@@ -2,17 +2,20 @@
 
 namespace App\Modules\Media\Models;
 
-use App\Models\Role;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 use RonasIT\Support\Traits\ModelTrait;
-use Tymon\JWTAuth\Facades\JWTAuth;
 
 class Media extends Model
 {
-    use ModelTrait, SoftDeletes;
+    use ModelTrait;
+    use SoftDeletes;
+    use HasFactory;
 
     protected $fillable = [
         'link',
@@ -23,27 +26,23 @@ class Media extends Model
     ];
 
     protected $casts = [
-        'is_public' => 'boolean'
-    ];
-
-    protected $dates = [
-        'deleted_at'
+        'is_public' => 'boolean',
+        'deleted_at' => 'date'
     ];
 
     protected $hidden = ['pivot'];
 
-    public function scopeApplyMediaPermissionRestrictions($query): void
+    public function scopeApplyMediaPermissionRestrictions(Builder $query): void
     {
-        if (!JWTAuth::getToken()) {
+        if (!Auth::check()) {
             $query->where('is_public', true);
 
             return;
         }
 
-        /** @var User $user */
-        $user = JWTAuth::toUser();
+        $user = Auth::user();
 
-        if ($user->role_id !== Role::ADMIN) {
+        if (!$user->isAdmin()) {
             $query->where(function ($subQuery) use ($user) {
                 $subQuery
                     ->where('is_public', true)

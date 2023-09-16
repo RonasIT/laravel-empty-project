@@ -2,7 +2,7 @@
 
 use App\Modules\Media\Contracts\Controllers\MediaControllerContract;
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => 'auth_group'], function () {
     Route::post('/media', ['uses' => MediaControllerContract::class . '@create']);
     Route::delete('/media/{id}', ['uses' => MediaControllerContract::class . '@delete']);
     Route::get('/media', ['uses' => MediaControllerContract::class . '@search']);

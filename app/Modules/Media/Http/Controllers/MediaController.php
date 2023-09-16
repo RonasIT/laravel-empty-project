@@ -27,7 +27,7 @@ class MediaController extends Controller implements MediaControllerContract
         return response()->json($media);
     }
 
-    public function delete(DeleteMediaRequestContract $request, MediaServiceContract $mediaService, int $id)
+    public function delete(DeleteMediaRequestContract $request, MediaServiceContract $mediaService, int $id): Response
     {
         $mediaService->delete($id);
 
