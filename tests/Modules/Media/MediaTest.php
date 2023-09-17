@@ -114,7 +114,7 @@ class MediaTest extends ModuleTestCase
             ]
         ]);
 
-        $response->assertStatus(Response::HTTP_OK);
+        $response->assertOk();
 
         $responseData = $response->json();
 
