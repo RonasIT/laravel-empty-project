@@ -7,7 +7,6 @@ use App\Tests\Support\MediaTestTrait;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use RonasIT\Support\Traits\FilesUploadTrait;
-use Symfony\Component\HttpFoundation\Response;
 
 class MediaTest extends TestCase
 {
@@ -33,7 +32,7 @@ class MediaTest extends TestCase
     {
         $response = $this->actingAs($this->admin)->json('post', '/media', ['file' => $this->file]);
 
-        $response->assertStatus(Response::HTTP_OK);
+        $response->assertOk();
 
         $responseData = $response->json();
 
@@ -65,7 +64,7 @@ class MediaTest extends TestCase
             'link' => '/storage/file.png'
         ]);
 
-        $response->assertStatus(Response::HTTP_OK);
+        $response->assertOk();
     }
 
     public function testCreateCheckResponse()
@@ -88,14 +87,14 @@ class MediaTest extends TestCase
     {
         $response = $this->json('post', '/media', ['file' => $this->file]);
 
-        $response->assertStatus(Response::HTTP_UNAUTHORIZED);
+        $response->assertUnauthorized();
     }
 
     public function testDelete()
     {
         $response = $this->actingAs($this->admin)->json('delete', '/media/1');
 
-        $response->assertStatus(Response::HTTP_NO_CONTENT);
+        $response->assertNoContent();
 
         $this->assertSoftDeleted('media', [
             'id' => 1
@@ -106,7 +105,7 @@ class MediaTest extends TestCase
     {
         $response = $this->actingAs($this->admin)->json('delete', '/media/0');
 
-        $response->assertStatus(Response::HTTP_NOT_FOUND);
+        $response->assertNotFound();
 
         $this->assertDatabaseMissing('media', [
             'id' => 0
@@ -117,7 +116,7 @@ class MediaTest extends TestCase
     {
         $response = $this->actingAs($this->user)->json('delete', '/media/1');
 
-        $response->assertStatus(Response::HTTP_FORBIDDEN);
+        $response->assertForbidden();
 
         $this->assertDatabaseHas('media', [
             'id' => 1
@@ -128,7 +127,7 @@ class MediaTest extends TestCase
     {
         $response = $this->json('delete', '/media/1');
 
-        $response->assertStatus(Response::HTTP_UNAUTHORIZED);
+        $response->assertUnauthorized();
 
         $this->assertDatabaseHas('media', [
             'id' => 1
@@ -191,7 +190,7 @@ class MediaTest extends TestCase
     {
         $response = $this->actingAs($this->admin)->json('get', '/media', $filter);
 
-        $response->assertStatus(Response::HTTP_OK);
+        $response->assertOk();
 
         $this->assertEqualsFixture($fixture, $response->json());
     }
@@ -206,7 +205,7 @@ class MediaTest extends TestCase
     {
         $response = $this->actingAs($this->user)->json('get', '/media', $filter);
 
-        $response->assertStatus(Response::HTTP_OK);
+        $response->assertOk();
 
         $this->assertEqualsFixture($fixture, $response->json());
     }
@@ -234,7 +233,7 @@ class MediaTest extends TestCase
 
         $response = $this->actingAs($this->user)->json('post', '/media', ['file' => $this->file]);
 
-        $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+        $response->assertUnprocessable();
 
         $response->assertJson([
             'errors' => [

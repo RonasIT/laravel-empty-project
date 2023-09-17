@@ -1,14 +1,15 @@
-version: '3'
+version: "3"
 
 services:
   nginx:
-    image: webdevops/php-nginx:8.1-alpine
+    image: webdevops/php-nginx-dev:8.1-alpine
     working_dir: /app
     volumes:
       - .:/app
     environment:
       WEB_DOCUMENT_ROOT: /app/public
       WEB_DOCUMENT_INDEX: index.php
+      XDEBUG_MODE: coverage
 
   pgsql_test:
     image: postgres:11.9-alpine

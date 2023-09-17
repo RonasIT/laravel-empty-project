@@ -63,8 +63,8 @@ return [
         'gcs' => [
             'driver' => 'gcs',
             'key_file_path' => env('GOOGLE_CLOUD_STORAGE_KEY_FILE_PATH', null),
-            'project_id' => env('GOOGLE_CLOUD_PROJECT_ID', 'ronas-it-development'),
-            'bucket' => env('GOOGLE_CLOUD_STORAGE_BUCKET', 'ronasit-development'),
+            'project_id' => env('GOOGLE_CLOUD_PROJECT_ID'),
+            'bucket' => env('GOOGLE_CLOUD_STORAGE_BUCKET'),
             'path_prefix' => env('GOOGLE_CLOUD_STORAGE_PATH_PREFIX', null),
             'visibility' => 'public',
             'throw' => true

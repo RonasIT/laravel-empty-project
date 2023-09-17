@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use RonasIT\Support\Traits\ModelTrait;
 
@@ -32,7 +31,7 @@ class Setting extends Model
     {
         $user = Auth::user();
 
-        if (Arr::get($user, 'role_id') !== Role::ADMIN) {
+        if ($user && !$user->isAdmin()) {
             $query->where('is_public', true);
         }
     }
