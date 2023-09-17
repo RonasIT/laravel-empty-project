@@ -6,9 +6,9 @@ use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Arr;
 use RonasIT\Support\AutoDoc\Tests\AutoDocTestCaseTrait;
-use RonasIT\Support\Tests\TestCase;
+use RonasIT\Support\Tests\TestCase as BaseTestCase;
 
-abstract class ModuleTestCase extends TestCase
+abstract class ModuleTestCase extends BaseTestCase
 {
     use AutoDocTestCaseTrait;
 
@@ -23,6 +23,9 @@ abstract class ModuleTestCase extends TestCase
 
         $app->loadEnvironmentFrom('.env.testing');
         $app->make(Kernel::class)->bootstrap();
+
+        $this->truncateExceptTables = ['migrations', 'password_resets', 'roles'];
+        $this->prepareSequencesExceptTables = ['migrations', 'password_resets', 'settings', 'roles'];
 
         return $app;
     }
