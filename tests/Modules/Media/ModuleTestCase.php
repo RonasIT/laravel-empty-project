@@ -2,21 +2,32 @@
 
 namespace App\Tests\Modules\Media;
 
-use App\Tests\TestCase;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Arr;
 use RonasIT\Support\AutoDoc\Tests\AutoDocTestCaseTrait;
+use RonasIT\Support\Tests\TestCase;
 
 abstract class ModuleTestCase extends TestCase
 {
     use AutoDocTestCaseTrait;
 
-    public function tearDown(): void
+    /**
+     * Creates the application.
+     *
+     * @return Application
+     */
+    public function createApplication(): Application
     {
-        $this->saveDocumentation();
+        $app = require __DIR__ . '/../../../bootstrap/app.php';
 
-        parent::tearDown();
+        $app->loadEnvironmentFrom('.env.testing');
+        $app->make(Kernel::class)->bootstrap();
+
+        $this->truncateExceptTables = ['migrations', 'password_resets', 'roles'];
+        $this->prepareSequencesExceptTables = ['migrations', 'password_resets', 'settings', 'roles'];
+
+        return $app;
     }
 
     public function getFixturePath($fixtureName): string

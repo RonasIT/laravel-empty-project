@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Modules\Media;
+namespace App\Modules\Media\Tests;
 
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Application;
@@ -19,7 +19,7 @@ abstract class ModuleTestCase extends BaseTestCase
      */
     public function createApplication(): Application
     {
-        $app = require __DIR__ . '/../../../bootstrap/app.php';
+        $app = require __DIR__ . '/../../../../bootstrap/app.php';
 
         $app->loadEnvironmentFrom('.env.testing');
         $app->make(Kernel::class)->bootstrap();
@@ -30,19 +30,12 @@ abstract class ModuleTestCase extends BaseTestCase
         return $app;
     }
 
-    public function tearDown(): void
-    {
-        $this->saveDocumentation();
-
-        parent::tearDown();
-    }
-
     public function getFixturePath($fixtureName): string
     {
         $class = get_class($this);
         $explodedClass = explode('\\', $class);
         $className = Arr::last($explodedClass);
 
-        return base_path("tests/Modules/Media/fixtures/{$className}/{$fixtureName}");
+        return base_path("app/Modules/Media/tests/fixtures/{$className}/{$fixtureName}");
     }
 }

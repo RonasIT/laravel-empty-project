@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Tests\Modules\Media;
+namespace App\Modules\Media\Tests;
 
 use App\Models\User;
 use App\Modules\Media\Models\Media;
+use App\Tests\Support\MediaTestTrait;
 use Illuminate\Http\Testing\File;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -12,6 +13,7 @@ use RonasIT\Support\Traits\FilesUploadTrait;
 class MediaTest extends ModuleTestCase
 {
     use FilesUploadTrait;
+    use MediaTestTrait;
 
     protected $admin;
     protected $user;
@@ -24,6 +26,8 @@ class MediaTest extends ModuleTestCase
         $this->admin = User::find(1);
         $this->user = User::find(2);
         $this->file = UploadedFile::fake()->image('file.png', 600, 600);
+
+        $this->mockGenerateFilename();
     }
 
     public function testCreate(): void
