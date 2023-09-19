@@ -95,11 +95,6 @@ return [
             'provider' => 'users',
             'table' => 'password_resets',
             'expire' => 60,
-        ],
-        'nova' => [
-            'provider' => 'users',
-            'table' => 'nova_password_resets',
-            'expire' => 60
         ]
     ],
 
