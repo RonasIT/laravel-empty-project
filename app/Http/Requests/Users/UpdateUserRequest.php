@@ -33,7 +33,7 @@ class UpdateUserRequest extends Request
             throw new NotFoundHttpException(__('validation.exceptions.not_found', ['entity' => 'User']));
         }
 
-        if ($this->has('role_id') && ! $this->user()->isAdmin()) {
+        if ($this->has('role_id') && !$this->user()->isAdmin()) {
             throw new AccessDeniedHttpException(__('validation.custom.role_id.access_denied'));
         }
     }
