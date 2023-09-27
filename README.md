@@ -2,7 +2,7 @@
 
 [![Coverage Status](https://coveralls.io/repos/github/RonasIT/laravel-empty-project/badge.svg?branch=development)](https://coveralls.io/github/RonasIT/laravel-empty-project?branch=development)
 
-This monorepo can be used to scaffold a Laravel project.
+This repository can be used to scaffold a Laravel project.
 
 ## Prerequisites
 
@@ -13,30 +13,59 @@ installed:
 
 ## Getting Started
 
-To get started with this monorepo, follow these steps:
+To get started with this repository, follow these steps:
 
-1. Clone this repository to your local machine.
-2. Run `git remote remove origin` to remove the existing
-   [remote](https://git-scm.com/docs/git-remote).
-3. Run `git remote add origin <your_remove_url>` to add your
-   new remote.
-4. Run `docker compose up -d` to build and start containers.
-   It may takes some time.
-5. Run `docker ps` to check that all five containers were started.
-6. Connect with the `nginx` container by running
-   `docker exec -i -t laravel-empty-project-nginx-1 /bin/bash`.
-7. Run `php artisan init <project_name>` to initialize your new project.
-8. Set `contact.email` value in the `configs/auto-doc.php`.
-9. Run `php vendor/bin/phpunit tests/` to check if everything
-   is ok and build documentation.
+Clone this repository to your local machine.
+```sh
+git clone git@github.com:RonasIT/laravel-empty-project.git
+```
+Remove the existing GitHub [remote](https://git-scm.com/docs/git-remote).
+```sh
+git remote remove origin
+```
+Add your project remote.
+```sh
+git remote add origin <project_git_url>
+```
+Build and start containers. It may takes some time.
+```sh
+docker compose up -d
+```
+Check docker containers health status.
+```sh
+docker ps
+```
+You should see something like this.
+```
+CONTAINER ID   IMAGE                       COMMAND                  CREATED              STATUS              PORTS                                                NAMES
+5ae2e24d63bb   ronasit/php-nginx-dev:8.1   "/entrypoint bash -c…"   About a minute ago   Up About a minute   0.0.0.0:80->80/tcp, 0.0.0.0:443->443/tcp, 9000/tcp   laravel-empty-project-nginx-1
+ef37a992c53c   webdevops/php:8.1-alpine    "/entrypoint supervi…"   About a minute ago   Up About a minute   9000/tcp                                             laravel-empty-project-php-1
+e02e9f746731   ronasit/postgres:12.5       "docker-entrypoint.s…"   About a minute ago   Up About a minute   0.0.0.0:5433->5432/tcp                               laravel-empty-project-pgsql_test-1
+4e1fda859342   ronasit/postgres:12.5       "docker-entrypoint.s…"   About a minute ago   Up About a minute   0.0.0.0:5432->5432/tcp                               laravel-empty-project-pgsql-1
+728c83486f92   redis:6.2.3                 "docker-entrypoint.s…"   About a minute ago   Up About a minute   0.0.0.0:6379->6379/tcp                               laravel-empty-project-redis-1
+```
+Connect to the `nginx` container.
+```sh
+docker exec -i -t laravel-empty-project-nginx-1 /bin/bash
+```
+Init your new project.
+```sh
+php artisan init <project_name>
+```
+Set required configs: `contact.email` in the `configs/auto-doc.php`.
+
+Run tests to generate documentation
+```sh
+php vendor/bin/phpunit tests/
+```
 
 API documentation can be accessed by visiting `http://localhost` in your
 web browser.
 
 ### Environments
 
-This monorepo by default supports three environments: _local_, _development_,
-and _testing_. Each environment is represented by an appropriate environment file:
+This repository by default supports three environments: `local`, `development`,
+and `testing`. Each environment is represented by an appropriate environment file:
 
 - .env
 - .env.development
