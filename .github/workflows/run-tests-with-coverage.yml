@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DB_CONNECTION: pgsql
-      DB_HOST: postgres
+      DB_HOST: localhost
       DB_PASSWORD: ""
       DB_USERNAME: forge
       DB_DATABASE: forge
