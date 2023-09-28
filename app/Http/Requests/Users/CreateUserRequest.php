@@ -3,7 +3,6 @@
 namespace App\Http\Requests\Users;
 
 use App\Http\Requests\Request;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class CreateUserRequest extends Request
 {
@@ -20,14 +19,5 @@ class CreateUserRequest extends Request
             'name' => 'string|required',
             'email' => 'required|email|unique:users,email',
         ];
-    }
-
-    public function validateResolved(): void
-    {
-        parent::validateResolved();
-
-        if ($this->has('role_id') && ! $this->user()->isAdmin()) {
-            throw new AccessDeniedHttpException('User does not exist');
-        }
     }
 }

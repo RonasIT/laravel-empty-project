@@ -92,7 +92,7 @@ class UserTest extends TestCase
 
         $response = $this->actingAs($this->user)->json('put', '/users/2', $data);
 
-        $response->assertJson(['error' => 'You are not able to change user role']);
+        $response->assertJson(['error' => __('validation.custom.role_id.access_denied')]);
 
         $this->assertDatabaseMissing('users', [
             'id' => 1,
