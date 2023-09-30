@@ -5,9 +5,12 @@ namespace App\Tests;
 use App\Mails\ForgotPasswordMail;
 use App\Models\User;
 use App\Tests\Support\AuthTestTrait;
+use Illuminate\Console\Events\ScheduledTaskFinished;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use Illuminate\Testing\Fluent\AssertableJson;
 
 class AuthTest extends TestCase
@@ -235,25 +238,6 @@ class AuthTest extends TestCase
         $response->assertUnauthorized();
     }
 
-    public function testClearPasswordHash()
-    {
-        Artisan::call('clear:set-password-hash');
-
-        $usersWithClearedHash = User::whereIn('id', [2, 4, 5])
-            ->get()
-            ->makeVisible('set_password_hash')
-            ->toArray();
-
-        $this->assertEqualsFixture('users_without_set_password_hash.json', $usersWithClearedHash);
-
-        $usersWithSetPasswordHash = User::whereIn('id', [1, 3])
-            ->get()
-            ->makeVisible('set_password_hash')
-            ->toArray();
-
-        $this->assertEqualsFixture('users_with_set_password_hash.json', $usersWithSetPasswordHash);
-    }
-
     public function testForgotPassword()
     {
         Mail::fake();
@@ -335,5 +319,36 @@ class AuthTest extends TestCase
         ]);
 
         $response->assertUnprocessable();
+    }
+
+    public function testClearPasswordHash()
+    {
+        Artisan::call('clear:set-password-hash');
+
+        $usersWithClearedHash = User::whereIn('id', [2, 4, 5])
+            ->get()
+            ->makeVisible('set_password_hash')
+            ->toArray();
+
+        $this->assertEqualsFixture('users_without_set_password_hash.json', $usersWithClearedHash);
+
+        $usersWithSetPasswordHash = User::whereIn('id', [1, 3])
+            ->get()
+            ->makeVisible('set_password_hash')
+            ->toArray();
+
+        $this->assertEqualsFixture('users_with_set_password_hash.json', $usersWithSetPasswordHash);
+    }
+
+    public function testClearPasswordHashSchedule()
+    {
+        Event::fake();
+
+        $this->travelTo(now()->setHour(1)->setMinute(0));
+        $this->artisan('schedule:run');
+
+        Event::assertDispatched(ScheduledTaskFinished::class, function ($event) {
+            return Str::contains($event->task->command, 'clear:set-password-hash');
+        });
     }
 }
