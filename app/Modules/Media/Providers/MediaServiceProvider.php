@@ -34,6 +34,5 @@ class MediaServiceProvider extends ServiceProvider
         $this->app->bind(DeleteMediaRequestContract::class, DeleteMediaRequest::class);
 
         $this->app->bind(MediaServiceContract::class, MediaService::class);
-        $this->app->bind(MediaControllerContract::class, MediaController::class);
     }
 }

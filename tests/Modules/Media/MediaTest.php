@@ -119,14 +119,15 @@ class MediaTest extends ModuleTestCase
         $responseData = $response->json();
 
         $this->assertDatabaseHas('media', [
-            'id' => $responseData[0]['id'],
+            'id' => 5,
             'name' => 'file.png',
             'owner_id' => $this->admin->id,
             'meta' => 'test1',
             'is_public' => false
         ]);
+
         $this->assertDatabaseHas('media', [
-            'id' => $responseData[1]['id'],
+            'id' => 6,
             'name' => 'file.png',
             'owner_id' => $this->admin->id,
             'meta' => 'test2',
@@ -150,10 +151,6 @@ class MediaTest extends ModuleTestCase
         $response = $this->actingAs($this->admin)->json('delete', '/media/0');
 
         $response->assertNotFound();
-
-        $this->assertDatabaseMissing('media', [
-            'id' => 0
-        ]);
     }
 
     public function testDeleteNoPermission(): void

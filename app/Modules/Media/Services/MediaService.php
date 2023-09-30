@@ -27,7 +27,8 @@ class MediaService extends EntityService implements MediaServiceContract
 
     public function search(array $filters): LengthAwarePaginator
     {
-        return $this->repository
+        return $this
+            ->repository
             ->searchQuery($filters)
             ->filterByQuery(['name'])
             ->getSearchResults();
@@ -56,10 +57,5 @@ class MediaService extends EntityService implements MediaServiceContract
         }
 
         return $result;
-    }
-
-    public function delete($where): int
-    {
-        return $this->repository->delete($where);
     }
 }

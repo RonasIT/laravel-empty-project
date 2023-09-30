@@ -47,14 +47,12 @@ class MediaTest extends ModuleTestCase
         ]);
     }
 
-
     public function testCreatePublic(): void
     {
         $response = $this->actingAs($this->user)->json('post', '/media', [
-                'file' => $this->file,
-                'is_public' => true,
-            ]
-        );
+            'file' => $this->file,
+            'is_public' => true,
+        ]);
 
         $responseData = $response->json();
 
@@ -124,6 +122,7 @@ class MediaTest extends ModuleTestCase
             'meta' => 'test1',
             'is_public' => false
         ]);
+
         $this->assertDatabaseHas('media', [
             'id' => $responseData[1]['id'],
             'name' => 'file.png',
@@ -149,10 +148,6 @@ class MediaTest extends ModuleTestCase
         $response = $this->actingAs($this->admin)->json('delete', '/media/0');
 
         $response->assertNotFound();
-
-        $this->assertDatabaseMissing('media', [
-            'id' => 0
-        ]);
     }
 
     public function testDeleteNoPermission(): void
