@@ -21,6 +21,8 @@ class SearchUserRequest extends Request
             'query' => 'string|nullable',
             'order_by' => 'string|nullable',
             'desc' => 'boolean|nullable',
+            'with' => 'array',
+            'with.*' => 'string|required',
         ];
     }
 }

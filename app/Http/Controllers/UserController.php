@@ -27,7 +27,9 @@ class UserController extends Controller
 
     public function get(GetUserRequest $request, UserService $service, int $id): JsonResponse
     {
-        $result = $service->find($id);
+        $result = $service
+            ->with($request->input('with', []))
+            ->find($id);
 
         return response()->json($result);
     }
@@ -41,7 +43,9 @@ class UserController extends Controller
 
     public function profile(GetUserProfileRequest $request, UserService $service): JsonResponse
     {
-        $result = $service->find($request->user()->id);
+        $result = $service
+            ->with($request->input('with', []))
+            ->find($request->user()->id);
 
         return response()->json($result);
     }

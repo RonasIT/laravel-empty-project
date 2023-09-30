@@ -238,7 +238,9 @@ class UserTest extends TestCase
 
     public function testGetProfile()
     {
-        $response = $this->actingAs($this->admin)->json('get', '/profile');
+        $response = $this->actingAs($this->admin)->json('get', '/profile', [
+            'with' => ['role', 'media']
+        ]);
 
         $response->assertOk();
 
@@ -247,7 +249,9 @@ class UserTest extends TestCase
 
     public function testGet()
     {
-        $response = $this->actingAs($this->admin)->json('get', '/users/1');
+        $response = $this->actingAs($this->admin)->json('get', '/users/1', [
+            'with' => ['role', 'media']
+        ]);
 
         $response->assertOk();
 
@@ -290,6 +294,7 @@ class UserTest extends TestCase
             [
                 'filter' => [
                     'query' => 'Admin',
+                    'with' => ['role'],
                     'order_by' => 'created_at',
                     'desc' => false
                 ],

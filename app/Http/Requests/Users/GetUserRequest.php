@@ -8,6 +8,14 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class GetUserRequest extends Request
 {
+    public function rules(): array
+    {
+        return [
+            'with' => 'array',
+            'with.*' => 'string|required',
+        ];
+    }
+
     public function validateResolved(): void
     {
         parent::validateResolved();

@@ -87,6 +87,25 @@ class AuthTest extends TestCase
         $response->assertCookie('token');
     }
 
+    public function testLoginAsAuthorizedUser()
+    {
+        $response = $this->actingAs($this->admin)->json('post', '/login', [
+            'email' => $this->users[0]['email'],
+            'password' => $this->users[0]['password']
+        ]);
+
+        $response->assertOk();
+    }
+
+    public function testRegisterAuthorizedUser()
+    {
+        $data = $this->getJsonFixture('new_user.json');
+
+        $response = $this->actingAs($this->admin)->json('post', '/register', $data);
+
+        $response->assertOk();
+    }
+
     public function testRegisterFromGuestUser()
     {
         $data = $this->getJsonFixture('new_user.json');
@@ -170,6 +189,17 @@ class AuthTest extends TestCase
         $response->assertCookieNotExpired('token');
     }
 
+    public function testRefreshTokenWithRememberWithoutBlacklist()
+    {
+        config(['jwt.blacklist_enabled' => false]);
+
+        $response = $this->actingAs($this->admin)->json('get', '/auth/refresh', [
+            'remember' => true
+        ]);
+
+        $response->assertUnauthorized();
+    }
+
     public function testRefreshTokenIat()
     {
         $request = $this->actingAs($this->admin);
@@ -194,6 +224,15 @@ class AuthTest extends TestCase
         $response->assertNoContent();
 
         $response->assertCookieExpired('token');
+    }
+
+    public function testLogoutWithoutBlacklist()
+    {
+        config(['jwt.blacklist_enabled' => false]);
+
+        $response = $this->actingAs($this->admin)->json('post', '/auth/logout');
+
+        $response->assertUnauthorized();
     }
 
     public function testClearPasswordHash()

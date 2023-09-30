@@ -8,7 +8,13 @@
             "role_id": 1,
             "set_password_hash_created_at": null,
             "created_at": "2016-10-20T11:05:00.000000Z",
-            "updated_at": "2016-10-20T11:05:00.000000Z"
+            "updated_at": "2016-10-20T11:05:00.000000Z",
+            "role": {
+                "id": 1,
+                "name": "administrator",
+                "created_at": null,
+                "updated_at": null
+            }
         }
     ],
     "first_page_url": "http:\/\/localhost\/users?page=1",
