@@ -7,6 +7,9 @@ use Illuminate\Support\ServiceProvider;
 
 class DevDependenciesServiceProvider extends ServiceProvider
 {
+    /**
+     * @codeCoverageIgnore
+     */
     public function boot(): void
     {
         if (config('app.env') === 'local') {
