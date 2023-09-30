@@ -45,14 +45,12 @@ class MediaTest extends TestCase
         ]);
     }
 
-
     public function testCreatePublic()
     {
         $response = $this->actingAs($this->user)->json('post', '/media', [
-                'file' => $this->file,
-                'is_public' => true,
-            ]
-        );
+            'file' => $this->file,
+            'is_public' => true
+        ]);
 
         $responseData = $response->json();
 
@@ -134,25 +132,21 @@ class MediaTest extends TestCase
         ]);
     }
 
-    public function getSearchFilters()
+    public function getAdminSearchFilters()
     {
         return [
             [
-                'filter' => ['query' => 'main'],
-                'result' => 'get_medias_by_name.json'
-            ],
-            [
                 'filter' => ['query' => 'product'],
-                'result' => 'get_medias_by_query.json'
+                'result' => 'get_by_query_as_admin.json'
             ],
             [
                 'filter' => [
                     'query' => 'photo',
                     'order_by' => 'name',
                     'desc' => false,
-                    'per_page' => 2
+                    'per_page' => 3
                 ],
-                'result' => 'get_medias_complex.json'
+                'result' => 'get_complex_as_admin.json'
             ]
         ];
     }
@@ -161,32 +155,28 @@ class MediaTest extends TestCase
     {
         return [
             [
-                'filter' => ['query' => 'main'],
-                'result' => 'get_by_name.json'
-            ],
-            [
                 'filter' => ['query' => 'product'],
-                'result' => 'get_by_query.json'
+                'result' => 'get_by_query_user.json'
             ],
             [
                 'filter' => [
                     'query' => 'photo',
                     'order_by' => 'name',
                     'desc' => false,
-                    'per_page' => 2
+                    'per_page' => 3
                 ],
-                'result' => 'get_complex.json'
+                'result' => 'get_complex_user.json'
             ]
         ];
     }
 
     /**
-     * @dataProvider  getSearchFilters
+     * @dataProvider  getAdminSearchFilters
      *
      * @param  array $filter
      * @param  string $fixture
      */
-    public function testSearch($filter, $fixture)
+    public function testSearchByAdmin($filter, $fixture)
     {
         $response = $this->actingAs($this->admin)->json('get', '/media', $filter);
 

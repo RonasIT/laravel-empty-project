@@ -2,6 +2,26 @@
     "current_page": 1,
     "data": [
         {
+            "id": 4,
+            "created_at": "2016-10-20T11:05:00.000000Z",
+            "updated_at": "2016-10-20T11:05:00.000000Z",
+            "deleted_at": null,
+            "link": "http:\/\/localhost\/test4.jpg",
+            "name": "Photo",
+            "is_public": true,
+            "owner_id": 2
+        },
+        {
+            "id": 5,
+            "created_at": "2016-10-20T11:05:00.000000Z",
+            "updated_at": "2016-10-20T11:05:00.000000Z",
+            "deleted_at": null,
+            "link": "http:\/\/localhost\/test5.jpg",
+            "name": "Private photo",
+            "is_public": false,
+            "owner_id": 2
+        },
+        {
             "id": 1,
             "created_at": "2016-10-20T11:05:00.000000Z",
             "updated_at": "2016-10-20T11:05:00.000000Z",
@@ -35,8 +55,8 @@
     ],
     "next_page_url": null,
     "path": "http:\/\/localhost\/media",
-    "per_page": 10,
+    "per_page": 3,
     "prev_page_url": null,
-    "to": 1,
-    "total": 1
+    "to": 3,
+    "total": 3
 }
