@@ -21,14 +21,18 @@ class BaseMail extends Mailable implements ShouldQueue
         $this->data = $data;
         $this->subject = $subject;
         $this->view = $view;
+        $this->onQueue('mails');
     }
 
+    /**
+     * @deprecated
+     * @codeCoverageIgnore
+     */
     public function build()
     {
         return $this
-            ->view($this->view)
+            ->view($this->view, $this->data)
             ->subject($this->subject)
-            ->with($this->data)
             ->onQueue('mails');
     }
 
