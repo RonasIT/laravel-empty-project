@@ -32,12 +32,6 @@ class Media extends Model
 
     public function scopeApplyMediaPermissionRestrictions(Builder $query): void
     {
-        if (!Auth::check()) {
-            $query->where('is_public', true);
-
-            return;
-        }
-
         $user = Auth::user();
 
         if (!$user->isAdmin()) {
