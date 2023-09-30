@@ -63,21 +63,13 @@ class UserController extends Controller
         return response('', Response::HTTP_NO_CONTENT);
     }
 
-    public function deleteProfile(DeleteProfileRequest $request, UserService $service, JWTAuth $auth): Response
+    public function deleteProfile(DeleteProfileRequest $request, UserService $service): Response
     {
-        try {
-            $service->delete($request->user()->id);
+        $service->delete($request->user()->id);
 
-            $auth->parseToken();
-            $auth->invalidate(true);
-            $auth->unsetToken();
+        $tokenCookie = $this->makeAuthorizationTokenExpiredCookie();
 
-            $tokenCookie = $this->makeAuthorizationTokenExpiredCookie();
-
-            return response('', Response::HTTP_NO_CONTENT)->withCookie($tokenCookie);
-        } catch (JWTException $e) {
-            throw new UnauthorizedHttpException('jwt-auth', $e->getMessage(), $e, $e->getCode());
-        }
+        return response('', Response::HTTP_NO_CONTENT)->withCookie($tokenCookie);
     }
 
     public function delete(DeleteUserRequest $request, UserService $service, int $id): Response

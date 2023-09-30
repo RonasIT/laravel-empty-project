@@ -96,19 +96,11 @@ class AuthController extends Controller
         }
     }
 
-    public function logout(LogoutRequest $request, JWTAuth $auth): Response
+    public function logout(LogoutRequest $request): Response
     {
-        try {
-            $auth->parseToken();
-            $auth->invalidate(true);
-            $auth->unsetToken();
+        $tokenCookie = $this->makeAuthorizationTokenExpiredCookie();
 
-            $tokenCookie = $this->makeAuthorizationTokenExpiredCookie();
-
-            return response('', Response::HTTP_NO_CONTENT)->withCookie($tokenCookie);
-        } catch (JWTException $e) {
-            throw new UnauthorizedHttpException('jwt-auth', $e->getMessage(), $e, $e->getCode());
-        }
+        return response('', Response::HTTP_NO_CONTENT)->withCookie($tokenCookie);
     }
 
     public function forgotPassword(ForgotPasswordRequest $request, UserService $service): Response

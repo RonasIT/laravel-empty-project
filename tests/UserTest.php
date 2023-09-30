@@ -218,15 +218,29 @@ class UserTest extends TestCase
         $response->assertUnauthorized();
     }
 
+    public function testDeleteProfileAsAdmin()
+    {
+        $response = $this->actingAs($this->admin)->json('delete', '/profile');
+
+        $response->assertForbidden();
+    }
+
     public function testDelete()
     {
-        $response = $this->actingAs($this->admin)->json('delete', '/users/1');
+        $response = $this->actingAs($this->admin)->json('delete', '/users/2');
 
         $response->assertNoContent();
 
         $this->assertDatabaseMissing('users', [
-            'id' => 1
+            'id' => 2
         ]);
+    }
+
+    public function testDeleteOwnUser()
+    {
+        $response = $this->actingAs($this->admin)->json('delete', '/users/1');
+
+        $response->assertForbidden();
     }
 
     public function testDeleteNotExists()
