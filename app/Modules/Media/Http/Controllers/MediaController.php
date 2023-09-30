@@ -11,6 +11,7 @@ use App\Modules\Media\Contracts\Services\MediaServiceContract;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 use Symfony\Component\HttpFoundation\Response;
+
 use function response;
 
 class MediaController extends Controller implements MediaControllerContract

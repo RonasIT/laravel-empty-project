@@ -51,10 +51,9 @@ class MediaTest extends ModuleTestCase
     public function testCreatePublic(): void
     {
         $response = $this->actingAs($this->user)->json('post', '/media', [
-                'file' => $this->file,
-                'is_public' => true,
-            ]
-        );
+            'file' => $this->file,
+            'is_public' => true,
+        ]);
 
         $responseData = $response->json();
 
