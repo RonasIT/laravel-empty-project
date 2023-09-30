@@ -11,11 +11,17 @@ use App\Http\Requests\Users\SearchUserRequest;
 use App\Http\Requests\Users\UpdateProfileRequest;
 use App\Http\Requests\Users\UpdateUserRequest;
 use App\Services\UserService;
+use App\Traits\TokenTrait;
 use Illuminate\Http\JsonResponse;
+use PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException;
+use PHPOpenSourceSaver\JWTAuth\JWTAuth;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class UserController extends Controller
 {
+    use TokenTrait;
+
     public function create(CreateUserRequest $request, UserService $service): JsonResponse
     {
         $data = $request->onlyValidated();
@@ -57,11 +63,21 @@ class UserController extends Controller
         return response('', Response::HTTP_NO_CONTENT);
     }
 
-    public function deleteProfile(DeleteProfileRequest $request, UserService $service): Response
+    public function deleteProfile(DeleteProfileRequest $request, UserService $service, JWTAuth $auth): Response
     {
-        $service->delete($request->user()->id);
+        try {
+            $service->delete($request->user()->id);
 
-        return response('', Response::HTTP_NO_CONTENT);
+            $auth->parseToken();
+            $auth->invalidate(true);
+            $auth->unsetToken();
+
+            $tokenCookie = $this->makeAuthorizationTokenExpiredCookie();
+
+            return response('', Response::HTTP_NO_CONTENT)->withCookie($tokenCookie);
+        } catch (JWTException $e) {
+            throw new UnauthorizedHttpException('jwt-auth', $e->getMessage(), $e, $e->getCode());
+        }
     }
 
     public function delete(DeleteUserRequest $request, UserService $service, int $id): Response

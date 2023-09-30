@@ -191,6 +191,8 @@ class UserTest extends TestCase
 
         $response->assertNoContent();
 
+        $response->assertCookieExpired('token');
+
         $this->assertDatabaseMissing('users', [
             'id' => 2
         ]);
@@ -198,6 +200,15 @@ class UserTest extends TestCase
         $this->assertDatabaseMissing('media', [
             'owner_id' => 2
         ]);
+    }
+
+    public function testDeleteProfileWithoutBlacklist()
+    {
+        config(['jwt.blacklist_enabled' => false]);
+
+        $response = $this->actingAs($this->user)->json('delete', '/profile');
+
+        $response->assertUnauthorized();
     }
 
     public function testDeleteProfileNoAuth()
