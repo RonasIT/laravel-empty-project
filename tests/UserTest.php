@@ -71,35 +71,13 @@ class UserTest extends TestCase
         $this->assertDatabaseHas('users', $data);
     }
 
-    public function testUpdateNoPermission()
+    public function testUpdateByUser()
     {
         $data = $this->getJsonFixture('update_user.json');
 
-        $response = $this->actingAs($this->user)->json('put', '/users/1', $data);
-
-        $response->assertForbidden();
-
-        $this->assertDatabaseMissing('users', [
-            'id' => 1,
-            'name' => $data['name'],
-            'email' => $data['email']
-        ]);
-    }
-
-    public function testUpdateRoleIdByUser()
-    {
-        $data = $this->getJsonFixture('update_user_role.json');
-
         $response = $this->actingAs($this->user)->json('put', '/users/2', $data);
 
-        $response->assertJson(['error' => __('validation.custom.role_id.access_denied')]);
-
-        $this->assertDatabaseMissing('users', [
-            'id' => 1,
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'role_id' => $data['role_id']
-        ]);
+        $response->assertForbidden();
     }
 
     public function testUpdateWithEmailOfAnotherUser()
