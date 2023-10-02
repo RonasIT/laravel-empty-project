@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use Illuminate\Support\Facades\Auth;
 use PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
@@ -11,9 +12,9 @@ trait TokenTrait
     private function makeAuthorizationTokenExpiredCookie(): Cookie
     {
         try {
-            auth()->parseToken();
-            auth()->invalidate(true);
-            auth()->unsetToken();
+            Auth::guard()->parseToken();
+            Auth::guard()->invalidate(true);
+            Auth::guard()->unsetToken();
 
             return $this->makeAuthorizationTokenCookie(null, false, true);
         } catch (JWTException $e) {
