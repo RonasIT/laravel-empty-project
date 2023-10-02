@@ -13,10 +13,7 @@ use App\Http\Requests\Users\UpdateUserRequest;
 use App\Services\UserService;
 use App\Traits\TokenTrait;
 use Illuminate\Http\JsonResponse;
-use PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException;
-use PHPOpenSourceSaver\JWTAuth\JWTAuth;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class UserController extends Controller
 {
