@@ -7,6 +7,9 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
+/**
+ * @codeCoverageIgnore
+ */
 class Init extends Command
 {
     protected $signature = 'init {application-name : The application name }';

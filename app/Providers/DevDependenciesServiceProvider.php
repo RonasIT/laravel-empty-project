@@ -5,11 +5,11 @@ namespace App\Providers;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * @codeCoverageIgnore
+ */
 class DevDependenciesServiceProvider extends ServiceProvider
 {
-    /**
-     * @codeCoverageIgnore
-     */
     public function boot(): void
     {
         if (config('app.env') === 'local') {

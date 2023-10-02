@@ -38,7 +38,7 @@ jobs:
           extensions: pgsql
       - uses: actions/checkout@v3
       - name: Install Dependencies
-        run: composer install -q --no-ansi --no-interaction --no-progress --prefer-dist
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
       - name: Execute unit tests via PHPUnit with coverage
         run: vendor/bin/phpunit --coverage-clover build/logs/clover.xml
         env:

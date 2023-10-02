@@ -132,6 +132,16 @@ class MediaTest extends TestCase
         ]);
     }
 
+    public function getSearchFilters()
+    {
+        return [
+            [
+                'filter' => ['all' => true],
+                'result' => 'get_by_all.json'
+            ],
+        ];
+    }
+
     public function getAdminSearchFilters()
     {
         return [
@@ -156,7 +166,7 @@ class MediaTest extends TestCase
         return [
             [
                 'filter' => ['query' => 'product'],
-                'result' => 'get_by_query_user.json'
+                'result' => 'get_by_query_as_user.json'
             ],
             [
                 'filter' => [
@@ -165,9 +175,24 @@ class MediaTest extends TestCase
                     'desc' => false,
                     'per_page' => 3
                 ],
-                'result' => 'get_complex_user.json'
+                'result' => 'get_complex_as_user.json'
             ]
         ];
+    }
+
+    /**
+     * @dataProvider  getSearchFilters
+     *
+     * @param  array $filter
+     * @param  string $fixture
+     */
+    public function testSearch($filter, $fixture)
+    {
+        $response = $this->json('get', '/media', $filter);
+
+        $response->assertOk();
+
+        $this->assertEqualsFixture($fixture, $response->json());
     }
 
     /**

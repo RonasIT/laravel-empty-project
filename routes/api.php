@@ -31,7 +31,6 @@ Route::group(['middleware' => 'auth_group'], function () {
 
     Route::post('media', [MediaController::class, 'create']);
     Route::delete('media/{id}', [MediaController::class, 'delete']);
-    Route::get('media', [MediaController::class, 'search']);
 
     Route::put('settings/{name}', [SettingController::class, 'update']);
     Route::get('settings/{name}', [SettingController::class, 'get']);
@@ -45,6 +44,8 @@ Route::group(['middleware' => 'guest_group'], function () {
     Route::post('auth/forgot-password', [AuthController::class, 'forgotPassword']);
     Route::post('auth/restore-password', [AuthController::class, 'restorePassword']);
     Route::post('auth/token/check', [AuthController::class, 'checkRestoreToken']);
+
+    Route::get('media', [MediaController::class, 'search']);
 
     Route::get('status', [StatusController::class, 'status']);
 });

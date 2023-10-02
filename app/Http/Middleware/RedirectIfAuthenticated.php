@@ -7,7 +7,6 @@ use Closure;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * @deprecated
  * @codeCoverageIgnore
  */
 class RedirectIfAuthenticated

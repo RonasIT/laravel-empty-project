@@ -2,7 +2,6 @@
 
 namespace App\Traits;
 
-use Illuminate\Http\Response;
 use PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
