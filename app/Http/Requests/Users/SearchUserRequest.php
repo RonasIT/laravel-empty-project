@@ -13,6 +13,8 @@ class SearchUserRequest extends Request
 
     public function rules(): array
     {
+        $availableRelations = implode(',', $this->getAvailableRelations());
+
         return [
             'role_id' => 'integer|nullable',
             'page' => 'integer|nullable',
@@ -22,7 +24,16 @@ class SearchUserRequest extends Request
             'order_by' => 'string|nullable',
             'desc' => 'boolean|nullable',
             'with' => 'array',
-            'with.*' => 'string|required',
+            'with.*' => "required|string|in:{$availableRelations}",
+        ];
+    }
+
+    protected function getAvailableRelations(): array
+    {
+        return [
+            'role',
+            'media',
+            'media.owner',
         ];
     }
 }
