@@ -2,7 +2,7 @@
 
 namespace App\Http;
 
-use Fruitcake\Cors\HandleCors;
+use Illuminate\Http\Middleware\HandleCors;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use RonasIT\Support\AutoDoc\Http\Middleware\AutoDocMiddleware;
 use Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode;
