@@ -2,7 +2,6 @@
 
 namespace App\Modules\Media\Http\Controllers;
 
-use App\Modules\Media\Contracts\Controllers\MediaControllerContract;
 use App\Modules\Media\Contracts\Requests\BulkCreateMediaRequestContract;
 use App\Modules\Media\Contracts\Requests\CreateMediaRequestContract;
 use App\Modules\Media\Contracts\Requests\DeleteMediaRequestContract;
@@ -14,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 use function response;
 
-class MediaController extends Controller implements MediaControllerContract
+class MediaController extends Controller
 {
     public function create(CreateMediaRequestContract $request, MediaServiceContract $mediaService): JsonResponse
     {

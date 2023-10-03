@@ -9,8 +9,8 @@
             "link": "http:\/\/localhost\/test.jpg",
             "name": "Product main photo",
             "is_public": true,
-            "meta": null,
-            "owner_id": 1
+            "owner_id": 1,
+            "meta": null
         }
     ],
     "first_page_url": "http:\/\/localhost\/media?page=1",

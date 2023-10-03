@@ -4,14 +4,13 @@ namespace App\Http\Requests\Users;
 
 use App\Http\Requests\Request;
 use App\Services\UserService;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class UpdateUserRequest extends Request
 {
     public function authorize(): bool
     {
-        return ($this->user()->isAdmin()) || ($this->user()->id === (int) $this->route('id'));
+        return $this->user()->isAdmin();
     }
 
     public function rules(): array
@@ -31,10 +30,6 @@ class UpdateUserRequest extends Request
 
         if (!$service->exists($this->route('id'))) {
             throw new NotFoundHttpException(__('validation.exceptions.not_found', ['entity' => 'User']));
-        }
-
-        if ($this->has('role_id') && ! $this->user()->isAdmin()) {
-            throw new AccessDeniedHttpException(__('validation.custom.role_id.access_denied'));
         }
     }
 }

@@ -71,35 +71,13 @@ class UserTest extends TestCase
         $this->assertDatabaseHas('users', $data);
     }
 
-    public function testUpdateNoPermission()
+    public function testUpdateByUser()
     {
         $data = $this->getJsonFixture('update_user.json');
 
-        $response = $this->actingAs($this->user)->json('put', '/users/1', $data);
-
-        $response->assertForbidden();
-
-        $this->assertDatabaseMissing('users', [
-            'id' => 1,
-            'name' => $data['name'],
-            'email' => $data['email']
-        ]);
-    }
-
-    public function testUpdateRoleIdByUser()
-    {
-        $data = $this->getJsonFixture('update_user_role.json');
-
         $response = $this->actingAs($this->user)->json('put', '/users/2', $data);
 
-        $response->assertJson(['error' => 'You are not able to change user role']);
-
-        $this->assertDatabaseMissing('users', [
-            'id' => 1,
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'role_id' => $data['role_id']
-        ]);
+        $response->assertForbidden();
     }
 
     public function testUpdateWithEmailOfAnotherUser()
@@ -191,6 +169,8 @@ class UserTest extends TestCase
 
         $response->assertNoContent();
 
+        $response->assertCookieExpired('token');
+
         $this->assertDatabaseMissing('users', [
             'id' => 2
         ]);
@@ -200,6 +180,15 @@ class UserTest extends TestCase
         ]);
     }
 
+    public function testDeleteProfileWithoutBlacklist()
+    {
+        config(['jwt.blacklist_enabled' => false]);
+
+        $response = $this->actingAs($this->user)->json('delete', '/profile');
+
+        $response->assertUnauthorized();
+    }
+
     public function testDeleteProfileNoAuth()
     {
         $response = $this->json('delete', '/profile');
@@ -207,15 +196,29 @@ class UserTest extends TestCase
         $response->assertUnauthorized();
     }
 
+    public function testDeleteProfileAsAdmin()
+    {
+        $response = $this->actingAs($this->admin)->json('delete', '/profile');
+
+        $response->assertForbidden();
+    }
+
     public function testDelete()
     {
-        $response = $this->actingAs($this->admin)->json('delete', '/users/1');
+        $response = $this->actingAs($this->admin)->json('delete', '/users/2');
 
         $response->assertNoContent();
 
         $this->assertDatabaseMissing('users', [
-            'id' => 1
+            'id' => 2
         ]);
+    }
+
+    public function testDeleteOwnUser()
+    {
+        $response = $this->actingAs($this->admin)->json('delete', '/users/1');
+
+        $response->assertForbidden();
     }
 
     public function testDeleteNotExists()
@@ -238,7 +241,9 @@ class UserTest extends TestCase
 
     public function testGetProfile()
     {
-        $response = $this->actingAs($this->admin)->json('get', '/profile');
+        $response = $this->actingAs($this->admin)->json('get', '/profile', [
+            'with' => ['role', 'media.owner']
+        ]);
 
         $response->assertOk();
 
@@ -247,7 +252,9 @@ class UserTest extends TestCase
 
     public function testGet()
     {
-        $response = $this->actingAs($this->admin)->json('get', '/users/1');
+        $response = $this->actingAs($this->admin)->json('get', '/users/1', [
+            'with' => ['role', 'media.owner']
+        ]);
 
         $response->assertOk();
 
@@ -290,6 +297,7 @@ class UserTest extends TestCase
             [
                 'filter' => [
                     'query' => 'Admin',
+                    'with' => ['role'],
                     'order_by' => 'created_at',
                     'desc' => false
                 ],

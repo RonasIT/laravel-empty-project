@@ -58,4 +58,9 @@ class MediaService extends EntityService implements MediaServiceContract
 
         return $result;
     }
+
+    public function delete($where): int
+    {
+        return $this->repository->delete($where);
+    }
 }

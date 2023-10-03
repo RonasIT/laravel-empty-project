@@ -47,7 +47,6 @@ class MediaTest extends ModuleTestCase
         ]);
     }
 
-
     public function testCreatePublic(): void
     {
         $response = $this->actingAs($this->user)->json('post', '/media', [
@@ -118,7 +117,7 @@ class MediaTest extends ModuleTestCase
         $responseData = $response->json();
 
         $this->assertDatabaseHas('media', [
-            'id' => 5,
+            'id' => 6,
             'name' => 'file.png',
             'owner_id' => $this->admin->id,
             'meta' => 'test1',
@@ -126,7 +125,7 @@ class MediaTest extends ModuleTestCase
         ]);
 
         $this->assertDatabaseHas('media', [
-            'id' => 6,
+            'id' => 7,
             'name' => 'file.png',
             'owner_id' => $this->admin->id,
             'meta' => 'test2',
@@ -178,21 +177,27 @@ class MediaTest extends ModuleTestCase
     {
         return [
             [
-                'filter' => ['query' => 'main'],
-                'result' => 'get_medias_by_name.json'
+                'filter' => ['all' => true],
+                'result' => 'get_by_all.json'
             ],
+        ];
+    }
+
+    public function getAdminSearchFilters()
+    {
+        return [
             [
                 'filter' => ['query' => 'product'],
-                'result' => 'get_medias_by_query.json'
+                'result' => 'get_by_query_as_admin.json'
             ],
             [
                 'filter' => [
                     'query' => 'photo',
                     'order_by' => 'name',
                     'desc' => false,
-                    'per_page' => 2
+                    'per_page' => 3
                 ],
-                'result' => 'get_medias_complex.json'
+                'result' => 'get_complex_as_admin.json'
             ]
         ];
     }
@@ -201,21 +206,17 @@ class MediaTest extends ModuleTestCase
     {
         return [
             [
-                'filter' => ['query' => 'main'],
-                'result' => 'get_by_name.json'
-            ],
-            [
                 'filter' => ['query' => 'product'],
-                'result' => 'get_by_query.json'
+                'result' => 'get_by_query_as_user.json'
             ],
             [
                 'filter' => [
                     'query' => 'photo',
                     'order_by' => 'name',
                     'desc' => false,
-                    'per_page' => 2
+                    'per_page' => 3
                 ],
-                'result' => 'get_complex.json'
+                'result' => 'get_complex_as_user.json'
             ]
         ];
     }
@@ -227,6 +228,21 @@ class MediaTest extends ModuleTestCase
      * @param string $fixture
      */
     public function testSearch(array $filter, string $fixture): void
+    {
+        $response = $this->json('get', '/media', $filter);
+
+        $response->assertOk();
+
+        $this->assertEqualsFixture($fixture, $response->json());
+    }
+
+    /**
+     * @dataProvider  getAdminSearchFilters
+     *
+     * @param  array $filter
+     * @param  string $fixture
+     */
+    public function testSearchByAdmin($filter, $fixture)
     {
         $response = $this->actingAs($this->admin)->json('get', '/media', $filter);
 

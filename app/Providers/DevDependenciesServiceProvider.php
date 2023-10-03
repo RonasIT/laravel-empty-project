@@ -5,6 +5,9 @@ namespace App\Providers;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * @codeCoverageIgnore
+ */
 class DevDependenciesServiceProvider extends ServiceProvider
 {
     public function boot(): void

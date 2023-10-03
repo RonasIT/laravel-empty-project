@@ -11,11 +11,14 @@ use App\Http\Requests\Users\SearchUserRequest;
 use App\Http\Requests\Users\UpdateProfileRequest;
 use App\Http\Requests\Users\UpdateUserRequest;
 use App\Services\UserService;
+use App\Traits\TokenTrait;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
+    use TokenTrait;
+
     public function create(CreateUserRequest $request, UserService $service): JsonResponse
     {
         $data = $request->onlyValidated();
@@ -27,7 +30,9 @@ class UserController extends Controller
 
     public function get(GetUserRequest $request, UserService $service, int $id): JsonResponse
     {
-        $result = $service->find($id);
+        $result = $service
+            ->with($request->input('with', []))
+            ->find($id);
 
         return response()->json($result);
     }
@@ -41,7 +46,9 @@ class UserController extends Controller
 
     public function profile(GetUserProfileRequest $request, UserService $service): JsonResponse
     {
-        $result = $service->find($request->user()->id);
+        $result = $service
+            ->with($request->input('with', []))
+            ->find($request->user()->id);
 
         return response()->json($result);
     }
@@ -57,7 +64,9 @@ class UserController extends Controller
     {
         $service->delete($request->user()->id);
 
-        return response('', Response::HTTP_NO_CONTENT);
+        $tokenCookie = $this->makeAuthorizationTokenExpiredCookie();
+
+        return response('', Response::HTTP_NO_CONTENT)->withCookie($tokenCookie);
     }
 
     public function delete(DeleteUserRequest $request, UserService $service, int $id): Response

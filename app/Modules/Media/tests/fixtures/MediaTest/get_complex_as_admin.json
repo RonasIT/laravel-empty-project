@@ -1,0 +1,70 @@
+{
+    "current_page": 1,
+    "data": [
+        {
+            "id": 2,
+            "created_at": "2016-10-20T11:05:00.000000Z",
+            "updated_at": "2016-10-20T11:05:00.000000Z",
+            "deleted_at": null,
+            "link": "http:\/\/localhost\/test1.jpg",
+            "name": "Category Photo photo",
+            "is_public": false,
+            "owner_id": 1,
+            "meta": null
+        },
+        {
+            "id": 4,
+            "created_at": "2016-10-20T11:05:00.000000Z",
+            "updated_at": "2016-10-20T11:05:00.000000Z",
+            "deleted_at": null,
+            "link": "http:\/\/localhost\/test4.jpg",
+            "name": "Photo",
+            "is_public": true,
+            "owner_id": 2,
+            "meta": null
+        },
+        {
+            "id": 5,
+            "created_at": "2016-10-20T11:05:00.000000Z",
+            "updated_at": "2016-10-20T11:05:00.000000Z",
+            "deleted_at": null,
+            "link": "http:\/\/localhost\/test5.jpg",
+            "name": "Private photo",
+            "is_public": false,
+            "owner_id": 2,
+            "meta": null
+        }
+    ],
+    "first_page_url": "http:\/\/localhost\/media?page=1",
+    "from": 1,
+    "last_page": 2,
+    "last_page_url": "http:\/\/localhost\/media?page=2",
+    "links": [
+        {
+            "url": null,
+            "label": "&laquo; Previous",
+            "active": false
+        },
+        {
+            "url": "http:\/\/localhost\/media?page=1",
+            "label": "1",
+            "active": true
+        },
+        {
+            "url": "http:\/\/localhost\/media?page=2",
+            "label": "2",
+            "active": false
+        },
+        {
+            "url": "http:\/\/localhost\/media?page=2",
+            "label": "Next &raquo;",
+            "active": false
+        }
+    ],
+    "next_page_url": "http:\/\/localhost\/media?page=2",
+    "path": "http:\/\/localhost\/media",
+    "per_page": 3,
+    "prev_page_url": null,
+    "to": 3,
+    "total": 4
+}

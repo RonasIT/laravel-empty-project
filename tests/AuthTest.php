@@ -5,9 +5,12 @@ namespace App\Tests;
 use App\Mails\ForgotPasswordMail;
 use App\Models\User;
 use App\Tests\Support\AuthTestTrait;
+use Illuminate\Console\Events\ScheduledTaskFinished;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use Illuminate\Testing\Fluent\AssertableJson;
 
 class AuthTest extends TestCase
@@ -85,6 +88,25 @@ class AuthTest extends TestCase
 
         $this->assertArrayHasKey('token', $response->json());
         $response->assertCookie('token');
+    }
+
+    public function testLoginAsAuthorizedUser()
+    {
+        $response = $this->actingAs($this->admin)->json('post', '/login', [
+            'email' => $this->users[0]['email'],
+            'password' => $this->users[0]['password']
+        ]);
+
+        $response->assertOk();
+    }
+
+    public function testRegisterAuthorizedUser()
+    {
+        $data = $this->getJsonFixture('new_user.json');
+
+        $response = $this->actingAs($this->admin)->json('post', '/register', $data);
+
+        $response->assertOk();
     }
 
     public function testRegisterFromGuestUser()
@@ -170,6 +192,17 @@ class AuthTest extends TestCase
         $response->assertCookieNotExpired('token');
     }
 
+    public function testRefreshTokenWithRememberWithoutBlacklist()
+    {
+        config(['jwt.blacklist_enabled' => false]);
+
+        $response = $this->actingAs($this->admin)->json('get', '/auth/refresh', [
+            'remember' => true
+        ]);
+
+        $response->assertUnauthorized();
+    }
+
     public function testRefreshTokenIat()
     {
         $request = $this->actingAs($this->admin);
@@ -196,23 +229,13 @@ class AuthTest extends TestCase
         $response->assertCookieExpired('token');
     }
 
-    public function testClearPasswordHash()
+    public function testLogoutWithoutBlacklist()
     {
-        Artisan::call('clear:set-password-hash');
+        config(['jwt.blacklist_enabled' => false]);
 
-        $usersWithClearedHash = User::whereIn('id', [2, 4, 5])
-            ->get()
-            ->makeVisible('set_password_hash')
-            ->toArray();
+        $response = $this->actingAs($this->admin)->json('post', '/auth/logout');
 
-        $this->assertEqualsFixture('users_without_set_password_hash.json', $usersWithClearedHash);
-
-        $usersWithSetPasswordHash = User::whereIn('id', [1, 3])
-            ->get()
-            ->makeVisible('set_password_hash')
-            ->toArray();
-
-        $this->assertEqualsFixture('users_with_set_password_hash.json', $usersWithSetPasswordHash);
+        $response->assertUnauthorized();
     }
 
     public function testForgotPassword()
@@ -296,5 +319,36 @@ class AuthTest extends TestCase
         ]);
 
         $response->assertUnprocessable();
+    }
+
+    public function testClearPasswordHash()
+    {
+        Artisan::call('clear:set-password-hash');
+
+        $usersWithClearedHash = User::whereIn('id', [2, 4, 5])
+            ->get()
+            ->makeVisible('set_password_hash')
+            ->toArray();
+
+        $this->assertEqualsFixture('users_without_set_password_hash.json', $usersWithClearedHash);
+
+        $usersWithSetPasswordHash = User::whereIn('id', [1, 3])
+            ->get()
+            ->makeVisible('set_password_hash')
+            ->toArray();
+
+        $this->assertEqualsFixture('users_with_set_password_hash.json', $usersWithSetPasswordHash);
+    }
+
+    public function testClearPasswordHashSchedule()
+    {
+        Event::fake();
+
+        $this->travelTo(now()->setHour(1)->setMinute(0));
+        $this->artisan('schedule:run');
+
+        Event::assertDispatched(ScheduledTaskFinished::class, function ($event) {
+            return Str::contains($event->task->command, 'clear:set-password-hash');
+        });
     }
 }

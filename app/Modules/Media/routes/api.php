@@ -1,10 +1,13 @@
 <?php
 
-use App\Modules\Media\Contracts\Controllers\MediaControllerContract;
+use App\Modules\Media\Http\Controllers\MediaController;
 
 Route::group(['middleware' => 'auth_group'], function () {
-    Route::post('/media', [MediaControllerContract::class, 'create']);
-    Route::delete('/media/{id}', [MediaControllerContract::class, 'delete']);
-    Route::get('/media', [MediaControllerContract::class, 'search']);
-    Route::post('/media/bulk', [MediaControllerContract::class, 'bulkCreate']);
+    Route::post('/media', [MediaController::class, 'create']);
+    Route::delete('/media/{id}', [MediaController::class, 'delete']);
+    Route::post('/media/bulk', [MediaController::class, 'bulkCreate']);
+});
+
+Route::group(['middleware' => 'guest_group'], function () {
+    Route::get('/media', [MediaController::class, 'search']);
 });

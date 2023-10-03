@@ -3,6 +3,7 @@
 namespace App\Tests;
 
 use App\Models\User;
+use App\Services\SettingService;
 
 class SettingTest extends TestCase
 {
@@ -177,5 +178,60 @@ class SettingTest extends TestCase
         $response->assertOk();
 
         $this->assertEqualsFixture($fixture, $response->json());
+    }
+
+    public function testSetNotExistsSetting()
+    {
+        $setting = [
+            'name' => 'test.value',
+            'value' => 123
+        ];
+
+        $result = app(SettingService::class)->set($setting['name'], $setting['value']);
+
+        $this->assertEqualsFixture('setting_set_not_exists.json', $result->jsonSerialize());
+
+        $this->assertDatabaseHas('settings', [
+            'name' => $setting['name'],
+            'value' => json_encode($setting['value'])
+        ]);
+    }
+
+    public function testSetExistsSetting()
+    {
+        $setting = [
+            'name' => 'attribute',
+            'value' => 'new value'
+        ];
+
+        $result = app(SettingService::class)->set($setting['name'], $setting['value']);
+
+        $this->assertEqualsFixture('setting_set_exists.json', $result->jsonSerialize());
+
+        $this->assertDatabaseHas('settings', [
+            'name' => $setting['name'],
+            'value' => json_encode($setting['value'])
+        ]);
+    }
+
+    public function testGetExistsSetting()
+    {
+        $result = app(SettingService::class)->get('attribute');
+
+        $this->assertEqualsFixture('setting_get_exists.json', $result);
+    }
+
+    public function testGetExistsJsonSetting()
+    {
+        $result = app(SettingService::class)->get('settings.timezone');
+
+        $this->assertEqualsFixture('setting_get_exists_json.json', $result);
+    }
+
+    public function testGetNotExistsSetting()
+    {
+        $result = app(SettingService::class)->get('not_exists_attribute');
+
+        $this->assertEqualsFixture('setting_get_not_exists.json', $result);
     }
 }

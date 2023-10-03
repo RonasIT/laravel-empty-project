@@ -195,7 +195,6 @@ return [
         Laravel\Tinker\TinkerServiceProvider::class,
         RonasIT\Support\HelpersServiceProvider::class,
         RonasIT\Support\AutoDoc\AutoDocServiceProvider::class,
-        FruitCake\Cors\CorsServiceProvider::class,
         PHPOpenSourceSaver\JWTAuth\Providers\LaravelServiceProvider::class,
 
         /*
