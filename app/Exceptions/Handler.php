@@ -79,9 +79,11 @@ class Handler extends ExceptionHandler
             );
         }
 
+        // @codeCoverageIgnoreStart
         if (app()->runningUnitTests() && ($exception instanceof ExpectationFailedException)) {
             throw $exception;
         }
+        // @codeCoverageIgnoreEnd
 
         return parent::render($request, $exception);
     }
@@ -99,6 +101,8 @@ class Handler extends ExceptionHandler
             return response()->json(['error' => 'Unauthenticated.'], 401);
         }
 
+        // @codeCoverageIgnoreStart
         return redirect()->guest(route('login'));
+        // @codeCoverageIgnoreEnd
     }
 }

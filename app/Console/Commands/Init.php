@@ -7,13 +7,16 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
+/**
+ * @codeCoverageIgnore
+ */
 class Init extends Command
 {
     protected $signature = 'init {application-name : The application name }';
 
     protected $description = 'Initialize required project parameters to run DEV environment';
 
-    public function handle()
+    public function handle(): void
     {
         $appName = $this->argument('application-name');
         $kebabName = Str::kebab($appName);
@@ -43,7 +46,7 @@ class Init extends Command
         }
     }
 
-    protected function createAdminUser($kebabName)
+    protected function createAdminUser($kebabName): void
     {
         $defaultPassword = substr(md5(uniqid()), 0, 8);
 
@@ -60,15 +63,15 @@ class Init extends Command
         return (Str::contains($string, ' ')) ? "\"{$string}\"" : $string;
     }
 
-    protected function publishMigration($admin)
+    protected function publishMigration($admin): void
     {
         $data = view('add_default_user')->with($admin)->render();
         $fileName = Carbon::now()->format('Y_m_d_His') . '_add_default_user.php';
 
-        return file_put_contents("database/migrations/{$fileName}", "<?php\n\n{$data}");
+        file_put_contents("database/migrations/{$fileName}", "<?php\n\n{$data}");
     }
 
-    protected function updateConfigFile($fileName, $separator, $data)
+    protected function updateConfigFile($fileName, $separator, $data): void
     {
         $parsed = file_get_contents($fileName);
 

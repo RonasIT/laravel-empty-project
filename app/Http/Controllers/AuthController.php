@@ -10,15 +10,17 @@ use App\Http\Requests\Auth\RefreshTokenRequest;
 use App\Http\Requests\Auth\RegisterUserRequest;
 use App\Http\Requests\Auth\RestorePasswordRequest;
 use App\Services\UserService;
+use App\Traits\TokenTrait;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
-use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException;
 use PHPOpenSourceSaver\JWTAuth\JWTAuth;
 
 class AuthController extends Controller
 {
+    use TokenTrait;
+
     public function login(LoginRequest $request, UserService $service, JWTAuth $auth): JsonResponse
     {
         $credentials = $request->only('email', 'password');
@@ -94,19 +96,11 @@ class AuthController extends Controller
         }
     }
 
-    public function logout(LogoutRequest $request, JWTAuth $auth): Response
+    public function logout(LogoutRequest $request): Response
     {
-        try {
-            $auth->parseToken();
-            $auth->invalidate(true);
-            $auth->unsetToken();
+        $tokenCookie = $this->makeAuthorizationTokenExpiredCookie();
 
-            $tokenCookie = $this->makeAuthorizationTokenExpiredCookie();
-
-            return response('', Response::HTTP_NO_CONTENT)->withCookie($tokenCookie);
-        } catch (JWTException $e) {
-            throw new UnauthorizedHttpException('jwt-auth', $e->getMessage(), $e, $e->getCode());
-        }
+        return response('', Response::HTTP_NO_CONTENT)->withCookie($tokenCookie);
     }
 
     public function forgotPassword(ForgotPasswordRequest $request, UserService $service): Response
@@ -129,17 +123,5 @@ class AuthController extends Controller
     public function checkRestoreToken(CheckRestoreTokenRequest $request): Response
     {
         return response('', Response::HTTP_NO_CONTENT);
-    }
-
-    private function makeAuthorizationTokenExpiredCookie(): Cookie
-    {
-        return $this->makeAuthorizationTokenCookie(null, false, true);
-    }
-
-    private function makeAuthorizationTokenCookie($token, bool $remember = false, $forget = false): Cookie
-    {
-        $minutes = $forget ? -2628000 : ($remember ? config('jwt.refresh_ttl') : 0);
-
-        return cookie('token', $token, $minutes, null, null, true, true, false, 'None');
     }
 }

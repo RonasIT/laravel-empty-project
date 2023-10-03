@@ -10,7 +10,7 @@ class DeleteUserRequest extends Request
 {
     public function authorize(): bool
     {
-        return $this->user()->isAdmin();
+        return $this->user()->isAdmin() && ($this->user()->id !== (int) $this->route('id'));
     }
 
     public function validateResolved(): void
