@@ -4,7 +4,7 @@ namespace App\Modules\Media\Http\Requests;
 
 use App\Http\Requests\Request;
 use App\Modules\Media\Contracts\Requests\DeleteMediaRequestContract;
-use App\Modules\Media\Services\MediaService;
+use App\Modules\Media\Contracts\Services\MediaServiceContract;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DeleteMediaRequest extends Request implements DeleteMediaRequestContract
@@ -18,7 +18,7 @@ class DeleteMediaRequest extends Request implements DeleteMediaRequestContract
     {
         parent::validateResolved();
 
-        $service = app(MediaService::class);
+        $service = app(MediaServiceContract::class);
 
         if (!$service->exists($this->route('id'))) {
             throw new NotFoundHttpException(__('validation.exceptions.not_found', ['entity' => 'Media']));

@@ -48,15 +48,13 @@ class MediaService extends EntityService implements MediaServiceContract
     {
         $result = [];
 
-        foreach ($data as $media) {
+        return array_map(function ($media) {
             /** @var UploadedFile $file */
             $file = $media['file'];
             $content = file_get_contents($file->getPathname());
 
-            $result[] = $this->create($content, $file->getClientOriginalName(), $media);
-        }
-
-        return $result;
+            return $this->create($content, $file->getClientOriginalName(), $media);
+        }, $data);
     }
 
     public function delete($where): int

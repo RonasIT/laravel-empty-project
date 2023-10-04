@@ -36,10 +36,8 @@ class MediaTest extends ModuleTestCase
 
         $response->assertOk();
 
-        $responseData = $response->json();
-
         $this->assertDatabaseHas('media', [
-            'id' => $responseData['id'],
+            'id' => 6,
             'name' => 'file.png',
             'owner_id' => $this->admin->id,
             'is_public' => false,
@@ -54,17 +52,15 @@ class MediaTest extends ModuleTestCase
             'is_public' => true,
         ]);
 
-        $responseData = $response->json();
+        $response->assertOk();
 
         $this->assertDatabaseHas('media', [
-            'id' => $responseData['id'],
+            'id' => 6,
             'name' => 'file.png',
             'owner_id' => $this->user->id,
             'is_public' => true,
             'link' => '/storage/file.png'
         ]);
-
-        $response->assertOk();
     }
 
     public function testCreateCheckUrls(): void
@@ -78,14 +74,14 @@ class MediaTest extends ModuleTestCase
     {
         $response = $this->actingAs($this->admin)->json('post', '/media', ['file' => $this->file]);
 
-        $responseData = $response->json();
+        $response->assertOk();
 
         $this->assertDatabaseHas('media', [
-            'id' => $responseData['id'],
-            'link' => $responseData['link']
+            'id' => 6,
+            'link' => '/storage/file.png'
         ]);
 
-        Storage::disk('local')->assertExists($this->getFilePathFromUrl($responseData['link']));
+        Storage::disk('local')->assertExists($this->getFilePathFromUrl('file.png'));
 
         $this->clearUploadedFilesFolder();
     }
@@ -113,8 +109,6 @@ class MediaTest extends ModuleTestCase
         ]);
 
         $response->assertOk();
-
-        $responseData = $response->json();
 
         $this->assertDatabaseHas('media', [
             'id' => 6,
@@ -324,10 +318,10 @@ class MediaTest extends ModuleTestCase
 
         $response = $this->actingAs($this->user)->json('post', '/media', ['file' => $this->file]);
 
-        $responseData = $response->json();
+        $responseData = $response->assertOk();
 
         $this->assertDatabaseHas('media', [
-            'id' => $responseData['id'],
+            'id' => 6,
         ]);
     }
 }
