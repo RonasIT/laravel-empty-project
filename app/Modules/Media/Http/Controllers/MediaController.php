@@ -6,8 +6,13 @@ use App\Modules\Media\Contracts\Requests\BulkCreateMediaRequestContract;
 use App\Modules\Media\Contracts\Requests\CreateMediaRequestContract;
 use App\Modules\Media\Contracts\Requests\DeleteMediaRequestContract;
 use App\Modules\Media\Contracts\Requests\SearchMediaRequestContract;
+use App\Modules\Media\Contracts\Resources\MediaCollectionResourceContract;
+use App\Modules\Media\Contracts\Resources\MediaListResourceContract;
+use App\Modules\Media\Contracts\Resources\MediaResourceContract;
 use App\Modules\Media\Contracts\Services\MediaServiceContract;
-use Illuminate\Http\JsonResponse;
+use App\Modules\Media\Http\Resources\MediaCollection;
+use App\Modules\Media\Http\Resources\MediaListResource;
+use App\Modules\Media\Http\Resources\MediaResource;
 use Illuminate\Routing\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -15,8 +20,10 @@ use function response;
 
 class MediaController extends Controller
 {
-    public function create(CreateMediaRequestContract $request, MediaServiceContract $mediaService): JsonResponse
-    {
+    public function create(
+        CreateMediaRequestContract $request,
+        MediaServiceContract $mediaService
+    ): MediaResourceContract {
         $file = $request->file('file');
         $data = $request->onlyValidated();
 
@@ -24,7 +31,7 @@ class MediaController extends Controller
 
         $media = $mediaService->create($content, $file->getClientOriginalName(), $data);
 
-        return response()->json($media);
+        return new MediaResource($media);
     }
 
     public function delete(DeleteMediaRequestContract $request, MediaServiceContract $mediaService, int $id): Response
@@ -34,17 +41,21 @@ class MediaController extends Controller
         return response('', Response::HTTP_NO_CONTENT);
     }
 
-    public function search(SearchMediaRequestContract $request, MediaServiceContract $mediaService): JsonResponse
-    {
+    public function search(
+        SearchMediaRequestContract $request,
+        MediaServiceContract $mediaService
+    ): MediaCollectionResourceContract {
         $result = $mediaService->search($request->onlyValidated());
 
-        return response()->json($result);
+        return MediaCollection::make($result);
     }
 
-    public function bulkCreate(BulkCreateMediaRequestContract $request, MediaServiceContract $mediaService): JsonResponse
-    {
+    public function bulkCreate(
+        BulkCreateMediaRequestContract $request,
+        MediaServiceContract $mediaService
+    ): MediaListResourceContract {
         $result = $mediaService->bulkCreate($request->onlyValidated('media'));
 
-        return response()->json($result);
+        return MediaListResource::make($result);
     }
 }

@@ -34,7 +34,7 @@ class MediaTest extends ModuleTestCase
     {
         $response = $this->actingAs($this->admin)->json('post', '/media', ['file' => $this->file]);
 
-        $response->assertOk();
+        $response->assertCreated();
 
         $this->assertDatabaseHas('media', [
             'id' => 6,
@@ -52,7 +52,7 @@ class MediaTest extends ModuleTestCase
             'is_public' => true,
         ]);
 
-        $response->assertOk();
+        $response->assertCreated();
 
         $this->assertDatabaseHas('media', [
             'id' => 6,
@@ -74,7 +74,7 @@ class MediaTest extends ModuleTestCase
     {
         $response = $this->actingAs($this->admin)->json('post', '/media', ['file' => $this->file]);
 
-        $response->assertOk();
+        $response->assertCreated();
 
         $this->assertDatabaseHas('media', [
             'id' => 6,
@@ -318,10 +318,8 @@ class MediaTest extends ModuleTestCase
 
         $response = $this->actingAs($this->user)->json('post', '/media', ['file' => $this->file]);
 
-        $responseData = $response->assertOk();
+        $response->assertCreated();
 
-        $this->assertDatabaseHas('media', [
-            'id' => 6,
-        ]);
+        $this->assertDatabaseHas('media', ['id' => 6]);
     }
 }
