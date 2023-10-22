@@ -6,7 +6,7 @@ use App\Modules\Media\Contracts\Requests\BulkCreateMediaRequestContract;
 use App\Modules\Media\Contracts\Requests\CreateMediaRequestContract;
 use App\Modules\Media\Contracts\Requests\DeleteMediaRequestContract;
 use App\Modules\Media\Contracts\Requests\SearchMediaRequestContract;
-use App\Modules\Media\Contracts\Resources\MediaCollectionResourceContract;
+use App\Modules\Media\Contracts\Resources\MediaCollectionContract;
 use App\Modules\Media\Contracts\Resources\MediaListResourceContract;
 use App\Modules\Media\Contracts\Resources\MediaResourceContract;
 use App\Modules\Media\Contracts\Services\MediaServiceContract;
@@ -44,7 +44,7 @@ class MediaController extends Controller
     public function search(
         SearchMediaRequestContract $request,
         MediaServiceContract $mediaService
-    ): MediaCollectionResourceContract {
+    ): MediaCollectionContract {
         $result = $mediaService->search($request->onlyValidated());
 
         return MediaCollection::make($result);
