@@ -11,7 +11,6 @@ use App\Modules\Media\Contracts\Resources\MediaListResourceContract;
 use App\Modules\Media\Contracts\Resources\MediaResourceContract;
 use App\Modules\Media\Contracts\Services\MediaServiceContract;
 use App\Modules\Media\Http\Resources\MediaCollection;
-use App\Modules\Media\Http\Resources\MediaListResource;
 use App\Modules\Media\Http\Resources\MediaResource;
 use Illuminate\Routing\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -56,6 +55,6 @@ class MediaController extends Controller
     ): MediaListResourceContract {
         $result = $mediaService->bulkCreate($request->onlyValidated('media'));
 
-        return MediaListResource::make($result);
+        return MediaCollection::make($result);
     }
 }
