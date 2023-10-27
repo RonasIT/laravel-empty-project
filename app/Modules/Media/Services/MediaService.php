@@ -28,7 +28,6 @@ class MediaService extends EntityService implements MediaServiceContract
     public function search(array $filters): LengthAwarePaginator
     {
         return $this
-            ->repository
             ->searchQuery($filters)
             ->filterByQuery(['name'])
             ->getSearchResults();

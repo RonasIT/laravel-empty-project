@@ -15,7 +15,7 @@ class BulkCreateMediaRequest extends BaseRequest implements BulkCreateMediaReque
             'media' => 'required|array',
             'media.*' => 'array',
             'media.*.file' => "file|required|max:5120|mimes:{$types}",
-            'media.*.meta' => 'string',
+            'media.*.meta' => 'array',
             'media.*.is_public' => 'boolean',
         ];
     }

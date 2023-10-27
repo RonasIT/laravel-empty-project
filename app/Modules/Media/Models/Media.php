@@ -27,7 +27,8 @@ class Media extends Model
 
     protected $casts = [
         'is_public' => 'boolean',
-        'deleted_at' => 'date'
+        'deleted_at' => 'date',
+        'meta' => 'array',
     ];
 
     protected $hidden = ['pivot'];

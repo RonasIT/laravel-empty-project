@@ -98,11 +98,11 @@ class MediaTest extends ModuleTestCase
             'media' => [
                 [
                     'file' => $this->file,
-                    'meta' => 'test1'
+                    'meta' => ['test1']
                 ],
                 [
                     'file' => $this->file,
-                    'meta' => 'test2'
+                    'meta' => ['test2']
                 ]
             ]
         ]);
@@ -113,7 +113,7 @@ class MediaTest extends ModuleTestCase
             'id' => 6,
             'name' => 'file.png',
             'owner_id' => $this->admin->id,
-            'meta' => 'test1',
+            'meta' => "[\"test1\"]",
             'is_public' => false
         ]);
 
@@ -121,7 +121,7 @@ class MediaTest extends ModuleTestCase
             'id' => 7,
             'name' => 'file.png',
             'owner_id' => $this->admin->id,
-            'meta' => 'test2',
+            'meta' => "[\"test2\"]",
             'is_public' => false
         ]);
     }

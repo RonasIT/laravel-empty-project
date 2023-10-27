@@ -16,7 +16,13 @@ class CreateMediaTable extends Migration
             $table->string('name')->nullable();
             $table->boolean('is_public')->default(false);
             $table->integer('owner_id')->nullable();
-            $table->string('meta')->nullable();
+
+            if (config('database.default') == 'mysql') {
+                $table->jsonb('meta')->nullable();
+            } else {
+                $table->jsonb('meta')->default('{}');
+            }
+
             $table
                 ->foreign('owner_id')
                 ->references('id')
