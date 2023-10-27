@@ -4,19 +4,19 @@
             "id": 4,
             "link": "http:\/\/localhost\/test4.jpg",
             "name": "Photo",
-            "meta": null
+            "meta": []
         },
         {
             "id": 5,
             "link": "http:\/\/localhost\/test5.jpg",
             "name": "Private photo",
-            "meta": null
+            "meta": []
         },
         {
             "id": 1,
             "link": "http:\/\/localhost\/test.jpg",
             "name": "Product main photo",
-            "meta": null
+            "meta": []
         }
     ],
     "links": {

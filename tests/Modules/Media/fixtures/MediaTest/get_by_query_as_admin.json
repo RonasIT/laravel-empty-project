@@ -6,7 +6,7 @@
             "name": "Product main photo",
             "is_public": true,
             "owner_id": 1,
-            "meta": null
+            "meta": []
         }
     ],
     "links": {

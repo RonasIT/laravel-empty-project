@@ -4,7 +4,7 @@
             "id": 1,
             "link": "http:\/\/localhost\/test.jpg",
             "name": "Product main photo",
-            "meta": null
+            "meta": []
         }
     ],
     "links": {

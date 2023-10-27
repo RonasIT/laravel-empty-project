@@ -4,13 +4,13 @@
             "id": 1,
             "link": "http:\/\/localhost\/test.jpg",
             "name": "Product main photo",
-            "meta": null
+            "meta": []
         },
         {
             "id": 4,
             "link": "http:\/\/localhost\/test4.jpg",
             "name": "Photo",
-            "meta": null
+            "meta": []
         }
     ],
     "links": {

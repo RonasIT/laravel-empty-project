@@ -6,7 +6,7 @@
             "name": "Category Photo photo",
             "is_public": false,
             "owner_id": 1,
-            "meta": null
+            "meta": []
         },
         {
             "id": 4,
@@ -14,7 +14,7 @@
             "name": "Photo",
             "is_public": true,
             "owner_id": 2,
-            "meta": null
+            "meta": []
         },
         {
             "id": 5,
@@ -22,7 +22,7 @@
             "name": "Private photo",
             "is_public": false,
             "owner_id": 2,
-            "meta": null
+            "meta": []
         }
     ],
     "links": {
