@@ -22,7 +22,7 @@
             "name": "Product main photo",
             "is_public": true,
             "owner_id": 1,
-            "meta": null,
+            "meta": [],
             "owner": {
                 "id": 1,
                 "name": "Mr Admin",
@@ -42,7 +42,7 @@
             "name": "Category Photo photo",
             "is_public": false,
             "owner_id": 1,
-            "meta": null,
+            "meta": [],
             "owner": {
                 "id": 1,
                 "name": "Mr Admin",
