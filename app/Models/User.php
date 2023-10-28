@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Modules\Media\Models\Media;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;

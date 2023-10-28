@@ -1,0 +1,54 @@
+{
+    "data": [
+        {
+            "id": 4,
+            "link": "http:\/\/localhost\/test4.jpg",
+            "name": "Photo",
+            "meta": []
+        },
+        {
+            "id": 5,
+            "link": "http:\/\/localhost\/test5.jpg",
+            "name": "Private photo",
+            "meta": []
+        },
+        {
+            "id": 1,
+            "link": "http:\/\/localhost\/test.jpg",
+            "name": "Product main photo",
+            "meta": []
+        }
+    ],
+    "links": {
+        "first": "http:\/\/localhost\/media?page=1",
+        "last": "http:\/\/localhost\/media?page=1",
+        "prev": null,
+        "next": null
+    },
+    "meta": {
+        "current_page": 1,
+        "from": 1,
+        "last_page": 1,
+        "links": [
+            {
+                "url": null,
+                "label": "&laquo; Previous",
+                "active": false
+            },
+            {
+                "url": "http:\/\/localhost\/media?page=1",
+                "label": "1",
+                "active": true
+            },
+            {
+                "url": null,
+                "label": "Next &raquo;",
+                "active": false
+            }
+        ],
+        "path": "http:\/\/localhost\/media",
+        "per_page": 3,
+        "to": 3,
+        "total": 3
+    }
+}

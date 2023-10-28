@@ -33,13 +33,6 @@ $factory->define(App\Models\Role::class, function () {
         'name' => 'user'
     ];
 });
-
-$factory->define(App\Models\Media::class, function (Faker\Generator $faker) {
-    return [
-        'link' => $faker->word,
-        'name' => $faker->word
-    ];
-});
 $factory->define(App\Models\Setting::class, function (Faker\Generator $faker) {
     return [
         'key' => $faker->word,
