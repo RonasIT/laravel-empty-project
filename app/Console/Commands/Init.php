@@ -7,9 +7,6 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
-/**
- * @codeCoverageIgnore
- */
 class Init extends Command
 {
     protected $signature = 'init {application-name : The application name }';
@@ -44,6 +41,30 @@ class Init extends Command
         if ($this->confirm('Do you want generate admin user?', true)) {
             $this->createAdminUser($kebabName);
         }
+
+        if ($this->confirm('Do you want to generate a README file?', true)) {
+            $this->fillReadme();
+
+            if ($this->confirm('Do you need `Resources & Contacts` part?', true)) {
+                $this->fillResourcesAndContacts();
+            }
+
+            if ($this->confirm('Do you need `Prerequisites` part?', true)) {
+                $this->fillPrerequisites();
+            }
+
+            if ($this->confirm('Do you need `Getting Started` part?', true)) {
+                $this->fillGettingStarted();
+            }
+
+            if ($this->confirm('Do you need `Environments` part?', true)) {
+                $this->fillEnvironments();
+            }
+
+            if ($this->confirm('Do you need `Credentials and Access` part?', true)) {
+                $this->fillCredentialsAndAccess();
+            }
+        }
     }
 
     protected function createAdminUser($kebabName): void
@@ -56,6 +77,53 @@ class Init extends Command
             'password' => $this->ask('Please enter admin password', $defaultPassword),
             'role_id' => Role::ADMIN
         ]);
+    }
+
+    protected function fillReadme(): void
+    {
+        $appName = $this->argument('application-name');
+        $file = file_get_contents('.github/README_TEMPLATES/README.md');
+
+        $file = str_replace($file, ':project_name', $appName);
+
+        file_put_contents('README.md', $file);
+    }
+
+    protected function fillResourcesAndContacts(): void
+    {
+        $filePart = file_get_contents('.github/README_TEMPLATES/RESOURCES_AND_CONTACTS.md');
+
+        $this->updateReadmeFile($filePart);
+    }
+
+    protected function fillPrerequisites(): void
+    {
+        $filePart = file_get_contents('.github/README_TEMPLATES/PREREQUISITES.md');
+
+        $this->updateReadmeFile($filePart);
+    }
+
+    protected function fillGettingStarted(): void
+    {
+        $gitProjectPath = trim((string) shell_exec('git ls-remote --get-url origin'));
+        $filePart = file_get_contents('.github/README_TEMPLATES/GETTING_STARTED.md');
+        $filePart = str_replace($filePart, ':git_project_path', $gitProjectPath);
+
+        $this->updateReadmeFile($filePart);
+    }
+
+    protected function fillEnvironments(): void
+    {
+        $filePart = file_get_contents('.github/README_TEMPLATES/ENVIRONMENTS.md');
+
+        $this->updateReadmeFile($filePart);
+    }
+
+    protected function fillCredentialsAndAccess(): void
+    {
+        $filePart = file_get_contents('.github/README_TEMPLATES/CREDENTIALS_AND_ACCESS.md');
+
+        $this->updateReadmeFile($filePart);
     }
 
     protected function addQuotes($string): string
@@ -91,5 +159,12 @@ class Init extends Command
         $ymlSettings = implode("\n", $lines);
 
         file_put_contents($fileName, $ymlSettings);
+    }
+
+    protected function updateReadmeFile(string $filePart): void
+    {
+        $file = file_get_contents('README.md');
+
+        file_put_contents('README.md', $file . $filePart);
     }
 }
