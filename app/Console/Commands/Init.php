@@ -18,6 +18,8 @@ class Init extends Command
         $appName = $this->argument('application-name');
         $kebabName = Str::kebab($appName);
 
+        $appUrl = $this->ask('Please enter an application URL', 'http://localhost');
+
         $this->updateConfigFile('.env.testing', '=', [
             'DATA_COLLECTOR_KEY' => "{$kebabName}-local"
         ]);
@@ -29,7 +31,8 @@ class Init extends Command
 
         $this->updateConfigFile('.env.development', '=', [
             'APP_NAME' => $appName,
-            'DATA_COLLECTOR_KEY' => "{$kebabName}"
+            'DATA_COLLECTOR_KEY' => "{$kebabName}",
+            'APP_URL' => "{$appUrl}",
         ]);
 
         $this->updateConfigFile('.env.ci-testing', '=', [
@@ -46,7 +49,8 @@ class Init extends Command
             $this->fillReadme();
 
             if ($this->confirm('Do you need `Resources & Contacts` part?', true)) {
-                $this->fillResourcesAndContacts();
+                $this->fillResources($appUrl);
+                $this->fillContacts();
             }
 
             if ($this->confirm('Do you need `Prerequisites` part?', true)) {
@@ -83,15 +87,59 @@ class Init extends Command
     {
         $appName = $this->argument('application-name');
         $file = file_get_contents('.github/README_TEMPLATES/README.md');
-
         $file = str_replace($file, ':project_name', $appName);
 
         file_put_contents('README.md', $file);
     }
 
-    protected function fillResourcesAndContacts(): void
+    protected function fillResources(string $appUrl): void
     {
-        $filePart = file_get_contents('.github/README_TEMPLATES/RESOURCES_AND_CONTACTS.md');
+        $resources = [
+            'issue_tracker' => 'Issue Tracker',
+            'figma' => 'Figma',
+            'sentry' => 'Sentry',
+            'datadog' => 'DataDog',
+            'argocd' => 'ArgoCD',
+            'telescope' => 'Laravel Telescope',
+        ];
+
+        $filePart = file_get_contents('.github/README_TEMPLATES/RESOURCES.md');
+
+        foreach ($resources as $key => $title) {
+            if ($this->confirm("Are you going to use {$title}?", true)) {
+                $defaultLink = ($key === 'telescope') ? $appUrl . '/telescope' : '';
+
+                if ($link = $this->ask("Please enter a {$title} link", $defaultLink)) {
+                    $filePart = str_replace($filePart, ":{$key}_link", $link);
+                }
+
+                $this->removeTag($filePart, $key);
+            } else {
+                $this->removeStringByTag($filePart, $key);
+            }
+        }
+
+        $filePart = str_replace($filePart, ":api_link", $appUrl);
+
+        $this->updateReadmeFile($filePart);
+    }
+
+    protected function fillContacts(): void
+    {
+        $contacts = [
+            'manager' => 'Manager',
+            'team_lead' => 'Code Owner/Team Lead',
+        ];
+
+        $filePart = file_get_contents('.github/README_TEMPLATES/CONTACTS.md');
+
+        foreach ($contacts as $key => $title) {
+            if ($link = $this->ask("Please enter a {$title} contact", '')) {
+                $filePart = str_replace($filePart, ":{$key}_link", $link);
+            }
+
+            $this->removeTag($filePart, $key);
+        }
 
         $this->updateReadmeFile($filePart);
     }
@@ -166,5 +214,15 @@ class Init extends Command
         $file = file_get_contents('README.md');
 
         file_put_contents('README.md', $file . $filePart);
+    }
+
+    protected function removeStringByTag(string &$text, string $tag): void
+    {
+        $text = preg_replace("#({{$tag}.*?}).*?({/{$tag}})#", '', $text);
+    }
+
+    protected function removeTag(string &$text, string $tag): void
+    {
+        $text = preg_replace("#{(/*){$tag}}#", '', $text);
     }
 }
