@@ -9,16 +9,22 @@ use Illuminate\Support\Str;
 
 class Init extends Command
 {
+    const TEMPLATES_PATH = '.templates';
+
     protected $signature = 'init {application-name : The application name }';
 
     protected $description = 'Initialize required project parameters to run DEV environment';
+
+    protected array $adminCredentials = [];
+
+    protected string $appUrl;
 
     public function handle(): void
     {
         $appName = $this->argument('application-name');
         $kebabName = Str::kebab($appName);
 
-        $appUrl = $this->ask('Please enter an application URL', 'http://localhost');
+        $this->appUrl = $this->ask('Please enter an application URL', 'http://localhost');
 
         $this->updateConfigFile('.env.testing', '=', [
             'DATA_COLLECTOR_KEY' => "{$kebabName}-local"
@@ -32,7 +38,7 @@ class Init extends Command
         $this->updateConfigFile('.env.development', '=', [
             'APP_NAME' => $appName,
             'DATA_COLLECTOR_KEY' => "{$kebabName}",
-            'APP_URL' => "{$appUrl}",
+            'APP_URL' => "{$this->appUrl}",
         ]);
 
         $this->updateConfigFile('.env.ci-testing', '=', [
@@ -49,7 +55,7 @@ class Init extends Command
             $this->fillReadme();
 
             if ($this->confirm('Do you need `Resources & Contacts` part?', true)) {
-                $this->fillResources($appUrl);
+                $this->fillResources();
                 $this->fillContacts();
             }
 
@@ -75,24 +81,27 @@ class Init extends Command
     {
         $defaultPassword = substr(md5(uniqid()), 0, 8);
 
-        $this->publishMigration([
+        $this->adminCredentials = [
             'name' => $this->ask('Please enter admin name', 'Admin'),
             'email' => $this->ask('Please enter admin email', "admin@{$kebabName}.com"),
             'password' => $this->ask('Please enter admin password', $defaultPassword),
             'role_id' => Role::ADMIN
-        ]);
+        ];
+
+        $this->publishMigration();
     }
 
     protected function fillReadme(): void
     {
         $appName = $this->argument('application-name');
-        $file = file_get_contents('.github/README_TEMPLATES/README.md');
-        $file = str_replace($file, ':project_name', $appName);
+        $file = $this->loadReadmePart('README.md');
+
+        $this->setReadmeValue($file, 'project_name', $appName);
 
         file_put_contents('README.md', $file);
     }
 
-    protected function fillResources(string $appUrl): void
+    protected function fillResources(): void
     {
         $resources = [
             'issue_tracker' => 'Issue Tracker',
@@ -103,14 +112,14 @@ class Init extends Command
             'telescope' => 'Laravel Telescope',
         ];
 
-        $filePart = file_get_contents('.github/README_TEMPLATES/RESOURCES.md');
+        $filePart = $this->loadReadmePart('RESOURCES.md');
 
         foreach ($resources as $key => $title) {
             if ($this->confirm("Are you going to use {$title}?", true)) {
-                $defaultLink = ($key === 'telescope') ? $appUrl . '/telescope' : '';
+                $defaultLink = ($key === 'telescope') ? $this->appUrl . '/telescope' : '';
 
                 if ($link = $this->ask("Please enter a {$title} link", $defaultLink)) {
-                    $filePart = str_replace($filePart, ":{$key}_link", $link);
+                    $this->setReadmeValue($filePart, "{$key}_link", $link);
                 }
 
                 $this->removeTag($filePart, $key);
@@ -119,8 +128,7 @@ class Init extends Command
             }
         }
 
-        $filePart = str_replace($filePart, ":api_link", $appUrl);
-
+        $this->setReadmeValue($filePart, 'api_link', $this->appUrl);
         $this->updateReadmeFile($filePart);
     }
 
@@ -131,11 +139,11 @@ class Init extends Command
             'team_lead' => 'Code Owner/Team Lead',
         ];
 
-        $filePart = file_get_contents('.github/README_TEMPLATES/CONTACTS.md');
+        $filePart = $this->loadReadmePart('CONTACTS.md');
 
         foreach ($contacts as $key => $title) {
             if ($link = $this->ask("Please enter a {$title} contact", '')) {
-                $filePart = str_replace($filePart, ":{$key}_link", $link);
+                $this->setReadmeValue($filePart, "{$key}_link", $link);
             }
 
             $this->removeTag($filePart, $key);
@@ -146,7 +154,7 @@ class Init extends Command
 
     protected function fillPrerequisites(): void
     {
-        $filePart = file_get_contents('.github/README_TEMPLATES/PREREQUISITES.md');
+        $filePart = $this->loadReadmePart('PREREQUISITES.md');
 
         $this->updateReadmeFile($filePart);
     }
@@ -154,22 +162,31 @@ class Init extends Command
     protected function fillGettingStarted(): void
     {
         $gitProjectPath = trim((string) shell_exec('git ls-remote --get-url origin'));
-        $filePart = file_get_contents('.github/README_TEMPLATES/GETTING_STARTED.md');
-        $filePart = str_replace($filePart, ':git_project_path', $gitProjectPath);
+        $filePart = $this->loadReadmePart('GETTING_STARTED.md');
 
+        $this->setReadmeValue($filePart, 'git_project_path', $gitProjectPath);
         $this->updateReadmeFile($filePart);
     }
 
     protected function fillEnvironments(): void
     {
-        $filePart = file_get_contents('.github/README_TEMPLATES/ENVIRONMENTS.md');
+        $filePart = $this->loadReadmePart('ENVIRONMENTS.md');
 
+        $this->setReadmeValue($filePart, 'api_link', $this->appUrl);
         $this->updateReadmeFile($filePart);
     }
 
     protected function fillCredentialsAndAccess(): void
     {
-        $filePart = file_get_contents('.github/README_TEMPLATES/CREDENTIALS_AND_ACCESS.md');
+        $filePart = $this->loadReadmePart('CREDENTIALS_AND_ACCESS.md');
+
+        if ($this->adminCredentials) {
+            $this->setReadmeValue($filePart, 'admin_email', $this->adminCredentials['email']);
+            $this->setReadmeValue($filePart, 'admin_password', $this->adminCredentials['password']);
+            $this->removeTag($filePart, 'admin_credentials');
+        } else {
+            $this->removeStringByTag($filePart, 'admin_credentials');
+        }
 
         $this->updateReadmeFile($filePart);
     }
@@ -179,9 +196,9 @@ class Init extends Command
         return (Str::contains($string, ' ')) ? "\"{$string}\"" : $string;
     }
 
-    protected function publishMigration($admin): void
+    protected function publishMigration(): void
     {
-        $data = view('add_default_user')->with($admin)->render();
+        $data = view('add_default_user')->with($this->adminCredentials)->render();
         $fileName = Carbon::now()->format('Y_m_d_His') . '_add_default_user.php';
 
         file_put_contents("database/migrations/{$fileName}", "<?php\n\n{$data}");
@@ -209,6 +226,11 @@ class Init extends Command
         file_put_contents($fileName, $ymlSettings);
     }
 
+    protected function loadReadmePart(string $fileName): string
+    {
+        return file_get_contents(self::TEMPLATES_PATH . '/' . $fileName);
+    }
+
     protected function updateReadmeFile(string $filePart): void
     {
         $file = file_get_contents('README.md');
@@ -224,5 +246,10 @@ class Init extends Command
     protected function removeTag(string &$text, string $tag): void
     {
         $text = preg_replace("#{(/*){$tag}}#", '', $text);
+    }
+
+    protected function setReadmeValue(string &$file, string $key, string $value): void
+    {
+        $file = str_replace($file, ":{$key}", $value);
     }
 }
