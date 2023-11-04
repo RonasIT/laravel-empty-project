@@ -8,4 +8,3 @@ Below are links to tools and services used in this project:
 {argocd}- ArgoCD: Is a kubernetes controller which continuously monitors running applications. [ArgoCD](:argocd_link){/argocd}
 {telescope}- Laravel Telescope: This is debug assistant for the Laravel framework. [Laravel Telescope](:telescope_link){/telescope}
 - [API Documentation](:api_link)
-

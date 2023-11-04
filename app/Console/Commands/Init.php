@@ -21,6 +21,8 @@ class Init extends Command
 
     protected array $emptyValuesList = [];
 
+    protected string $readmeContent = '';
+
     public function handle(): void
     {
         $appName = $this->argument('application-name');
@@ -49,7 +51,7 @@ class Init extends Command
 
         $this->info('Project initialized successfully!');
 
-        if ($this->confirm('Do you want to generate admin user?', true)) {
+        if ($this->confirm('Do you want to generate an admin user?', true)) {
             $this->createAdminUser($kebabName);
         }
 
@@ -78,6 +80,8 @@ class Init extends Command
                 $this->fillCredentialsAndAccess();
             }
 
+            $this->saveReadme();
+
             $this->info('README generated successfully!');
 
             if ($this->emptyValuesList) {
@@ -95,9 +99,9 @@ class Init extends Command
         $defaultPassword = substr(md5(uniqid()), 0, 8);
 
         $this->adminCredentials = [
-            'name' => $this->ask('Please enter admin name', 'Admin'),
-            'email' => $this->ask('Please enter admin email', "admin@{$kebabName}.com"),
-            'password' => $this->ask('Please enter admin password', $defaultPassword),
+            'name' => $this->ask('Please enter an admin name', 'Admin'),
+            'email' => $this->ask('Please enter an admin email', "admin@{$kebabName}.com"),
+            'password' => $this->ask('Please enter an admin password', $defaultPassword),
             'role_id' => Role::ADMIN
         ];
 
@@ -111,7 +115,7 @@ class Init extends Command
 
         $this->setReadmeValue($file, 'project_name', $appName);
 
-        file_put_contents('README.md', $file);
+        $this->readmeContent = $file;
     }
 
     protected function fillResourcesAndContacts(): void
@@ -257,11 +261,9 @@ class Init extends Command
 
     protected function updateReadmeFile(string $filePart): void
     {
-        $file = file_get_contents('README.md');
-
         $filePart = preg_replace('#(\n){2,}#', "\n", $filePart);
 
-        file_put_contents('README.md', $file . "\n" . $filePart);
+        $this->readmeContent .= "\n" . $filePart;
     }
 
     protected function removeStringByTag(string &$text, string $tag): void
@@ -277,5 +279,10 @@ class Init extends Command
     protected function setReadmeValue(string &$file, string $key, string $value): void
     {
         $file = str_replace(":{$key}", $value, $file);
+    }
+
+    protected function saveReadme(): void
+    {
+        file_put_contents('README.md', $this->readmeContent);
     }
 }
