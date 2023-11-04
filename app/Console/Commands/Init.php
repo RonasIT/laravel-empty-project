@@ -19,6 +19,8 @@ class Init extends Command
 
     protected string $appUrl;
 
+    protected array $emptyValuesList = [];
+
     public function handle(): void
     {
         $appName = $this->argument('application-name');
@@ -45,34 +47,45 @@ class Init extends Command
             'DATA_COLLECTOR_KEY' => "{$kebabName}"
         ]);
 
-        $this->info('Project initialized successfully');
+        $this->info('Project initialized successfully!');
 
-        if ($this->confirm('Do you want generate admin user?', true)) {
+        if ($this->confirm('Do you want to generate admin user?', true)) {
             $this->createAdminUser($kebabName);
         }
 
         if ($this->confirm('Do you want to generate a README file?', true)) {
             $this->fillReadme();
 
-            if ($this->confirm('Do you need `Resources & Contacts` part?', true)) {
+            if ($this->confirm('Do you need a `Resources & Contacts` part?', true)) {
+                $this->fillResourcesAndContacts();
                 $this->fillResources();
                 $this->fillContacts();
             }
 
-            if ($this->confirm('Do you need `Prerequisites` part?', true)) {
+            if ($this->confirm('Do you need a `Prerequisites` part?', true)) {
                 $this->fillPrerequisites();
             }
 
-            if ($this->confirm('Do you need `Getting Started` part?', true)) {
+            if ($this->confirm('Do you need a `Getting Started` part?', true)) {
                 $this->fillGettingStarted();
             }
 
-            if ($this->confirm('Do you need `Environments` part?', true)) {
+            if ($this->confirm('Do you need an `Environments` part?', true)) {
                 $this->fillEnvironments();
             }
 
-            if ($this->confirm('Do you need `Credentials and Access` part?', true)) {
+            if ($this->confirm('Do you need a `Credentials and Access` part?', true)) {
                 $this->fillCredentialsAndAccess();
+            }
+
+            $this->info('README generated successfully!');
+
+            if ($this->emptyValuesList) {
+                $this->warn('Don`t forget to fill the following empty values:');
+
+                foreach ($this->emptyValuesList as $value) {
+                    $this->warn("- {$value}");
+                }
             }
         }
     }
@@ -101,6 +114,13 @@ class Init extends Command
         file_put_contents('README.md', $file);
     }
 
+    protected function fillResourcesAndContacts(): void
+    {
+        $filePart = $this->loadReadmePart('RESOURCES_AND_CONTACTS.md');
+
+        $this->updateReadmeFile($filePart);
+    }
+
     protected function fillResources(): void
     {
         $resources = [
@@ -120,6 +140,8 @@ class Init extends Command
 
                 if ($link = $this->ask("Please enter a {$title} link", $defaultLink)) {
                     $this->setReadmeValue($filePart, "{$key}_link", $link);
+                } else {
+                    $this->emptyValuesList[] = "{$title} link";
                 }
 
                 $this->removeTag($filePart, $key);
@@ -144,6 +166,8 @@ class Init extends Command
         foreach ($contacts as $key => $title) {
             if ($link = $this->ask("Please enter a {$title} contact", '')) {
                 $this->setReadmeValue($filePart, "{$key}_link", $link);
+            } else {
+                $this->emptyValuesList[] = "{$title} contact";
             }
 
             $this->removeTag($filePart, $key);
@@ -235,7 +259,9 @@ class Init extends Command
     {
         $file = file_get_contents('README.md');
 
-        file_put_contents('README.md', $file . $filePart);
+        $filePart = preg_replace('#(\n){2,}#', "\n", $filePart);
+
+        file_put_contents('README.md', $file . "\n" . $filePart);
     }
 
     protected function removeStringByTag(string &$text, string $tag): void
@@ -250,6 +276,6 @@ class Init extends Command
 
     protected function setReadmeValue(string &$file, string $key, string $value): void
     {
-        $file = str_replace($file, ":{$key}", $value);
+        $file = str_replace(":{$key}", $value, $file);
     }
 }

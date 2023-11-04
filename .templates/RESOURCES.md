@@ -1,9 +1,3 @@
-## Project Resources & Contacts
-
-This section provides quick links to various resources and contacts associated
-with this project. It's here to streamline your navigation and communication
-process, so you can efficiently find what you need or reach out to who you need.
-
 ### Resources
 
 Below are links to tools and services used in this project:
@@ -14,3 +8,4 @@ Below are links to tools and services used in this project:
 {argocd}- ArgoCD: Is a kubernetes controller which continuously monitors running applications. [ArgoCD](:argocd_link){/argocd}
 {telescope}- Laravel Telescope: This is debug assistant for the Laravel framework. [Laravel Telescope](:telescope_link){/telescope}
 - [API Documentation](:api_link)
+
