@@ -113,6 +113,46 @@ class InitCommandTest extends TestCase
             ->assertExitCode(0);
     }
 
+    public function testRunWithAdminAndPartialReadmeCreation()
+    {
+        $filePutContentsMock = $this->getFunctionMock('App\Console\Commands', 'file_put_contents');
+
+        $filePutContentsMock
+            ->expects($this->exactly(5))
+            ->withConsecutive(
+                ['.env.testing', $this->getFixture('env.testing.yml')],
+                ['.env', $this->getFixture('env.yml')],
+                ['.env.development', $this->getFixture('env.development.yml')],
+                ['.env.ci-testing', $this->getFixture('env.ci-testing.yml')],
+                ['README.md', $this->getFixture('partial_readme.md')],
+            );
+
+        $this->artisan('init "My App"')
+            ->expectsOutput('Project initialized successfully!')
+            ->expectsQuestion('Please enter an application URL', 'https://mysite.com')
+            ->expectsConfirmation('Do you want to generate an admin user?')
+            ->expectsConfirmation('Do you want to generate a README file?', 'yes')
+            ->expectsConfirmation('Do you need a `Resources & Contacts` part?', 'yes')
+            ->expectsConfirmation('Are you going to use Issue Tracker?', 'yes')
+            ->expectsQuestion('Please enter a Issue Tracker link', '')
+            ->expectsConfirmation('Are you going to use Figma?')
+            ->expectsConfirmation('Are you going to use Sentry?')
+            ->expectsConfirmation('Are you going to use DataDog?')
+            ->expectsConfirmation('Are you going to use ArgoCD?')
+            ->expectsConfirmation('Are you going to use Laravel Telescope?')
+            ->expectsQuestion('Please enter a Manager contact', 'manager@mail.com')
+            ->expectsQuestion('Please enter a Code Owner/Team Lead contact', '')
+            ->expectsConfirmation('Do you need a `Prerequisites` part?')
+            ->expectsConfirmation('Do you need a `Getting Started` part?')
+            ->expectsConfirmation('Do you need an `Environments` part?', 'yes')
+            ->expectsConfirmation('Do you need a `Credentials and Access` part?', 'yes')
+            ->expectsOutput('README generated successfully!')
+            ->expectsOutput('Don`t forget to fill the following empty values:')
+            ->expectsOutput('- Issue Tracker link')
+            ->expectsOutput('- Code Owner/Team Lead contact')
+            ->assertExitCode(0);
+    }
+
     public function testRunWithAdminAndFullReadmeCreation()
     {
         $filePutContentsMock = $this->getFunctionMock('App\Console\Commands', 'file_put_contents');
