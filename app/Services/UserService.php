@@ -77,9 +77,6 @@ class UserService extends EntityService
             ]);
     }
 
-    /**
-     * @codeCoverageIgnore
-     */
     protected function generateHash(int $length = 32): string
     {
         $length /= 2;
