@@ -11,6 +11,21 @@ class Init extends Command
 {
     const TEMPLATES_PATH = '.templates';
 
+    const RESOURCES_ITEMS = [
+        'issue_tracker' => 'Issue Tracker',
+        'figma' => 'Figma',
+        'sentry' => 'Sentry',
+        'datadog' => 'DataDog',
+        'argocd' => 'ArgoCD',
+        'telescope' => 'Laravel Telescope',
+    ];
+
+
+    const CONTACTS_ITEMS = [
+        'manager' => 'Manager',
+        'team_lead' => 'Code Owner/Team Lead',
+    ];
+
     protected $signature = 'init {application-name : The application name }';
 
     protected $description = 'Initialize required project parameters to run DEV environment';
@@ -28,21 +43,25 @@ class Init extends Command
         $appName = $this->argument('application-name');
         $kebabName = Str::kebab($appName);
 
-        $this->appUrl = $this->ask('Please enter an application URL', 'http://localhost');
+        $this->appUrl = $this->ask('Please enter an application URL', "https://api.dev.{$kebabName}.com");
 
         $this->updateConfigFile('.env.testing', '=', [
             'DATA_COLLECTOR_KEY' => "{$kebabName}-local"
         ]);
 
-        $this->updateConfigFile('.env', '=', [
+        $envFile = file_exists('.env')
+            ? '.env'
+            : '.env.example';
+
+        $this->updateConfigFile($envFile, '=', [
             'APP_NAME' => $appName,
             'SWAGGER_REMOTE_DRIVER_KEY' => "{$kebabName}-local"
         ]);
 
         $this->updateConfigFile('.env.development', '=', [
             'APP_NAME' => $appName,
-            'DATA_COLLECTOR_KEY' => "{$kebabName}",
-            'APP_URL' => "{$this->appUrl}",
+            'DATA_COLLECTOR_KEY' => $kebabName,
+            'APP_URL' => $this->appUrl,
         ]);
 
         $this->updateConfigFile('.env.ci-testing', '=', [
@@ -127,18 +146,9 @@ class Init extends Command
 
     protected function fillResources(): void
     {
-        $resources = [
-            'issue_tracker' => 'Issue Tracker',
-            'figma' => 'Figma',
-            'sentry' => 'Sentry',
-            'datadog' => 'DataDog',
-            'argocd' => 'ArgoCD',
-            'telescope' => 'Laravel Telescope',
-        ];
-
         $filePart = $this->loadReadmePart('RESOURCES.md');
 
-        foreach ($resources as $key => $title) {
+        foreach (self::RESOURCES_ITEMS as $key => $title) {
             if ($this->confirm("Are you going to use {$title}?", true)) {
                 $defaultLink = ($key === 'telescope') ? $this->appUrl . '/telescope' : '';
 
@@ -160,14 +170,9 @@ class Init extends Command
 
     protected function fillContacts(): void
     {
-        $contacts = [
-            'manager' => 'Manager',
-            'team_lead' => 'Code Owner/Team Lead',
-        ];
-
         $filePart = $this->loadReadmePart('CONTACTS.md');
 
-        foreach ($contacts as $key => $title) {
+        foreach (self::CONTACTS_ITEMS as $key => $title) {
             if ($link = $this->ask("Please enter a {$title} contact", '')) {
                 $this->setReadmeValue($filePart, "{$key}_link", $link);
             } else {
@@ -256,12 +261,12 @@ class Init extends Command
 
     protected function loadReadmePart(string $fileName): string
     {
-        return file_get_contents(self::TEMPLATES_PATH . '/' . $fileName);
+        return file_get_contents(self::TEMPLATES_PATH . DIRECTORY_SEPARATOR . $fileName);
     }
 
     protected function updateReadmeFile(string $filePart): void
     {
-        $filePart = preg_replace('#(\n){2,}#', "\n", $filePart);
+        $filePart = preg_replace('#(\n){3,}#', "\n", $filePart);
 
         $this->readmeContent .= "\n" . $filePart;
     }

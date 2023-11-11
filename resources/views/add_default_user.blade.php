@@ -1,4 +1,3 @@
-use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\Hash;
 use RonasIT\Support\Traits\MigrationTrait;
@@ -10,7 +9,7 @@ class AddDefaultUser extends Migration
     public function up()
     {
         if (config('app.env') !== 'testing') {
-            User::create([
+            DB::table('users')->insert([
                 'name' => '{{ $name }}',
                 'email' => '{{ $email }}',
                 'password' => Hash::make('{{ $password }}'),
@@ -22,7 +21,9 @@ class AddDefaultUser extends Migration
     public function down()
     {
         if (config('app.env') !== 'testing') {
-            User::where('email', '{{ $email }}')->delete();
+            DB::table('users')
+                ->where('email', '{{ $email }}')
+                ->delete();
         }
     }
 }

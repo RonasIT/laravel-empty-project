@@ -8,11 +8,6 @@ class InitCommandTest extends TestCase
 {
     use PHPMock;
 
-    public function setUp(): void
-    {
-        TestCase::setUp();
-    }
-
     public function testRunWithoutAdminAndReadmeCreation()
     {
         $filePutContentsMock = $this->getFunctionMock('App\Console\Commands', 'file_put_contents');
@@ -21,12 +16,13 @@ class InitCommandTest extends TestCase
             ->expects($this->exactly(4))
             ->withConsecutive(
                 ['.env.testing', $this->getFixture('env.testing.yml')],
-                ['.env', $this->getFixture('env.yml')],
+                ['.env.example', $this->getFixture('env.example.yml')],
                 ['.env.development', $this->getFixture('env.development.yml')],
                 ['.env.ci-testing', $this->getFixture('env.ci-testing.yml')],
             );
 
-        $this->artisan('init "My App"')
+        $this
+            ->artisan('init "My App"')
             ->expectsOutput('Project initialized successfully!')
             ->expectsQuestion('Please enter an application URL', 'https://mysite.com')
             ->expectsConfirmation('Do you want to generate an admin user?')
@@ -42,13 +38,14 @@ class InitCommandTest extends TestCase
             ->expects($this->exactly(5))
             ->withConsecutive(
                 ['.env.testing', $this->getFixture('env.testing.yml')],
-                ['.env', $this->getFixture('env.yml')],
+                ['.env.example', $this->getFixture('env.example.yml')],
                 ['.env.development', $this->getFixture('env.development.yml')],
                 ['.env.ci-testing', $this->getFixture('env.ci-testing.yml')],
                 ['database/migrations/2018_11_11_111111_add_default_user.php', $this->getFixture('migration.php')],
             );
 
-        $this->artisan('init "My App"')
+        $this
+            ->artisan('init "My App"')
             ->expectsOutput('Project initialized successfully!')
             ->expectsQuestion('Please enter an application URL', 'https://mysite.com')
             ->expectsConfirmation('Do you want to generate an admin user?', 'yes')
@@ -67,14 +64,15 @@ class InitCommandTest extends TestCase
             ->expects($this->exactly(6))
             ->withConsecutive(
                 ['.env.testing', $this->getFixture('env.testing.yml')],
-                ['.env', $this->getFixture('env.yml')],
+                ['.env.example', $this->getFixture('env.example.yml')],
                 ['.env.development', $this->getFixture('env.development.yml')],
                 ['.env.ci-testing', $this->getFixture('env.ci-testing.yml')],
                 ['database/migrations/2018_11_11_111111_add_default_user.php', $this->getFixture('migration.php')],
                 ['README.md', $this->getFixture('default_readme.md')],
             );
 
-        $this->artisan('init "My App"')
+        $this
+            ->artisan('init "My App"')
             ->expectsOutput('Project initialized successfully!')
             ->expectsQuestion('Please enter an application URL', 'https://mysite.com')
             ->expectsConfirmation('Do you want to generate an admin user?', 'yes')
@@ -121,13 +119,14 @@ class InitCommandTest extends TestCase
             ->expects($this->exactly(5))
             ->withConsecutive(
                 ['.env.testing', $this->getFixture('env.testing.yml')],
-                ['.env', $this->getFixture('env.yml')],
+                ['.env.example', $this->getFixture('env.example.yml')],
                 ['.env.development', $this->getFixture('env.development.yml')],
                 ['.env.ci-testing', $this->getFixture('env.ci-testing.yml')],
                 ['README.md', $this->getFixture('partial_readme.md')],
             );
 
-        $this->artisan('init "My App"')
+        $this
+            ->artisan('init "My App"')
             ->expectsOutput('Project initialized successfully!')
             ->expectsQuestion('Please enter an application URL', 'https://mysite.com')
             ->expectsConfirmation('Do you want to generate an admin user?')
@@ -161,14 +160,15 @@ class InitCommandTest extends TestCase
             ->expects($this->exactly(6))
             ->withConsecutive(
                 ['.env.testing', $this->getFixture('env.testing.yml')],
-                ['.env', $this->getFixture('env.yml')],
+                ['.env.example', $this->getFixture('env.example.yml')],
                 ['.env.development', $this->getFixture('env.development.yml')],
                 ['.env.ci-testing', $this->getFixture('env.ci-testing.yml')],
                 ['database/migrations/2018_11_11_111111_add_default_user.php', $this->getFixture('migration.php')],
                 ['README.md', $this->getFixture('full_readme.md')],
             );
 
-        $this->artisan('init "My App"')
+        $this
+            ->artisan('init "My App"')
             ->expectsOutput('Project initialized successfully!')
             ->expectsQuestion('Please enter an application URL', 'https://mysite.com')
             ->expectsConfirmation('Do you want to generate an admin user?', 'yes')
