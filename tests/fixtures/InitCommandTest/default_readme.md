@@ -41,7 +41,7 @@ To get started with this repository, follow these steps:
 Clone this repository to your local machine.
 
 ```sh
-git clone git@github.com:RonasIT/laravel-empty-project.git
+git clone https://github.com/RonasIT/laravel-empty-project
 ```
 
 Build and start containers. It may takes some time.

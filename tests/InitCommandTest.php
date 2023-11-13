@@ -2,24 +2,17 @@
 
 namespace App\Tests;
 
+use App\Tests\Support\InitCommandMockTrait;
 use phpmock\phpunit\PHPMock;
 
 class InitCommandTest extends TestCase
 {
+    use InitCommandMockTrait;
     use PHPMock;
 
     public function testRunWithoutAdminAndReadmeCreation()
     {
-        $filePutContentsMock = $this->getFunctionMock('App\Console\Commands', 'file_put_contents');
-
-        $filePutContentsMock
-            ->expects($this->exactly(4))
-            ->withConsecutive(
-                ['.env.testing', $this->getFixture('env.testing.yml')],
-                ['.env.example', $this->getFixture('env.example.yml')],
-                ['.env.development', $this->getFixture('env.development.yml')],
-                ['.env.ci-testing', $this->getFixture('env.ci-testing.yml')],
-            );
+        $this->mockFilePutContent();
 
         $this
             ->artisan('init "My App"')
@@ -32,17 +25,9 @@ class InitCommandTest extends TestCase
 
     public function testRunWithAdminAndWithoutReadmeCreation()
     {
-        $filePutContentsMock = $this->getFunctionMock('App\Console\Commands', 'file_put_contents');
-
-        $filePutContentsMock
-            ->expects($this->exactly(5))
-            ->withConsecutive(
-                ['.env.testing', $this->getFixture('env.testing.yml')],
-                ['.env.example', $this->getFixture('env.example.yml')],
-                ['.env.development', $this->getFixture('env.development.yml')],
-                ['.env.ci-testing', $this->getFixture('env.ci-testing.yml')],
-                ['database/migrations/2018_11_11_111111_add_default_user.php', $this->getFixture('migration.php')],
-            );
+        $this->mockFilePutContent([
+            'database/migrations/2018_11_11_111111_add_default_user.php' => $this->getFixture('migration.php'),
+        ]);
 
         $this
             ->artisan('init "My App"')
@@ -58,18 +43,12 @@ class InitCommandTest extends TestCase
 
     public function testRunWithAdminAndDefaultReadmeCreation()
     {
-        $filePutContentsMock = $this->getFunctionMock('App\Console\Commands', 'file_put_contents');
+        $this->mockShellExec();
 
-        $filePutContentsMock
-            ->expects($this->exactly(6))
-            ->withConsecutive(
-                ['.env.testing', $this->getFixture('env.testing.yml')],
-                ['.env.example', $this->getFixture('env.example.yml')],
-                ['.env.development', $this->getFixture('env.development.yml')],
-                ['.env.ci-testing', $this->getFixture('env.ci-testing.yml')],
-                ['database/migrations/2018_11_11_111111_add_default_user.php', $this->getFixture('migration.php')],
-                ['README.md', $this->getFixture('default_readme.md')],
-            );
+        $this->mockFilePutContent([
+            'database/migrations/2018_11_11_111111_add_default_user.php' => $this->getFixture('migration.php'),
+            'README.md' => $this->getFixture('default_readme.md'),
+        ]);
 
         $this
             ->artisan('init "My App"')
@@ -113,17 +92,9 @@ class InitCommandTest extends TestCase
 
     public function testRunWithAdminAndPartialReadmeCreation()
     {
-        $filePutContentsMock = $this->getFunctionMock('App\Console\Commands', 'file_put_contents');
-
-        $filePutContentsMock
-            ->expects($this->exactly(5))
-            ->withConsecutive(
-                ['.env.testing', $this->getFixture('env.testing.yml')],
-                ['.env.example', $this->getFixture('env.example.yml')],
-                ['.env.development', $this->getFixture('env.development.yml')],
-                ['.env.ci-testing', $this->getFixture('env.ci-testing.yml')],
-                ['README.md', $this->getFixture('partial_readme.md')],
-            );
+        $this->mockFilePutContent([
+            'README.md' => $this->getFixture('partial_readme.md'),
+        ]);
 
         $this
             ->artisan('init "My App"')
@@ -154,18 +125,12 @@ class InitCommandTest extends TestCase
 
     public function testRunWithAdminAndFullReadmeCreation()
     {
-        $filePutContentsMock = $this->getFunctionMock('App\Console\Commands', 'file_put_contents');
+        $this->mockShellExec();
 
-        $filePutContentsMock
-            ->expects($this->exactly(6))
-            ->withConsecutive(
-                ['.env.testing', $this->getFixture('env.testing.yml')],
-                ['.env.example', $this->getFixture('env.example.yml')],
-                ['.env.development', $this->getFixture('env.development.yml')],
-                ['.env.ci-testing', $this->getFixture('env.ci-testing.yml')],
-                ['database/migrations/2018_11_11_111111_add_default_user.php', $this->getFixture('migration.php')],
-                ['README.md', $this->getFixture('full_readme.md')],
-            );
+        $this->mockFilePutContent([
+            'database/migrations/2018_11_11_111111_add_default_user.php' => $this->getFixture('migration.php'),
+            'README.md' => $this->getFixture('full_readme.md'),
+        ]);
 
         $this
             ->artisan('init "My App"')
