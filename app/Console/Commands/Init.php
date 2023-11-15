@@ -20,7 +20,6 @@ class Init extends Command
         'telescope' => 'Laravel Telescope',
     ];
 
-
     const CONTACTS_ITEMS = [
         'manager' => 'Manager',
         'team_lead' => 'Code Owner/Team Lead',
@@ -49,7 +48,7 @@ class Init extends Command
             'DATA_COLLECTOR_KEY' => "{$kebabName}-local"
         ]);
 
-        $envFile = file_exists('.env')
+        $envFile = (file_exists('.env'))
             ? '.env'
             : '.env.example';
 
