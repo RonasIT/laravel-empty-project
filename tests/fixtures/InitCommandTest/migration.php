@@ -1,3 +1,5 @@
+<?php
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\Hash;
 use RonasIT\Support\Traits\MigrationTrait;
@@ -10,10 +12,10 @@ class AddDefaultUser extends Migration
     {
         if (config('app.env') !== 'testing') {
             DB::table('users')->insert([
-                'name' => '{{ $name }}',
-                'email' => '{{ $email }}',
-                'password' => Hash::make('{{ $password }}'),
-                'role_id' => '{{ $role_id }}'
+                'name' => 'TestAdmin',
+                'email' => 'mail@mail.com',
+                'password' => Hash::make('123456'),
+                'role_id' => '1'
             ]);
         }
     }
@@ -22,7 +24,7 @@ class AddDefaultUser extends Migration
     {
         if (config('app.env') !== 'testing') {
             DB::table('users')
-                ->where('email', '{{ $email }}')
+                ->where('email', 'mail@mail.com')
                 ->delete();
         }
     }
