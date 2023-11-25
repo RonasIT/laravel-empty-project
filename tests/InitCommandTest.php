@@ -25,9 +25,9 @@ class InitCommandTest extends TestCase
 
     public function testRunWithAdminAndWithoutReadmeCreation()
     {
-        $this->mockFilePutContent([
-            'database/migrations/2018_11_11_111111_add_default_user.php' => $this->getFixture('migration.php'),
-        ]);
+        $this->mockFilePutContent(
+            ['database/migrations/2018_11_11_111111_add_default_user.php', $this->getFixture('migration.php')]
+        );
 
         $this
             ->artisan('init "My App"')
@@ -45,10 +45,10 @@ class InitCommandTest extends TestCase
     {
         $this->mockShellExec();
 
-        $this->mockFilePutContent([
-            'database/migrations/2018_11_11_111111_add_default_user.php' => $this->getFixture('migration.php'),
-            'README.md' => $this->getFixture('default_readme.md'),
-        ]);
+        $this->mockFilePutContent(
+            ['database/migrations/2018_11_11_111111_add_default_user.php', $this->getFixture('migration.php')],
+            ['README.md', $this->getFixture('default_readme.md')]
+        );
 
         $this
             ->artisan('init "My App"')
@@ -72,8 +72,8 @@ class InitCommandTest extends TestCase
             ->expectsQuestion('Please enter a ArgoCD link', '')
             ->expectsConfirmation('Are you going to use Laravel Telescope?', 'yes')
             ->expectsQuestion('Please enter a Laravel Telescope link', '')
-            ->expectsQuestion('Please enter a Manager contact', '')
-            ->expectsQuestion('Please enter a Code Owner/Team Lead contact', '')
+            ->expectsQuestion('Please enter a Manager\'s email', '')
+            ->expectsQuestion('Please enter a Code Owner/Team Lead\'s email', '')
             ->expectsConfirmation('Do you need a `Prerequisites` part?', 'yes')
             ->expectsConfirmation('Do you need a `Getting Started` part?', 'yes')
             ->expectsConfirmation('Do you need an `Environments` part?', 'yes')
@@ -92,9 +92,9 @@ class InitCommandTest extends TestCase
 
     public function testRunWithAdminAndPartialReadmeCreation()
     {
-        $this->mockFilePutContent([
-            'README.md' => $this->getFixture('partial_readme.md'),
-        ]);
+        $this->mockFilePutContent(
+            ['README.md', $this->getFixture('partial_readme.md')]
+        );
 
         $this
             ->artisan('init "My App"')
@@ -110,8 +110,8 @@ class InitCommandTest extends TestCase
             ->expectsConfirmation('Are you going to use DataDog?')
             ->expectsConfirmation('Are you going to use ArgoCD?')
             ->expectsConfirmation('Are you going to use Laravel Telescope?')
-            ->expectsQuestion('Please enter a Manager contact', 'manager@mail.com')
-            ->expectsQuestion('Please enter a Code Owner/Team Lead contact', '')
+            ->expectsQuestion('Please enter a Manager\'s email', 'manager@mail.com')
+            ->expectsQuestion('Please enter a Code Owner/Team Lead\'s email', '')
             ->expectsConfirmation('Do you need a `Prerequisites` part?')
             ->expectsConfirmation('Do you need a `Getting Started` part?')
             ->expectsConfirmation('Do you need an `Environments` part?', 'yes')
@@ -127,10 +127,10 @@ class InitCommandTest extends TestCase
     {
         $this->mockShellExec();
 
-        $this->mockFilePutContent([
-            'database/migrations/2018_11_11_111111_add_default_user.php' => $this->getFixture('migration.php'),
-            'README.md' => $this->getFixture('full_readme.md'),
-        ]);
+        $this->mockFilePutContent(
+            ['database/migrations/2018_11_11_111111_add_default_user.php', $this->getFixture('migration.php')],
+            ['README.md', $this->getFixture('full_readme.md')]
+        );
 
         $this
             ->artisan('init "My App"')
@@ -154,8 +154,8 @@ class InitCommandTest extends TestCase
             ->expectsQuestion('Please enter a ArgoCD link', 'https://argocd.com/my-project')
             ->expectsConfirmation('Are you going to use Laravel Telescope?', 'yes')
             ->expectsQuestion('Please enter a Laravel Telescope link', 'https://mypsite.com/telescope-link')
-            ->expectsQuestion('Please enter a Manager contact', 'manager@mail.com')
-            ->expectsQuestion('Please enter a Code Owner/Team Lead contact', 'lead@mail.com')
+            ->expectsQuestion('Please enter a Manager\'s email', 'manager@mail.com')
+            ->expectsQuestion('Please enter a Code Owner/Team Lead\'s email', 'lead@mail.com')
             ->expectsConfirmation('Do you need a `Prerequisites` part?', 'yes')
             ->expectsConfirmation('Do you need a `Getting Started` part?', 'yes')
             ->expectsConfirmation('Do you need an `Environments` part?', 'yes')

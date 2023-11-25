@@ -8,22 +8,19 @@ trait InitCommandMockTrait
 {
     use PHPMock;
 
-    public function mockFilePutContent(array $fileContents = []): void
+    public function mockFilePutContent(...$arguments): void
     {
-        $defaultFileContents = [
-            '.env.testing' => $this->getFixture('env.testing.yml'),
-            '.env.example' => $this->getFixture('env.example.yml'),
-            '.env.development' => $this->getFixture('env.development.yml'),
-            '.env.ci-testing' => $this->getFixture('env.ci-testing.yml'),
-        ];
-
-        $fileContents = $defaultFileContents + $fileContents;
-
         $mock = $this->getFunctionMock('App\Console\Commands', 'file_put_contents');
 
         $mock
-            ->expects($this->exactly(count($fileContents)))
-            ->willReturnCallback(fn ($file) => $fileContents[$file]);
+            ->expects($this->exactly(4 + count($arguments)))
+            ->withConsecutive(
+                ['.env.testing', $this->getFixture('env.testing.yml')],
+                ['.env.example', $this->getFixture('env.example.yml')],
+                ['.env.development', $this->getFixture('env.development.yml')],
+                ['.env.ci-testing', $this->getFixture('env.ci-testing.yml')],
+                ...$arguments
+            );
     }
 
     public function mockShellExec(): void
