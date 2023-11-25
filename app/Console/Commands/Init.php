@@ -172,7 +172,7 @@ class Init extends Command
         $filePart = $this->loadReadmePart('CONTACTS.md');
 
         foreach (self::CONTACTS_ITEMS as $key => $title) {
-            if ($link = $this->ask("Please enter a {$title} contact", '')) {
+            if ($link = $this->ask("Please enter a {$title}'s email", '')) {
                 $this->setReadmeValue($filePart, "{$key}_link", $link);
             } else {
                 $this->emptyValuesList[] = "{$title} contact";
@@ -272,7 +272,7 @@ class Init extends Command
 
     protected function removeStringByTag(string &$text, string $tag): void
     {
-        $text = preg_replace("#({{$tag}.*?}).*?({/{$tag}})#", '', $text);
+        $text = preg_replace("#({{$tag}})(.|\s)*?({/{$tag}})#", '', $text);
     }
 
     protected function removeTag(string &$text, string $tag): void

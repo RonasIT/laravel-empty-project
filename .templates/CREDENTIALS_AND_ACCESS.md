@@ -1,3 +1,5 @@
 ## Credentials and Access
 
-{admin_credentials}Default admin email and password: `:admin_email`/`:admin_password`{/admin_credentials}
+{admin_credentials}Default admin access:
+- email `:admin_email`
+- password `:admin_password`{/admin_credentials}
