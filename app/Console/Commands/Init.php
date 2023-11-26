@@ -18,6 +18,7 @@ class Init extends Command
         'datadog' => 'DataDog',
         'argocd' => 'ArgoCD',
         'telescope' => 'Laravel Telescope',
+        'nova' => 'Laravel Nova',
     ];
 
     const CONTACTS_ITEMS = [
@@ -48,9 +49,7 @@ class Init extends Command
             'DATA_COLLECTOR_KEY' => "{$kebabName}-local"
         ]);
 
-        $envFile = (file_exists('.env'))
-            ? '.env'
-            : '.env.example';
+        $envFile = (file_exists('.env')) ? '.env' : '.env.example';
 
         $this->updateConfigFile($envFile, '=', [
             'APP_NAME' => $appName,
@@ -175,7 +174,7 @@ class Init extends Command
             if ($link = $this->ask("Please enter a {$title}'s email", '')) {
                 $this->setReadmeValue($filePart, "{$key}_link", $link);
             } else {
-                $this->emptyValuesList[] = "{$title} contact";
+                $this->emptyValuesList[] = "{$title}'s email";
             }
 
             $this->removeTag($filePart, $key);
@@ -194,9 +193,12 @@ class Init extends Command
     protected function fillGettingStarted(): void
     {
         $gitProjectPath = trim((string) shell_exec('git ls-remote --get-url origin'));
+        $projectDirectory = basename($gitProjectPath, '.git');
         $filePart = $this->loadReadmePart('GETTING_STARTED.md');
 
         $this->setReadmeValue($filePart, 'git_project_path', $gitProjectPath);
+        $this->setReadmeValue($filePart, 'project_directory', $projectDirectory);
+
         $this->updateReadmeFile($filePart);
     }
 

@@ -72,6 +72,8 @@ class InitCommandTest extends TestCase
             ->expectsQuestion('Please enter a ArgoCD link', '')
             ->expectsConfirmation('Are you going to use Laravel Telescope?', 'yes')
             ->expectsQuestion('Please enter a Laravel Telescope link', '')
+            ->expectsConfirmation('Are you going to use Laravel Nova?', 'yes')
+            ->expectsQuestion('Please enter a Laravel Nova link', '')
             ->expectsQuestion('Please enter a Manager\'s email', '')
             ->expectsQuestion('Please enter a Code Owner/Team Lead\'s email', '')
             ->expectsConfirmation('Do you need a `Prerequisites` part?', 'yes')
@@ -85,8 +87,8 @@ class InitCommandTest extends TestCase
             ->expectsOutput('- Sentry link')
             ->expectsOutput('- DataDog link')
             ->expectsOutput('- ArgoCD link')
-            ->expectsOutput('- Manager contact')
-            ->expectsOutput('- Code Owner/Team Lead contact')
+            ->expectsOutput('- Manager\'s email')
+            ->expectsOutput('- Code Owner/Team Lead\'s email')
             ->assertExitCode(0);
     }
 
@@ -119,7 +121,7 @@ class InitCommandTest extends TestCase
             ->expectsOutput('README generated successfully!')
             ->expectsOutput('Don`t forget to fill the following empty values:')
             ->expectsOutput('- Issue Tracker link')
-            ->expectsOutput('- Code Owner/Team Lead contact')
+            ->expectsOutput('- Code Owner/Team Lead\'s email')
             ->assertExitCode(0);
     }
 
