@@ -17,6 +17,7 @@ Below are links to tools and services used in this project:
 - [DataDog](https://datadoghq.com/my-project): This is where we monitor our logs, and server performance, and receive alerts.
 - [ArgoCD](https://argocd.com/my-project): Is a kubernetes controller which continuously monitors running applications.
 - [Laravel Telescope](https://mypsite.com/telescope-link): This is debug assistant for the Laravel framework.
+- [Laravel Nova](https://mypsite.com/nova-link): This is admin panel for the Laravel framework.
 - [API Documentation](https://mysite.com)
 
 ### Contacts
@@ -42,6 +43,12 @@ Clone this repository to your local machine.
 
 ```sh
 git clone https://github.com/ronasit/laravel-helpers.git
+```
+
+Open project directory.
+
+```sh
+cd laravel-helpers
 ```
 
 Build and start containers. It may takes some time.

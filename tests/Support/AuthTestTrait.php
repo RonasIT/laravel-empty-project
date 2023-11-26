@@ -7,7 +7,8 @@ use RonasIT\Support\Traits\MockClassTrait;
 
 trait AuthTestTrait
 {
-    use MockClassTrait, PHPMock;
+    use MockClassTrait;
+    use PHPMock;
 
     public function mockOpensslRandomPseudoBytes(): void
     {
