@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Role;
 use Illuminate\Console\Command;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
@@ -26,9 +27,16 @@ class Init extends Command
         'team_lead' => 'Code Owner/Team Lead',
     ];
 
+    const CREDENTIALS_ITEMS = [
+        'telescope' => 'Laravel Telescope',
+        'nova' => 'Laravel Nova',
+    ];
+
     protected $signature = 'init {application-name : The application name }';
 
     protected $description = 'Initialize required project parameters to run DEV environment';
+
+    protected array $resources = [];
 
     protected array $adminCredentials = [];
 
@@ -94,7 +102,7 @@ class Init extends Command
             }
 
             if ($this->confirm('Do you need a `Credentials and Access` part?', true)) {
-                $this->fillCredentialsAndAccess();
+                $this->fillCredentialsAndAccess($kebabName);
             }
 
             $this->saveReadme();
@@ -111,7 +119,7 @@ class Init extends Command
         }
     }
 
-    protected function createAdminUser($kebabName): void
+    protected function createAdminUser(string $kebabName): void
     {
         $defaultPassword = substr(md5(uniqid()), 0, 8);
 
@@ -147,19 +155,25 @@ class Init extends Command
         $filePart = $this->loadReadmePart('RESOURCES.md');
 
         foreach (self::RESOURCES_ITEMS as $key => $title) {
-            if ($this->confirm("Are you going to use {$title}?", true)) {
-                $defaultLink = ($key === 'telescope') ? $this->appUrl . '/telescope' : '';
+            $defaultAnswer = ($key === 'telescope') ? $this->appUrl . '/telescope' : 'later';
+            $text = "Are you going to use {$title}? " .
+                "Please enter a link or select `later` to do it later, otherwise select `no`.";
 
-                if ($link = $this->ask("Please enter a {$title} link", $defaultLink)) {
-                    $this->setReadmeValue($filePart, "{$key}_link", $link);
-                } else {
-                    $this->emptyValuesList[] = "{$title} link";
-                }
+            $link = $this->anticipate(
+                $text,
+                ['later', 'no'],
+                $defaultAnswer
+            );
 
-                $this->removeTag($filePart, $key);
-            } else {
-                $this->removeStringByTag($filePart, $key);
+            if ($link === 'later') {
+                $this->emptyValuesList[] = "{$title} link";
+            } else if ($link !== 'no') {
+                $this->setReadmeValue($filePart, "{$key}_link", $link);
             }
+
+            $this->resources[$key] = ($link !== 'no');
+
+            $this->removeTag($filePart, $key, $link === 'no');
         }
 
         $this->setReadmeValue($filePart, 'api_link', $this->appUrl);
@@ -210,16 +224,37 @@ class Init extends Command
         $this->updateReadmeFile($filePart);
     }
 
-    protected function fillCredentialsAndAccess(): void
+    protected function fillCredentialsAndAccess(string $kebabName): void
     {
         $filePart = $this->loadReadmePart('CREDENTIALS_AND_ACCESS.md');
 
         if ($this->adminCredentials) {
             $this->setReadmeValue($filePart, 'admin_email', $this->adminCredentials['email']);
             $this->setReadmeValue($filePart, 'admin_password', $this->adminCredentials['password']);
-            $this->removeTag($filePart, 'admin_credentials');
-        } else {
-            $this->removeStringByTag($filePart, 'admin_credentials');
+        }
+
+        $this->removeTag($filePart, 'admin_credentials', !$this->adminCredentials);
+
+        foreach (self::CREDENTIALS_ITEMS as $key => $title) {
+            if (!Arr::get($this->resources, $key)) {
+                $this->removeTag($filePart, "{$key}_credentials", true);
+
+                continue;
+            }
+
+            if ($this->confirm("Is {$title}'s admin the same as default one?", true)) {
+                $email = $this->adminCredentials['email'];
+                $password = $this->adminCredentials['password'];
+            } else {
+                $defaultPassword = substr(md5(uniqid()), 0, 8);
+
+                $email = $this->ask("Please enter a {$title}'s admin email", "admin@{$kebabName}.com");
+                $password = $this->ask("Please enter a {$title}'s admin password", $defaultPassword);
+            }
+
+            $this->setReadmeValue($filePart, "{$key}_email", $email);
+            $this->setReadmeValue($filePart, "{$key}_password", $password);
+            $this->removeTag($filePart, "{$key}_credentials");
         }
 
         $this->updateReadmeFile($filePart);
@@ -272,14 +307,13 @@ class Init extends Command
         $this->readmeContent .= "\n" . $filePart;
     }
 
-    protected function removeStringByTag(string &$text, string $tag): void
+    protected function removeTag(string &$text, string $tag, bool $removeWholeString = false): void
     {
-        $text = preg_replace("#({{$tag}})(.|\s)*?({/{$tag}})#", '', $text);
-    }
+        $regex = ($removeWholeString)
+            ? "#({{$tag}})(.|\s)*?({/{$tag}})#"
+            : "#{(/*){$tag}}#";
 
-    protected function removeTag(string &$text, string $tag): void
-    {
-        $text = preg_replace("#{(/*){$tag}}#", '', $text);
+        $text = preg_replace($regex, '', $text);
     }
 
     protected function setReadmeValue(string &$file, string $key, string $value): void
