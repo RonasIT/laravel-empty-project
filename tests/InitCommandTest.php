@@ -61,38 +61,38 @@ class InitCommandTest extends TestCase
             ->expectsConfirmation('Do you want to generate a README file?', 'yes')
             ->expectsConfirmation('Do you need a `Resources & Contacts` part?', 'yes')
             ->expectsQuestion(
-                'Are you going to use Issue Tracker? ' .
-                'Please enter a link or select `later` to do it later, otherwise select `no`.',
+                'Are you going to use Issue Tracker? '
+                . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
                 'later'
             )
             ->expectsQuestion(
-                'Are you going to use Figma? ' .
-                'Please enter a link or select `later` to do it later, otherwise select `no`.',
+                'Are you going to use Figma? '
+                . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
                 'later'
             )
             ->expectsQuestion(
-                'Are you going to use Sentry? ' .
-                'Please enter a link or select `later` to do it later, otherwise select `no`.',
+                'Are you going to use Sentry? '
+                . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
                 'later'
             )
             ->expectsQuestion(
-                'Are you going to use DataDog? ' .
-                'Please enter a link or select `later` to do it later, otherwise select `no`.',
+                'Are you going to use DataDog? '
+                . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
                 'later'
             )
             ->expectsQuestion(
-                'Are you going to use ArgoCD? ' .
-                'Please enter a link or select `later` to do it later, otherwise select `no`.',
+                'Are you going to use ArgoCD? '
+                . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
                 'later'
             )
             ->expectsQuestion(
-                'Are you going to use Laravel Telescope? ' .
-                'Please enter a link or select `later` to do it later, otherwise select `no`.',
+                'Are you going to use Laravel Telescope? '
+                . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
                 'later'
             )
             ->expectsQuestion(
-                'Are you going to use Laravel Nova? ' .
-                'Please enter a link or select `later` to do it later, otherwise select `no`.',
+                'Are you going to use Laravel Nova? '
+                . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
                 'later'
             )
             ->expectsQuestion('Please enter a Manager\'s email', '')
@@ -129,38 +129,38 @@ class InitCommandTest extends TestCase
             ->expectsConfirmation('Do you want to generate a README file?', 'yes')
             ->expectsConfirmation('Do you need a `Resources & Contacts` part?', 'yes')
             ->expectsQuestion(
-                'Are you going to use Issue Tracker? ' .
-                'Please enter a link or select `later` to do it later, otherwise select `no`.',
+                'Are you going to use Issue Tracker? '
+                . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
                 'later'
             )
             ->expectsQuestion(
-                'Are you going to use Figma? ' .
-                'Please enter a link or select `later` to do it later, otherwise select `no`.',
+                'Are you going to use Figma? '
+                . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
                 'no'
             )
             ->expectsQuestion(
-                'Are you going to use Sentry? ' .
-                'Please enter a link or select `later` to do it later, otherwise select `no`.',
+                'Are you going to use Sentry? '
+                . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
                 'no'
             )
             ->expectsQuestion(
-                'Are you going to use DataDog? ' .
-                'Please enter a link or select `later` to do it later, otherwise select `no`.',
+                'Are you going to use DataDog? '
+                . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
                 'no'
             )
             ->expectsQuestion(
-                'Are you going to use ArgoCD? ' .
-                'Please enter a link or select `later` to do it later, otherwise select `no`.',
+                'Are you going to use ArgoCD? '
+                . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
                 'no'
             )
             ->expectsQuestion(
-                'Are you going to use Laravel Telescope? ' .
-                'Please enter a link or select `later` to do it later, otherwise select `no`.',
+                'Are you going to use Laravel Telescope? '
+                . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
                 'no'
             )
             ->expectsQuestion(
-                'Are you going to use Laravel Nova? ' .
-                'Please enter a link or select `later` to do it later, otherwise select `no`.',
+                'Are you going to use Laravel Nova? '
+                . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
                 'no'
             )
             ->expectsQuestion('Please enter a Manager\'s email', 'manager@mail.com')
@@ -196,38 +196,38 @@ class InitCommandTest extends TestCase
             ->expectsConfirmation('Do you want to generate a README file?', 'yes')
             ->expectsConfirmation('Do you need a `Resources & Contacts` part?', 'yes')
             ->expectsQuestion(
-                'Are you going to use Issue Tracker? ' .
-                'Please enter a link or select `later` to do it later, otherwise select `no`.',
+                'Are you going to use Issue Tracker? '
+                . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
                 'https://gitlab.com/my-project'
             )
             ->expectsQuestion(
-                'Are you going to use Figma? ' .
-                'Please enter a link or select `later` to do it later, otherwise select `no`.',
+                'Are you going to use Figma? '
+                . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
                 'https://figma.com/my-project'
             )
             ->expectsQuestion(
-                'Are you going to use Sentry? ' .
-                'Please enter a link or select `later` to do it later, otherwise select `no`.',
+                'Are you going to use Sentry? '
+                . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
                 'https://sentry.com/my-project'
             )
             ->expectsQuestion(
-                'Are you going to use DataDog? ' .
-                'Please enter a link or select `later` to do it later, otherwise select `no`.',
+                'Are you going to use DataDog? '
+                . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
                 'https://datadoghq.com/my-project'
             )
             ->expectsQuestion(
-                'Are you going to use ArgoCD? ' .
-                'Please enter a link or select `later` to do it later, otherwise select `no`.',
+                'Are you going to use ArgoCD? '
+                . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
                 'https://argocd.com/my-project'
             )
             ->expectsQuestion(
-                'Are you going to use Laravel Telescope? ' .
-                'Please enter a link or select `later` to do it later, otherwise select `no`.',
+                'Are you going to use Laravel Telescope? '
+                . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
                 'https://mypsite.com/telescope-link'
             )
             ->expectsQuestion(
-                'Are you going to use Laravel Nova? ' .
-                'Please enter a link or select `later` to do it later, otherwise select `no`.',
+                'Are you going to use Laravel Nova? '
+                . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
                 'https://mypsite.com/nova-link'
             )
             ->expectsQuestion('Please enter a Manager\'s email', 'manager@mail.com')

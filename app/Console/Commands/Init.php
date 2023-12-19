@@ -10,9 +10,9 @@ use Illuminate\Support\Str;
 
 class Init extends Command
 {
-    const TEMPLATES_PATH = '.templates';
+    public const TEMPLATES_PATH = '.templates';
 
-    const RESOURCES_ITEMS = [
+    public const RESOURCES_ITEMS = [
         'issue_tracker' => 'Issue Tracker',
         'figma' => 'Figma',
         'sentry' => 'Sentry',
@@ -22,12 +22,12 @@ class Init extends Command
         'nova' => 'Laravel Nova',
     ];
 
-    const CONTACTS_ITEMS = [
+    public const CONTACTS_ITEMS = [
         'manager' => 'Manager',
         'team_lead' => 'Code Owner/Team Lead',
     ];
 
-    const CREDENTIALS_ITEMS = [
+    public const CREDENTIALS_ITEMS = [
         'telescope' => 'Laravel Telescope',
         'nova' => 'Laravel Nova',
     ];
@@ -156,8 +156,8 @@ class Init extends Command
 
         foreach (self::RESOURCES_ITEMS as $key => $title) {
             $defaultAnswer = ($key === 'telescope') ? $this->appUrl . '/telescope' : 'later';
-            $text = "Are you going to use {$title}? " .
-                "Please enter a link or select `later` to do it later, otherwise select `no`.";
+            $text = "Are you going to use {$title}? "
+                . "Please enter a link or select `later` to do it later, otherwise select `no`.";
 
             $link = $this->anticipate(
                 $text,
@@ -167,7 +167,7 @@ class Init extends Command
 
             if ($link === 'later') {
                 $this->emptyValuesList[] = "{$title} link";
-            } else if ($link !== 'no') {
+            } elseif ($link !== 'no') {
                 $this->setReadmeValue($filePart, "{$key}_link", $link);
             }
 

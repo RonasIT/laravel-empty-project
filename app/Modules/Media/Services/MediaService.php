@@ -5,7 +5,6 @@ namespace App\Modules\Media\Services;
 use App\Modules\Media\Contracts\Services\MediaServiceContract;
 use App\Modules\Media\Repositories\MediaRepository;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -45,10 +44,7 @@ class MediaService extends EntityService implements MediaServiceContract
 
     public function bulkCreate(array $data): array
     {
-        $result = [];
-
         return array_map(function ($media) {
-            /** @var UploadedFile $file */
             $file = $media['file'];
             $content = file_get_contents($file->getPathname());
 
