@@ -2,13 +2,11 @@
 
 namespace App\Modules\Media\Providers;
 
-use App\Modules\Media\Contracts\Controllers\MediaControllerContract;
 use App\Modules\Media\Contracts\Requests\BulkCreateMediaRequestContract;
 use App\Modules\Media\Contracts\Requests\CreateMediaRequestContract;
 use App\Modules\Media\Contracts\Requests\DeleteMediaRequestContract;
 use App\Modules\Media\Contracts\Requests\SearchMediaRequestContract;
 use App\Modules\Media\Contracts\Services\MediaServiceContract;
-use App\Modules\Media\Http\Controllers\MediaController;
 use App\Modules\Media\Http\Requests\BulkCreateMediaRequest;
 use App\Modules\Media\Http\Requests\CreateMediaRequest;
 use App\Modules\Media\Http\Requests\DeleteMediaRequest;

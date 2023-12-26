@@ -8,6 +8,12 @@ Clone this repository to your local machine.
 git clone :git_project_path
 ```
 
+Open project directory.
+
+```sh
+cd :project_directory
+```
+
 Build and start containers. It may takes some time.
 
 ```sh

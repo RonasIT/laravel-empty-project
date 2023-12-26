@@ -11,19 +11,20 @@ process, so you can efficiently find what you need or reach out to who you need.
 ### Resources
 
 Below are links to tools and services used in this project:
-- Issue Tracker: Here, you can report any issues or bugs related to the project. [Issue Tracker](:issue_tracker_link)
-- Figma: This is where we maintain all our design assets and mock-ups. [Figma](:figma_link)
-- Sentry: To monitor application performance and error tracking. [Sentry](:sentry_link)
-- DataDog: This is where we monitor our logs, and server performance, and receive alerts. [DataDog](:datadog_link)
-- ArgoCD: Is a kubernetes controller which continuously monitors running applications. [ArgoCD](:argocd_link)
-- Laravel Telescope: This is debug assistant for the Laravel framework. [Laravel Telescope](:telescope_link)
+- [Issue Tracker](:issue_tracker_link): Here, you can report any issues or bugs related to the project.
+- [Figma](:figma_link): This is where we maintain all our design assets and mock-ups.
+- [Sentry](:sentry_link): To monitor application performance and error tracking.
+- [DataDog](:datadog_link): This is where we monitor our logs, and server performance, and receive alerts.
+- [ArgoCD](:argocd_link): Is a kubernetes controller which continuously monitors running applications.
+- [Laravel Telescope](:telescope_link): This is debug assistant for the Laravel framework.
+- [Laravel Nova](:nova_link): This is admin panel for the Laravel framework.
 - [API Documentation](https://mysite.com)
 
 ### Contacts
 
 Should you need assistance or have questions, feel free to connect with the following individuals:
-- Manager: If you have any high-level project concerns, feel free to get in touch with our project manager. [Connect with Manager](:manager_link)
-- Code Owner/Team Lead: For specific questions about the codebase or technical aspects, reach out to our team lead. [Connect with Team Lead](:team_lead_link)
+- Manager: If you have any high-level project concerns, feel free to get in touch with our project manager. [Connect with Manager](mailto::manager_link)
+- Code Owner/Team Lead: For specific questions about the codebase or technical aspects, reach out to our team lead. [Connect with Team Lead](mailto::team_lead_link)
 
 Please be mindful of each individual's preferred contact method and office hours.
 
@@ -41,7 +42,13 @@ To get started with this repository, follow these steps:
 Clone this repository to your local machine.
 
 ```sh
-git clone https://github.com/RonasIT/laravel-empty-project
+git clone https://github.com/ronasit/laravel-helpers.git
+```
+
+Open project directory.
+
+```sh
+cd laravel-helpers
 ```
 
 Build and start containers. It may takes some time.
@@ -63,4 +70,14 @@ and `testing`. Each environment is represented by an appropriate environment fil
 
 ## Credentials and Access
 
-Default admin email and password: `mail@mail.com`/`123456`
+Default admin access:
+- email `mail@mail.com`
+- password `123456`
+
+Laravel Telescope access:
+- email `mail@mail.com`
+- password `123456`
+
+Laravel Nova access:
+- email `mail@mail.com`
+- password `123456`

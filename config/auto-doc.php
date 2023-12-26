@@ -17,6 +17,17 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Global application prefix
+    |--------------------------------------------------------------------------
+    |
+    | Usefully in case the webserver using a path to route requests to the app
+    | In case your app available at https://some.domain.com/service - use
+    | /service as global prefix config
+    */
+    'global_prefix' => env('SWAGGER_GLOBAL_PREFIX', '/'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Info block
     |--------------------------------------------------------------------------
     |
@@ -29,11 +40,11 @@ return [
         | Documentation Template
         |--------------------------------------------------------------------------
         |
-        | You can use your custom documentation view
+        | You can use your custom documentation view.
         */
-        'description' => 'swagger-description',
+        'description' => 'auto-doc::swagger-description',
         'version' => '0.0.0',
-        'title' => 'Name of Your Application',
+        'title' => env('APP_NAME', 'Name of Your Application'),
         'termsOfService' => '',
         'contact' => [
             'email' => 'your@email.com'
@@ -42,9 +53,6 @@ return [
             'name' => '',
             'url' => ''
         ]
-    ],
-    'swagger' => [
-        'version' => '2.0'
     ],
 
     /*
@@ -94,6 +102,16 @@ return [
     */
     'driver' => env('SWAGGER_DRIVER', 'local'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | OpenAPI Spec viewer
+    |--------------------------------------------------------------------------
+    |
+    | Tool for rendering API documentation in HTML format.
+    | Available values: "swagger", "elements", "rapidoc"
+    */
+    'documentation_viewer' => env('SWAGGER_SPEC_VIEWER', 'swagger'),
+
     'drivers' => [
         'local' => [
             'class' => LocalDriver::class,
@@ -121,6 +139,28 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Paths to additional documentation
+    |--------------------------------------------------------------------------
+    | An array of documentation paths to merge with the main documentation.
+    |
+    | For example, if your additional documentation is located in storage/additional_docs/example.json
+    | you need to add 'storage/additional_docs/example.json' to additional_paths, if your additional
+    | documentation is located in the root directory of your project you need to add the filename to additional_paths
+    */
+    'additional_paths' => [],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Response example array items limit
+    |--------------------------------------------------------------------------
+    | All array responses will be automatically cut for the config items count
+    |
+    | Note: you should collect documentation after the config change
+    */
+    'response_example_limit_count' => 5,
+
+    /*
+    |--------------------------------------------------------------------------
     | Swagger documentation visibility environments list
     |--------------------------------------------------------------------------
     |
@@ -131,5 +171,5 @@ return [
         'development'
     ],
 
-    'config_version' => '2.1'
+    'config_version' => '2.6'
 ];

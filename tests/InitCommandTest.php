@@ -25,9 +25,9 @@ class InitCommandTest extends TestCase
 
     public function testRunWithAdminAndWithoutReadmeCreation()
     {
-        $this->mockFilePutContent([
-            'database/migrations/2018_11_11_111111_add_default_user.php' => $this->getFixture('migration.php'),
-        ]);
+        $this->mockFilePutContent(
+            ['database/migrations/2018_11_11_111111_add_default_user.php', $this->getFixture('migration.php')]
+        );
 
         $this
             ->artisan('init "My App"')
@@ -45,10 +45,10 @@ class InitCommandTest extends TestCase
     {
         $this->mockShellExec();
 
-        $this->mockFilePutContent([
-            'database/migrations/2018_11_11_111111_add_default_user.php' => $this->getFixture('migration.php'),
-            'README.md' => $this->getFixture('default_readme.md'),
-        ]);
+        $this->mockFilePutContent(
+            ['database/migrations/2018_11_11_111111_add_default_user.php', $this->getFixture('migration.php')],
+            ['README.md', $this->getFixture('default_readme.md')]
+        );
 
         $this
             ->artisan('init "My App"')
@@ -60,24 +60,49 @@ class InitCommandTest extends TestCase
             ->expectsQuestion('Please enter an admin password', '123456')
             ->expectsConfirmation('Do you want to generate a README file?', 'yes')
             ->expectsConfirmation('Do you need a `Resources & Contacts` part?', 'yes')
-            ->expectsConfirmation('Are you going to use Issue Tracker?', 'yes')
-            ->expectsQuestion('Please enter a Issue Tracker link', '')
-            ->expectsConfirmation('Are you going to use Figma?', 'yes')
-            ->expectsQuestion('Please enter a Figma link', '')
-            ->expectsConfirmation('Are you going to use Sentry?', 'yes')
-            ->expectsQuestion('Please enter a Sentry link', '')
-            ->expectsConfirmation('Are you going to use DataDog?', 'yes')
-            ->expectsQuestion('Please enter a DataDog link', '')
-            ->expectsConfirmation('Are you going to use ArgoCD?', 'yes')
-            ->expectsQuestion('Please enter a ArgoCD link', '')
-            ->expectsConfirmation('Are you going to use Laravel Telescope?', 'yes')
-            ->expectsQuestion('Please enter a Laravel Telescope link', '')
-            ->expectsQuestion('Please enter a Manager contact', '')
-            ->expectsQuestion('Please enter a Code Owner/Team Lead contact', '')
+            ->expectsQuestion(
+                'Are you going to use Issue Tracker? '
+                . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
+                'later'
+            )
+            ->expectsQuestion(
+                'Are you going to use Figma? '
+                . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
+                'later'
+            )
+            ->expectsQuestion(
+                'Are you going to use Sentry? '
+                . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
+                'later'
+            )
+            ->expectsQuestion(
+                'Are you going to use DataDog? '
+                . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
+                'later'
+            )
+            ->expectsQuestion(
+                'Are you going to use ArgoCD? '
+                . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
+                'later'
+            )
+            ->expectsQuestion(
+                'Are you going to use Laravel Telescope? '
+                . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
+                'later'
+            )
+            ->expectsQuestion(
+                'Are you going to use Laravel Nova? '
+                . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
+                'later'
+            )
+            ->expectsQuestion('Please enter a Manager\'s email', '')
+            ->expectsQuestion('Please enter a Code Owner/Team Lead\'s email', '')
             ->expectsConfirmation('Do you need a `Prerequisites` part?', 'yes')
             ->expectsConfirmation('Do you need a `Getting Started` part?', 'yes')
             ->expectsConfirmation('Do you need an `Environments` part?', 'yes')
             ->expectsConfirmation('Do you need a `Credentials and Access` part?', 'yes')
+            ->expectsConfirmation('Is Laravel Telescope\'s admin the same as default one?', 'yes')
+            ->expectsConfirmation('Is Laravel Nova\'s admin the same as default one?', 'yes')
             ->expectsOutput('README generated successfully!')
             ->expectsOutput('Don`t forget to fill the following empty values:')
             ->expectsOutput('- Issue Tracker link')
@@ -85,16 +110,16 @@ class InitCommandTest extends TestCase
             ->expectsOutput('- Sentry link')
             ->expectsOutput('- DataDog link')
             ->expectsOutput('- ArgoCD link')
-            ->expectsOutput('- Manager contact')
-            ->expectsOutput('- Code Owner/Team Lead contact')
+            ->expectsOutput('- Manager\'s email')
+            ->expectsOutput('- Code Owner/Team Lead\'s email')
             ->assertExitCode(0);
     }
 
     public function testRunWithAdminAndPartialReadmeCreation()
     {
-        $this->mockFilePutContent([
-            'README.md' => $this->getFixture('partial_readme.md'),
-        ]);
+        $this->mockFilePutContent(
+            ['README.md', $this->getFixture('partial_readme.md')]
+        );
 
         $this
             ->artisan('init "My App"')
@@ -103,15 +128,43 @@ class InitCommandTest extends TestCase
             ->expectsConfirmation('Do you want to generate an admin user?')
             ->expectsConfirmation('Do you want to generate a README file?', 'yes')
             ->expectsConfirmation('Do you need a `Resources & Contacts` part?', 'yes')
-            ->expectsConfirmation('Are you going to use Issue Tracker?', 'yes')
-            ->expectsQuestion('Please enter a Issue Tracker link', '')
-            ->expectsConfirmation('Are you going to use Figma?')
-            ->expectsConfirmation('Are you going to use Sentry?')
-            ->expectsConfirmation('Are you going to use DataDog?')
-            ->expectsConfirmation('Are you going to use ArgoCD?')
-            ->expectsConfirmation('Are you going to use Laravel Telescope?')
-            ->expectsQuestion('Please enter a Manager contact', 'manager@mail.com')
-            ->expectsQuestion('Please enter a Code Owner/Team Lead contact', '')
+            ->expectsQuestion(
+                'Are you going to use Issue Tracker? '
+                . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
+                'later'
+            )
+            ->expectsQuestion(
+                'Are you going to use Figma? '
+                . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
+                'no'
+            )
+            ->expectsQuestion(
+                'Are you going to use Sentry? '
+                . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
+                'no'
+            )
+            ->expectsQuestion(
+                'Are you going to use DataDog? '
+                . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
+                'no'
+            )
+            ->expectsQuestion(
+                'Are you going to use ArgoCD? '
+                . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
+                'no'
+            )
+            ->expectsQuestion(
+                'Are you going to use Laravel Telescope? '
+                . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
+                'no'
+            )
+            ->expectsQuestion(
+                'Are you going to use Laravel Nova? '
+                . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
+                'no'
+            )
+            ->expectsQuestion('Please enter a Manager\'s email', 'manager@mail.com')
+            ->expectsQuestion('Please enter a Code Owner/Team Lead\'s email', '')
             ->expectsConfirmation('Do you need a `Prerequisites` part?')
             ->expectsConfirmation('Do you need a `Getting Started` part?')
             ->expectsConfirmation('Do you need an `Environments` part?', 'yes')
@@ -119,7 +172,7 @@ class InitCommandTest extends TestCase
             ->expectsOutput('README generated successfully!')
             ->expectsOutput('Don`t forget to fill the following empty values:')
             ->expectsOutput('- Issue Tracker link')
-            ->expectsOutput('- Code Owner/Team Lead contact')
+            ->expectsOutput('- Code Owner/Team Lead\'s email')
             ->assertExitCode(0);
     }
 
@@ -127,10 +180,10 @@ class InitCommandTest extends TestCase
     {
         $this->mockShellExec();
 
-        $this->mockFilePutContent([
-            'database/migrations/2018_11_11_111111_add_default_user.php' => $this->getFixture('migration.php'),
-            'README.md' => $this->getFixture('full_readme.md'),
-        ]);
+        $this->mockFilePutContent(
+            ['database/migrations/2018_11_11_111111_add_default_user.php', $this->getFixture('migration.php')],
+            ['README.md', $this->getFixture('full_readme.md')]
+        );
 
         $this
             ->artisan('init "My App"')
@@ -142,24 +195,51 @@ class InitCommandTest extends TestCase
             ->expectsQuestion('Please enter an admin password', '123456')
             ->expectsConfirmation('Do you want to generate a README file?', 'yes')
             ->expectsConfirmation('Do you need a `Resources & Contacts` part?', 'yes')
-            ->expectsConfirmation('Are you going to use Issue Tracker?', 'yes')
-            ->expectsQuestion('Please enter a Issue Tracker link', 'https://gitlab.com/my-project')
-            ->expectsConfirmation('Are you going to use Figma?', 'yes')
-            ->expectsQuestion('Please enter a Figma link', 'https://figma.com/my-project')
-            ->expectsConfirmation('Are you going to use Sentry?', 'yes')
-            ->expectsQuestion('Please enter a Sentry link', 'https://sentry.com/my-project')
-            ->expectsConfirmation('Are you going to use DataDog?', 'yes')
-            ->expectsQuestion('Please enter a DataDog link', 'https://datadoghq.com/my-project')
-            ->expectsConfirmation('Are you going to use ArgoCD?', 'yes')
-            ->expectsQuestion('Please enter a ArgoCD link', 'https://argocd.com/my-project')
-            ->expectsConfirmation('Are you going to use Laravel Telescope?', 'yes')
-            ->expectsQuestion('Please enter a Laravel Telescope link', 'https://mypsite.com/telescope-link')
-            ->expectsQuestion('Please enter a Manager contact', 'manager@mail.com')
-            ->expectsQuestion('Please enter a Code Owner/Team Lead contact', 'lead@mail.com')
+            ->expectsQuestion(
+                'Are you going to use Issue Tracker? '
+                . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
+                'https://gitlab.com/my-project'
+            )
+            ->expectsQuestion(
+                'Are you going to use Figma? '
+                . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
+                'https://figma.com/my-project'
+            )
+            ->expectsQuestion(
+                'Are you going to use Sentry? '
+                . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
+                'https://sentry.com/my-project'
+            )
+            ->expectsQuestion(
+                'Are you going to use DataDog? '
+                . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
+                'https://datadoghq.com/my-project'
+            )
+            ->expectsQuestion(
+                'Are you going to use ArgoCD? '
+                . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
+                'https://argocd.com/my-project'
+            )
+            ->expectsQuestion(
+                'Are you going to use Laravel Telescope? '
+                . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
+                'https://mypsite.com/telescope-link'
+            )
+            ->expectsQuestion(
+                'Are you going to use Laravel Nova? '
+                . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
+                'https://mypsite.com/nova-link'
+            )
+            ->expectsQuestion('Please enter a Manager\'s email', 'manager@mail.com')
+            ->expectsQuestion('Please enter a Code Owner/Team Lead\'s email', 'lead@mail.com')
             ->expectsConfirmation('Do you need a `Prerequisites` part?', 'yes')
             ->expectsConfirmation('Do you need a `Getting Started` part?', 'yes')
             ->expectsConfirmation('Do you need an `Environments` part?', 'yes')
             ->expectsConfirmation('Do you need a `Credentials and Access` part?', 'yes')
+            ->expectsConfirmation('Is Laravel Telescope\'s admin the same as default one?', 'yes')
+            ->expectsConfirmation('Is Laravel Nova\'s admin the same as default one?')
+            ->expectsQuestion('Please enter a Laravel Nova\'s admin email', 'nova_mail@mail.com')
+            ->expectsQuestion('Please enter a Laravel Nova\'s admin password', '654321')
             ->expectsOutput('README generated successfully!')
             ->assertExitCode(0);
     }

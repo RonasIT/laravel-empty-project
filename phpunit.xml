@@ -6,8 +6,6 @@
     </include>
     <exclude>
       <directory suffix=".php">./app/Modules/Media/tests</directory>
-    </exclude>
-    <exclude>
       <directory suffix=".php">./app/Modules/Media/database</directory>
     </exclude>
   </coverage>

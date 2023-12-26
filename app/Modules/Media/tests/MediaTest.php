@@ -26,12 +26,12 @@ class MediaTest extends ModuleTestCase
         $this->admin = User::find(1);
         $this->user = User::find(2);
         $this->file = UploadedFile::fake()->image('file.png', 600, 600);
-
-        $this->mockGenerateFilename();
     }
 
     public function testCreate(): void
     {
+        $this->mockGenerateFilename();
+
         $response = $this->actingAs($this->admin)->json('post', '/media', ['file' => $this->file]);
 
         $response->assertCreated();
@@ -47,6 +47,8 @@ class MediaTest extends ModuleTestCase
 
     public function testCreatePublic(): void
     {
+        $this->mockGenerateFilename();
+
         $response = $this->actingAs($this->user)->json('post', '/media', [
             'file' => $this->file,
             'is_public' => true,
@@ -64,6 +66,8 @@ class MediaTest extends ModuleTestCase
 
     public function testCreateCheckUrls(): void
     {
+        $this->mockGenerateFilename();
+
         $this->actingAs($this->admin)->json('post', '/media', ['file' => $this->file]);
 
         $this->assertEquals(1, Media::where('link', 'like', '/%')->count());
@@ -71,6 +75,8 @@ class MediaTest extends ModuleTestCase
 
     public function testCreateCheckResponse(): void
     {
+        $this->mockGenerateFilename();
+
         $response = $this->actingAs($this->admin)->json('post', '/media', ['file' => $this->file]);
 
         $response->assertCreated();
@@ -94,6 +100,8 @@ class MediaTest extends ModuleTestCase
 
     public function testBulkCreate(): void
     {
+        $this->mockGenerateFilename(2);
+
         $response = $this->actingAs($this->admin)->json('post', '/media/bulk', [
             'media' => [
                 [
