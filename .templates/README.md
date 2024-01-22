@@ -1,3 +1,3 @@
 # :project_name
 
-Project description will be here
+This project implements an API for the :project_name :type app.
