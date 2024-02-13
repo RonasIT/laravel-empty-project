@@ -32,6 +32,11 @@ class Init extends Command
         'nova' => 'Laravel Nova',
     ];
 
+    public const DEFAULT_URLS = [
+        'telescope',
+        'nova',
+    ];
+
     protected $signature = 'init {application-name : The application name }';
 
     protected $description = 'Initialize required project parameters to run DEV environment';
@@ -140,6 +145,14 @@ class Init extends Command
 
         $this->setReadmeValue($file, 'project_name', $appName);
 
+        $type = $this->anticipate(
+            question: 'What type of application will your API serve?',
+            choices: ['Mobile', 'Web', 'Multiplatform'],
+            default: 'Multiplatform'
+        );
+
+        $this->setReadmeValue($file, 'type', $type);
+
         $this->readmeContent = $file;
     }
 
@@ -155,7 +168,7 @@ class Init extends Command
         $filePart = $this->loadReadmePart('RESOURCES.md');
 
         foreach (self::RESOURCES_ITEMS as $key => $title) {
-            $defaultAnswer = ($key === 'telescope') ? $this->appUrl . '/telescope' : 'later';
+            $defaultAnswer = (in_array($key, self::DEFAULT_URLS)) ? $this->appUrl . "/{$key}" : 'later';
             $text = "Are you going to use {$title}? "
                 . "Please enter a link or select `later` to do it later, otherwise select `no`.";
 

@@ -59,6 +59,7 @@ class InitCommandTest extends TestCase
             ->expectsQuestion('Please enter an admin email', 'mail@mail.com')
             ->expectsQuestion('Please enter an admin password', '123456')
             ->expectsConfirmation('Do you want to generate a README file?', 'yes')
+            ->expectsQuestion('What type of application will your API serve?', 'Multiplatform')
             ->expectsConfirmation('Do you need a `Resources & Contacts` part?', 'yes')
             ->expectsQuestion(
                 'Are you going to use Issue Tracker? '
@@ -127,6 +128,7 @@ class InitCommandTest extends TestCase
             ->expectsQuestion('Please enter an application URL', 'https://mysite.com')
             ->expectsConfirmation('Do you want to generate an admin user?')
             ->expectsConfirmation('Do you want to generate a README file?', 'yes')
+            ->expectsQuestion('What type of application will your API serve?', 'Web')
             ->expectsConfirmation('Do you need a `Resources & Contacts` part?', 'yes')
             ->expectsQuestion(
                 'Are you going to use Issue Tracker? '
@@ -194,6 +196,7 @@ class InitCommandTest extends TestCase
             ->expectsQuestion('Please enter an admin email', 'mail@mail.com')
             ->expectsQuestion('Please enter an admin password', '123456')
             ->expectsConfirmation('Do you want to generate a README file?', 'yes')
+            ->expectsQuestion('What type of application will your API serve?', 'Mobile')
             ->expectsConfirmation('Do you need a `Resources & Contacts` part?', 'yes')
             ->expectsQuestion(
                 'Are you going to use Issue Tracker? '

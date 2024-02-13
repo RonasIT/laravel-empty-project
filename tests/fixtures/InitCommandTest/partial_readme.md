@@ -1,6 +1,6 @@
 # My App
 
-Project description will be here
+This project implements an API for the My App Web app.
 
 ## Project Resources & Contacts
 
