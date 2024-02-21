@@ -11,13 +11,13 @@ process, so you can efficiently find what you need or reach out to who you need.
 ### Resources
 
 Below are links to tools and services used in this project:
-- [Issue Tracker](https://gitlab.com/my-project): Here, you can report any issues or bugs related to the project.
-- [Figma](https://figma.com/my-project): This is where we maintain all our design assets and mock-ups.
-- [Sentry](https://sentry.com/my-project): To monitor application performance and error tracking.
-- [DataDog](https://datadoghq.com/my-project): This is where we monitor our logs, and server performance, and receive alerts.
-- [ArgoCD](https://argocd.com/my-project): Is a kubernetes controller which continuously monitors running applications.
-- [Laravel Telescope](https://mypsite.com/telescope-link): This is debug assistant for the Laravel framework.
-- [Laravel Nova](https://mypsite.com/nova-link): This is admin panel for the Laravel framework.
+- [Issue Tracker](https://gitlab.com/my-project): Here, you can report any issues or bugs related to the project. 
+- [Figma](https://figma.com/my-project): This is where we maintain all our design assets and mock-ups. 
+- [Sentry](https://sentry.com/my-project): To monitor application performance and error tracking. 
+- [DataDog](https://datadoghq.com/my-project): This is where we monitor our logs, and server performance, and receive alerts. 
+- [ArgoCD](https://argocd.com/my-project): Is a kubernetes controller which continuously monitors running applications. 
+- [Laravel Telescope](https://mypsite.com/telescope-link): This is debug assistant for the Laravel framework. 
+- [Laravel Nova](https://mypsite.com/nova-link): This is admin panel for the Laravel framework. 
 - [API Documentation](https://mysite.com)
 
 ### Contacts
