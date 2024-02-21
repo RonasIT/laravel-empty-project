@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Mails\ForgotPasswordMail;
+use App\Mail\ForgotPasswordMail;
 use App\Models\Role;
 use App\Repositories\UserRepository;
 use Carbon\Carbon;

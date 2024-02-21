@@ -3,19 +3,18 @@
 namespace App\Tests\Support;
 
 use phpmock\phpunit\PHPMock;
-use RonasIT\Support\Traits\MockClassTrait;
+use RonasIT\Support\Traits\MockTrait;
 
 trait AuthTestTrait
 {
-    use MockClassTrait;
+    use MockTrait;
     use PHPMock;
 
     public function mockOpensslRandomPseudoBytes(): void
     {
-        $mock = $this->getFunctionMock('App\Services', 'openssl_random_pseudo_bytes');
-        $mock
-            ->expects($this->once())
-            ->willReturn('5qw6rdsyd4sa65d4zxfc65ds4fc');
+        $this->mockNativeFunction('App\Services', [
+            $this->functionCall('openssl_random_pseudo_bytes', [], '5qw6rdsyd4sa65d4zxfc65ds4fc')
+        ]);
     }
 
     public function decodeJWTToken($token)
