@@ -5,17 +5,18 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Setting\GetSettingRequest;
 use App\Http\Requests\Setting\SearchSettingRequest;
 use App\Http\Requests\Setting\UpdateSettingRequest;
+use App\Http\Resources\Setting\SettingsCollectionResource;
+use App\Http\Resources\Setting\SettingResource;
 use App\Services\SettingService;
-use Illuminate\Http\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\Response;
 
 class SettingController extends Controller
 {
-    public function get(GetSettingRequest $request, SettingService $service, string $key): JsonResponse
+    public function get(GetSettingRequest $request, SettingService $service, string $key): SettingResource
     {
         $result = $service->findBy('name', $key);
 
-        return response()->json($result);
+        return SettingResource::make($result);
     }
 
     public function update(UpdateSettingRequest $request, SettingService $service, string $key): Response
@@ -28,10 +29,10 @@ class SettingController extends Controller
         return response('', Response::HTTP_NO_CONTENT);
     }
 
-    public function search(SearchSettingRequest $request, SettingService $service): JsonResponse
+    public function search(SearchSettingRequest $request, SettingService $service): SettingsCollectionResource
     {
         $result = $service->search($request->onlyValidated());
 
-        return response()->json($result);
+        return SettingsCollectionResource::make($result);
     }
 }
