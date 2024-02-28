@@ -328,7 +328,7 @@ class Init extends Command
     {
         $regex = ($removeWholeString)
             ? "#({{$tag}})(.|\s)*?({/{$tag}})#"
-            : "#{(/*){$tag}}#";
+            : "# {0,1}{(/*){$tag}}#";
 
         $text = preg_replace($regex, '', $text);
     }
