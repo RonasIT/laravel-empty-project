@@ -166,6 +166,7 @@ class Init extends Command
     protected function fillResources(): void
     {
         $filePart = $this->loadReadmePart('RESOURCES.md');
+        $laterText = '(will be added later)';
 
         foreach (self::RESOURCES_ITEMS as $key => $title) {
             $defaultAnswer = (in_array($key, self::DEFAULT_URLS)) ? $this->appUrl . "/{$key}" : 'later';
@@ -180,8 +181,11 @@ class Init extends Command
 
             if ($link === 'later') {
                 $this->emptyValuesList[] = "{$title} link";
+                $this->setReadmeValue($filePart, "{$key}_link");
+                $this->setReadmeValue($filePart, "{$key}_later", $laterText);
             } elseif ($link !== 'no') {
                 $this->setReadmeValue($filePart, "{$key}_link", $link);
+                $this->setReadmeValue($filePart, "{$key}_later");
             }
 
             $this->resources[$key] = ($link !== 'no');
@@ -324,12 +328,12 @@ class Init extends Command
     {
         $regex = ($removeWholeString)
             ? "#({{$tag}})(.|\s)*?({/{$tag}})#"
-            : "#{(/*){$tag}}#";
+            : "# {0,1}{(/*){$tag}}#";
 
         $text = preg_replace($regex, '', $text);
     }
 
-    protected function setReadmeValue(string &$file, string $key, string $value): void
+    protected function setReadmeValue(string &$file, string $key, string $value = ''): void
     {
         $file = str_replace(":{$key}", $value, $file);
     }
