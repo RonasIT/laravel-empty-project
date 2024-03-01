@@ -47,12 +47,12 @@ return [
         'title' => env('APP_NAME', 'Name of Your Application'),
         'termsOfService' => '',
         'contact' => [
-            'email' => 'your@email.com'
+            'email' => 'your@email.com',
         ],
         'license' => [
             'name' => '',
-            'url' => ''
-        ]
+            'url' => '',
+        ],
     ],
 
     /*
@@ -86,8 +86,8 @@ return [
         'code-descriptions' => [
             '200' => 'Operation successfully done',
             '204' => 'Operation successfully done',
-            '404' => 'This entity not found'
-        ]
+            '404' => 'This entity not found',
+        ],
     ],
 
     /*
@@ -115,12 +115,12 @@ return [
     'drivers' => [
         'local' => [
             'class' => LocalDriver::class,
-            'production_path' => storage_path('documentation.json')
+            'production_path' => storage_path('documentation.json'),
         ],
         'remote' => [
             'class' => RemoteDriver::class,
             'key' => env('SWAGGER_REMOTE_DRIVER_KEY', 'project_name'),
-            'url' => env('SWAGGER_REMOTE_DRIVER_URL', 'https://example.com')
+            'url' => env('SWAGGER_REMOTE_DRIVER_URL', 'https://example.com'),
         ],
         'storage' => [
             'class' => StorageDriver::class,
@@ -133,8 +133,8 @@ return [
             | One of the filesystems.disks config value
             */
             'disk' => env('SWAGGER_STORAGE_DRIVER_DISK', 'public'),
-            'production_path' => 'documentation.json'
-        ]
+            'production_path' => 'documentation.json',
+        ],
     ],
 
     /*
@@ -168,8 +168,8 @@ return [
     */
     'display_environments' => [
         'local',
-        'development'
+        'development',
     ],
 
-    'config_version' => '2.6'
+    'config_version' => '2.6',
 ];

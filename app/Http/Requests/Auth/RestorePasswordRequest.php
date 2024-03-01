@@ -10,7 +10,7 @@ class RestorePasswordRequest extends Request
     {
         return [
             'token' => 'required|string|exists:users,set_password_hash',
-            'password' => 'required|string'
+            'password' => 'required|string',
         ];
     }
 }

@@ -35,12 +35,12 @@ class CreateRolesTable extends Migration
         $roles = [
             [
                 'id' => 1,
-                'name' => 'administrator'
+                'name' => 'administrator',
             ],
             [
                 'id' => 2,
-                'name' => 'user'
-            ]
+                'name' => 'user',
+            ],
         ];
 
         DB::table('roles')->insert($roles);

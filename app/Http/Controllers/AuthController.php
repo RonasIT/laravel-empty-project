@@ -41,7 +41,7 @@ class AuthController extends Controller
                 'token' => $token,
                 'ttl' => config('jwt.ttl'),
                 'refresh_ttl' => config('jwt.refresh_ttl'),
-                'user' => $user
+                'user' => $user,
             ])
             ->withCookie($tokenCookie);
     }
@@ -61,7 +61,7 @@ class AuthController extends Controller
                 'token' => $token,
                 'ttl' => config('jwt.ttl'),
                 'refresh_ttl' => config('jwt.refresh_ttl'),
-                'user' => $user
+                'user' => $user,
             ])
             ->withCookie($tokenCookie);
     }
@@ -87,7 +87,7 @@ class AuthController extends Controller
                 ->json([
                     'token' => $newToken,
                     'ttl' => config('jwt.ttl'),
-                    'refresh_ttl' => config('jwt.refresh_ttl')
+                    'refresh_ttl' => config('jwt.refresh_ttl'),
                 ])
                 ->withHeaders(['Authorization' => "Bearer {$newToken}"])
                 ->withCookie($tokenCookie);

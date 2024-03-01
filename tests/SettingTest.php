@@ -28,7 +28,7 @@ class SettingTest extends TestCase
 
         $this->assertDatabaseHas('settings', [
             'name' => $setting['name'],
-            'value' => json_encode($setting['value'])
+            'value' => json_encode($setting['value']),
         ]);
     }
 
@@ -51,7 +51,7 @@ class SettingTest extends TestCase
 
         $this->assertDatabaseMissing('settings', [
             'name' => $setting['name'],
-            'value' => json_encode($setting['value'])
+            'value' => json_encode($setting['value']),
         ]);
     }
 
@@ -65,7 +65,7 @@ class SettingTest extends TestCase
 
         $this->assertDatabaseMissing('settings', [
             'name' => $setting['name'],
-            'value' => json_encode($setting['value'])
+            'value' => json_encode($setting['value']),
         ]);
     }
 
@@ -109,34 +109,34 @@ class SettingTest extends TestCase
         return [
             [
                 'filter' => ['query' => 'states'],
-                'result' => 'get_setting_by_key.json'
+                'result' => 'get_setting_by_key.json',
             ],
             [
                 'filter' => [
                     'order_by' => 'name',
-                    'desc' => false
+                    'desc' => false,
                 ],
-                'result' => 'get_settings_check_order.json'
+                'result' => 'get_settings_check_order.json',
             ],
             [
                 'filters' => [
-                    'per_page' => 2
+                    'per_page' => 2,
                 ],
-                'fixture' => 'search_per_page.json'
+                'fixture' => 'search_per_page.json',
             ],
             [
                 'filters' => [
-                    'all' => 1
+                    'all' => 1,
                 ],
-                'fixture' => 'search_all.json'
+                'fixture' => 'search_all.json',
             ],
             [
                 'filters' => [
                     'per_page' => 1,
                     'query' => 'states',
                 ],
-                'fixture' => 'search_complex.json'
-            ]
+                'fixture' => 'search_complex.json',
+            ],
         ];
     }
 
@@ -160,8 +160,8 @@ class SettingTest extends TestCase
         return [
             [
                 'filter' => [],
-                'result' => 'get_public_settings.json'
-            ]
+                'result' => 'get_public_settings.json',
+            ],
         ];
     }
 
@@ -184,7 +184,7 @@ class SettingTest extends TestCase
     {
         $setting = [
             'name' => 'test.value',
-            'value' => 123
+            'value' => 123,
         ];
 
         $result = app(SettingService::class)->set($setting['name'], $setting['value']);
@@ -193,7 +193,7 @@ class SettingTest extends TestCase
 
         $this->assertDatabaseHas('settings', [
             'name' => $setting['name'],
-            'value' => json_encode($setting['value'])
+            'value' => json_encode($setting['value']),
         ]);
     }
 
@@ -201,7 +201,7 @@ class SettingTest extends TestCase
     {
         $setting = [
             'name' => 'attribute',
-            'value' => 'new value'
+            'value' => 'new value',
         ];
 
         $result = app(SettingService::class)->set($setting['name'], $setting['value']);
@@ -210,7 +210,7 @@ class SettingTest extends TestCase
 
         $this->assertDatabaseHas('settings', [
             'name' => $setting['name'],
-            'value' => json_encode($setting['value'])
+            'value' => json_encode($setting['value']),
         ]);
     }
 

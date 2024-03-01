@@ -58,7 +58,7 @@ class SettingService extends EntityService
         if (empty($setting)) {
             return $this->repository->create([
                 'name' => $key,
-                'value' => $value
+                'value' => $value,
             ]);
         }
 
@@ -68,9 +68,9 @@ class SettingService extends EntityService
         Arr::set($setting, $valuePath, $value);
 
         return $this->repository->update([
-            'name' => $primaryKey
+            'name' => $primaryKey,
         ], [
-            'value' => $setting['value']
+            'value' => $setting['value'],
         ]);
     }
 }
