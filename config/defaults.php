@@ -12,5 +12,5 @@ return [
     |
     */
 
-    'password_hash_lifetime' => env('PASSWORD_HASH_LIFETIME', 1)
+    'password_hash_lifetime' => env('PASSWORD_HASH_LIFETIME', 1),
 ];

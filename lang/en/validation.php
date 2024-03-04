@@ -104,8 +104,8 @@ return [
             'rule-name' => 'custom-message',
         ],
         'role_id' => [
-            'access_denied' => 'You are not able to change user role'
-        ]
+            'access_denied' => 'You are not able to change user role',
+        ],
     ],
 
     /*
@@ -132,6 +132,6 @@ return [
 
     'exceptions' => [
         'not_found' => ':Entity does not exist',
-    ]
+    ],
 
 ];

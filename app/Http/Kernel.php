@@ -36,7 +36,7 @@ class Kernel extends HttpKernel
         ValidatePostSize::class,
         TrimStrings::class,
         ConvertEmptyStringsToNull::class,
-        AutoDocMiddleware::class
+        AutoDocMiddleware::class,
     ];
 
     /**
@@ -52,21 +52,21 @@ class Kernel extends HttpKernel
 //            AuthenticateSession::class,
             ShareErrorsFromSession::class,
             VerifyCsrfToken::class,
-            SubstituteBindings::class
+            SubstituteBindings::class,
         ],
 
         'api' => [
             'throttle:60,1',
-            'bindings'
+            'bindings',
         ],
 
         'auth_group' => [
             'auth',
-            'maintenance'
+            'maintenance',
         ],
 
         'guest_group' => [
-            'maintenance'
+            'maintenance',
         ],
     ];
 
@@ -84,6 +84,6 @@ class Kernel extends HttpKernel
         'can' => Authorize::class,
         'guest' => RedirectIfAuthenticated::class,
         'throttle' => ThrottleRequests::class,
-        'maintenance' => CheckForMaintenanceMode::class
+        'maintenance' => CheckForMaintenanceMode::class,
     ];
 }

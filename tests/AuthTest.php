@@ -32,7 +32,7 @@ class AuthTest extends TestCase
     {
         $response = $this->json('post', '/login', [
             'email' => $this->users[1]['email'],
-            'password' => $this->users[1]['password']
+            'password' => $this->users[1]['password'],
         ]);
 
         $response->assertOk();
@@ -45,7 +45,7 @@ class AuthTest extends TestCase
     {
         $response = $this->json('post', '/login', [
             'email' => 'wrong email',
-            'password' => 'wrong password'
+            'password' => 'wrong password',
         ]);
 
         $response->assertUnauthorized();
@@ -56,7 +56,7 @@ class AuthTest extends TestCase
         $response = $this->json('post', '/login', [
             'email' => $this->users[1]['email'],
             'password' => $this->users[1]['password'],
-            'remember' => true
+            'remember' => true,
         ]);
 
         $response->assertOk();
@@ -69,7 +69,7 @@ class AuthTest extends TestCase
         $response = $this->json('post', '/login', [
             'email' => $this->users[1]['email'],
             'password' => $this->users[1]['password'],
-            'remember' => false
+            'remember' => false,
         ]);
 
         $response->assertOk();
@@ -81,7 +81,7 @@ class AuthTest extends TestCase
     {
         $response = $this->json('post', '/login', [
             'email' => $this->users[0]['email'],
-            'password' => $this->users[0]['password']
+            'password' => $this->users[0]['password'],
         ]);
 
         $response->assertOk();
@@ -94,7 +94,7 @@ class AuthTest extends TestCase
     {
         $response = $this->actingAs($this->admin)->json('post', '/login', [
             'email' => $this->users[0]['email'],
-            'password' => $this->users[0]['password']
+            'password' => $this->users[0]['password'],
         ]);
 
         $response->assertOk();
@@ -183,7 +183,7 @@ class AuthTest extends TestCase
     public function testRefreshTokenWithRemember()
     {
         $response = $this->actingAs($this->admin)->json('get', '/auth/refresh', [
-            'remember' => true
+            'remember' => true,
         ]);
 
         $response->assertOk();
@@ -197,7 +197,7 @@ class AuthTest extends TestCase
         config(['jwt.blacklist_enabled' => false]);
 
         $response = $this->actingAs($this->admin)->json('get', '/auth/refresh', [
-            'remember' => true
+            'remember' => true,
         ]);
 
         $response->assertUnauthorized();
@@ -245,7 +245,7 @@ class AuthTest extends TestCase
         $this->mockOpensslRandomPseudoBytes();
 
         $response = $this->json('post', '/auth/forgot-password', [
-            'email' => 'fidel.kutch@example.com'
+            'email' => 'fidel.kutch@example.com',
         ]);
 
         $response->assertNoContent();
@@ -253,21 +253,21 @@ class AuthTest extends TestCase
         $this->assertDatabaseMissing('users', [
             'email' => 'fidel.kutch@example.com',
             'set_password_hash' => null,
-            'set_password_hash_created_at' => null
+            'set_password_hash_created_at' => null,
         ]);
 
         $this->assertMailEquals(ForgotPasswordMail::class, [
             [
                 'emails' => 'fidel.kutch@example.com',
-                'fixture' => 'forgot_password_email.html'
-            ]
+                'fixture' => 'forgot_password_email.html',
+            ],
         ]);
     }
 
     public function testForgotPasswordUserDoesNotExists()
     {
         $response = $this->json('post', '/auth/forgot-password', [
-            'email' => 'not_exists@example.com'
+            'email' => 'not_exists@example.com',
         ]);
 
         $response->assertUnprocessable();
@@ -284,12 +284,12 @@ class AuthTest extends TestCase
 
         $this->assertDatabaseMissing('users', [
             'email' => 'fidel.kutch@example.com',
-            'password' => 'old_password'
+            'password' => 'old_password',
         ]);
 
         $this->assertDatabaseMissing('users', [
             'email' => 'fidel.kutch@example.com',
-            'set_password_hash' => 'restore_token'
+            'set_password_hash' => 'restore_token',
         ]);
     }
 

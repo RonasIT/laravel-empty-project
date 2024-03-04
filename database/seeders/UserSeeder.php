@@ -11,7 +11,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         factory(User::class)->create([
-            'role_id' => Role::USER
+            'role_id' => Role::USER,
         ]);
     }
 }

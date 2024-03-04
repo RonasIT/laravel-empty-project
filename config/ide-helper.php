@@ -67,7 +67,6 @@ return [
         'app',
     ],
 
-
     /*
     |--------------------------------------------------------------------------
     | Extra classes
@@ -92,7 +91,7 @@ return [
             'critical'  => 'Monolog\Logger::addCritical',
             'alert'     => 'Monolog\Logger::addAlert',
             'emergency' => 'Monolog\Logger::addEmergency',
-        ]
+        ],
     ],
 
     /*

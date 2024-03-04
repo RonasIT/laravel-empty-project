@@ -14,7 +14,7 @@ class SearchSettingRequest extends Request
             'all' => 'integer',
             'query' => 'string|nullable',
             'order_by' => 'string|in:name',
-            'desc' => 'boolean'
+            'desc' => 'boolean',
         ];
     }
 }
