@@ -33,7 +33,7 @@ return [
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),
-            'throw' => true
+            'throw' => true,
         ],
 
         'public' => [
@@ -41,7 +41,7 @@ return [
             'root' => storage_path('app/public'),
             'url' => env('APP_URL') . '/storage',
             'visibility' => 'public',
-            'throw' => true
+            'throw' => true,
         ],
 
         's3' => [
@@ -52,7 +52,7 @@ return [
             'bucket' => env('AWS_BUCKET'),
             'url' => env('AWS_URL'),
             'endpoint' => env('AWS_ENDPOINT'),
-            'throw' => true
+            'throw' => true,
         ],
 
         'testing' => [
@@ -67,7 +67,7 @@ return [
             'bucket' => env('GOOGLE_CLOUD_STORAGE_BUCKET'),
             'path_prefix' => env('GOOGLE_CLOUD_STORAGE_PATH_PREFIX', null),
             'visibility' => 'public',
-            'throw' => true
+            'throw' => true,
         ],
     ],
 

@@ -19,7 +19,7 @@ class RefreshTokenResource extends BaseJsonResource
         return [
             'token' => $this->newToken,
             'ttl' => config('jwt.ttl'),
-            'refresh_ttl' => config('jwt.refresh_ttl')
+            'refresh_ttl' => config('jwt.refresh_ttl'),
         ];
     }
 

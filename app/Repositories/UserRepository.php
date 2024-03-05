@@ -23,7 +23,7 @@ class UserRepository extends BaseRepository
             ->where('set_password_hash_created_at', '<', Carbon::now()->subHours(config('defaults.password_hash_lifetime')))
             ->update([
                 'set_password_hash' => null,
-                'set_password_hash_created_at' => null
+                'set_password_hash_created_at' => null,
             ]);
     }
 }

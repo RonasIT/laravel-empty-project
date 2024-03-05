@@ -59,14 +59,14 @@ class Init extends Command
         $this->appUrl = $this->ask('Please enter an application URL', "https://api.dev.{$kebabName}.com");
 
         $this->updateConfigFile('.env.testing', '=', [
-            'DATA_COLLECTOR_KEY' => "{$kebabName}-local"
+            'DATA_COLLECTOR_KEY' => "{$kebabName}-local",
         ]);
 
         $envFile = (file_exists('.env')) ? '.env' : '.env.example';
 
         $this->updateConfigFile($envFile, '=', [
             'APP_NAME' => $appName,
-            'SWAGGER_REMOTE_DRIVER_KEY' => "{$kebabName}-local"
+            'SWAGGER_REMOTE_DRIVER_KEY' => "{$kebabName}-local",
         ]);
 
         $this->updateConfigFile('.env.development', '=', [
@@ -76,7 +76,7 @@ class Init extends Command
         ]);
 
         $this->updateConfigFile('.env.ci-testing', '=', [
-            'DATA_COLLECTOR_KEY' => "{$kebabName}"
+            'DATA_COLLECTOR_KEY' => "{$kebabName}",
         ]);
 
         $this->info('Project initialized successfully!');
@@ -132,7 +132,7 @@ class Init extends Command
             'name' => $this->ask('Please enter an admin name', 'Admin'),
             'email' => $this->ask('Please enter an admin email', "admin@{$kebabName}.com"),
             'password' => $this->ask('Please enter an admin password', $defaultPassword),
-            'role_id' => Role::ADMIN
+            'role_id' => Role::ADMIN,
         ];
 
         $this->publishMigration();
@@ -166,6 +166,7 @@ class Init extends Command
     protected function fillResources(): void
     {
         $filePart = $this->loadReadmePart('RESOURCES.md');
+        $laterText = '(will be added later)';
 
         foreach (self::RESOURCES_ITEMS as $key => $title) {
             $defaultAnswer = (in_array($key, self::DEFAULT_URLS)) ? $this->appUrl . "/{$key}" : 'later';
@@ -180,8 +181,11 @@ class Init extends Command
 
             if ($link === 'later') {
                 $this->emptyValuesList[] = "{$title} link";
+                $this->setReadmeValue($filePart, "{$key}_link");
+                $this->setReadmeValue($filePart, "{$key}_later", $laterText);
             } elseif ($link !== 'no') {
                 $this->setReadmeValue($filePart, "{$key}_link", $link);
+                $this->setReadmeValue($filePart, "{$key}_later");
             }
 
             $this->resources[$key] = ($link !== 'no');
@@ -324,12 +328,12 @@ class Init extends Command
     {
         $regex = ($removeWholeString)
             ? "#({{$tag}})(.|\s)*?({/{$tag}})#"
-            : "#{(/*){$tag}}#";
+            : "# {0,1}{(/*){$tag}}#";
 
         $text = preg_replace($regex, '', $text);
     }
 
-    protected function setReadmeValue(string &$file, string $key, string $value): void
+    protected function setReadmeValue(string &$file, string $key, string $value = ''): void
     {
         $file = str_replace(":{$key}", $value, $file);
     }

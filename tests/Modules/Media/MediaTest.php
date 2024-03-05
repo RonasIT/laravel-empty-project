@@ -41,7 +41,7 @@ class MediaTest extends ModuleTestCase
             'name' => 'file.png',
             'owner_id' => $this->admin->id,
             'is_public' => false,
-            'link' => '/storage/file.png'
+            'link' => '/storage/file.png',
         ]);
     }
 
@@ -61,7 +61,7 @@ class MediaTest extends ModuleTestCase
             'name' => 'file.png',
             'owner_id' => $this->user->id,
             'is_public' => true,
-            'link' => '/storage/file.png'
+            'link' => '/storage/file.png',
         ]);
     }
 
@@ -84,7 +84,7 @@ class MediaTest extends ModuleTestCase
 
         $this->assertDatabaseHas('media', [
             'id' => 6,
-            'link' => '/storage/file.png'
+            'link' => '/storage/file.png',
         ]);
 
         Storage::disk('local')->assertExists($this->getFilePathFromUrl('file.png'));
@@ -107,13 +107,13 @@ class MediaTest extends ModuleTestCase
             'media' => [
                 [
                     'file' => $this->file,
-                    'meta' => ['test1']
+                    'meta' => ['test1'],
                 ],
                 [
                     'file' => $this->file,
-                    'meta' => ['test2']
-                ]
-            ]
+                    'meta' => ['test2'],
+                ],
+            ],
         ]);
 
         $response->assertOk();
@@ -123,7 +123,7 @@ class MediaTest extends ModuleTestCase
             'name' => 'file.png',
             'owner_id' => $this->admin->id,
             'meta' => "[\"test1\"]",
-            'is_public' => false
+            'is_public' => false,
         ]);
 
         $this->assertDatabaseHas('media', [
@@ -131,7 +131,7 @@ class MediaTest extends ModuleTestCase
             'name' => 'file.png',
             'owner_id' => $this->admin->id,
             'meta' => "[\"test2\"]",
-            'is_public' => false
+            'is_public' => false,
         ]);
     }
 
@@ -142,7 +142,7 @@ class MediaTest extends ModuleTestCase
         $response->assertNoContent();
 
         $this->assertSoftDeleted('media', [
-            'id' => 1
+            'id' => 1,
         ]);
     }
 
@@ -160,7 +160,7 @@ class MediaTest extends ModuleTestCase
         $response->assertForbidden();
 
         $this->assertDatabaseHas('media', [
-            'id' => 1
+            'id' => 1,
         ]);
     }
 
@@ -171,7 +171,7 @@ class MediaTest extends ModuleTestCase
         $response->assertUnauthorized();
 
         $this->assertDatabaseHas('media', [
-            'id' => 1
+            'id' => 1,
         ]);
     }
 
@@ -180,7 +180,7 @@ class MediaTest extends ModuleTestCase
         return [
             [
                 'filter' => ['all' => true],
-                'result' => 'get_by_all.json'
+                'result' => 'get_by_all.json',
             ],
         ];
     }
@@ -190,17 +190,17 @@ class MediaTest extends ModuleTestCase
         return [
             [
                 'filter' => ['query' => 'product'],
-                'result' => 'get_by_query_as_admin.json'
+                'result' => 'get_by_query_as_admin.json',
             ],
             [
                 'filter' => [
                     'query' => 'photo',
                     'order_by' => 'name',
                     'desc' => false,
-                    'per_page' => 3
+                    'per_page' => 3,
                 ],
-                'result' => 'get_complex_as_admin.json'
-            ]
+                'result' => 'get_complex_as_admin.json',
+            ],
         ];
     }
 
@@ -209,17 +209,17 @@ class MediaTest extends ModuleTestCase
         return [
             [
                 'filter' => ['query' => 'product'],
-                'result' => 'get_by_query_as_user.json'
+                'result' => 'get_by_query_as_user.json',
             ],
             [
                 'filter' => [
                     'query' => 'photo',
                     'order_by' => 'name',
                     'desc' => false,
-                    'per_page' => 3
+                    'per_page' => 3,
                 ],
-                'result' => 'get_complex_as_user.json'
-            ]
+                'result' => 'get_complex_as_user.json',
+            ],
         ];
     }
 
@@ -272,11 +272,11 @@ class MediaTest extends ModuleTestCase
     {
         return [
             [
-                'filter' => ['fileName' => 'notAVirus.exe']
+                'filter' => ['fileName' => 'notAVirus.exe'],
             ],
             [
-                'filter' => ['fileName' => 'notAVirus.psd']
-            ]
+                'filter' => ['fileName' => 'notAVirus.psd'],
+            ],
         ];
     }
 
@@ -295,8 +295,8 @@ class MediaTest extends ModuleTestCase
 
         $response->assertJson([
             'errors' => [
-                'file' => ['The file must be a file of type: jpg, jpeg, bmp, png.']
-            ]
+                'file' => ['The file must be a file of type: jpg, jpeg, bmp, png.'],
+            ],
         ]);
     }
 
@@ -304,14 +304,14 @@ class MediaTest extends ModuleTestCase
     {
         return [
             [
-                'filter' => ['fileName' => 'image.jpg']
+                'filter' => ['fileName' => 'image.jpg'],
             ],
             [
-                'filter' => ['fileName' => 'image.png']
+                'filter' => ['fileName' => 'image.png'],
             ],
             [
-                'filter' => ['fileName' => 'image.bmp']
-            ]
+                'filter' => ['fileName' => 'image.bmp'],
+            ],
         ];
     }
 

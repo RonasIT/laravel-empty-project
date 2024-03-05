@@ -13,7 +13,7 @@ class RegisterUserRequest extends Request
             'email' => 'required|string|email|unique:users,email',
             'password' => 'required|string|same:confirm',
             'confirm' => 'required|string',
-            'remember' => 'boolean'
+            'remember' => 'boolean',
         ];
     }
 }

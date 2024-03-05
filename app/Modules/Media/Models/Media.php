@@ -22,7 +22,7 @@ class Media extends Model
         'name',
         'owner_id',
         'is_public',
-        'meta'
+        'meta',
     ];
 
     protected $casts = [

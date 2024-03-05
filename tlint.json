@@ -1,12 +1,23 @@
 {
-  "disabled": ["TrailingCommasOnArrays", "SpaceAfterSoleNotOperator"],
+  "disabled": [
+    "SpaceAfterSoleNotOperator",
+    "MailableMethodsInBuild",
+    "AlphabeticalImports"
+  ],
   "excluded": [
-    "_ide_helper.php", "_ide_helper_models.php", ".phpstorm.meta.php",
-    ".php-cs-fixer.dist.php", "app/Providers/DevDependenciesServiceProvider.php"
+    "_ide_helper.php",
+    "_ide_helper_models.php",
+    ".phpstorm.meta.php",
+    ".php-cs-fixer.dist.php",
+    "bootstrap/app.php",
+    "public/index.php"
   ],
   "paths": [
     {
-      "controllers": ["app/Http/Services", "app/Http/Repositories"]
+      "controllers": [
+        "app/Http/Services",
+        "app/Http/Repositories"
+      ]
     }
   ]
 }

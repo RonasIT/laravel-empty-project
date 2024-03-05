@@ -16,7 +16,7 @@ trait MediaTestTrait
             callChain: array_fill(0, $callsCount, [
                 'method' => 'generateName',
                 'arguments' => [],
-                'result' => 'file.png'
+                'result' => 'file.png',
             ])
         );
     }

@@ -11,26 +11,26 @@ class RoleTest extends TestCase
         return [
             [
                 'filter' => ['all' => 1],
-                'result' => 'search_by_all.json'
+                'result' => 'search_by_all.json',
             ],
             [
                 'filter' => [
                     'page' => 2,
                     'per_page' => 1,
                 ],
-                'result' => 'search_by_page_per.json'
+                'result' => 'search_by_page_per.json',
             ],
             [
                 'filter' => ['query' => 'us'],
-                'result' => 'get_roles_by_name.json'
+                'result' => 'get_roles_by_name.json',
             ],
             [
                 'filter' => [
                     'desc' => true,
-                    'order_by' => 'name'
+                    'order_by' => 'name',
                 ],
-                'result' => 'get_roles_check_order.json'
-            ]
+                'result' => 'get_roles_check_order.json',
+            ],
         ];
     }
 

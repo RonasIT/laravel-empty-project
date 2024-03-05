@@ -83,14 +83,14 @@ class UserTest extends TestCase
     public function testUpdateWithEmailOfAnotherUser()
     {
         $response = $this->actingAs($this->admin)->json('put', '/users/2', [
-            'email' => 'admin@example.com'
+            'email' => 'admin@example.com',
         ]);
 
         $response->assertUnprocessable();
 
         $this->assertDatabaseMissing('users', [
             'id' => 2,
-            'email' => 'admin@example.com'
+            'email' => 'admin@example.com',
         ]);
     }
 
@@ -172,11 +172,11 @@ class UserTest extends TestCase
         $response->assertCookieExpired('token');
 
         $this->assertDatabaseMissing('users', [
-            'id' => 2
+            'id' => 2,
         ]);
 
         $this->assertDatabaseMissing('media', [
-            'owner_id' => 2
+            'owner_id' => 2,
         ]);
     }
 
@@ -210,7 +210,7 @@ class UserTest extends TestCase
         $response->assertNoContent();
 
         $this->assertDatabaseMissing('users', [
-            'id' => 2
+            'id' => 2,
         ]);
     }
 
@@ -235,14 +235,14 @@ class UserTest extends TestCase
         $response->assertUnauthorized();
 
         $this->assertDatabaseHas('users', [
-            'id' => 1
+            'id' => 1,
         ]);
     }
 
     public function testGetProfile()
     {
         $response = $this->actingAs($this->admin)->json('get', '/profile', [
-            'with' => ['role', 'media.owner']
+            'with' => ['role', 'media.owner'],
         ]);
 
         $response->assertOk();
@@ -253,7 +253,7 @@ class UserTest extends TestCase
     public function testGet()
     {
         $response = $this->actingAs($this->admin)->json('get', '/users/1', [
-            'with' => ['role', 'media.owner']
+            'with' => ['role', 'media.owner'],
         ]);
 
         $response->assertOk();
@@ -273,43 +273,43 @@ class UserTest extends TestCase
         return [
             [
                 'filter' => ['all' => 1],
-                'result' => 'search_by_all_user.json'
+                'result' => 'search_by_all_user.json',
             ],
             [
                 'filter' => [
                     'page' => 1,
                     'per_page' => 2,
                 ],
-                'result' => 'search_by_page_per_page_user.json'
+                'result' => 'search_by_page_per_page_user.json',
             ],
             [
                 'filter' => ['query' => 'Another User'],
-                'result' => 'get_users_by_name.json'
+                'result' => 'get_users_by_name.json',
             ],
             [
                 'filter' => ['query' => 'admin@example.com'],
-                'result' => 'get_users_by_email.json'
+                'result' => 'get_users_by_email.json',
             ],
             [
                 'filter' => ['query' => 'Admin'],
-                'result' => 'get_users_by_query.json'
+                'result' => 'get_users_by_query.json',
             ],
             [
                 'filter' => [
                     'query' => 'Admin',
                     'with' => ['role'],
                     'order_by' => 'created_at',
-                    'desc' => false
+                    'desc' => false,
                 ],
-                'result' => 'get_users_complex.json'
+                'result' => 'get_users_complex.json',
             ],
             [
                 'filter' => [
                     'desc' => false,
-                    'order_by' => 'name'
+                    'order_by' => 'name',
                 ],
-                'result' => 'get_users_check_order.json'
-            ]
+                'result' => 'get_users_check_order.json',
+            ],
         ];
     }
 

@@ -17,14 +17,14 @@ class Setting extends Model
     protected $fillable = [
         'name',
         'value',
-        'is_public'
+        'is_public',
     ];
     protected $hidden = ['pivot'];
 
     protected $casts = [
         'value' => 'array',
         'name' => 'string',
-        'is_public' => 'boolean'
+        'is_public' => 'boolean',
     ];
 
     public function scopeApplySettingPermissionRestrictions(Builder $query): void

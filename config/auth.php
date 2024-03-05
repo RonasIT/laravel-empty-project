@@ -43,7 +43,7 @@ return [
         'nova' => [
             'driver' => 'session',
             'provider' => 'users',
-        ]
+        ],
     ],
 
     /*
@@ -95,7 +95,7 @@ return [
             'provider' => 'users',
             'table' => 'password_resets',
             'expire' => 60,
-        ]
+        ],
     ],
 
     /*
