@@ -30,7 +30,7 @@ class MediaController extends Controller
 
         $media = $mediaService->create($content, $file->getClientOriginalName(), $data);
 
-        return new MediaResource($media);
+        return MediaResource::make($media);
     }
 
     public function delete(DeleteMediaRequestContract $request, MediaServiceContract $mediaService, int $id): Response

@@ -9,10 +9,11 @@ use App\Http\Requests\Auth\LogoutRequest;
 use App\Http\Requests\Auth\RefreshTokenRequest;
 use App\Http\Requests\Auth\RegisterUserRequest;
 use App\Http\Requests\Auth\RestorePasswordRequest;
+use App\Http\Resources\Auth\SuccessLoginResource;
+use App\Http\Resources\Auth\RefreshTokenResource;
+use Illuminate\Http\Response;
 use App\Services\UserService;
 use App\Traits\TokenTrait;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Response;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException;
 use PHPOpenSourceSaver\JWTAuth\JWTAuth;
@@ -21,7 +22,7 @@ class AuthController extends Controller
 {
     use TokenTrait;
 
-    public function login(LoginRequest $request, UserService $service, JWTAuth $auth): JsonResponse
+    public function login(LoginRequest $request, UserService $service, JWTAuth $auth): SuccessLoginResource
     {
         $credentials = $request->only('email', 'password');
         $remember = $request->input('remember', false);
@@ -29,24 +30,17 @@ class AuthController extends Controller
         $token = $auth->attempt($credentials);
 
         if ($token === false) {
-            return response()->json(['message' => 'Authorization failed'], Response::HTTP_UNAUTHORIZED);
+            throw new UnauthorizedHttpException('jwt-auth');
         }
 
         $user = $service->first(['email' => $request->input('email')]);
 
         $tokenCookie = $this->makeAuthorizationTokenCookie($token, $remember);
 
-        return response()
-            ->json([
-                'token' => $token,
-                'ttl' => config('jwt.ttl'),
-                'refresh_ttl' => config('jwt.refresh_ttl'),
-                'user' => $user,
-            ])
-            ->withCookie($tokenCookie);
+        return SuccessLoginResource::make($token, $user, $tokenCookie);
     }
 
-    public function register(RegisterUserRequest $request, UserService $service, JWTAuth $auth): JsonResponse
+    public function register(RegisterUserRequest $request, UserService $service, JWTAuth $auth): SuccessLoginResource
     {
         $user = $service->create($request->onlyValidated());
 
@@ -56,17 +50,10 @@ class AuthController extends Controller
         $token = $auth->attempt($credentials);
         $tokenCookie = $this->makeAuthorizationTokenCookie($token, $remember);
 
-        return response()
-            ->json([
-                'token' => $token,
-                'ttl' => config('jwt.ttl'),
-                'refresh_ttl' => config('jwt.refresh_ttl'),
-                'user' => $user,
-            ])
-            ->withCookie($tokenCookie);
+        return SuccessLoginResource::make($token, $user, $tokenCookie);
     }
 
-    public function refreshToken(RefreshTokenRequest $request, JWTAuth $auth): JsonResponse
+    public function refreshToken(RefreshTokenRequest $request, JWTAuth $auth): RefreshTokenResource
     {
         $remember = $request->input('remember', false);
 
@@ -83,14 +70,7 @@ class AuthController extends Controller
             $newToken = $auth->fromUser($user);
             $tokenCookie = $this->makeAuthorizationTokenCookie($newToken, $remember);
 
-            return response()
-                ->json([
-                    'token' => $newToken,
-                    'ttl' => config('jwt.ttl'),
-                    'refresh_ttl' => config('jwt.refresh_ttl'),
-                ])
-                ->withHeaders(['Authorization' => "Bearer {$newToken}"])
-                ->withCookie($tokenCookie);
+            return RefreshTokenResource::make($newToken, $tokenCookie);
         } catch (JWTException $e) {
             throw new UnauthorizedHttpException('jwt-auth', $e->getMessage(), $e, $e->getCode());
         }
