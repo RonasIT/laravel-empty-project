@@ -12,13 +12,15 @@ trait InitCommandMockTrait
     {
         $mock = $this->getFunctionMock('App\Console\Commands', 'file_put_contents');
 
+        $callChain = [
+            ['.env.example', $this->getFixture('env.example.yml')],
+            ['.env.development', $this->getFixture('env.development.yml')],
+            ...$arguments
+        ];
+
         $mock
-            ->expects($this->exactly(4 + count($arguments)))
-            ->withConsecutive(
-                ['.env.example', $this->getFixture('env.example.yml')],
-                ['.env.development', $this->getFixture('env.development.yml')],
-                ...$arguments
-            );
+            ->expects($this->exactly(count($callChain)))
+            ->withConsecutive(...$callChain);
     }
 
     public function mockShellExec(): void
