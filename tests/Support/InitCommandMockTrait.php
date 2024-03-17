@@ -15,7 +15,7 @@ trait InitCommandMockTrait
         $callChain = [
             ['.env.example', $this->getFixture('env.example.yml')],
             ['.env.development', $this->getFixture('env.development.yml')],
-            ...$arguments
+            ...$arguments,
         ];
 
         $mock
