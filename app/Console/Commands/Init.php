@@ -135,7 +135,7 @@ class Init extends Command
 
         $this->setReadmeValue($file, 'project_name', $appName);
 
-        $type = $this->anticipate(
+        $type = $this->choice(
             question: 'What type of application will your API serve?',
             choices: ['Mobile', 'Web', 'Multiplatform'],
             default: 'Multiplatform'
