@@ -58,25 +58,15 @@ class Init extends Command
 
         $this->appUrl = $this->ask('Please enter an application URL', "https://api.dev.{$kebabName}.com");
 
-        $this->updateConfigFile('.env.testing', '=', [
-            'DATA_COLLECTOR_KEY' => "{$kebabName}-local",
-        ]);
-
         $envFile = (file_exists('.env')) ? '.env' : '.env.example';
 
         $this->updateConfigFile($envFile, '=', [
             'APP_NAME' => $appName,
-            'SWAGGER_REMOTE_DRIVER_KEY' => "{$kebabName}-local",
         ]);
 
         $this->updateConfigFile('.env.development', '=', [
             'APP_NAME' => $appName,
-            'DATA_COLLECTOR_KEY' => $kebabName,
             'APP_URL' => $this->appUrl,
-        ]);
-
-        $this->updateConfigFile('.env.ci-testing', '=', [
-            'DATA_COLLECTOR_KEY' => "{$kebabName}",
         ]);
 
         $this->info('Project initialized successfully!');
@@ -145,7 +135,7 @@ class Init extends Command
 
         $this->setReadmeValue($file, 'project_name', $appName);
 
-        $type = $this->anticipate(
+        $type = $this->choice(
             question: 'What type of application will your API serve?',
             choices: ['Mobile', 'Web', 'Multiplatform'],
             default: 'Multiplatform'
