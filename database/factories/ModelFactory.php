@@ -24,18 +24,18 @@ $factory->define(App\Models\User::class, function (Faker\Generator $faker) {
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = Hash::make('secret'),
         'remember_token' => Str::random(10),
-        'role_id' => Role::USER
+        'role_id' => Role::USER,
     ];
 });
 
 $factory->define(App\Models\Role::class, function () {
     return [
-        'name' => 'user'
+        'name' => 'user',
     ];
 });
 $factory->define(App\Models\Setting::class, function (Faker\Generator $faker) {
     return [
         'key' => $faker->word,
-        'value' => $faker->word
+        'value' => $faker->word,
     ];
 });

@@ -9,7 +9,7 @@ class RefreshTokenRequest extends Request
     public function rules(): array
     {
         return [
-            'remember' => 'boolean'
+            'remember' => 'boolean',
         ];
     }
 }

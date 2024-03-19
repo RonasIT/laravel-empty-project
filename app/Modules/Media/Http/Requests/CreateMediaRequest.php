@@ -14,7 +14,7 @@ class CreateMediaRequest extends BaseRequest implements CreateMediaRequestContra
         return [
             'file' => "file|required|max:5120|mimes:{$types}",
             'meta' => 'array',
-            'is_public' => 'boolean'
+            'is_public' => 'boolean',
         ];
     }
 }

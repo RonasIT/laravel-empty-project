@@ -1,38 +1,26 @@
 {
-    "current_page": 1,
     "data": [
         {
-            "created_at": "2016-10-20T11:05:00.000000Z",
-            "updated_at": "2016-10-20T11:06:00.000000Z",
             "name": "attribute",
             "value": {
                 "name": "color",
                 "value": "#000"
-            },
-            "is_public": true
+            }
         },
         {
-            "created_at": "2016-10-20T11:07:00.000000Z",
-            "updated_at": "2016-10-20T11:08:00.000000Z",
             "name": "mailgun",
             "value": {
                 "api_key": "superKey",
                 "account_id": "3495"
-            },
-            "is_public": false
+            }
         },
         {
-            "created_at": "2016-10-20T11:06:00.000000Z",
-            "updated_at": "2016-10-20T11:07:00.000000Z",
             "name": "settings",
             "value": {
                 "timezone": "australia"
-            },
-            "is_public": true
+            }
         },
         {
-            "created_at": "2016-10-20T11:08:00.000000Z",
-            "updated_at": "2016-10-20T11:09:00.000000Z",
             "name": "states",
             "value": [
                 "NSW",
@@ -43,35 +31,39 @@
                 "TAS",
                 "VIC",
                 "WA"
-            ],
-            "is_public": true
+            ]
         }
     ],
-    "first_page_url": "http:\/\/localhost\/settings?page=1",
-    "from": 1,
-    "last_page": 1,
-    "last_page_url": "http:\/\/localhost\/settings?page=1",
-    "links": [
-        {
-            "url": null,
-            "label": "&laquo; Previous",
-            "active": false
-        },
-        {
-            "url": "http:\/\/localhost\/settings?page=1",
-            "label": "1",
-            "active": true
-        },
-        {
-            "url": null,
-            "label": "Next &raquo;",
-            "active": false
-        }
-    ],
-    "next_page_url": null,
-    "path": "http:\/\/localhost\/settings",
-    "per_page": 4,
-    "prev_page_url": null,
-    "to": 4,
-    "total": 4
+    "links": {
+        "first": "http:\/\/localhost\/settings?page=1",
+        "last": "http:\/\/localhost\/settings?page=1",
+        "prev": null,
+        "next": null
+    },
+    "meta": {
+        "current_page": 1,
+        "from": 1,
+        "last_page": 1,
+        "links": [
+            {
+                "url": null,
+                "label": "&laquo; Previous",
+                "active": false
+            },
+            {
+                "url": "http:\/\/localhost\/settings?page=1",
+                "label": "1",
+                "active": true
+            },
+            {
+                "url": null,
+                "label": "Next &raquo;",
+                "active": false
+            }
+        ],
+        "path": "http:\/\/localhost\/settings",
+        "per_page": 4,
+        "to": 4,
+        "total": 4
+    }
 }

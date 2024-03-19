@@ -56,10 +56,10 @@ class UserService extends EntityService
         $this->repository
             ->force()
             ->update([
-                'email' => $email
+                'email' => $email,
             ], [
                 'set_password_hash' => $hash,
-                'set_password_hash_created_at' => Carbon::now()
+                'set_password_hash_created_at' => Carbon::now(),
             ]);
 
         Mail::to($email)->send(new ForgotPasswordMail(['hash' => $hash]));
@@ -70,10 +70,10 @@ class UserService extends EntityService
         $this->repository
             ->force()
             ->update([
-                'set_password_hash' => $token
+                'set_password_hash' => $token,
             ], [
                 'password' => Hash::make($password),
-                'set_password_hash' => null
+                'set_password_hash' => null,
             ]);
     }
 

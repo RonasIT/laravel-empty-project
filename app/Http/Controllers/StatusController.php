@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use DB;
 use Exception;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\DB;
 
 class StatusController extends BaseController
 {

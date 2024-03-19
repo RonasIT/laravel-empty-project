@@ -10,31 +10,32 @@ use App\Http\Requests\Users\GetUserRequest;
 use App\Http\Requests\Users\SearchUserRequest;
 use App\Http\Requests\Users\UpdateProfileRequest;
 use App\Http\Requests\Users\UpdateUserRequest;
+use App\Http\Resources\User\UserResource;
+use App\Http\Resources\User\UsersCollectionResource;
 use App\Services\UserService;
 use App\Traits\TokenTrait;
-use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
     use TokenTrait;
 
-    public function create(CreateUserRequest $request, UserService $service): JsonResponse
+    public function create(CreateUserRequest $request, UserService $service): UserResource
     {
         $data = $request->onlyValidated();
 
         $result = $service->create($data);
 
-        return response()->json($result);
+        return UserResource::make($result);
     }
 
-    public function get(GetUserRequest $request, UserService $service, int $id): JsonResponse
+    public function get(GetUserRequest $request, UserService $service, int $id): UserResource
     {
         $result = $service
             ->with($request->input('with', []))
             ->find($id);
 
-        return response()->json($result);
+        return UserResource::make($result);
     }
 
     public function update(UpdateUserRequest $request, UserService $service, int $id): Response
@@ -44,13 +45,13 @@ class UserController extends Controller
         return response('', Response::HTTP_NO_CONTENT);
     }
 
-    public function profile(GetUserProfileRequest $request, UserService $service): JsonResponse
+    public function profile(GetUserProfileRequest $request, UserService $service): UserResource
     {
         $result = $service
             ->with($request->input('with', []))
             ->find($request->user()->id);
 
-        return response()->json($result);
+        return UserResource::make($result);
     }
 
     public function updateProfile(UpdateProfileRequest $request, UserService $service): Response
@@ -76,10 +77,10 @@ class UserController extends Controller
         return response('', Response::HTTP_NO_CONTENT);
     }
 
-    public function search(SearchUserRequest $request, UserService $service): JsonResponse
+    public function search(SearchUserRequest $request, UserService $service): UsersCollectionResource
     {
         $result = $service->search($request->onlyValidated());
 
-        return response()->json($result);
+        return new UsersCollectionResource($result);
     }
 }

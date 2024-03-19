@@ -19,7 +19,7 @@ return [
         'factory' => 'database/factories/ModelFactory.php',
         'seeds' => 'database/seeds',
         'database_seeder' => 'database/seeds/DatabaseSeeder.php',
-        'translations' => 'resources/lang/en/validation.php'
+        'translations' => 'resources/lang/en/validation.php',
      ],
     'stubs' => [
         'model' => 'entity-generator::model',
@@ -39,6 +39,6 @@ return [
         'translation_not_found' => 'entity-generator::translation_not_found',
         'validation' => 'entity-generator::validation',
         'seeder' => 'entity-generator::seeder',
-        'database_empty_seeder' => 'entity-generator::database_seed_empty'
-    ]
+        'database_empty_seeder' => 'entity-generator::database_seed_empty',
+    ],
 ];

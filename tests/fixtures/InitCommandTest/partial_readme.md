@@ -11,7 +11,7 @@ process, so you can efficiently find what you need or reach out to who you need.
 ### Resources
 
 Below are links to tools and services used in this project:
-- [Issue Tracker](:issue_tracker_link): Here, you can report any issues or bugs related to the project.
+- [Issue Tracker](): Here, you can report any issues or bugs related to the project. (will be added later)
 - [API Documentation](https://mysite.com)
 
 ### Contacts
