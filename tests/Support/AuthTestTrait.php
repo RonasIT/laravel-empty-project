@@ -2,13 +2,11 @@
 
 namespace App\Tests\Support;
 
-use phpmock\phpunit\PHPMock;
 use RonasIT\Support\Traits\MockTrait;
 
 trait AuthTestTrait
 {
     use MockTrait;
-    use PHPMock;
 
     public function mockOpensslRandomPseudoBytes(): void
     {
