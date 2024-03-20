@@ -27,15 +27,12 @@ trait InitCommandMockTrait
 
     public function mockShellExec(): void
     {
-        $this->mockNativeFunction(
-            namespace: 'App\Console\Commands',
-            callChain: [
-                $this->functionCall(
-                    name: 'shell_exec',
-                    arguments: ['git ls-remote --get-url origin'],
-                    result: 'https://github.com/ronasit/laravel-helpers.git'
-                )
-            ]
-        );
+        $this->mockNativeFunction('App\Console\Commands', [
+            $this->functionCall(
+                name: 'shell_exec',
+                arguments: ['git ls-remote --get-url origin'],
+                result: 'https://github.com/ronasit/laravel-helpers.git'
+            )
+        ]);
     }
 }
