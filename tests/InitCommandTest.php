@@ -3,12 +3,10 @@
 namespace App\Tests;
 
 use App\Tests\Support\InitCommandMockTrait;
-use phpmock\phpunit\PHPMock;
 
 class InitCommandTest extends TestCase
 {
     use InitCommandMockTrait;
-    use PHPMock;
 
     public function testRunWithoutAdminAndReadmeCreation()
     {
