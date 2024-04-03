@@ -257,10 +257,7 @@ class AuthTest extends TestCase
         ]);
 
         $this->assertMailEquals(ForgotPasswordMail::class, [
-            [
-                'emails' => 'fidel.kutch@example.com',
-                'fixture' => 'forgot_password_email.html',
-            ],
+            $this->mockedMail('fidel.kutch@example.com', 'forgot_password_email.html', 'Forgot password?'),
         ]);
     }
 
