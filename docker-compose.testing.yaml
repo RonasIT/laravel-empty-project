@@ -2,7 +2,7 @@ version: "3"
 
 services:
   nginx:
-    image: webdevops/php-nginx-dev:8.1-alpine
+    image: webdevops/php-nginx-dev:8.2-alpine
     working_dir: /app
     volumes:
       - .:/app
