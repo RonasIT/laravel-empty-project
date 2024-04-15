@@ -19,7 +19,7 @@
     "nunomaduro/collision": "^6.4",
     "php-open-source-saver/jwt-auth": "^2.2",
     "psr/simple-cache": "^3.0",
-    "ronasit/laravel-helpers": "^2.5",
+    "ronasit/laravel-helpers": "^2.6",
     "ronasit/laravel-swagger": "^2.2",
     "spatie/laravel-google-cloud-storage": "^2.3",
     "spatie/laravel-ignition": "^2.4",
