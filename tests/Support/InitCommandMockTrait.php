@@ -7,6 +7,7 @@ use phpmock\phpunit\PHPMock;
 trait InitCommandMockTrait
 {
     use PHPMock;
+    use PHPUnitHelperTrait;
 
     public function mockFilePutContent(...$arguments): void
     {
@@ -20,7 +21,7 @@ trait InitCommandMockTrait
 
         $mock
             ->expects($this->exactly(count($callChain)))
-            ->withConsecutive(...$callChain);
+            ->with(...self::withConsecutive(...$callChain));
     }
 
     public function mockShellExec(): void
