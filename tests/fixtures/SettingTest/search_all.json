@@ -35,8 +35,8 @@
         }
     ],
     "links": {
-        "first": "http:\/\/localhost\/settings?page=1",
-        "last": "http:\/\/localhost\/settings?page=1",
+        "first": "http:\/\/localhost\/v0.1\/settings?page=1",
+        "last": "http:\/\/localhost\/v0.1\/settings?page=1",
         "prev": null,
         "next": null
     },
@@ -51,7 +51,7 @@
                 "active": false
             },
             {
-                "url": "http:\/\/localhost\/settings?page=1",
+                "url": "http:\/\/localhost\/v0.1\/settings?page=1",
                 "label": "1",
                 "active": true
             },
@@ -61,7 +61,7 @@
                 "active": false
             }
         ],
-        "path": "http:\/\/localhost\/settings",
+        "path": "http:\/\/localhost\/v0.1\/settings",
         "per_page": 4,
         "to": 4,
         "total": 4
