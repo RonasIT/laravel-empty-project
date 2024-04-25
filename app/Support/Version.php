@@ -16,23 +16,23 @@ class Version
 
     public static function is(VersionEnum $checkedVersion): bool
     {
-        return $checkedVersion->value === self::current();
+        return version_compare($checkedVersion->value, self::current(), '==');
     }
 
     public static function between(VersionEnum $from, VersionEnum $to): bool
     {
         $version = self::current();
 
-        return $version >= $from->value && $version <= $to->value;
+        return version_compare($version, $from->value, '>=') && version_compare($version, $to->value, '<=');
     }
 
-    public static function from(VersionEnum $from): bool
+    public static function gte(VersionEnum $from): bool
     {
-        return self::current() >= $from->value;
+        return version_compare(self::current(), $from->value, '>=');
     }
 
-    public static function to(VersionEnum $to): bool
+    public static function lte(VersionEnum $to): bool
     {
-        return self::current() <= $to->value;
+        return version_compare(self::current(), $to->value, '<=');
     }
 }
