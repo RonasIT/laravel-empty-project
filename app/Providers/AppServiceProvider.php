@@ -47,19 +47,17 @@ class AppServiceProvider extends ServiceProvider
                 return $result;
             });
 
-            if ($instance) {
-                return $instance->whereIn($param, $versions);
-            } else {
-                return RouteFacade::whereIn($param, $versions);
-            }
+            return (!empty($instance))
+                ? $instance->whereIn($param, $versions)
+                : RouteFacade::whereIn($param, $versions);
         };
 
-        Route::macro('versionRange', function (VersionEnum $from, VersionEnum $to, $param = null) use ($versionRange) {
-            return $versionRange($from, $to, $param, $this);
-        });
+        Route::macro('versionRange', fn (VersionEnum $from, VersionEnum $to, $param = null) => $versionRange($from, $to, $param, $this));
+
         Route::macro('versionFrom', function (VersionEnum $from, $param = null) use ($versionRange) {
             return $versionRange($from, null, $param, $this);
         });
+
         Route::macro('versionTo', function (VersionEnum $to, $param = null) use ($versionRange) {
             return $versionRange(null, $to, $param, $this);
         });
