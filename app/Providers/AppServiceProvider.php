@@ -60,9 +60,9 @@ class AppServiceProvider extends ServiceProvider
 
         RouteFacade::macro('versionRange', fn (VersionEnum $from, VersionEnum $to, $param = null) => $versionRange($from, $to, $param));
 
-        RouteFacade::macro('versionFrom', function (VersionEnum $from, $param = null) => $versionRange($from, null, $param));
+        RouteFacade::macro('versionFrom', fn (VersionEnum $from, $param = null) => $versionRange($from, null, $param));
 
-        RouteFacade::macro('versionTo', function (VersionEnum $to, $param = null) => $versionRange(null, $to, $param));
+        RouteFacade::macro('versionTo', fn (VersionEnum $to, $param = null) => $versionRange(null, $to, $param));
 
         RouteFacade::macro('version', fn (VersionEnum $version) => RouteFacade::prefix('v' . $version->value));
     }
