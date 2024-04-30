@@ -54,23 +54,16 @@ class AppServiceProvider extends ServiceProvider
 
         Route::macro('versionRange', fn (VersionEnum $from, VersionEnum $to, $param = null) => $versionRange($from, $to, $param, $this));
 
-        Route::macro('versionFrom', function (VersionEnum $from, $param = null) use ($versionRange) {
-            return $versionRange($from, null, $param, $this);
-        });
+        Route::macro('versionFrom', fn (VersionEnum $from, $param = null) => $versionRange($from, null, $param, $this));
 
-        Route::macro('versionTo', function (VersionEnum $to, $param = null) use ($versionRange) {
-            return $versionRange(null, $to, $param, $this);
-        });
+        Route::macro('versionTo', fn (VersionEnum $to, $param = null) => $versionRange(null, $to, $param, $this));
 
-        RouteFacade::macro('versionRange', function (VersionEnum $from, VersionEnum $to, $param = null) use ($versionRange) {
-            return $versionRange($from, $to, $param);
-        });
-        RouteFacade::macro('versionFrom', function (VersionEnum $from, $param = null) use ($versionRange) {
-            return $versionRange($from, null, $param);
-        });
-        RouteFacade::macro('versionTo', function (VersionEnum $to, $param = null) use ($versionRange) {
-            return $versionRange(null, $to, $param);
-        });
+        RouteFacade::macro('versionRange', fn (VersionEnum $from, VersionEnum $to, $param = null) => $versionRange($from, $to, $param));
+
+        RouteFacade::macro('versionFrom', function (VersionEnum $from, $param = null) => $versionRange($from, null, $param));
+
+        RouteFacade::macro('versionTo', function (VersionEnum $to, $param = null) => $versionRange(null, $to, $param));
+
         RouteFacade::macro('version', fn (VersionEnum $version) => RouteFacade::prefix('v' . $version->value));
     }
 
