@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\ClearVersion;
 use Illuminate\Http\Middleware\HandleCors;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use RonasIT\Support\AutoDoc\Http\Middleware\AutoDocMiddleware;
@@ -85,5 +86,6 @@ class Kernel extends HttpKernel
         'guest' => RedirectIfAuthenticated::class,
         'throttle' => ThrottleRequests::class,
         'maintenance' => CheckForMaintenanceMode::class,
+        'clear_version' => ClearVersion::class,
     ];
 }
