@@ -10,7 +10,7 @@ class ForgotPasswordMail extends BaseMail
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Forgot password?',
+            subject: __('Forgot password?'),
         );
     }
 
