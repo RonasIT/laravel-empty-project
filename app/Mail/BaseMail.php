@@ -24,9 +24,4 @@ abstract class BaseMail extends Mailable implements ShouldQueue
     abstract public function envelope(): Envelope;
 
     abstract public function content(): Content;
-
-    public function attachments(): array
-    {
-        return [];
-    }
 }
