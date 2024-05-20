@@ -6,7 +6,7 @@ use App\Services\RoleService;
 
 class RoleTest extends TestCase
 {
-    public function getSearchFilters()
+    public function getSearchFilters(): array
     {
         return [
             [

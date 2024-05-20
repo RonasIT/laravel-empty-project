@@ -2,7 +2,7 @@
 
 namespace App\Tests;
 
-use App\Mails\ForgotPasswordMail;
+use App\Mail\ForgotPasswordMail;
 use App\Models\User;
 use App\Tests\Support\AuthTestTrait;
 use Illuminate\Console\Events\ScheduledTaskFinished;
@@ -169,7 +169,7 @@ class AuthTest extends TestCase
         $this->assertNotEquals($this->token, last($explodedCookie));
     }
 
-    public function refreshTokenAfterRefreshTTL()
+    public function testRefreshTokenAfterRefreshTTL()
     {
         $request = $this->actingAs($this->admin);
 
@@ -257,10 +257,7 @@ class AuthTest extends TestCase
         ]);
 
         $this->assertMailEquals(ForgotPasswordMail::class, [
-            [
-                'emails' => 'fidel.kutch@example.com',
-                'fixture' => 'forgot_password_email.html',
-            ],
+            $this->mockedMail('fidel.kutch@example.com', 'forgot_password_email.html', 'Forgot password?'),
         ]);
     }
 
