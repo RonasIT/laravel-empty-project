@@ -204,9 +204,6 @@ return [
         RonasIT\Support\AutoDoc\AutoDocServiceProvider::class,
         PHPOpenSourceSaver\JWTAuth\Providers\LaravelServiceProvider::class,
 
-        /*
-         * Module Service Providers...
-         */
 
         /*
          * Application Service Providers...
