@@ -32,8 +32,6 @@ class SearchUserRequest extends Request
     {
         return [
             'role',
-            'media',
-            'media.owner',
         ];
     }
 }

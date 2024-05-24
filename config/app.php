@@ -207,7 +207,6 @@ return [
         /*
          * Module Service Providers...
          */
-        App\Modules\Media\Providers\MediaServiceProvider::class,
 
         /*
          * Application Service Providers...

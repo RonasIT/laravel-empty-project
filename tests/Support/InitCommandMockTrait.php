@@ -32,7 +32,7 @@ trait InitCommandMockTrait
                 name: 'shell_exec',
                 arguments: ['git ls-remote --get-url origin'],
                 result: 'https://github.com/ronasit/laravel-helpers.git'
-            )
+            ),
         ]);
     }
 }

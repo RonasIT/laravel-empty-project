@@ -2,10 +2,8 @@
 
 namespace App\Models;
 
-use App\Modules\Media\Models\Media;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
@@ -53,11 +51,6 @@ class User extends Authenticatable implements JWTSubject
     public function role(): BelongsTo
     {
         return $this->belongsTo(Role::class);
-    }
-
-    public function media(): HasMany
-    {
-        return $this->hasMany(Media::class, 'owner_id');
     }
 
     public function isAdmin(): bool

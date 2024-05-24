@@ -4,10 +4,6 @@
     <include>
       <directory suffix=".php">./app</directory>
     </include>
-    <exclude>
-      <directory suffix=".php">./app/Modules/Media/tests</directory>
-      <directory suffix=".php">./app/Modules/Media/database</directory>
-    </exclude>
   </coverage>
   <extensions>
     <extension class="RonasIT\Support\AutoDoc\Tests\PhpUnitExtensions\SwaggerExtension"/>
@@ -15,7 +11,6 @@
   <testsuites>
     <testsuite name="Tests">
       <directory suffix="Test.php">./tests</directory>
-      <directory suffix="Test.php">./app/Modules/Media/tests</directory>
     </testsuite>
   </testsuites>
   <php>

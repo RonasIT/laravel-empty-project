@@ -20,8 +20,6 @@ class GetUserProfileRequest extends Request
     {
         return [
             'role',
-            'media',
-            'media.owner',
         ];
     }
 }
