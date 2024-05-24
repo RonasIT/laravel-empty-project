@@ -33,8 +33,6 @@ class GetUserRequest extends Request
     {
         return [
             'role',
-            'media',
-            'media.owner',
         ];
     }
 }

@@ -174,10 +174,6 @@ class UserTest extends TestCase
         $this->assertDatabaseMissing('users', [
             'id' => 2,
         ]);
-
-        $this->assertDatabaseMissing('media', [
-            'owner_id' => 2,
-        ]);
     }
 
     public function testDeleteProfileWithoutBlacklist()
@@ -242,7 +238,7 @@ class UserTest extends TestCase
     public function testGetProfile()
     {
         $response = $this->actingAs($this->admin)->json('get', '/profile', [
-            'with' => ['role', 'media.owner'],
+            'with' => ['role'],
         ]);
 
         $response->assertOk();
@@ -253,7 +249,7 @@ class UserTest extends TestCase
     public function testGet()
     {
         $response = $this->actingAs($this->admin)->json('get', '/users/1', [
-            'with' => ['role', 'media.owner'],
+            'with' => ['role'],
         ]);
 
         $response->assertOk();

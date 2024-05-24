@@ -205,11 +205,6 @@ return [
         PHPOpenSourceSaver\JWTAuth\Providers\LaravelServiceProvider::class,
 
         /*
-         * Module Service Providers...
-         */
-        App\Modules\Media\Providers\MediaServiceProvider::class,
-
-        /*
          * Application Service Providers...
          */
         App\Providers\AppServiceProvider::class,

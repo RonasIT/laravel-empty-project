@@ -11,7 +11,7 @@ trait AuthTestTrait
     public function mockOpensslRandomPseudoBytes(): void
     {
         $this->mockNativeFunction('App\Services', [
-            $this->functionCall('openssl_random_pseudo_bytes', [], '5qw6rdsyd4sa65d4zxfc65ds4fc')
+            $this->functionCall('openssl_random_pseudo_bytes', [], '5qw6rdsyd4sa65d4zxfc65ds4fc'),
         ]);
     }
 

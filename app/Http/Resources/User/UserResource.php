@@ -3,8 +3,6 @@
 namespace App\Http\Resources\User;
 
 use App\Http\Resources\BaseJsonResource;
-use App\Http\Resources\Media\MediaCollectionResource;
-use App\Modules\Media\Http\Resources\MediaResource;
 use Illuminate\Http\Response;
 
 class UserResource extends BaseJsonResource
@@ -22,7 +20,6 @@ class UserResource extends BaseJsonResource
             'email' => $this->resource->email,
             'role_id' => $this->resource->role_id,
             'role' => RoleResource::make($this->whenLoaded('role')),
-            'media' => MediaCollectionResource::make($this->whenLoaded('media')),
         ];
     }
 }
