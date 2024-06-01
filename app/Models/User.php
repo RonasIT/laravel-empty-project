@@ -11,9 +11,9 @@ use RonasIT\Support\Traits\ModelTrait;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use Notifiable;
-    use ModelTrait;
     use HasFactory;
+    use ModelTrait;
+    use Notifiable;
 
     protected $fillable = [
         'name',

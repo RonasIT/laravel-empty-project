@@ -36,7 +36,7 @@ class SettingTest extends TestCase
     {
         $setting = $this->getJsonFixture('update_setting.json');
 
-        $response = $this->actingAs($this->admin)->json('put', "/settings/not-exists", $setting['value']);
+        $response = $this->actingAs($this->admin)->json('put', '/settings/not-exists', $setting['value']);
 
         $response->assertNotFound();
     }
@@ -143,8 +143,8 @@ class SettingTest extends TestCase
     /**
      * @dataProvider  getSearchFilters
      *
-     * @param array $filter
-     * @param string $fixture
+     * @param  array  $filter
+     * @param  string  $fixture
      */
     public function testSearch($filter, $fixture)
     {
@@ -168,8 +168,8 @@ class SettingTest extends TestCase
     /**
      * @dataProvider  getUserSearchFilters
      *
-     * @param array $filter
-     * @param string $fixture
+     * @param  array  $filter
+     * @param  string  $fixture
      */
     public function testSearchByUser($filter, $fixture)
     {

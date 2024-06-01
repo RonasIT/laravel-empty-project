@@ -161,7 +161,7 @@ class Init extends Command
         foreach (self::RESOURCES_ITEMS as $key => $title) {
             $defaultAnswer = (in_array($key, self::DEFAULT_URLS)) ? $this->appUrl . "/{$key}" : 'later';
             $text = "Are you going to use {$title}? "
-                . "Please enter a link or select `later` to do it later, otherwise select `no`.";
+                . 'Please enter a link or select `later` to do it later, otherwise select `no`.';
 
             $link = $this->anticipate(
                 $text,

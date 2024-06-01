@@ -20,7 +20,7 @@ return [
         'seeds' => 'database/seeds',
         'database_seeder' => 'database/seeds/DatabaseSeeder.php',
         'translations' => 'resources/lang/en/validation.php',
-     ],
+    ],
     'stubs' => [
         'model' => 'entity-generator::model',
         'relation' => 'entity-generator::relation',

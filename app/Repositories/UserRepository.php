@@ -7,8 +7,8 @@ use Carbon\Carbon;
 use RonasIT\Support\Repositories\BaseRepository;
 
 /**
- * @property  User $model
-*/
+ * @property User $model
+ */
 class UserRepository extends BaseRepository
 {
     public function __construct()
