@@ -43,8 +43,10 @@ Route::group(['prefix' => 'v{version}', 'middleware' => 'clear_version'], functi
             Route::post('auth/forgot-password', [AuthController::class, 'forgotPassword']);
             Route::post('auth/restore-password', [AuthController::class, 'restorePassword']);
             Route::post('auth/token/check', [AuthController::class, 'checkRestoreToken']);
-
-            Route::get('status', [StatusController::class, 'status']);
         });
     });
+});
+
+Route::group(['middleware' => 'guest_group'], function () {
+    Route::get('status', [StatusController::class, 'status']);
 });
