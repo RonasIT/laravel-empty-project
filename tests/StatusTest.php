@@ -10,7 +10,7 @@ class StatusTest extends TestCase
 {
     public function testStatusOk()
     {
-        $response = $this->json('get', '/status', [], [], 0, false);
+        $response = $this->get('/status');
 
         $response->assertOk();
     }
@@ -23,7 +23,7 @@ class StatusTest extends TestCase
         DB::shouldReceive('connection')->andReturn($connection);
         DB::shouldReceive('getPdo')->andThrow(Exception::class);
 
-        $response = $this->json('get', '/status', [], [], 0, false);
+        $response = $this->get('/status');
 
         $response->assertStatus(Response::HTTP_SERVICE_UNAVAILABLE);
     }

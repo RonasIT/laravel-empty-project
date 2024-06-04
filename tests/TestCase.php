@@ -67,13 +67,10 @@ abstract class TestCase extends BaseTestCase
         return parent::call($method, $uri, $parameters, $cookies, $files, $server, $content);
     }
 
-    public function json($method, $uri, array $data = [], array $headers = [], $options = 0, VersionEnum|bool|null $apiVersion = null): TestResponse
+    public function json($method, $uri, array $data = [], array $headers = [], $options = 0, ?VersionEnum $apiVersion = null): TestResponse
     {
-        if ($apiVersion !== false) {
-            $apiVersion = (empty($apiVersion)) ? last(VersionEnum::values()) : $apiVersion->value;
-            $uri = "/v{$apiVersion}{$uri}";
-        }
+        $apiVersion = (empty($apiVersion)) ? last(VersionEnum::values()) : $apiVersion->value;
 
-        return parent::json($method, $uri, $data, $headers);
+        return parent::json($method, "/v{$apiVersion}{$uri}", $data, $headers);
     }
 }
