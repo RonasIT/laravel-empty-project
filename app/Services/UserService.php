@@ -15,6 +15,7 @@ use RonasIT\Support\Services\EntityService;
 
 /**
  * @property UserRepository $repository
+ *
  * @mixin UserRepository
  */
 class UserService extends EntityService

@@ -4,29 +4,27 @@ namespace App\Providers;
 
 use App\Enums\VersionEnum;
 use Illuminate\Routing\Route;
+use Illuminate\Routing\RouteRegistrar;
 use Illuminate\Support\Facades\Route as RouteFacade;
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Routing\RouteRegistrar;
 
 class AppServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap any application services.
-     *
-     * @return void
      */
     public function boot(): void
     {
         /**
          * Specify that the route version must be in the range of given values inclusive.
          *
-         * @param VersionEnum|null $start
-         * @param VersionEnum|null $end
-         * @param string|null $param (default is 'version')
-         * @param Route|null $instance
+         * @param  VersionEnum|null  $start
+         * @param  VersionEnum|null  $end
+         * @param  string|null  $param  (default is 'version')
+         * @param  Route|null  $instance
          * @return Route|RouteRegistrar
          */
-        $versionRange = function (?VersionEnum $start, ?VersionEnum $end, ?string $param, Route $instance = null) {
+        $versionRange = function (?VersionEnum $start, ?VersionEnum $end, ?string $param, ?Route $instance = null) {
             if (!$param) {
                 $param = 'version';
             }

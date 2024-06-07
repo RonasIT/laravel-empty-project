@@ -7,8 +7,8 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use RonasIT\Support\Repositories\BaseRepository;
 
 /**
- * @property  Setting $model
-*/
+ * @property Setting $model
+ */
 class SettingRepository extends BaseRepository
 {
     public function __construct()

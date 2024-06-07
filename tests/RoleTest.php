@@ -37,8 +37,8 @@ class RoleTest extends TestCase
     /**
      * @dataProvider  getSearchFilters
      *
-     * @param array $filter
-     * @param string $fixture
+     * @param  array  $filter
+     * @param  string  $fixture
      */
     public function testSearch($filter, $fixture)
     {

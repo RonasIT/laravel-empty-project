@@ -9,14 +9,14 @@ use App\Http\Requests\Auth\LogoutRequest;
 use App\Http\Requests\Auth\RefreshTokenRequest;
 use App\Http\Requests\Auth\RegisterUserRequest;
 use App\Http\Requests\Auth\RestorePasswordRequest;
-use App\Http\Resources\Auth\SuccessLoginResource;
 use App\Http\Resources\Auth\RefreshTokenResource;
-use Illuminate\Http\Response;
+use App\Http\Resources\Auth\SuccessLoginResource;
 use App\Services\UserService;
 use App\Traits\TokenTrait;
-use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
+use Illuminate\Http\Response;
 use PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException;
 use PHPOpenSourceSaver\JWTAuth\JWTAuth;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class AuthController extends Controller
 {

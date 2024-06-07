@@ -8,8 +8,8 @@ use RonasIT\Support\Traits\ModelTrait;
 
 class Role extends Model
 {
-    use ModelTrait;
     use HasFactory;
+    use ModelTrait;
 
     public const ADMIN = 1;
     public const USER = 2;

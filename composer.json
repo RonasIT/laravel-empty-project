@@ -33,7 +33,7 @@
     "barryvdh/laravel-ide-helper": "^3.0",
     "brainmaestro/composer-git-hooks": "v3.0.0-alpha.1",
     "fakerphp/faker": "^1.23",
-    "friendsofphp/php-cs-fixer": "^3.8",
+    "laravel/pint": "^1.16",
     "mockery/mockery": "^1.6",
     "php-coveralls/php-coveralls": "^2.7",
     "phpunit/phpunit": "^9.6.17",
@@ -89,7 +89,7 @@
         "stop-on-failure": ["pre-commit"]
       },
       "pre-commit": [
-        "docker-compose up -d php && docker-compose exec -T php vendor/bin/php-cs-fixer fix && docker-compose exec -T php vendor/bin/tlint"
+        "docker-compose up -d php && docker-compose exec -T php vendor/bin/pint && docker-compose exec -T php vendor/bin/tlint"
       ]
     }
   },
