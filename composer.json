@@ -21,7 +21,7 @@
     "php-open-source-saver/jwt-auth": "^2.2",
     "psr/simple-cache": "^3.0",
     "ronasit/laravel-helpers": "dev-master",
-    "ronasit/laravel-swagger": "^2.2",
+    "ronasit/laravel-swagger": "dev-master",
     "spatie/laravel-google-cloud-storage": "^2.3",
     "spatie/laravel-ignition": "^2.4",
     "symfony/http-client": "6.4.5",

@@ -4,6 +4,7 @@ namespace App\Tests;
 
 use App\Models\User;
 use Illuminate\Support\Arr;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class UserTest extends TestCase
 {
@@ -264,31 +265,31 @@ class UserTest extends TestCase
         $response->assertNotFound();
     }
 
-    public function getSearchFilters()
+    public static function getSearchFilters(): array
     {
         return [
             [
                 'filter' => ['all' => 1],
-                'result' => 'search_by_all_user.json',
+                'fixture' => 'search_by_all_user.json',
             ],
             [
                 'filter' => [
                     'page' => 1,
                     'per_page' => 2,
                 ],
-                'result' => 'search_by_page_per_page_user.json',
+                'fixture' => 'search_by_page_per_page_user.json',
             ],
             [
                 'filter' => ['query' => 'Another User'],
-                'result' => 'get_users_by_name.json',
+                'fixture' => 'get_users_by_name.json',
             ],
             [
                 'filter' => ['query' => 'admin@example.com'],
-                'result' => 'get_users_by_email.json',
+                'fixture' => 'get_users_by_email.json',
             ],
             [
                 'filter' => ['query' => 'Admin'],
-                'result' => 'get_users_by_query.json',
+                'fixture' => 'get_users_by_query.json',
             ],
             [
                 'filter' => [
@@ -297,24 +298,19 @@ class UserTest extends TestCase
                     'order_by' => 'created_at',
                     'desc' => false,
                 ],
-                'result' => 'get_users_complex.json',
+                'fixture' => 'get_users_complex.json',
             ],
             [
                 'filter' => [
                     'desc' => false,
                     'order_by' => 'name',
                 ],
-                'result' => 'get_users_check_order.json',
+                'fixture' => 'get_users_check_order.json',
             ],
         ];
     }
 
-    /**
-     * @dataProvider  getSearchFilters
-     *
-     * @param array $filter
-     * @param string $fixture
-     */
+    #[DataProvider('getSearchFilters')]
     public function testSearch($filter, $fixture)
     {
         $response = $this->actingAs($this->admin)->json('get', '/users', $filter);

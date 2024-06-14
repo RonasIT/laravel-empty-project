@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ccad338d8a0a216adaa037a8d8879c9c",
+    "content-hash": "fc25c619129c99953aefedc1817a4096",
     "packages": [
         {
             "name": "brick/math",
@@ -6137,29 +6137,30 @@
         },
         {
             "name": "ronasit/laravel-swagger",
-            "version": "2.2",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RonasIT/laravel-swagger.git",
-                "reference": "ccda21b896fe5b96d3902d43e5b43b7a79fc8b9e"
+                "reference": "a9b2d6aa059f4a99669ffbdd97d63dffdcbcccd2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RonasIT/laravel-swagger/zipball/ccda21b896fe5b96d3902d43e5b43b7a79fc8b9e",
-                "reference": "ccda21b896fe5b96d3902d43e5b43b7a79fc8b9e",
+                "url": "https://api.github.com/repos/RonasIT/laravel-swagger/zipball/a9b2d6aa059f4a99669ffbdd97d63dffdcbcccd2",
+                "reference": "a9b2d6aa059f4a99669ffbdd97d63dffdcbcccd2",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "laravel/framework": ">=5.3.0",
-                "php": ">=7.3.0",
-                "phpunit/phpunit": ">=7.0"
+                "laravel/framework": "^10.0",
+                "php": "^8.1",
+                "phpunit/phpunit": "^10.0"
             },
             "require-dev": {
-                "orchestra/testbench": "^6.25",
+                "orchestra/testbench": "^8.0",
                 "php-coveralls/php-coveralls": "^2.5",
                 "php-mock/php-mock-phpunit": "^2.7"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -6196,9 +6197,9 @@
             ],
             "support": {
                 "issues": "https://github.com/RonasIT/laravel-swagger/issues",
-                "source": "https://github.com/RonasIT/laravel-swagger/tree/2.2"
+                "source": "https://github.com/RonasIT/laravel-swagger/tree/master"
             },
-            "time": "2023-11-07T03:20:06+00:00"
+            "time": "2024-05-02T06:55:57+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -11995,6 +11996,7 @@
     "minimum-stability": "beta",
     "stability-flags": {
         "ronasit/laravel-helpers": 20,
+        "ronasit/laravel-swagger": 20,
         "brainmaestro/composer-git-hooks": 15,
         "ronasit/laravel-entity-generator": 10
     },
