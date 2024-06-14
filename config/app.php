@@ -7,7 +7,7 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'disabled_api_versions' => explode(',', env('DISABLED_API_VERSIONS')),
+    'disabled_api_versions' => explode(',', env('DISABLED_API_VERSIONS', '')),
 
     /*
     |--------------------------------------------------------------------------

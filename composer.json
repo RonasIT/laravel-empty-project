@@ -36,7 +36,7 @@
     "friendsofphp/php-cs-fixer": "^3.8",
     "mockery/mockery": "^1.6",
     "php-coveralls/php-coveralls": "^2.7",
-    "phpunit/phpunit": "^9.6.17",
+    "phpunit/phpunit": "^10.5",
     "ronasit/laravel-entity-generator": ">=2.0.4-beta",
     "tightenco/tlint": "^9.3"
   },
