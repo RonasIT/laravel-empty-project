@@ -24,7 +24,12 @@ class InitCommandTest extends TestCase
     public function testRunWithAdminAndWithoutReadmeCreation()
     {
         $this->mockFilePutContent(
-            ['database/migrations/2018_11_11_111111_add_default_user.php', $this->getFixture('migration.php')]
+            [
+                'database/migrations/2018_11_11_111111_add_default_user.php',
+                $this->getFixture('migration.php'),
+                'optionalParameter',
+                'optionalParameter',
+            ]
         );
 
         $this
@@ -44,8 +49,18 @@ class InitCommandTest extends TestCase
         $this->mockShellExec();
 
         $this->mockFilePutContent(
-            ['database/migrations/2018_11_11_111111_add_default_user.php', $this->getFixture('migration.php')],
-            ['README.md', $this->getFixture('default_readme.md')]
+            [
+                'database/migrations/2018_11_11_111111_add_default_user.php',
+                $this->getFixture('migration.php'),
+                'optionalParameter',
+                'optionalParameter',
+            ],
+            [
+                'README.md',
+                $this->getFixture('default_readme.md'),
+                'optionalParameter',
+                'optionalParameter',
+            ]
         );
 
         $this
@@ -117,7 +132,12 @@ class InitCommandTest extends TestCase
     public function testRunWithAdminAndPartialReadmeCreation()
     {
         $this->mockFilePutContent(
-            ['README.md', $this->getFixture('partial_readme.md')]
+            [
+                'README.md',
+                $this->getFixture('partial_readme.md'),
+                'optionalParameter',
+                'optionalParameter',
+            ]
         );
 
         $this
@@ -181,8 +201,18 @@ class InitCommandTest extends TestCase
         $this->mockShellExec();
 
         $this->mockFilePutContent(
-            ['database/migrations/2018_11_11_111111_add_default_user.php', $this->getFixture('migration.php')],
-            ['README.md', $this->getFixture('full_readme.md')]
+            [
+                'database/migrations/2018_11_11_111111_add_default_user.php',
+                $this->getFixture('migration.php'),
+                'optionalParameter',
+                'optionalParameter',
+            ],
+            [
+                'README.md',
+                $this->getFixture('full_readme.md'),
+                'optionalParameter',
+                'optionalParameter',
+            ]
         );
 
         $this

@@ -4,6 +4,7 @@ namespace App\Tests;
 
 use App\Models\User;
 use App\Services\SettingService;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class SettingTest extends TestCase
 {
@@ -104,34 +105,34 @@ class SettingTest extends TestCase
         $response->assertNotFound();
     }
 
-    public function getSearchFilters()
+    public static function getSearchFilters(): array
     {
         return [
             [
                 'filter' => ['query' => 'states'],
-                'result' => 'get_setting_by_key.json',
+                'fixture' => 'get_setting_by_key.json',
             ],
             [
                 'filter' => [
                     'order_by' => 'name',
                     'desc' => false,
                 ],
-                'result' => 'get_settings_check_order.json',
+                'fixture' => 'get_settings_check_order.json',
             ],
             [
-                'filters' => [
+                'filter' => [
                     'per_page' => 2,
                 ],
                 'fixture' => 'search_per_page.json',
             ],
             [
-                'filters' => [
+                'filter' => [
                     'all' => 1,
                 ],
                 'fixture' => 'search_all.json',
             ],
             [
-                'filters' => [
+                'filter' => [
                     'per_page' => 1,
                     'query' => 'states',
                 ],
@@ -140,12 +141,7 @@ class SettingTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider  getSearchFilters
-     *
-     * @param array $filter
-     * @param string $fixture
-     */
+    #[DataProvider('getSearchFilters')]
     public function testSearch($filter, $fixture)
     {
         $response = $this->actingAs($this->admin)->json('get', '/settings', $filter);
@@ -155,22 +151,17 @@ class SettingTest extends TestCase
         $this->assertEqualsFixture($fixture, $response->json());
     }
 
-    public function getUserSearchFilters()
+    public static function getUserSearchFilters(): array
     {
         return [
             [
                 'filter' => [],
-                'result' => 'get_public_settings.json',
+                'fixture' => 'get_public_settings.json',
             ],
         ];
     }
 
-    /**
-     * @dataProvider  getUserSearchFilters
-     *
-     * @param array $filter
-     * @param string $fixture
-     */
+    #[DataProvider('getUserSearchFilters')]
     public function testSearchByUser($filter, $fixture)
     {
         $response = $this->actingAs($this->user)->json('get', '/settings', $filter);

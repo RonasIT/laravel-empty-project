@@ -11,8 +11,8 @@ trait InitCommandMockTrait
     public function mockFilePutContent(...$arguments): void
     {
         $callChain = [
-            ['.env.example', $this->getFixture('env.example.yml')],
-            ['.env.development', $this->getFixture('env.development.yml')],
+            ['.env.example', $this->getFixture('env.example.yml'), 'optionalParameter', 'optionalParameter'],
+            ['.env.development', $this->getFixture('env.development.yml'), 'optionalParameter', 'optionalParameter'],
             ...$arguments,
         ];
 
