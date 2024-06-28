@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "00bb7a1736aea5243ff34fa742db5dcc",
+    "content-hash": "2b08def0c5698312d26a837dd352efb6",
     "packages": [
         {
             "name": "brick/math",
@@ -1236,16 +1236,16 @@
         },
         {
             "name": "google/protobuf",
-            "version": "v4.27.1",
+            "version": "v4.27.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/protocolbuffers/protobuf-php.git",
-                "reference": "c471e2b3afe61bf41f22d1ca926b24e7ce96c598"
+                "reference": "1b9bfead0ea8108e6ab411258fc38417b62d4bf6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/protocolbuffers/protobuf-php/zipball/c471e2b3afe61bf41f22d1ca926b24e7ce96c598",
-                "reference": "c471e2b3afe61bf41f22d1ca926b24e7ce96c598",
+                "url": "https://api.github.com/repos/protocolbuffers/protobuf-php/zipball/1b9bfead0ea8108e6ab411258fc38417b62d4bf6",
+                "reference": "1b9bfead0ea8108e6ab411258fc38417b62d4bf6",
                 "shasum": ""
             },
             "require": {
@@ -1274,9 +1274,9 @@
                 "proto"
             ],
             "support": {
-                "source": "https://github.com/protocolbuffers/protobuf-php/tree/v4.27.1"
+                "source": "https://github.com/protocolbuffers/protobuf-php/tree/v4.27.2"
             },
-            "time": "2024-06-05T16:59:28+00:00"
+            "time": "2024-06-25T19:14:44+00:00"
         },
         {
             "name": "graham-campbell/result-type",
@@ -1797,16 +1797,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v11.11.1",
+            "version": "v11.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "c9b52e84bd18f155e5ba59b948c7da3e7f37e87f"
+                "reference": "92deaa4f037ff100e36809443811301819a8cf84"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/c9b52e84bd18f155e5ba59b948c7da3e7f37e87f",
-                "reference": "c9b52e84bd18f155e5ba59b948c7da3e7f37e87f",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/92deaa4f037ff100e36809443811301819a8cf84",
+                "reference": "92deaa4f037ff100e36809443811301819a8cf84",
                 "shasum": ""
             },
             "require": {
@@ -1998,7 +1998,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2024-06-20T10:54:53+00:00"
+            "time": "2024-06-27T09:04:50+00:00"
         },
         {
             "name": "laravel/legacy-factories",
@@ -5641,16 +5641,16 @@
         },
         {
             "name": "ronasit/laravel-helpers",
-            "version": "dev-laravel-min-version-10.48",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RonasIT/laravel-helpers.git",
-                "reference": "84d2fc9a8f63b8c2e8a76c9aef86e10ee2f91b75"
+                "reference": "22620f288d8712361d80b6295a054f26c685d40d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RonasIT/laravel-helpers/zipball/84d2fc9a8f63b8c2e8a76c9aef86e10ee2f91b75",
-                "reference": "84d2fc9a8f63b8c2e8a76c9aef86e10ee2f91b75",
+                "url": "https://api.github.com/repos/RonasIT/laravel-helpers/zipball/22620f288d8712361d80b6295a054f26c685d40d",
+                "reference": "22620f288d8712361d80b6295a054f26c685d40d",
                 "shasum": ""
             },
             "require": {
@@ -5670,6 +5670,7 @@
                 "php-coveralls/php-coveralls": "^2.5",
                 "phpunit/phpunit": "9.*"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -5705,27 +5706,27 @@
             ],
             "support": {
                 "issues": "https://github.com/RonasIT/laravel-helpers/issues",
-                "source": "https://github.com/RonasIT/laravel-helpers/tree/laravel-min-version-10.48"
+                "source": "https://github.com/RonasIT/laravel-helpers/tree/master"
             },
-            "time": "2024-06-21T21:00:25+00:00"
+            "time": "2024-06-28T15:14:17+00:00"
         },
         {
             "name": "ronasit/laravel-swagger",
-            "version": "dev-update-dependencies",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RonasIT/laravel-swagger.git",
-                "reference": "ea4c04adb54a433b9cf94dced9946ba43978936f"
+                "reference": "b515b254b919edf9c5b08cf9edced651586740b3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RonasIT/laravel-swagger/zipball/ea4c04adb54a433b9cf94dced9946ba43978936f",
-                "reference": "ea4c04adb54a433b9cf94dced9946ba43978936f",
+                "url": "https://api.github.com/repos/RonasIT/laravel-swagger/zipball/b515b254b919edf9c5b08cf9edced651586740b3",
+                "reference": "b515b254b919edf9c5b08cf9edced651586740b3",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "laravel/framework": "^10.0|^11.0",
+                "laravel/framework": ">=10.0",
                 "php": "^8.1",
                 "phpunit/phpunit": "^10.0"
             },
@@ -5734,6 +5735,7 @@
                 "php-coveralls/php-coveralls": "^2.5",
                 "php-mock/php-mock-phpunit": "^2.7"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -5770,9 +5772,9 @@
             ],
             "support": {
                 "issues": "https://github.com/RonasIT/laravel-swagger/issues",
-                "source": "https://github.com/RonasIT/laravel-swagger/tree/update-dependencies"
+                "source": "https://github.com/RonasIT/laravel-swagger/tree/master"
             },
-            "time": "2024-06-20T02:59:44+00:00"
+            "time": "2024-06-26T09:49:30+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -6755,16 +6757,16 @@
         },
         {
             "name": "spatie/error-solutions",
-            "version": "1.0.1",
+            "version": "1.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/error-solutions.git",
-                "reference": "d60d4d2ef4b7701c86134ded959667cac6215233"
+                "reference": "55ea4117e0fde89d520883734ab9b71064c48876"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/error-solutions/zipball/d60d4d2ef4b7701c86134ded959667cac6215233",
-                "reference": "d60d4d2ef4b7701c86134ded959667cac6215233",
+                "url": "https://api.github.com/repos/spatie/error-solutions/zipball/55ea4117e0fde89d520883734ab9b71064c48876",
+                "reference": "55ea4117e0fde89d520883734ab9b71064c48876",
                 "shasum": ""
             },
             "require": {
@@ -6817,7 +6819,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/error-solutions/issues",
-                "source": "https://github.com/spatie/error-solutions/tree/1.0.1"
+                "source": "https://github.com/spatie/error-solutions/tree/1.0.3"
             },
             "funding": [
                 {
@@ -6825,7 +6827,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-06-21T10:09:00+00:00"
+            "time": "2024-06-27T12:22:48+00:00"
         },
         {
             "name": "spatie/flare-client-php",
@@ -12416,7 +12418,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^8.2",
+        "php": "^8.3",
         "ext-openssl": "*"
     },
     "platform-dev": {
