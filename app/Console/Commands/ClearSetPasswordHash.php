@@ -11,9 +11,9 @@ class ClearSetPasswordHash extends Command
 
     protected $description = 'Clear set_password_hash in users table';
 
-    public function handle(): void
+    public function handle(UserService $service): void
     {
-        app(UserService::class)->clearSetPasswordHash();
+        $service->clearSetPasswordHash();
 
         $this->line('Set password hash was cleared');
     }
