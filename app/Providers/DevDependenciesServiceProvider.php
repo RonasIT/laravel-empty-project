@@ -14,7 +14,8 @@ class DevDependenciesServiceProvider extends ServiceProvider
     {
         if (config('app.env') === 'local') {
             // To use "require-dev" dependencies, their providers should be registered via full namespace
-            App::register(\RonasIT\Support\EntityGeneratorServiceProvider::class);
+            // TODO: restore when the dependency would be updated
+            //App::register(\RonasIT\Support\EntityGeneratorServiceProvider::class);
             App::register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
         }
     }
