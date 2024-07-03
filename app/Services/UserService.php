@@ -6,6 +6,7 @@ use App\Mail\ForgotPasswordMail;
 use App\Models\Role;
 use App\Repositories\UserRepository;
 use Carbon\Carbon;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
@@ -65,8 +66,16 @@ class UserService extends EntityService
         Mail::to($email)->send(new ForgotPasswordMail(['hash' => $hash]));
     }
 
-    public function restorePassword(string $token, string $password): void
+    public function restorePassword(User $user, string $password): void
     {
+        $user->forceFill([
+            'password' => Hash::make($password),
+        ])->setRememberToken(Str::random(60));
+
+        $user->save();
+
+        event(new PasswordReset($user));
+
         $this->repository
             ->force()
             ->update([

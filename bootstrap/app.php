@@ -22,8 +22,7 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        // need to check how it works
-        // maybe this row is not necessary
+        // TODO: need to check how it works, maybe this row is not necessary
         $middleware->throttleApi('60,1');
 
         $middleware->group('auth_group', [

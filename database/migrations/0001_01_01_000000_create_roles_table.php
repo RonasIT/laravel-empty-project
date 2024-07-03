@@ -6,31 +6,30 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use RonasIT\Support\Traits\MigrationTrait;
 
-class CreateRolesTable extends Migration
-{
+return new class () extends Migration {
     use MigrationTrait;
 
-    public function up()
+    public function up(): void
     {
         $this->createTable();
         $this->addRoles();
     }
 
-    public function down()
+    public function down(): void
     {
         Schema::drop('roles');
     }
 
-    public function createTable()
+    public function createTable(): void
     {
         Schema::create('roles', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('name');
             $table->timestamps();
         });
     }
 
-    public function addRoles()
+    public function addRoles(): void
     {
         $roles = [
             [
@@ -45,4 +44,4 @@ class CreateRolesTable extends Migration
 
         DB::table('roles')->insert($roles);
     }
-}
+};
