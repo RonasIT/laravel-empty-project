@@ -80,7 +80,7 @@ return [
         'jwt' => [
             'type' => 'apiKey',
             'name' => 'Authorization',
-            'in' => 'header'
+            'in' => 'header',
         ],
         'laravel' => [
             'type' => 'apiKey',

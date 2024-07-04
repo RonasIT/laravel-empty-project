@@ -17,7 +17,7 @@ services:
           WEB_DOCUMENT_ROOT: /app/public
           WEB_DOCUMENT_INDEX: index.php
           REDIS_PORT: "6379"
-          php.xdebug.max_nesting_level: 250
+          XDEBUG_MAX_NESTING_LEVEL: 250
           XDEBUG_PROFILER_ENABLE: 0
           XDEBUG_START_WITH_REQUEST: 1
           XDEBUG_DISCOVER_CLIENT_HOST: 0
