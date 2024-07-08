@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -10,7 +11,7 @@ use Illuminate\Notifications\Notifiable;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 use RonasIT\Support\Traits\ModelTrait;
 
-class User extends Authenticatable implements JWTSubject, \Illuminate\Contracts\Auth\CanResetPassword
+class User extends Authenticatable implements JWTSubject, CanResetPasswordContract
 {
     use CanResetPassword;
     use HasFactory;
@@ -27,10 +28,6 @@ class User extends Authenticatable implements JWTSubject, \Illuminate\Contracts\
     protected $hidden = [
         'password',
         'remember_token',
-    ];
-
-    protected $casts = [
-        'is_public' => 'boolean',
     ];
 
     public function getJWTIdentifier(): int
@@ -63,5 +60,12 @@ class User extends Authenticatable implements JWTSubject, \Illuminate\Contracts\
         $url = 'https://example.com/reset-password?token='.$token;
 
         $this->notify(new ResetPasswordNotification($url));
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'password' => 'hashed',
+        ];
     }
 }
