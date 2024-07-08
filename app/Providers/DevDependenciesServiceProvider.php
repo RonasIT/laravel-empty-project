@@ -16,7 +16,6 @@ class DevDependenciesServiceProvider extends ServiceProvider
             // To use "require-dev" dependencies, their providers should be registered via full namespace
             // TODO: restore when the dependency would be updated
             //App::register(\RonasIT\Support\EntityGeneratorServiceProvider::class);
-            App::register(\Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class);
         }
     }
 
