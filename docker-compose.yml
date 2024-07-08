@@ -1,7 +1,7 @@
 services:
 
   nginx:
-      build: .
+      image: webdevops/php-nginx-dev:8.3
       working_dir: /app
       command: >
         bash -c "chmod +x ./docker/entrypoint.sh && ./docker/entrypoint.sh && cd /opt/docker && supervisord"
@@ -55,7 +55,7 @@ services:
         - 6379:6379
 
   php:
-    build: .
+    image: webdevops/php-nginx-dev:8.3
     working_dir: /app
     volumes:
       - ./:/app
