@@ -1,10 +1,8 @@
-FROM webdevops/php-nginx:8.1-alpine
+FROM webdevops/php-nginx:8.3-alpine
 
 ENV WEB_DOCUMENT_ROOT /app/public
 ENV WEB_DOCUMENT_INDEX index.php
 
 WORKDIR /app
-COPY . /app
-RUN chown -R application:www-data /app
-USER application
+COPY --chown=1000:1000 . /app/
 RUN composer install --no-dev --optimize-autoloader
