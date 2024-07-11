@@ -20,6 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__.'/../routes/console.php',
         channels: __DIR__.'/../routes/channels.php',
         health: '/up',
+        apiPrefix: ''
     )
     ->withMiddleware(function (Middleware $middleware) {
         // TODO: need to check how it works, maybe this row is not necessary

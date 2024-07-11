@@ -10,9 +10,16 @@ trait AuthTestTrait
 
     public function mockOpensslRandomPseudoBytes(): void
     {
-        $this->mockNativeFunction('App\Services', [
-            $this->functionCall('openssl_random_pseudo_bytes', [], '5qw6rdsyd4sa65d4zxfc65ds4fc'),
+        $this->mockNativeFunction('Illuminate\Auth\Passwords', [
+            $this->functionCall('hash_hmac', [], '5qw6rdsyd4sa65d4zxfc65ds4fc'),
         ]);
+    }
+
+    public function mockBcryptHasher(): void
+    {
+        /*$this->mockNativeFunction('Illuminate\Hashing', [
+            $this->functionCall('password_verify'),
+        ]);*/
     }
 
     public function decodeJWTToken($token)

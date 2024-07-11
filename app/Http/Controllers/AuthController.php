@@ -11,13 +11,17 @@ use App\Http\Requests\Auth\RegisterUserRequest;
 use App\Http\Requests\Auth\RestorePasswordRequest;
 use App\Http\Resources\Auth\SuccessLoginResource;
 use App\Http\Resources\Auth\RefreshTokenResource;
+use App\Mail\ForgotPasswordMail;
+use App\Models\User;
 use Illuminate\Http\Response;
 use App\Services\UserService;
 use App\Traits\TokenTrait;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException;
 use PHPOpenSourceSaver\JWTAuth\JWTAuth;
+use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 class AuthController extends Controller
 {
@@ -86,39 +90,51 @@ class AuthController extends Controller
 
     public function forgotPassword(ForgotPasswordRequest $request): Response
     {
-        Password::sendResetLink($request->only('email'));
-        //$service->forgotPassword($request->input('email'));
+        Password::sendResetLink($request->only('email'), function ($user, $token) {
+            Mail::to($user->email)->send(new ForgotPasswordMail(['hash' => $token]));
+        });
 
         return response('', Response::HTTP_NO_CONTENT);
     }
 
     public function restorePassword(RestorePasswordRequest $request, UserService $service): Response
     {
+        $credentials = $request->only('email', 'password', 'token');
+        $credentials['password_confirmation'] = $credentials['password'];
         $status = Password::reset(
-            $request->only('email', 'password', 'password_confirmation', 'token'),
-            /*function (User $user, string $password) {
-                $user->forceFill([
+            //$request->only('email', 'password', 'token'),
+            $credentials,
+            function (User $user, string $password) use ($service, $request) {
+                /*$user->forceFill([
                     'password' => Hash::make($password)
                 ])->setRememberToken(Str::random(60));
 
-                $user->save();
+                $user->save();*/
+                /*$service->restorePassword(
+                    $request->input('token'),
+                    $password
+                );*/
 
-                event(new PasswordReset($user));
-            }*/
-            $service->restorePassword(
+                //event(new PasswordReset($user));
+            }
+            /*$service->restorePassword(
                 $request->input('token'),
                 $request->input('password')
-            )
+            )*/
         );
 
-        return $status === Password::PASSWORD_RESET
+        if ($status !== Password::PASSWORD_RESET) {
+            throw new UnprocessableEntityHttpException(__($status));
+        }
+
+        /*return $status === Password::PASSWORD_RESET
             ? redirect()->route('login')->with('status', __($status))
             : back()->withErrors(['email' => [__($status)]]);
 
         $service->restorePassword(
             $request->input('token'),
             $request->input('password')
-        );
+        );*/
 
         return response('', Response::HTTP_NO_CONTENT);
     }

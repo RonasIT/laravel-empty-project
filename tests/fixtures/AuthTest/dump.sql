@@ -4,3 +4,7 @@ INSERT INTO users(id, name, email, password, remember_token, role_id, created_at
   (3, 'Alien East', 'alien.ease@example.com', 'old_password', null, 2, '2016-10-20 11:05:00', '2016-10-20 11:05:00'),
   (4, 'Alien North', 'alien.north@example.com', 'old_password', null, 2, '2016-10-20 11:05:00', '2016-10-20 11:05:00'),
   (5, 'Alien South', 'alien.south@example.com', 'old_password', null, 2, '2016-10-20 11:05:00', '2016-10-20 11:05:00');
+
+INSERT INTO password_reset_tokens(email, token, created_at) VALUES
+ ('fidel.kutch@example.com11', '$2y$12$tZyxJSv7BzJ493ChpMTPWeHyC2kg9D5GyrGfKoT.4Nuwil.X5.k4e', '2018-11-11 11:00:00'),
+ ('fidel.kutch@example.com', '$2y$12$NPNGKmmgS1Fonxmu2UM5nODobyjAiSO2uEt9CEoMRcOXunVUQr1Bq', '2018-11-11 11:00:00');

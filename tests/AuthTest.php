@@ -250,10 +250,8 @@ class AuthTest extends TestCase
 
         $response->assertNoContent();
 
-        $this->assertDatabaseMissing('users', [
+        $this->assertDatabaseHas('password_reset_tokens', [
             'email' => 'fidel.kutch@example.com',
-            'set_password_hash' => null,
-            'set_password_hash_created_at' => null,
         ]);
 
         $this->assertMailEquals(ForgotPasswordMail::class, [
@@ -272,29 +270,33 @@ class AuthTest extends TestCase
 
     public function testRestorePassword()
     {
+        $this->mockBcryptHasher();
+
         $response = $this->json('post', '/auth/restore-password', [
+            'email' => 'fidel.kutch@example.com',
             'password' => 'new_password',
-            'token' => 'restore_token',
+            'token' => '$2y$12$NPNGKmmgS1Fonxmu2UM5nODobyjAiSO2uEt9CEoMRcOXunVUQr1Bq',
+            //'token' => '$2y$12$tZyxJSv7BzJ493ChpMTPWeHyC2kg9D5GyrGfKoT.4Nuwil.X5.k4e',
         ]);
 
         $response->assertNoContent();
 
-        $this->assertDatabaseMissing('users', [
+        $this->assertDatabaseHas('users', [
             'email' => 'fidel.kutch@example.com',
-            'password' => 'old_password',
+            'password' => '$2y$12$p9Bub8AaSl7EHfoGMgaXReK7Cs50kjHswxzNPTB5B4mcoRWfHnv8u',
         ]);
 
-        $this->assertDatabaseMissing('users', [
+        $this->assertDatabaseMissing('password_reset_tokens', [
             'email' => 'fidel.kutch@example.com',
-            'set_password_hash' => 'restore_token',
         ]);
     }
 
     public function testRestorePasswordWrongToken()
     {
         $response = $this->json('post', '/auth/restore-password', [
+            'email' => 'fidel.kutch@example.com',
             'password' => 'new_password',
-            'token' => 'incorrect_token',
+            'token' => '$2y$12$iqRo8zSwF7p3hZ6/KWUusuRVausbgVOGHmfhfqo3id.Pa/1IIdL2y',
         ]);
 
         $response->assertUnprocessable();
@@ -316,36 +318,5 @@ class AuthTest extends TestCase
         ]);
 
         $response->assertUnprocessable();
-    }
-
-    public function testClearPasswordHash()
-    {
-        Artisan::call('clear:set-password-hash');
-
-        $usersWithClearedHash = User::whereIn('id', [2, 4, 5])
-            ->get()
-            ->makeVisible('set_password_hash')
-            ->toArray();
-
-        $this->assertEqualsFixture('users_without_set_password_hash.json', $usersWithClearedHash);
-
-        $usersWithSetPasswordHash = User::whereIn('id', [1, 3])
-            ->get()
-            ->makeVisible('set_password_hash')
-            ->toArray();
-
-        $this->assertEqualsFixture('users_with_set_password_hash.json', $usersWithSetPasswordHash);
-    }
-
-    public function testClearPasswordHashSchedule()
-    {
-        Event::fake();
-
-        $this->travelTo(now()->setHour(1)->setMinute(0));
-        $this->artisan('schedule:run');
-
-        Event::assertDispatched(ScheduledTaskFinished::class, function ($event) {
-            return Str::contains($event->task->command, 'clear:set-password-hash');
-        });
     }
 }

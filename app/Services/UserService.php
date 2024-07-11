@@ -2,16 +2,13 @@
 
 namespace App\Services;
 
-use App\Mail\ForgotPasswordMail;
 use App\Models\Role;
 use App\Repositories\UserRepository;
-use Carbon\Carbon;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
 use RonasIT\Support\Services\EntityService;
 
 /**
@@ -48,22 +45,6 @@ class UserService extends EntityService
         }
 
         return $this->repository->update($where, $data);
-    }
-
-    public function forgotPassword(string $email): void
-    {
-        $hash = $this->generateHash();
-
-        $this->repository
-            ->force()
-            ->update([
-                'email' => $email,
-            ], [
-                'set_password_hash' => $hash,
-                'set_password_hash_created_at' => Carbon::now(),
-            ]);
-
-        Mail::to($email)->send(new ForgotPasswordMail(['hash' => $hash]));
     }
 
     public function restorePassword(User $user, string $password): void
