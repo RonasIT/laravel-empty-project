@@ -1,56 +1,49 @@
 services:
 
   nginx:
-      image: webdevops/php-nginx-dev:8.3
-      working_dir: /app
-      command: >
-        bash -c "chmod +x ./docker/entrypoint.sh && ./docker/entrypoint.sh && cd /opt/docker && supervisord"
-      ports:
-          - 80:80
-          - 443:443
-      volumes:
-          - ./:/app
-      links:
-        - pgsql
-        - pgsql_test
-      environment:
-          WEB_DOCUMENT_ROOT: /app/public
-          WEB_DOCUMENT_INDEX: index.php
-          REDIS_PORT: "6379"
-          XDEBUG_MAX_NESTING_LEVEL: 250
-          XDEBUG_PROFILER_ENABLE: 0
-          XDEBUG_START_WITH_REQUEST: 1
-          XDEBUG_DISCOVER_CLIENT_HOST: 0
-          XDEBUG_CLIENT_PORT: 9000
-          XDEBUG_CLIENT_HOST: host.docker.internal
+    image: webdevops/php-nginx-dev:8.3
+    working_dir: /app
+    command: >
+      bash -c "chmod +x ./docker/entrypoint.sh && ./docker/entrypoint.sh && cd /opt/docker && supervisord"
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./:/app
+    links:
+      - pgsql
+      - pgsql_test
+    environment:
+      WEB_DOCUMENT_ROOT: /app/public
+      WEB_DOCUMENT_INDEX: index.php
+      REDIS_PORT: "6379"
+      XDEBUG_MAX_NESTING_LEVEL: 250
+      XDEBUG_PROFILER_ENABLE: 0
+      XDEBUG_START_WITH_REQUEST: 1
+      XDEBUG_DISCOVER_CLIENT_HOST: 0
+      XDEBUG_CLIENT_PORT: 9000
+      XDEBUG_CLIENT_HOST: host.docker.internal
 
   pgsql:
-    image: ronasit/postgres:12.5
+    image: bitnami/postgresql:16.1.0
     ports:
-        - 5432:5432
+      - 5432:5432
     environment:
-        POSTGRES_PASSWORD: ""
-        POSTGRES_USER: pguser
-        POSTGRES_DB: pgdb
-        POSTGRES_HOST_AUTH_METHOD: trust
+      ALLOW_EMPTY_PASSWORD: yes
     volumes:
       - .:/app
 
   pgsql_test:
-    image: ronasit/postgres:12.5
+    image: bitnami/postgresql:16
     ports:
-        - 5433:5432
+      - 5433:5432
     environment:
-      POSTGRES_PASSWORD: ""
-      POSTGRES_USER: forge
-      POSTGRES_DB: forge
-      POSTGRES_HOST_AUTH_METHOD: trust
+      ALLOW_EMPTY_PASSWORD: yes
     volumes:
-    - .:/app
-    command: ["-c", "fsync=off"]
+      - .:/app
 
   redis:
-    image: redis:6.2.3
+    image: bitnami/redis:7.2
     ports:
         - 6379:6379
 
@@ -59,4 +52,3 @@ services:
     working_dir: /app
     volumes:
       - ./:/app
-
