@@ -16,7 +16,7 @@ abstract class BaseMail extends Mailable implements ShouldQueue
 
     public int $tries = 5;
 
-    public function __construct(public $viewData)
+    public function __construct()
     {
         $this->queue = 'mails';
     }
