@@ -26,6 +26,12 @@ trait TokenTrait
     {
         $minutes = $forget ? -2628000 : ($remember ? config('jwt.refresh_ttl') : 0);
 
-        return cookie('token', $token, $minutes, null, null, true, true, false, 'None');
+        return cookie(
+            name: 'token',
+            value: $token,
+            minutes: $minutes,
+            secure: true,
+            sameSite: 'None',
+        );
     }
 }
