@@ -36,7 +36,7 @@ class RoleTest extends TestCase
     }
 
     #[DataProvider('getSearchFilters')]
-    public function testSearch($filter, $fixture)
+    public function testSearch(array $filter, string $fixture)
     {
         $results = app(RoleService::class)->search($filter);
 

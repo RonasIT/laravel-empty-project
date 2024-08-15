@@ -5,34 +5,34 @@ namespace App\Tests;
 use App\Mail\ForgotPasswordMail;
 use App\Models\User;
 use App\Tests\Support\AuthTestTrait;
-use Illuminate\Console\Events\ScheduledTaskFinished;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Str;
 use Illuminate\Testing\Fluent\AssertableJson;
+use RonasIT\Support\Tests\ModelTestState;
 
 class AuthTest extends TestCase
 {
     use AuthTestTrait;
 
-    protected $admin;
-    protected $users;
+    protected static User $admin;
+    protected static array $users;
+
+    protected static ModelTestState $userState;
 
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->users = $this->getJsonFixture('users.json');
-        $this->admin = User::find(1);
+        self::$users ??= $this->getJsonFixture('users.json');
+        self::$admin ??= User::find(1);
+
+        self::$userState ??= new ModelTestState(User::class);
     }
 
     public function testLogin()
     {
         $response = $this->json('post', '/login', [
-            'email' => $this->users[1]['email'],
-            'password' => $this->users[1]['password'],
+            'email' => self::$users[1]['email'],
+            'password' => self::$users[1]['password'],
         ]);
 
         $response->assertOk();
@@ -54,8 +54,8 @@ class AuthTest extends TestCase
     public function testLoginWithRemember()
     {
         $response = $this->json('post', '/login', [
-            'email' => $this->users[1]['email'],
-            'password' => $this->users[1]['password'],
+            'email' => self::$users[1]['email'],
+            'password' => self::$users[1]['password'],
             'remember' => true,
         ]);
 
@@ -67,8 +67,8 @@ class AuthTest extends TestCase
     public function testLoginWithoutRemember()
     {
         $response = $this->json('post', '/login', [
-            'email' => $this->users[1]['email'],
-            'password' => $this->users[1]['password'],
+            'email' => self::$users[1]['email'],
+            'password' => self::$users[1]['password'],
             'remember' => false,
         ]);
 
@@ -80,8 +80,8 @@ class AuthTest extends TestCase
     public function testLoginAsRegisteredUser()
     {
         $response = $this->json('post', '/login', [
-            'email' => $this->users[0]['email'],
-            'password' => $this->users[0]['password'],
+            'email' => self::$users[0]['email'],
+            'password' => self::$users[0]['password'],
         ]);
 
         $response->assertOk();
@@ -92,9 +92,9 @@ class AuthTest extends TestCase
 
     public function testLoginAsAuthorizedUser()
     {
-        $response = $this->actingAs($this->admin)->json('post', '/login', [
-            'email' => $this->users[0]['email'],
-            'password' => $this->users[0]['password'],
+        $response = $this->actingAs(self::$admin)->json('post', '/login', [
+            'email' => self::$users[0]['email'],
+            'password' => self::$users[0]['password'],
         ]);
 
         $response->assertOk();
@@ -102,15 +102,21 @@ class AuthTest extends TestCase
 
     public function testRegisterAuthorizedUser()
     {
+        $this->mockBcryptHasher();
+
         $data = $this->getJsonFixture('new_user.json');
 
-        $response = $this->actingAs($this->admin)->json('post', '/register', $data);
+        $response = $this->actingAs(self::$admin)->json('post', '/register', $data);
 
         $response->assertOk();
+
+        self::$userState->assertChangesEqualsFixture('register_authorized_user__users_state.json');
     }
 
     public function testRegisterFromGuestUser()
     {
+        $this->mockBcryptHasher();
+
         $data = $this->getJsonFixture('new_user.json');
 
         $response = $this->json('post', '/register', $data);
@@ -121,18 +127,17 @@ class AuthTest extends TestCase
         $response->assertCookie('token');
         $this->assertEquals(0, $response->getCookie('token', false)->getExpiresTime());
 
-        $this->assertDatabaseHas('users', $response->json('user'));
-        $this->assertDatabaseHas('users', Arr::only($data, ['email', 'name']));
+        self::$userState->assertChangesEqualsFixture('register_from_guest_user__users_state.json');
     }
 
     public function testRegisterFromGuestUserWithRemember()
     {
         $data = $this->getJsonFixture('new_user.json');
 
-        $response = $this->json('post', '/register', array_merge(
-            $data,
-            ['remember' => true]
-        ));
+        $response = $this->json('post', '/register', [
+            ...$data,
+            'remember' => true,
+        ]);
 
         $response->assertOk();
         $response->assertCookie('token');
@@ -141,7 +146,7 @@ class AuthTest extends TestCase
 
     public function testRefreshToken()
     {
-        $request = $this->actingAs($this->admin);
+        $request = $this->actingAs(self::$admin);
 
         $this->travel(config('jwt.ttl') + 1)->minutes();
 
@@ -171,7 +176,7 @@ class AuthTest extends TestCase
 
     public function testRefreshTokenAfterRefreshTTL()
     {
-        $request = $this->actingAs($this->admin);
+        $request = $this->actingAs(self::$admin);
 
         $this->travel(config('jwt.refresh_ttl') + 1)->minutes();
 
@@ -182,7 +187,7 @@ class AuthTest extends TestCase
 
     public function testRefreshTokenWithRemember()
     {
-        $response = $this->actingAs($this->admin)->json('get', '/auth/refresh', [
+        $response = $this->actingAs(self::$admin)->json('get', '/auth/refresh', [
             'remember' => true,
         ]);
 
@@ -196,7 +201,7 @@ class AuthTest extends TestCase
     {
         config(['jwt.blacklist_enabled' => false]);
 
-        $response = $this->actingAs($this->admin)->json('get', '/auth/refresh', [
+        $response = $this->actingAs(self::$admin)->json('get', '/auth/refresh', [
             'remember' => true,
         ]);
 
@@ -205,7 +210,7 @@ class AuthTest extends TestCase
 
     public function testRefreshTokenIat()
     {
-        $request = $this->actingAs($this->admin);
+        $request = $this->actingAs(self::$admin);
 
         $this->travel(1)->second();
 
@@ -222,7 +227,7 @@ class AuthTest extends TestCase
 
     public function testLogout()
     {
-        $response = $this->actingAs($this->admin)->json('post', '/auth/logout');
+        $response = $this->actingAs(self::$admin)->json('post', '/auth/logout');
 
         $response->assertNoContent();
 
@@ -233,7 +238,7 @@ class AuthTest extends TestCase
     {
         config(['jwt.blacklist_enabled' => false]);
 
-        $response = $this->actingAs($this->admin)->json('post', '/auth/logout');
+        $response = $this->actingAs(self::$admin)->json('post', '/auth/logout');
 
         $response->assertUnauthorized();
     }
@@ -250,9 +255,12 @@ class AuthTest extends TestCase
 
         $response->assertNoContent();
 
-        $this->assertDatabaseHas('password_reset_tokens', [
-            'email' => 'fidel.kutch@example.com',
-        ]);
+        $this->assertDatabaseHas(
+            table: 'password_reset_tokens',
+            data:[
+                'email' => 'fidel.kutch@example.com',
+            ],
+        );
 
         $this->assertMailEquals(ForgotPasswordMail::class, [
             $this->mockedMail(
@@ -276,31 +284,27 @@ class AuthTest extends TestCase
     {
         $this->mockBcryptHasher();
 
-        $response = $this->json('post', '/auth/restore-password', [
-            'email' => 'fidel.kutch@example.com',
-            'password' => 'new_password',
-            'token' => 'df44310cccca33db4f4b75b9762a1df811cbde99739d297b3d6f7de22db8f53f',
-        ]);
+        $data = $this->getJsonFixture('restore_password.json');
+
+        $response = $this->json('post', '/auth/restore-password', $data);
 
         $response->assertNoContent();
 
-        $this->assertDatabaseHas('users', [
-            'email' => 'fidel.kutch@example.com',
-            'password' => '$2y$12$p9Bub8AaSl7EHfoGMgaXReK7Cs50kjHswxzNPTB5B4mcoRWfHnv8u',
-        ]);
+        self::$userState->assertChangesEqualsFixture('restore_password__users_state.json');
 
-        $this->assertDatabaseMissing('password_reset_tokens', [
-            'email' => 'fidel.kutch@example.com',
-        ]);
+        $this->assertDatabaseMissing(
+            table: 'password_reset_tokens',
+            data: [
+                'email' => 'fidel.kutch@example.com',
+            ],
+        );
     }
 
     public function testRestorePasswordWrongToken()
     {
-        $response = $this->json('post', '/auth/restore-password', [
-            'email' => 'fidel.kutch@example.com',
-            'password' => 'new_password',
-            'token' => '$2y$12$iqRo8zSwF7p3hZ6/KWUusuRVausbgVOGHmfhfqo3id.Pa/1IIdL2y',
-        ]);
+        $data = $this->getJsonFixture('restore_password_wrong_token.json');
+
+        $response = $this->json('post', '/auth/restore-password', $data);
 
         $response->assertUnprocessable();
     }

@@ -23,7 +23,7 @@ trait AuthTestTrait
         $this->mockNativeFunction('Illuminate\Hashing', [
             $this->functionCall(
                 name: 'password_hash',
-                result: '$2y$12$p9Bub8AaSl7EHfoGMgaXReK7Cs50kjHswxzNPTB5B4mcoRWfHnv8u',
+                result: '$2y$12$p9Bub8AaSl7EHfoGMgaXReK7Cs50kjHswxzNPTB5B4mcoRWfHnv7u',
             ),
         ]);
     }

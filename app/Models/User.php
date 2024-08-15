@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Auth\Passwords\CanResetPassword;
-//use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -13,7 +11,6 @@ use RonasIT\Support\Traits\ModelTrait;
 
 class User extends Authenticatable implements JWTSubject
 {
-    //use CanResetPassword;
     use HasFactory;
     use ModelTrait;
     use Notifiable;

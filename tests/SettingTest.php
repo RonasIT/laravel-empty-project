@@ -8,22 +8,22 @@ use PHPUnit\Framework\Attributes\DataProvider;
 
 class SettingTest extends TestCase
 {
-    protected $admin;
-    protected $user;
+    protected static User $admin;
+    protected static User $user;
 
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->admin = User::find(1);
-        $this->user = User::find(2);
+        self::$admin ??= User::find(1);
+        self::$user ??= User::find(2);
     }
 
     public function testUpdate()
     {
         $setting = $this->getJsonFixture('update_setting.json');
 
-        $response = $this->actingAs($this->admin)->json('put', "/settings/{$setting['name']}", $setting['value']);
+        $response = $this->actingAs(self::$admin)->json('put', "/settings/{$setting['name']}", $setting['value']);
 
         $response->assertNoContent();
 
@@ -37,7 +37,7 @@ class SettingTest extends TestCase
     {
         $setting = $this->getJsonFixture('update_setting.json');
 
-        $response = $this->actingAs($this->admin)->json('put', "/settings/not-exists", $setting['value']);
+        $response = $this->actingAs(self::$admin)->json('put', "/settings/not-exists", $setting['value']);
 
         $response->assertNotFound();
     }
@@ -60,7 +60,7 @@ class SettingTest extends TestCase
     {
         $setting = $this->getJsonFixture('update_setting.json');
 
-        $response = $this->actingAs($this->user)->json('put', "/settings/{$setting['name']}", $setting['value']);
+        $response = $this->actingAs(self::$user)->json('put', "/settings/{$setting['name']}", $setting['value']);
 
         $response->assertForbidden();
 
@@ -72,35 +72,35 @@ class SettingTest extends TestCase
 
     public function testGetAsAdmin()
     {
-        $response = $this->actingAs($this->admin)->json('get', '/settings/states');
+        $response = $this->actingAs(self::$admin)->json('get', '/settings/states');
 
         $response->assertOk();
     }
 
     public function testGetAsUser()
     {
-        $response = $this->actingAs($this->user)->json('get', '/settings/states');
+        $response = $this->actingAs(self::$user)->json('get', '/settings/states');
 
         $response->assertOk();
     }
 
     public function testGetNoPermission()
     {
-        $response = $this->actingAs($this->user)->json('get', '/settings/mailgun');
+        $response = $this->actingAs(self::$user)->json('get', '/settings/mailgun');
 
         $response->assertForbidden();
     }
 
     public function testGetCheckResponse()
     {
-        $response = $this->actingAs($this->admin)->json('get', '/settings/states');
+        $response = $this->actingAs(self::$admin)->json('get', '/settings/states');
 
         $this->assertEqualsFixture('get_setting.json', $response->json());
     }
 
     public function testGetNotExists()
     {
-        $response = $this->actingAs($this->admin)->json('get', '/settings/0');
+        $response = $this->actingAs(self::$admin)->json('get', '/settings/0');
 
         $response->assertNotFound();
     }
@@ -144,7 +144,7 @@ class SettingTest extends TestCase
     #[DataProvider('getSearchFilters')]
     public function testSearch($filter, $fixture)
     {
-        $response = $this->actingAs($this->admin)->json('get', '/settings', $filter);
+        $response = $this->actingAs(self::$admin)->json('get', '/settings', $filter);
 
         $response->assertOk();
 
@@ -162,9 +162,9 @@ class SettingTest extends TestCase
     }
 
     #[DataProvider('getUserSearchFilters')]
-    public function testSearchByUser($filter, $fixture)
+    public function testSearchByUser(array $filter, string $fixture)
     {
-        $response = $this->actingAs($this->user)->json('get', '/settings', $filter);
+        $response = $this->actingAs(self::$user)->json('get', '/settings', $filter);
 
         $response->assertOk();
 

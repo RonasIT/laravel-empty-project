@@ -6,7 +6,6 @@ use App\Mail\ForgotPasswordMail;
 use App\Models\Role;
 use App\Models\User;
 use App\Repositories\UserRepository;
-use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
