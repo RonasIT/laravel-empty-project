@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Auth\CheckRestoreTokenRequest;
 use App\Http\Requests\Auth\ForgotPasswordRequest;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\LogoutRequest;
@@ -104,11 +103,6 @@ class AuthController extends Controller
             throw new UnprocessableEntityHttpException(__($status));
         }
 
-        return response('', Response::HTTP_NO_CONTENT);
-    }
-
-    public function checkRestoreToken(CheckRestoreTokenRequest $request): Response
-    {
         return response('', Response::HTTP_NO_CONTENT);
     }
 }

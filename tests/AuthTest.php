@@ -280,6 +280,17 @@ class AuthTest extends TestCase
         $response->assertUnprocessable();
     }
 
+    public function testForgotPasswordThrottled()
+    {
+        $this->mockForgotPasswordThrottled();
+
+        $response = $this->json('post', '/auth/forgot-password', [
+            'email' => 'fidel.kutch@example.com',
+        ]);
+
+        $response->assertUnprocessable();
+    }
+
     public function testRestorePassword()
     {
         $this->mockBcryptHasher();
@@ -305,24 +316,6 @@ class AuthTest extends TestCase
         $data = $this->getJsonFixture('restore_password_wrong_token.json');
 
         $response = $this->json('post', '/auth/restore-password', $data);
-
-        $response->assertUnprocessable();
-    }
-
-    public function testCheckRestoreToken()
-    {
-        $response = $this->json('post', '/auth/token/check', [
-            'token' => 'restore_token',
-        ]);
-
-        $response->assertNoContent();
-    }
-
-    public function testCheckRestoreWrongToken()
-    {
-        $response = $this->json('post', '/auth/token/check', [
-            'token' => 'wrong_token',
-        ]);
 
         $response->assertUnprocessable();
     }

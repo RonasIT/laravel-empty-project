@@ -37,7 +37,6 @@ Route::prefix('v{version}')
                     Route::get('auth/refresh', 'refreshToken');
                     Route::post('auth/forgot-password', 'forgotPassword');
                     Route::post('auth/restore-password', 'restorePassword');
-                    Route::post('auth/token/check', 'checkRestoreToken');
                 });
             });
         });

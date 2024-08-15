@@ -2,6 +2,7 @@
 
 namespace App\Tests\Support;
 
+use App\Services\UserService;
 use RonasIT\Support\Traits\MockTrait;
 
 trait AuthTestTrait
@@ -25,6 +26,17 @@ trait AuthTestTrait
                 name: 'password_hash',
                 result: '$2y$12$p9Bub8AaSl7EHfoGMgaXReK7Cs50kjHswxzNPTB5B4mcoRWfHnv7u',
             ),
+        ]);
+    }
+
+    public function mockForgotPasswordThrottled(): void
+    {
+        $this->mockClass(UserService::class, [
+            [
+                'function' => 'forgotPassword',
+                'arguments' => [],
+                'result' => 'passwords.throttled',
+            ],
         ]);
     }
 
