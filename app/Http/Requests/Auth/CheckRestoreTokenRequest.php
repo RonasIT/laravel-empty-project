@@ -9,7 +9,7 @@ class CheckRestoreTokenRequest extends Request
     public function rules(): array
     {
         return [
-            'token' => 'required|string|exists:users,set_password_hash',
+            'token' => 'required|string',
         ];
     }
 }

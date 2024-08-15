@@ -10,7 +10,7 @@ class RestorePasswordRequest extends Request
     {
         return [
             'email' => 'required|email',
-            'token' => 'required|string|exists:password_reset_tokens,token',
+            'token' => 'required|string',
             'password' => 'required|string',
         ];
     }

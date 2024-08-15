@@ -255,7 +255,11 @@ class AuthTest extends TestCase
         ]);
 
         $this->assertMailEquals(ForgotPasswordMail::class, [
-            $this->mockedMail('fidel.kutch@example.com', 'forgot_password_email.html', 'Forgot password?'),
+            $this->mockedMail(
+                emails: 'fidel.kutch@example.com',
+                fixture: 'forgot_password_email.html',
+                subject: 'Forgot password?',
+            ),
         ]);
     }
 
@@ -275,8 +279,7 @@ class AuthTest extends TestCase
         $response = $this->json('post', '/auth/restore-password', [
             'email' => 'fidel.kutch@example.com',
             'password' => 'new_password',
-            'token' => '$2y$12$NPNGKmmgS1Fonxmu2UM5nODobyjAiSO2uEt9CEoMRcOXunVUQr1Bq',
-            //'token' => '$2y$12$tZyxJSv7BzJ493ChpMTPWeHyC2kg9D5GyrGfKoT.4Nuwil.X5.k4e',
+            'token' => 'df44310cccca33db4f4b75b9762a1df811cbde99739d297b3d6f7de22db8f53f',
         ]);
 
         $response->assertNoContent();

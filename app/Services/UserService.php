@@ -2,13 +2,17 @@
 
 namespace App\Services;
 
+use App\Mail\ForgotPasswordMail;
 use App\Models\Role;
+use App\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Password;
 use RonasIT\Support\Services\EntityService;
 
 /**
@@ -47,30 +51,26 @@ class UserService extends EntityService
         return $this->repository->update($where, $data);
     }
 
-    public function restorePassword(User $user, string $password): void
+    public function forgotPassword(string $email): string
     {
-        $user->forceFill([
-            'password' => Hash::make($password),
-        ])->setRememberToken(Str::random(60));
-
-        $user->save();
-
-        event(new PasswordReset($user));
-
-        $this->repository
-            ->force()
-            ->update([
-                'set_password_hash' => $token,
-            ], [
-                'password' => Hash::make($password),
-                'set_password_hash' => null,
-            ]);
+        return Password::sendResetLink(
+            credentials: ['email' => $email],
+            callback: fn ($user, $token) =>
+                Mail::to($user->email)->send(new ForgotPasswordMail(['hash' => $token]))
+        );
     }
 
-    protected function generateHash(int $length = 32): string
+    public function restorePassword(array $credentials): string
     {
-        $length /= 2;
-
-        return bin2hex(openssl_random_pseudo_bytes($length));
+        return Password::reset(
+            credentials: $credentials,
+            callback: fn (User $user, string $password) =>
+                $this->repository
+                    ->force()
+                    ->update(
+                        where:['id' => $user->id],
+                        data: ['password' => Hash::make($password)]
+                    )
+        );
     }
 }

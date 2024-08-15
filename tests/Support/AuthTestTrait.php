@@ -11,15 +11,21 @@ trait AuthTestTrait
     public function mockOpensslRandomPseudoBytes(): void
     {
         $this->mockNativeFunction('Illuminate\Auth\Passwords', [
-            $this->functionCall('hash_hmac', [], '5qw6rdsyd4sa65d4zxfc65ds4fc'),
+            $this->functionCall(
+                name: 'hash_hmac',
+                result: '5qw6rdsyd4sa65d4zxfc65ds4fc',
+            ),
         ]);
     }
 
     public function mockBcryptHasher(): void
     {
-        /*$this->mockNativeFunction('Illuminate\Hashing', [
-            $this->functionCall('password_verify'),
-        ]);*/
+        $this->mockNativeFunction('Illuminate\Hashing', [
+            $this->functionCall(
+                name: 'password_hash',
+                result: '$2y$12$p9Bub8AaSl7EHfoGMgaXReK7Cs50kjHswxzNPTB5B4mcoRWfHnv8u',
+            ),
+        ]);
     }
 
     public function decodeJWTToken($token)
