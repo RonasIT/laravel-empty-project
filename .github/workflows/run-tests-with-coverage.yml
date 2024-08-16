@@ -31,6 +31,17 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+      redis:
+        image: redis
+        env:
+          ALLOW_EMPTY_PASSWORD: yes
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
       - uses: shivammathur/setup-php@v2
@@ -44,6 +55,8 @@ jobs:
         run: vendor/bin/phpunit --coverage-clover build/logs/clover.xml
         env:
           DB_PORT: ${{ job.services.postgres.ports[5432] }}
+          REDIS_HOST: redis
+          REDIS_PORT: 6379
       - name: Upload coverage results to Coveralls
         env:
           COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
