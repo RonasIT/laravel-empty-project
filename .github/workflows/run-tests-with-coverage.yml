@@ -12,6 +12,7 @@ jobs:
     env:
       DB_CONNECTION: pgsql
       DB_HOST: localhost
+      DB_PORT: 5432
       DB_PASSWORD: ""
       DB_USERNAME: forge
       DB_DATABASE: forge
@@ -23,7 +24,6 @@ jobs:
       postgres:
         image: postgres
         env:
-          DB_PORT: 5432
           POSTGRES_PASSWORD: ""
           POSTGRES_USER: forge
           POSTGRES_DB: forge
