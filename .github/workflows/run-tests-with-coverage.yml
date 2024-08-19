@@ -58,7 +58,6 @@ jobs:
         run: vendor/bin/phpunit --coverage-clover build/logs/clover.xml
         env:
           DB_PORT: ${{ job.services.postgres.ports[5432] }}
-          REDIS_HOST: redis
           REDIS_PORT: 6379
       - name: Upload coverage results to Coveralls
         env:
