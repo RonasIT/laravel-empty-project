@@ -32,7 +32,7 @@ jobs:
           --health-timeout 5s
           --health-retries 5
       redis:
-        image: redis
+        image: redis:7.2
         env:
           ALLOW_EMPTY_PASSWORD: yes
         ports:
