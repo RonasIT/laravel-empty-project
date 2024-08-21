@@ -39,9 +39,6 @@ return Application::configure(basePath: dirname(__DIR__))
         apiPrefix: ''
     )
     ->withMiddleware(function (Middleware $middleware) {
-        // TODO: need to check how it works, maybe this row is not necessary
-        $middleware->throttleApi('60,1');
-
         $middleware->use([
             HandleCors::class,
             CheckForMaintenanceMode::class,
