@@ -84,7 +84,7 @@ class AuthController extends Controller
         return response('', Response::HTTP_NO_CONTENT)->withCookie($tokenCookie);
     }
 
-    public function forgotPassword(UserService $service, ForgotPasswordRequest $request): Response
+    public function forgotPassword(ForgotPasswordRequest $request, UserService $service): Response
     {
         $status = $service->forgotPassword($request->input('email'));
 

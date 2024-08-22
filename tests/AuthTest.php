@@ -303,13 +303,10 @@ class AuthTest extends TestCase
 
         self::$userState->assertChangesEqualsFixture('restore_password__users_state.json');
 
-        $this->assertDatabaseMissing(
-            table: 'password_reset_tokens',
-            data: [
-                'email' => 'fidel.kutch@example.com',
-            ],
-        );
-    }
+        $this->assertDatabaseMissing('password_reset_tokens', [
+            'email' => 'fidel.kutch@example.com',
+        ]);
+}
 
     public function testRestorePasswordWrongToken()
     {

@@ -66,10 +66,9 @@ class UserService extends EntityService
             callback: fn (User $user, string $password) =>
                 $this->repository
                     ->force()
-                    ->update(
-                        where:['id' => $user->id],
-                        data: ['password' => Hash::make($password)]
-                    )
+                    ->update($user->id, [
+                        'password' => Hash::make($password),
+                    ])
         );
     }
 }

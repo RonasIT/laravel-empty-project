@@ -39,7 +39,7 @@ class UserTest extends TestCase
 
         $this->assertEqualsFixture('user_created.json', $response->json());
 
-        self::$userState->assertChangesEqualsFixture('user_created__users_state.json');
+        self::$userState->assertChangesEqualsFixture('user_created_users_state.json');
     }
 
     public function testCreateNoAuth()
@@ -79,7 +79,7 @@ class UserTest extends TestCase
 
         $response->assertNoContent();
 
-        self::$userState->assertChangesEqualsFixture('user_updated__users_state.json');
+        self::$userState->assertChangesEqualsFixture('user_updated_users_state.json');
     }
 
     public function testUpdateByUser()
@@ -130,7 +130,7 @@ class UserTest extends TestCase
 
         $response->assertNoContent();
 
-        self::$userState->assertChangesEqualsFixture('profile_updated__users_state.json');
+        self::$userState->assertChangesEqualsFixture('profile_updated_users_state.json');
     }
 
     public function testUpdateProfileWithPassword()
@@ -213,7 +213,7 @@ class UserTest extends TestCase
 
         $response->assertNoContent();
 
-        self::$userState->assertChangesEqualsFixture('user_deleted__users_state.json');
+        self::$userState->assertChangesEqualsFixture('user_deleted_users_state.json');
     }
 
     public function testDeleteOwnUser()
