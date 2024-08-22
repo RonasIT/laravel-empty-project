@@ -1,0 +1,16 @@
+{
+    "updated": [],
+    "created": [
+        {
+            "id": 3,
+            "name": "Another User",
+            "email": "createuser@example.com",
+            "password": "$2y$12$p9Bub8AaSl7EHfoGMgaXReK7Cs50kjHswxzNPTB5B4mcoRWfHnv7u",
+            "role_id": 2,
+            "remember_token": null,
+            "created_at": "2018-11-11 11:11:11",
+            "updated_at": "2018-11-11 11:11:11"
+        }
+    ],
+    "deleted": []
+}

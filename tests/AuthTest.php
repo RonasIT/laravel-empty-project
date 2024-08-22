@@ -306,7 +306,7 @@ class AuthTest extends TestCase
         $this->assertDatabaseMissing('password_reset_tokens', [
             'email' => 'fidel.kutch@example.com',
         ]);
-}
+    }
 
     public function testRestorePasswordWrongToken()
     {

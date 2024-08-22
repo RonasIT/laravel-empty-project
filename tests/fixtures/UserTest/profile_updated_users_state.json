@@ -1,0 +1,12 @@
+{
+    "updated": [
+        {
+            "id": 1,
+            "name": "Update User",
+            "email": "updateuser@example.com",
+            "updated_at": "2018-11-11 11:11:11"
+        }
+    ],
+    "created": [],
+    "deleted": []
+}
