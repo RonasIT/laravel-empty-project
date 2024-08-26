@@ -110,7 +110,7 @@ class AuthTest extends TestCase
 
         $response->assertOk();
 
-        self::$userState->assertChangesEqualsFixture('register_authorized_user__users_state.json');
+        self::$userState->assertChangesEqualsFixture('register_authorized_user_users_state.json');
     }
 
     public function testRegisterFromGuestUser()
@@ -127,7 +127,7 @@ class AuthTest extends TestCase
         $response->assertCookie('token');
         $this->assertEquals(0, $response->getCookie('token', false)->getExpiresTime());
 
-        self::$userState->assertChangesEqualsFixture('register_from_guest_user__users_state.json');
+        self::$userState->assertChangesEqualsFixture('register_from_guest_user_users_state.json');
     }
 
     public function testRegisterFromGuestUserWithRemember()
@@ -301,7 +301,7 @@ class AuthTest extends TestCase
 
         $response->assertNoContent();
 
-        self::$userState->assertChangesEqualsFixture('restore_password__users_state.json');
+        self::$userState->assertChangesEqualsFixture('restore_password_users_state.json');
 
         $this->assertDatabaseMissing('password_reset_tokens', [
             'email' => 'fidel.kutch@example.com',
