@@ -255,12 +255,9 @@ class AuthTest extends TestCase
 
         $response->assertNoContent();
 
-        $this->assertDatabaseHas(
-            table: 'password_reset_tokens',
-            data:[
-                'email' => 'fidel.kutch@example.com',
-            ],
-        );
+        $this->assertDatabaseHas('password_reset_tokens', [
+            'email' => 'fidel.kutch@example.com',
+        ]);
 
         $this->assertMailEquals(ForgotPasswordMail::class, [
             $this->mockedMail(
