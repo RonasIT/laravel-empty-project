@@ -36,6 +36,7 @@
     "mockery/mockery": "^1.6",
     "php-coveralls/php-coveralls": "^2.7",
     "phpunit/phpunit": "^10.5",
+    "ronasit/laravel-entity-generator": "^3.0.0-beta",
     "tightenco/tlint": "^9.3"
   },
   "autoload": {

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3a1d3fdcfa13a00ad313d153946ebb1f",
+    "content-hash": "4aa4248fe186e69a8a7444b98593fb33",
     "packages": [
         {
             "name": "brick/math",
@@ -11957,6 +11957,73 @@
             "time": "2024-06-11T12:45:25+00:00"
         },
         {
+            "name": "ronasit/laravel-entity-generator",
+            "version": "3.0.0-beta",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/RonasIT/laravel-entity-generator.git",
+                "reference": "ba910b0edf65bb5364811d09c9a85a4d719ee8ae"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/RonasIT/laravel-entity-generator/zipball/ba910b0edf65bb5364811d09c9a85a4d719ee8ae",
+                "reference": "ba910b0edf65bb5364811d09c9a85a4d719ee8ae",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "laravel/framework": "^11.21",
+                "laravel/legacy-factories": ">=1.3.0",
+                "php": "^8.3",
+                "ronasit/laravel-helpers": "^3.0.0-beta"
+            },
+            "require-dev": {
+                "fakerphp/faker": "^1.23.1",
+                "mikey179/vfsstream": "^1.6.11",
+                "mockery/mockery": "^1.6.12",
+                "orchestra/testbench": "^9.3",
+                "php-coveralls/php-coveralls": "^2.7",
+                "php-mock/php-mock": "^2.5",
+                "phpunit/phpunit": "^10.5.30"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "RonasIT\\Support\\EntityGeneratorServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "RonasIT\\Support\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Roman Dubrovin",
+                    "email": "rdubrovin@ronasit.com"
+                }
+            ],
+            "description": "Provided console command for generating entities.",
+            "keywords": [
+                "entity generator",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/RonasIT/laravel-entity-generator/issues",
+                "source": "https://github.com/RonasIT/laravel-entity-generator/tree/3.0.0-beta"
+            },
+            "time": "2024-08-26T06:24:25+00:00"
+        },
+        {
             "name": "symfony/config",
             "version": "v7.1.1",
             "source": {
@@ -12433,7 +12500,8 @@
     "minimum-stability": "beta",
     "stability-flags": {
         "ronasit/laravel-helpers": 10,
-        "ronasit/laravel-swagger": 10
+        "ronasit/laravel-swagger": 10,
+        "ronasit/laravel-entity-generator": 10
     },
     "prefer-stable": false,
     "prefer-lowest": false,
