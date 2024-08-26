@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3a4a17a1975ed64e3d76b4013447d5a3",
+    "content-hash": "4aa4248fe186e69a8a7444b98593fb33",
     "packages": [
         {
             "name": "brick/math",
@@ -11958,7 +11958,7 @@
         },
         {
             "name": "ronasit/laravel-entity-generator",
-            "version": "dev-master",
+            "version": "3.0.0-beta",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RonasIT/laravel-entity-generator.git",
@@ -11986,7 +11986,6 @@
                 "php-mock/php-mock": "^2.5",
                 "phpunit/phpunit": "^10.5.30"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -12020,7 +12019,7 @@
             ],
             "support": {
                 "issues": "https://github.com/RonasIT/laravel-entity-generator/issues",
-                "source": "https://github.com/RonasIT/laravel-entity-generator/tree/master"
+                "source": "https://github.com/RonasIT/laravel-entity-generator/tree/3.0.0-beta"
             },
             "time": "2024-08-26T06:24:25+00:00"
         },
@@ -12502,7 +12501,7 @@
     "stability-flags": {
         "ronasit/laravel-helpers": 10,
         "ronasit/laravel-swagger": 10,
-        "ronasit/laravel-entity-generator": 20
+        "ronasit/laravel-entity-generator": 10
     },
     "prefer-stable": false,
     "prefer-lowest": false,
