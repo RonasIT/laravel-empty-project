@@ -21,12 +21,6 @@ class Setting extends Model
     ];
     protected $hidden = ['pivot'];
 
-    protected $casts = [
-        'value' => 'array',
-        'name' => 'string',
-        'is_public' => 'boolean',
-    ];
-
     public function scopeApplySettingPermissionRestrictions(Builder $query): void
     {
         $user = Auth::user();
@@ -34,5 +28,14 @@ class Setting extends Model
         if ($user && !$user->isAdmin()) {
             $query->where('is_public', true);
         }
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'value' => 'array',
+            'name' => 'string',
+            'is_public' => 'boolean',
+        ];
     }
 }

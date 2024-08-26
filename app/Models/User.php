@@ -11,31 +11,20 @@ use RonasIT\Support\Traits\ModelTrait;
 
 class User extends Authenticatable implements JWTSubject
 {
-    use Notifiable;
-    use ModelTrait;
     use HasFactory;
+    use ModelTrait;
+    use Notifiable;
 
     protected $fillable = [
         'name',
         'email',
         'password',
         'role_id',
-        'set_password_hash_created_at',
-    ];
-
-    protected $guarded = [
-        'set_password_hash',
     ];
 
     protected $hidden = [
         'password',
         'remember_token',
-        'set_password_hash',
-    ];
-
-    protected $casts = [
-        'is_public' => 'boolean',
-        'set_password_hash_created_at' => 'datetime',
     ];
 
     public function getJWTIdentifier(): int
@@ -61,5 +50,12 @@ class User extends Authenticatable implements JWTSubject
     public function isUser(): bool
     {
         return $this->role_id === Role::USER;
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'password' => 'hashed',
+        ];
     }
 }

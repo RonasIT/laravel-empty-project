@@ -4,15 +4,16 @@ namespace App\Console\Commands;
 
 use App\Models\Role;
 use Illuminate\Console\Command;
+use Illuminate\Contracts\Console\Isolatable;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
-class Init extends Command
+class Init extends Command implements Isolatable
 {
-    public const TEMPLATES_PATH = '.templates';
+    public const string TEMPLATES_PATH = '.templates';
 
-    public const RESOURCES_ITEMS = [
+    public const array RESOURCES_ITEMS = [
         'issue_tracker' => 'Issue Tracker',
         'figma' => 'Figma',
         'sentry' => 'Sentry',
@@ -22,17 +23,17 @@ class Init extends Command
         'nova' => 'Laravel Nova',
     ];
 
-    public const CONTACTS_ITEMS = [
+    public const array CONTACTS_ITEMS = [
         'manager' => 'Manager',
         'team_lead' => 'Code Owner/Team Lead',
     ];
 
-    public const CREDENTIALS_ITEMS = [
+    public const array CREDENTIALS_ITEMS = [
         'telescope' => 'Laravel Telescope',
         'nova' => 'Laravel Nova',
     ];
 
-    public const DEFAULT_URLS = [
+    public const array DEFAULT_URLS = [
         'telescope',
         'nova',
     ];

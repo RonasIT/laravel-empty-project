@@ -15,6 +15,9 @@ jobs:
       DB_PASSWORD: ""
       DB_USERNAME: forge
       DB_DATABASE: forge
+      REDIS_HOST: localhost
+      REDIS_PASSWORD: ""
+      REDIS_PORT: 6379
 
     services:
       postgres:
@@ -31,6 +34,18 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+      redis:
+        image: redis:7.2
+        env:
+          ALLOW_EMPTY_PASSWORD: yes
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
     steps:
       - uses: shivammathur/setup-php@v2
         with:

@@ -9,7 +9,8 @@ class RestorePasswordRequest extends Request
     public function rules(): array
     {
         return [
-            'token' => 'required|string|exists:users,set_password_hash',
+            'email' => 'required|email',
+            'token' => 'required|string',
             'password' => 'required|string',
         ];
     }

@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Enums\QueueEnum;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -18,7 +19,7 @@ abstract class BaseMail extends Mailable implements ShouldQueue
 
     public function __construct(public $viewData)
     {
-        $this->queue = 'mails';
+        $this->queue = QueueEnum::Mails->value;
     }
 
     abstract public function envelope(): Envelope;

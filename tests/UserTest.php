@@ -3,33 +3,43 @@
 namespace App\Tests;
 
 use App\Models\User;
+use App\Tests\Support\AuthTestTrait;
 use Illuminate\Support\Arr;
 use PHPUnit\Framework\Attributes\DataProvider;
+use RonasIT\Support\Tests\ModelTestState;
 
 class UserTest extends TestCase
 {
-    protected $admin;
-    protected $user;
+    use AuthTestTrait;
+
+    protected static User $admin;
+    protected static User $user;
+
+    protected static ModelTestState $userState;
 
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->admin = User::find(1);
-        $this->user = User::find(2);
+        self::$admin ??= User::find(1);
+        self::$user ??= User::find(2);
+
+        self::$userState ??= new ModelTestState(User::class);
     }
 
     public function testCreate()
     {
+        $this->mockBcryptHasher();
+
         $data = $this->getJsonFixture('create_user.json');
 
-        $response = $this->actingAs($this->admin)->json('post', '/users', $data);
+        $response = $this->actingAs(self::$admin)->json('post', '/users', $data);
 
         $response->assertOk();
 
         $this->assertEqualsFixture('user_created.json', $response->json());
 
-        $this->assertDatabaseHas('users', $this->getJsonFixture('user_created_database.json'));
+        self::$userState->assertChangesEqualsFixture('user_created_users_state.json');
     }
 
     public function testCreateNoAuth()
@@ -40,23 +50,23 @@ class UserTest extends TestCase
 
         $response->assertUnauthorized();
 
-        $this->assertDatabaseMissing('users', Arr::except($data, ['password']));
+        self::$userState->assertNotChanged();
     }
 
     public function testCreateNoPermission()
     {
         $data = $this->getJsonFixture('create_user.json');
 
-        $response = $this->actingAs($this->user)->json('post', '/users', $data);
+        $response = $this->actingAs(self::$user)->json('post', '/users', $data);
 
         $response->assertForbidden();
 
-        $this->assertDatabaseMissing('users', Arr::except($data, ['password']));
+        self::$userState->assertNotChanged();
     }
 
     public function testCreateUserExists()
     {
-        $response = $this->actingAs($this->admin)->json('post', '/users', $this->user->toArray());
+        $response = $this->actingAs(self::$admin)->json('post', '/users', self::$user->toArray());
 
         $response->assertUnprocessable();
     }
@@ -65,41 +75,38 @@ class UserTest extends TestCase
     {
         $data = $this->getJsonFixture('update_user.json');
 
-        $response = $this->actingAs($this->admin)->json('put', '/users/2', $data);
+        $response = $this->actingAs(self::$admin)->json('put', '/users/2', $data);
 
         $response->assertNoContent();
 
-        $this->assertDatabaseHas('users', $data);
+        self::$userState->assertChangesEqualsFixture('user_updated_users_state.json');
     }
 
     public function testUpdateByUser()
     {
         $data = $this->getJsonFixture('update_user.json');
 
-        $response = $this->actingAs($this->user)->json('put', '/users/2', $data);
+        $response = $this->actingAs(self::$user)->json('put', '/users/2', $data);
 
         $response->assertForbidden();
     }
 
     public function testUpdateWithEmailOfAnotherUser()
     {
-        $response = $this->actingAs($this->admin)->json('put', '/users/2', [
+        $response = $this->actingAs(self::$admin)->json('put', '/users/2', [
             'email' => 'admin@example.com',
         ]);
 
         $response->assertUnprocessable();
 
-        $this->assertDatabaseMissing('users', [
-            'id' => 2,
-            'email' => 'admin@example.com',
-        ]);
+        self::$userState->assertNotChanged();
     }
 
     public function testUpdateNotExists()
     {
         $data = $this->getJsonFixture('update_user.json');
 
-        $response = $this->actingAs($this->admin)->json('put', '/users/0', $data);
+        $response = $this->actingAs(self::$admin)->json('put', '/users/0', $data);
 
         $response->assertNotFound();
     }
@@ -112,25 +119,25 @@ class UserTest extends TestCase
 
         $response->assertUnauthorized();
 
-        $this->assertDatabaseMissing('users', $data);
+        self::$userState->assertNotChanged();
     }
 
     public function testUpdateProfile()
     {
         $data = $this->getJsonFixture('update_user.json');
 
-        $response = $this->actingAs($this->admin)->json('put', '/profile', $data);
+        $response = $this->actingAs(self::$admin)->json('put', '/profile', $data);
 
         $response->assertNoContent();
 
-        $this->assertDatabaseHas('users', $data);
+        self::$userState->assertChangesEqualsFixture('profile_updated_users_state.json');
     }
 
     public function testUpdateProfileWithPassword()
     {
         $data = $this->getJsonFixture('update_profile_with_password.json');
 
-        $response = $this->actingAs($this->user)->json('put', '/profile', $data);
+        $response = $this->actingAs(self::$user)->json('put', '/profile', $data);
 
         $response->assertNoContent();
     }
@@ -139,7 +146,7 @@ class UserTest extends TestCase
     {
         $data = $this->getJsonFixture('update_profile_with_password_without_old.json');
 
-        $response = $this->actingAs($this->user)->json('put', '/profile', $data);
+        $response = $this->actingAs(self::$user)->json('put', '/profile', $data);
 
         $response->assertUnprocessable();
     }
@@ -148,7 +155,7 @@ class UserTest extends TestCase
     {
         $data = $this->getJsonFixture('update_profile_with_password_with_wrong_old.json');
 
-        $response = $this->actingAs($this->user)->json('put', '/profile', $data);
+        $response = $this->actingAs(self::$user)->json('put', '/profile', $data);
 
         $response->assertUnprocessable();
     }
@@ -161,12 +168,12 @@ class UserTest extends TestCase
 
         $response->assertUnauthorized();
 
-        $this->assertDatabaseMissing('users', $data);
+        self::$userState->assertNotChanged();
     }
 
     public function testDeleteProfile()
     {
-        $response = $this->actingAs($this->user)->json('delete', '/profile');
+        $response = $this->actingAs(self::$user)->json('delete', '/profile');
 
         $response->assertNoContent();
 
@@ -181,7 +188,7 @@ class UserTest extends TestCase
     {
         config(['jwt.blacklist_enabled' => false]);
 
-        $response = $this->actingAs($this->user)->json('delete', '/profile');
+        $response = $this->actingAs(self::$user)->json('delete', '/profile');
 
         $response->assertUnauthorized();
     }
@@ -195,32 +202,30 @@ class UserTest extends TestCase
 
     public function testDeleteProfileAsAdmin()
     {
-        $response = $this->actingAs($this->admin)->json('delete', '/profile');
+        $response = $this->actingAs(self::$admin)->json('delete', '/profile');
 
         $response->assertForbidden();
     }
 
     public function testDelete()
     {
-        $response = $this->actingAs($this->admin)->json('delete', '/users/2');
+        $response = $this->actingAs(self::$admin)->json('delete', '/users/2');
 
         $response->assertNoContent();
 
-        $this->assertDatabaseMissing('users', [
-            'id' => 2,
-        ]);
+        self::$userState->assertChangesEqualsFixture('user_deleted_users_state.json');
     }
 
     public function testDeleteOwnUser()
     {
-        $response = $this->actingAs($this->admin)->json('delete', '/users/1');
+        $response = $this->actingAs(self::$admin)->json('delete', '/users/1');
 
         $response->assertForbidden();
     }
 
     public function testDeleteNotExists()
     {
-        $response = $this->actingAs($this->admin)->json('delete', '/users/0');
+        $response = $this->actingAs(self::$admin)->json('delete', '/users/0');
 
         $response->assertNotFound();
     }
@@ -231,14 +236,12 @@ class UserTest extends TestCase
 
         $response->assertUnauthorized();
 
-        $this->assertDatabaseHas('users', [
-            'id' => 1,
-        ]);
+        self::$userState->assertNotChanged();
     }
 
     public function testGetProfile()
     {
-        $response = $this->actingAs($this->admin)->json('get', '/profile', [
+        $response = $this->actingAs(self::$admin)->json('get', '/profile', [
             'with' => ['role'],
         ]);
 
@@ -249,7 +252,7 @@ class UserTest extends TestCase
 
     public function testGet()
     {
-        $response = $this->actingAs($this->admin)->json('get', '/users/1', [
+        $response = $this->actingAs(self::$admin)->json('get', '/users/1', [
             'with' => ['role'],
         ]);
 
@@ -260,7 +263,7 @@ class UserTest extends TestCase
 
     public function testGetNotExists()
     {
-        $response = $this->actingAs($this->admin)->json('get', '/users/0');
+        $response = $this->actingAs(self::$admin)->json('get', '/users/0');
 
         $response->assertNotFound();
     }
@@ -311,9 +314,9 @@ class UserTest extends TestCase
     }
 
     #[DataProvider('getSearchFilters')]
-    public function testSearch($filter, $fixture)
+    public function testSearch(array $filter, string $fixture)
     {
-        $response = $this->actingAs($this->admin)->json('get', '/users', $filter);
+        $response = $this->actingAs(self::$admin)->json('get', '/users', $filter);
 
         $response->assertOk();
 

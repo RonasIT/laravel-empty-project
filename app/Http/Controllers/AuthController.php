@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Auth\CheckRestoreTokenRequest;
 use App\Http\Requests\Auth\ForgotPasswordRequest;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\LogoutRequest;
@@ -14,9 +13,11 @@ use App\Http\Resources\Auth\RefreshTokenResource;
 use Illuminate\Http\Response;
 use App\Services\UserService;
 use App\Traits\TokenTrait;
+use Illuminate\Support\Facades\Password;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException;
 use PHPOpenSourceSaver\JWTAuth\JWTAuth;
+use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 class AuthController extends Controller
 {
@@ -85,23 +86,23 @@ class AuthController extends Controller
 
     public function forgotPassword(ForgotPasswordRequest $request, UserService $service): Response
     {
-        $service->forgotPassword($request->input('email'));
+        $status = $service->forgotPassword($request->input('email'));
+
+        if ($status !== Password::RESET_LINK_SENT) {
+            throw new UnprocessableEntityHttpException(__($status));
+        }
 
         return response('', Response::HTTP_NO_CONTENT);
     }
 
     public function restorePassword(RestorePasswordRequest $request, UserService $service): Response
     {
-        $service->restorePassword(
-            $request->input('token'),
-            $request->input('password')
-        );
+        $status = $service->restorePassword($request->onlyValidated());
 
-        return response('', Response::HTTP_NO_CONTENT);
-    }
+        if ($status !== Password::PASSWORD_RESET) {
+            throw new UnprocessableEntityHttpException(__($status));
+        }
 
-    public function checkRestoreToken(CheckRestoreTokenRequest $request): Response
-    {
         return response('', Response::HTTP_NO_CONTENT);
     }
 }
