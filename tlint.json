@@ -1,0 +1,22 @@
+{
+  "disabled": [
+    "SpaceAfterSoleNotOperator",
+    "AlphabeticalImports"
+  ],
+  "excluded": [
+    "_ide_helper.php",
+    "_ide_helper_models.php",
+    ".phpstorm.meta.php",
+    ".php-cs-fixer.dist.php",
+    "bootstrap/app.php",
+    "public/index.php"
+  ],
+  "paths": [
+    {
+      "controllers": [
+        "app/Http/Services",
+        "app/Http/Repositories"
+      ]
+    }
+  ]
+}
