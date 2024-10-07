@@ -46,7 +46,6 @@ return Application::configure(basePath: dirname(__DIR__))
             TrimStrings::class,
             ConvertEmptyStringsToNull::class,
             AutoDocMiddleware::class,
-            CheckVersionMiddleware::class,
         ]);
 
         $middleware->alias([
@@ -73,6 +72,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->group('api', [
             'throttle:60,1',
             'bindings',
+            CheckVersionMiddleware::class,
         ]);
 
         $middleware->group('auth_group', [
@@ -98,4 +98,5 @@ return Application::configure(basePath: dirname(__DIR__))
             'password',
             'password_confirmation',
         ]);
-    })->create();
+    })
+    ->create();
