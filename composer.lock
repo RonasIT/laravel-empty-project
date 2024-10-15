@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2ec36727304699bae7dabb043095320a",
+    "content-hash": "355e2a57d8d8277d954f7d15fddd59e7",
     "packages": [
         {
             "name": "brick/math",
@@ -11958,16 +11958,16 @@
         },
         {
             "name": "ronasit/laravel-entity-generator",
-            "version": "3.0.0-beta",
+            "version": "3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RonasIT/laravel-entity-generator.git",
-                "reference": "ba910b0edf65bb5364811d09c9a85a4d719ee8ae"
+                "reference": "78b359074c23e14bf49122a3b0745a86fc2e13f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RonasIT/laravel-entity-generator/zipball/ba910b0edf65bb5364811d09c9a85a4d719ee8ae",
-                "reference": "ba910b0edf65bb5364811d09c9a85a4d719ee8ae",
+                "url": "https://api.github.com/repos/RonasIT/laravel-entity-generator/zipball/78b359074c23e14bf49122a3b0745a86fc2e13f7",
+                "reference": "78b359074c23e14bf49122a3b0745a86fc2e13f7",
                 "shasum": ""
             },
             "require": {
@@ -12019,9 +12019,9 @@
             ],
             "support": {
                 "issues": "https://github.com/RonasIT/laravel-entity-generator/issues",
-                "source": "https://github.com/RonasIT/laravel-entity-generator/tree/3.0.0-beta"
+                "source": "https://github.com/RonasIT/laravel-entity-generator/tree/3.1"
             },
-            "time": "2024-08-26T06:24:25+00:00"
+            "time": "2024-10-14T11:19:22+00:00"
         },
         {
             "name": "symfony/config",
@@ -12500,8 +12500,7 @@
     "minimum-stability": "beta",
     "stability-flags": {
         "ronasit/laravel-helpers": 10,
-        "ronasit/laravel-swagger": 10,
-        "ronasit/laravel-entity-generator": 10
+        "ronasit/laravel-swagger": 10
     },
     "prefer-stable": false,
     "prefer-lowest": false,
