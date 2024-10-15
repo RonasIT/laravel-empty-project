@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4aa4248fe186e69a8a7444b98593fb33",
+    "content-hash": "2ec36727304699bae7dabb043095320a",
     "packages": [
         {
             "name": "brick/math",
@@ -5725,16 +5725,16 @@
         },
         {
             "name": "ronasit/laravel-swagger",
-            "version": "3.0.0-beta",
+            "version": "3.0.1-beta",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RonasIT/laravel-swagger.git",
-                "reference": "a5f9e4a509c1e6dc2bbeec73a1231e40ad3f0972"
+                "reference": "90e93d49d4d17a02e03be7075745b3e994f46e0c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RonasIT/laravel-swagger/zipball/a5f9e4a509c1e6dc2bbeec73a1231e40ad3f0972",
-                "reference": "a5f9e4a509c1e6dc2bbeec73a1231e40ad3f0972",
+                "url": "https://api.github.com/repos/RonasIT/laravel-swagger/zipball/90e93d49d4d17a02e03be7075745b3e994f46e0c",
+                "reference": "90e93d49d4d17a02e03be7075745b3e994f46e0c",
                 "shasum": ""
             },
             "require": {
@@ -5752,13 +5752,13 @@
             "extra": {
                 "laravel": {
                     "providers": [
-                        "RonasIT\\Support\\AutoDoc\\AutoDocServiceProvider"
+                        "RonasIT\\AutoDoc\\AutoDocServiceProvider"
                     ]
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "RonasIT\\Support\\AutoDoc\\": "src/"
+                    "RonasIT\\AutoDoc\\": "src/"
                 },
                 "exclude-from-classmap": [
                     "src/Tests/"
@@ -5784,9 +5784,9 @@
             ],
             "support": {
                 "issues": "https://github.com/RonasIT/laravel-swagger/issues",
-                "source": "https://github.com/RonasIT/laravel-swagger/tree/3.0.0-beta"
+                "source": "https://github.com/RonasIT/laravel-swagger/tree/3.0.1-beta"
             },
-            "time": "2024-08-22T13:03:47+00:00"
+            "time": "2024-10-14T07:38:38+00:00"
         },
         {
             "name": "sebastian/cli-parser",

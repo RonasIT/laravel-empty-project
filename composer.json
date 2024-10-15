@@ -20,7 +20,7 @@
     "php-open-source-saver/jwt-auth": "^2.7",
     "psr/simple-cache": "^3.0",
     "ronasit/laravel-helpers": "^3.0.0-beta",
-    "ronasit/laravel-swagger": "^3.0.0-beta",
+    "ronasit/laravel-swagger": "^3.0.1-beta",
     "spatie/laravel-google-cloud-storage": "^2.3",
     "spatie/laravel-ignition": "^2.8",
     "symfony/http-client": "^7.1.3",

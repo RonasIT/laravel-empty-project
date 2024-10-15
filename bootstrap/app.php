@@ -26,7 +26,7 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-use RonasIT\Support\AutoDoc\Http\Middleware\AutoDocMiddleware;
+use RonasIT\AutoDoc\Http\Middleware\AutoDocMiddleware;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 return Application::configure(basePath: dirname(__DIR__))

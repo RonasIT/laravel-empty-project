@@ -8,7 +8,7 @@ use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Testing\TestResponse;
-use RonasIT\Support\AutoDoc\Tests\AutoDocTestCaseTrait;
+use RonasIT\AutoDoc\Traits\AutoDocTestCaseTrait;
 use RonasIT\Support\Tests\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
