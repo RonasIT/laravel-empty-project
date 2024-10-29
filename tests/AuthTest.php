@@ -279,7 +279,7 @@ class AuthTest extends TestCase
 
     public function testForgotPasswordThrottled()
     {
-        $this->mockForgotPasswordThrottled();
+        $this->mockForgotPasswordThrottled('fidel.kutch@example.com');
 
         $response = $this->json('post', '/auth/forgot-password', [
             'email' => 'fidel.kutch@example.com',

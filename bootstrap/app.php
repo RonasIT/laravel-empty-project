@@ -28,6 +28,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use RonasIT\AutoDoc\Http\Middleware\AutoDocMiddleware;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use PHPUnit\Framework\ExpectationFailedException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -93,6 +94,10 @@ return Application::configure(basePath: dirname(__DIR__))
             TokenMismatchException::class,
             ValidationException::class,
         ]);
+
+        $exceptions->render(function (ExpectationFailedException $exception) {
+            throw $exception;
+        });
 
         $exceptions->dontFlash([
             'password',

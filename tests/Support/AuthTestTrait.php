@@ -29,12 +29,12 @@ trait AuthTestTrait
         ]);
     }
 
-    public function mockForgotPasswordThrottled(): void
+    public function mockForgotPasswordThrottled(string $email): void
     {
         $this->mockClass(UserService::class, [
             [
                 'function' => 'forgotPassword',
-                'arguments' => [],
+                'arguments' => [$email],
                 'result' => 'passwords.throttled',
             ],
         ]);
