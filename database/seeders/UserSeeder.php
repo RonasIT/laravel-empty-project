@@ -8,7 +8,7 @@ use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
 {
-    public function run()
+    public function run(): void
     {
         factory(User::class)->create([
             'role_id' => Role::USER,

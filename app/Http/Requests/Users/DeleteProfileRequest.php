@@ -8,6 +8,6 @@ class DeleteProfileRequest extends Request
 {
     public function authorize(): bool
     {
-        return $this->user()->isUser();
+        return !$this->user()->isAdmin();
     }
 }
