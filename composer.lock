@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "355e2a57d8d8277d954f7d15fddd59e7",
+    "content-hash": "28755d9e92602279d9d94f83af1074fc",
     "packages": [
         {
             "name": "brick/math",
@@ -5725,16 +5725,16 @@
         },
         {
             "name": "ronasit/laravel-swagger",
-            "version": "3.0.1-beta",
+            "version": "3.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RonasIT/laravel-swagger.git",
-                "reference": "90e93d49d4d17a02e03be7075745b3e994f46e0c"
+                "reference": "6919f6a08b5dc9a808c97f553be748776b7b5253"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RonasIT/laravel-swagger/zipball/90e93d49d4d17a02e03be7075745b3e994f46e0c",
-                "reference": "90e93d49d4d17a02e03be7075745b3e994f46e0c",
+                "url": "https://api.github.com/repos/RonasIT/laravel-swagger/zipball/6919f6a08b5dc9a808c97f553be748776b7b5253",
+                "reference": "6919f6a08b5dc9a808c97f553be748776b7b5253",
                 "shasum": ""
             },
             "require": {
@@ -5784,9 +5784,9 @@
             ],
             "support": {
                 "issues": "https://github.com/RonasIT/laravel-swagger/issues",
-                "source": "https://github.com/RonasIT/laravel-swagger/tree/3.0.1-beta"
+                "source": "https://github.com/RonasIT/laravel-swagger/tree/3.0.2"
             },
-            "time": "2024-10-14T07:38:38+00:00"
+            "time": "2024-10-17T06:36:57+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -12499,8 +12499,7 @@
     "aliases": [],
     "minimum-stability": "beta",
     "stability-flags": {
-        "ronasit/laravel-helpers": 10,
-        "ronasit/laravel-swagger": 10
+        "ronasit/laravel-helpers": 10
     },
     "prefer-stable": false,
     "prefer-lowest": false,

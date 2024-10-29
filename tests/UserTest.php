@@ -35,7 +35,7 @@ class UserTest extends TestCase
 
         $response = $this->actingAs(self::$admin)->json('post', '/users', $data);
 
-        $response->assertOk();
+        $response->assertCreated();
 
         $this->assertEqualsFixture('user_created.json', $response->json());
 
