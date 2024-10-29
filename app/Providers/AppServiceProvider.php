@@ -10,11 +10,6 @@ use Illuminate\Routing\RouteRegistrar;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
     public function boot(): void
     {
         /**
@@ -67,11 +62,6 @@ class AppServiceProvider extends ServiceProvider
         RouteFacade::macro('version', fn (VersionEnum $version) => RouteFacade::prefix('v' . $version->value));
     }
 
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
     public function register()
     {
     }
