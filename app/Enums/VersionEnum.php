@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-use App\Traits\EnumTrait;
+use RonasIT\Support\Traits\EnumTrait;
 
 enum VersionEnum: string
 {
