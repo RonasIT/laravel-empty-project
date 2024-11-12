@@ -34,7 +34,7 @@ services:
       - .:/app
 
   pgsql_test:
-    image: bitnami/postgresql:16
+    image: bitnami/postgresql:16.1.0
     ports:
       - 5433:5432
     environment:
