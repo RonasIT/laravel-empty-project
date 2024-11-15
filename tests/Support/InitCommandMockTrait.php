@@ -20,8 +20,8 @@ trait InitCommandMockTrait
             namespace: 'App\Console\Commands',
             callChain: array_map(
                 fn ($call) => $this->functionCall('file_put_contents', $call),
-                $callChain
-            )
+                $callChain,
+            ),
         );
     }
 
@@ -31,7 +31,7 @@ trait InitCommandMockTrait
             $this->functionCall(
                 name: 'shell_exec',
                 arguments: ['git ls-remote --get-url origin'],
-                result: 'https://github.com/ronasit/laravel-helpers.git'
+                result: 'https://github.com/ronasit/laravel-helpers.git',
             ),
         ]);
     }

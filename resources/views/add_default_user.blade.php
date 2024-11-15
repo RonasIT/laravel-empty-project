@@ -13,7 +13,7 @@ class AddDefaultUser extends Migration
                 'name' => '{{ $name }}',
                 'email' => '{{ $email }}',
                 'password' => Hash::make('{{ $password }}'),
-                'role_id' => '{{ $role_id }}'
+                'role_id' => '{{ $role_id }}',
             ]);
         }
     }

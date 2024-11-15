@@ -8,6 +8,7 @@ use RonasIT\Support\Services\EntityService;
 
 /**
  * @property RoleRepository $repository
+ *
  * @mixin RoleRepository
  */
 class RoleService extends EntityService
