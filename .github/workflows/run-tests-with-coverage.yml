@@ -37,7 +37,7 @@ jobs:
       redis:
         image: redis:7.2
         env:
-          ALLOW_EMPTY_PASSWORD: yes
+          ALLOW_EMPTY_PASSWORD: "yes"
         ports:
           - 6379:6379
         options: >-

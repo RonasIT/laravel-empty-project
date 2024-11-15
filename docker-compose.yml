@@ -29,7 +29,7 @@ services:
     ports:
       - 5432:5432
     environment:
-      ALLOW_EMPTY_PASSWORD: yes
+      ALLOW_EMPTY_PASSWORD: "yes"
     volumes:
       - .:/app
 
@@ -38,14 +38,14 @@ services:
     ports:
       - 5433:5432
     environment:
-      ALLOW_EMPTY_PASSWORD: yes
+      ALLOW_EMPTY_PASSWORD: "yes"
     volumes:
       - .:/app
 
   redis:
     image: bitnami/redis:7.2
     environment:
-      ALLOW_EMPTY_PASSWORD: yes
+      ALLOW_EMPTY_PASSWORD: "yes"
     ports:
         - 6379:6379
 
