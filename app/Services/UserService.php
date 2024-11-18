@@ -16,6 +16,7 @@ use RonasIT\Support\Services\EntityService;
 
 /**
  * @property UserRepository $repository
+ *
  * @mixin UserRepository
  */
 class UserService extends EntityService
@@ -54,8 +55,7 @@ class UserService extends EntityService
     {
         return Password::sendResetLink(
             credentials: ['email' => $email],
-            callback: fn ($user, $token) =>
-                Mail::to($user->email)->send(new ForgotPasswordMail(['hash' => $token]))
+            callback: fn ($user, $token) => Mail::to($user->email)->send(new ForgotPasswordMail(['hash' => $token])),
         );
     }
 
@@ -63,12 +63,11 @@ class UserService extends EntityService
     {
         return Password::reset(
             credentials: $credentials,
-            callback: fn (User $user, string $password) =>
-                $this->repository
-                    ->force()
-                    ->update($user->id, [
-                        'password' => Hash::make($password),
-                    ])
+            callback: fn (User $user, string $password) => $this->repository
+                ->force()
+                ->update($user->id, [
+                    'password' => Hash::make($password),
+                ]),
         );
     }
 }

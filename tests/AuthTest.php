@@ -157,7 +157,7 @@ class AuthTest extends TestCase
         $response->assertJson(fn (AssertableJson $json) => $json->hasAll(['token', 'ttl', 'refresh_ttl']));
 
         $this->assertNotEmpty(
-            $response->headers->get('authorization')
+            $response->headers->get('authorization'),
         );
 
         $authHeader = $response->headers->get('authorization');
@@ -221,7 +221,7 @@ class AuthTest extends TestCase
 
         $this->assertNotEquals(
             $this->decodeJWTToken($this->token)->iat,
-            $this->decodeJWTToken($newToken)->iat
+            $this->decodeJWTToken($newToken)->iat,
         );
     }
 

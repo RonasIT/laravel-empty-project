@@ -31,14 +31,13 @@
   "require-dev": {
     "ext-json": "*",
     "barryvdh/laravel-ide-helper": "^3.1",
-    "codedefective/cg-hooks": "^3.1",
+    "brainmaestro/composer-git-hooks": "^3.0",
     "fakerphp/faker": "^1.23",
-    "friendsofphp/php-cs-fixer": "^3.8",
+    "laravel/pint": "^1.18",
     "mockery/mockery": "^1.6",
     "php-coveralls/php-coveralls": "^2.7",
     "phpunit/phpunit": "^10.5",
-    "ronasit/laravel-entity-generator": "^3.1",
-    "tightenco/tlint": "^9.3"
+    "ronasit/laravel-entity-generator": "^3.1"
   },
   "autoload": {
     "classmap": [
@@ -57,6 +56,7 @@
   },
   "scripts": {
     "post-install-cmd": [
+      "git config --global --add safe.directory /app",
       "php artisan clear-compiled",
       "[ $COMPOSER_DEV_MODE -eq 0 ] || php artisan ide-helper:generate",
       "[ $COMPOSER_DEV_MODE -eq 0 ] || php artisan ide-helper:meta",
@@ -89,7 +89,7 @@
         "stop-on-failure": ["pre-commit"]
       },
       "pre-commit": [
-        "docker compose up -d php && docker compose exec -T php vendor/bin/php-cs-fixer fix && docker compose exec -T php vendor/bin/tlint"
+        "docker compose -f docker-compose.analyse.yaml up -d && docker compose -f docker-compose.analyse.yaml exec -T nginx vendor/bin/pint"
       ]
     }
   },

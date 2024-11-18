@@ -6,8 +6,8 @@ use App\Models\Role;
 use RonasIT\Support\Repositories\BaseRepository;
 
 /**
- * @property  Role $model
-*/
+ * @property Role $model
+ */
 class RoleRepository extends BaseRepository
 {
     public function __construct()

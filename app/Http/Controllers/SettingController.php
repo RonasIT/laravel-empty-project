@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Setting\GetSettingRequest;
 use App\Http\Requests\Setting\SearchSettingRequest;
 use App\Http\Requests\Setting\UpdateSettingRequest;
-use App\Http\Resources\Setting\SettingsCollectionResource;
 use App\Http\Resources\Setting\SettingResource;
+use App\Http\Resources\Setting\SettingsCollectionResource;
 use App\Services\SettingService;
 use Illuminate\Http\Response;
 
@@ -23,7 +23,7 @@ class SettingController extends Controller
     {
         $service->update(
             ['name' => $key],
-            ['value' => $request->all()]
+            ['value' => $request->all()],
         );
 
         return response('', Response::HTTP_NO_CONTENT);
