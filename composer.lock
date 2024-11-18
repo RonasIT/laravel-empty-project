@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cb92368e18e287849532ab4282e79b1e",
+    "content-hash": "1fa78ed9c20446e60a37bb2de7fcfd74",
     "packages": [
         {
             "name": "brick/math",
@@ -5736,6 +5736,55 @@
             "time": "2024-11-04T10:52:30+00:00"
         },
         {
+            "name": "ronasit/laravel-project-initializator",
+            "version": "dev-move_init_commant_from_empty_project",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/RonasIT/laravel-project-initializator.git",
+                "reference": "8bc1cb4c8d1f8aa5e009a53d7a68d66b9ab28e0b"
+            },
+            "require": {
+                "ext-json": "*",
+                "laravel/framework": "^11.30",
+                "php": ">=8.3",
+                "php-mock/php-mock-phpunit": "^2.10",
+                "ronasit/laravel-helpers": "^3.0.0-beta"
+            },
+            "require-dev": {
+                "brainmaestro/composer-git-hooks": "^3.0",
+                "fakerphp/faker": "^1.23.1",
+                "friendsofphp/php-cs-fixer": "^3.62",
+                "mockery/mockery": "^1.6.12",
+                "orchestra/testbench": "^9.3",
+                "php-coveralls/php-coveralls": "^2.7",
+                "phpunit/phpunit": "^10.5.30"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "RonasIT\\ProjectInitializator\\ProjectInitializatorServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "RonasIT\\ProjectInitializator\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "RonasIT\\ProjectInitializator\\Tests\\": "tests/",
+                    "RonasIT\\ProjectInitializator\\Tests\\Support\\": "tests/Support/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Provided tools for project initialization.",
+            "time": "2024-11-18T11:24:18+00:00"
+        },
+        {
             "name": "ronasit/laravel-swagger",
             "version": "3.0.2",
             "source": {
@@ -11438,7 +11487,8 @@
     "aliases": [],
     "minimum-stability": "beta",
     "stability-flags": {
-        "ronasit/laravel-helpers": 10
+        "ronasit/laravel-helpers": 10,
+        "ronasit/laravel-project-initializator": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,
