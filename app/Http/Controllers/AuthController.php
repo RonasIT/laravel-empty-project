@@ -8,15 +8,15 @@ use App\Http\Requests\Auth\LogoutRequest;
 use App\Http\Requests\Auth\RefreshTokenRequest;
 use App\Http\Requests\Auth\RegisterUserRequest;
 use App\Http\Requests\Auth\RestorePasswordRequest;
-use App\Http\Resources\Auth\SuccessLoginResource;
 use App\Http\Resources\Auth\RefreshTokenResource;
-use Illuminate\Http\Response;
+use App\Http\Resources\Auth\SuccessLoginResource;
 use App\Services\UserService;
 use App\Traits\TokenTrait;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Password;
-use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use PHPOpenSourceSaver\JWTAuth\Exceptions\JWTException;
 use PHPOpenSourceSaver\JWTAuth\JWTAuth;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 use Symfony\Component\HttpKernel\Exception\UnprocessableEntityHttpException;
 
 class AuthController extends Controller

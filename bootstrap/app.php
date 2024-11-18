@@ -26,9 +26,9 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Session\TokenMismatchException;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use PHPUnit\Framework\ExpectationFailedException;
 use RonasIT\AutoDoc\Http\Middleware\AutoDocMiddleware;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-use PHPUnit\Framework\ExpectationFailedException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -37,7 +37,7 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__ . '/../routes/console.php',
         channels: __DIR__ . '/../routes/channels.php',
         health: '/status',
-        apiPrefix: ''
+        apiPrefix: '',
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->use([

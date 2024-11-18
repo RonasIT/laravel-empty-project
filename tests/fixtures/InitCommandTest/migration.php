@@ -15,7 +15,7 @@ class AddDefaultUser extends Migration
                 'name' => 'TestAdmin',
                 'email' => 'mail@mail.com',
                 'password' => Hash::make('123456'),
-                'role_id' => '1'
+                'role_id' => '1',
             ]);
         }
     }

@@ -29,7 +29,7 @@ class InitCommandTest extends TestCase
                 $this->getFixture('migration.php'),
                 'optionalParameter',
                 'optionalParameter',
-            ]
+            ],
         );
 
         $this
@@ -60,7 +60,7 @@ class InitCommandTest extends TestCase
                 $this->getFixture('default_readme.md'),
                 'optionalParameter',
                 'optionalParameter',
-            ]
+            ],
         );
 
         $this
@@ -77,37 +77,37 @@ class InitCommandTest extends TestCase
             ->expectsQuestion(
                 'Are you going to use Issue Tracker? '
                 . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
-                'later'
+                'later',
             )
             ->expectsQuestion(
                 'Are you going to use Figma? '
                 . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
-                'later'
+                'later',
             )
             ->expectsQuestion(
                 'Are you going to use Sentry? '
                 . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
-                'later'
+                'later',
             )
             ->expectsQuestion(
                 'Are you going to use DataDog? '
                 . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
-                'later'
+                'later',
             )
             ->expectsQuestion(
                 'Are you going to use ArgoCD? '
                 . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
-                'later'
+                'later',
             )
             ->expectsQuestion(
                 'Are you going to use Laravel Telescope? '
                 . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
-                'later'
+                'later',
             )
             ->expectsQuestion(
                 'Are you going to use Laravel Nova? '
                 . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
-                'later'
+                'later',
             )
             ->expectsQuestion('Please enter a Manager\'s email', '')
             ->expectsQuestion('Please enter a Code Owner/Team Lead\'s email', '')
@@ -137,7 +137,7 @@ class InitCommandTest extends TestCase
                 $this->getFixture('partial_readme.md'),
                 'optionalParameter',
                 'optionalParameter',
-            ]
+            ],
         );
 
         $this
@@ -151,37 +151,37 @@ class InitCommandTest extends TestCase
             ->expectsQuestion(
                 'Are you going to use Issue Tracker? '
                 . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
-                'later'
+                'later',
             )
             ->expectsQuestion(
                 'Are you going to use Figma? '
                 . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
-                'no'
+                'no',
             )
             ->expectsQuestion(
                 'Are you going to use Sentry? '
                 . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
-                'no'
+                'no',
             )
             ->expectsQuestion(
                 'Are you going to use DataDog? '
                 . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
-                'no'
+                'no',
             )
             ->expectsQuestion(
                 'Are you going to use ArgoCD? '
                 . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
-                'no'
+                'no',
             )
             ->expectsQuestion(
                 'Are you going to use Laravel Telescope? '
                 . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
-                'no'
+                'no',
             )
             ->expectsQuestion(
                 'Are you going to use Laravel Nova? '
                 . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
-                'no'
+                'no',
             )
             ->expectsQuestion('Please enter a Manager\'s email', 'manager@mail.com')
             ->expectsQuestion('Please enter a Code Owner/Team Lead\'s email', '')
@@ -212,7 +212,7 @@ class InitCommandTest extends TestCase
                 $this->getFixture('full_readme.md'),
                 'optionalParameter',
                 'optionalParameter',
-            ]
+            ],
         );
 
         $this
@@ -229,37 +229,37 @@ class InitCommandTest extends TestCase
             ->expectsQuestion(
                 'Are you going to use Issue Tracker? '
                 . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
-                'https://gitlab.com/my-project'
+                'https://gitlab.com/my-project',
             )
             ->expectsQuestion(
                 'Are you going to use Figma? '
                 . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
-                'https://figma.com/my-project'
+                'https://figma.com/my-project',
             )
             ->expectsQuestion(
                 'Are you going to use Sentry? '
                 . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
-                'https://sentry.com/my-project'
+                'https://sentry.com/my-project',
             )
             ->expectsQuestion(
                 'Are you going to use DataDog? '
                 . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
-                'https://datadoghq.com/my-project'
+                'https://datadoghq.com/my-project',
             )
             ->expectsQuestion(
                 'Are you going to use ArgoCD? '
                 . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
-                'https://argocd.com/my-project'
+                'https://argocd.com/my-project',
             )
             ->expectsQuestion(
                 'Are you going to use Laravel Telescope? '
                 . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
-                'https://mypsite.com/telescope-link'
+                'https://mypsite.com/telescope-link',
             )
             ->expectsQuestion(
                 'Are you going to use Laravel Nova? '
                 . 'Please enter a link or select `later` to do it later, otherwise select `no`.',
-                'https://mypsite.com/nova-link'
+                'https://mypsite.com/nova-link',
             )
             ->expectsQuestion('Please enter a Manager\'s email', 'manager@mail.com')
             ->expectsQuestion('Please enter a Code Owner/Team Lead\'s email', 'lead@mail.com')
