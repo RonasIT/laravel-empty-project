@@ -25,7 +25,8 @@
     "spatie/laravel-ignition": "^2.8",
     "symfony/http-client": "^7.1.3",
     "symfony/mailgun-mailer": "^7.1.3",
-    "symfony/postmark-mailer": "^7.1"
+    "symfony/postmark-mailer": "^7.1",
+    "ronasit/laravel-project-initializator": "dev-move_init_commant_from_empty_project"
   },
   "require-dev": {
     "ext-json": "*",
@@ -92,5 +93,11 @@
       ]
     }
   },
-  "minimum-stability": "beta"
+  "minimum-stability": "beta",
+  "repositories": [
+    {
+      "type": "git",
+      "url": "https://github.com/RonasIT/laravel-project-initializator.git"
+    }
+  ]
 }
