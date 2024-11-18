@@ -31,6 +31,9 @@
     "new_with_parentheses": {
       "anonymous_class": false,
       "named_class": true
+    },
+    "phpdoc_separation": {
+      "skip_unlisted_annotations": false
     }
   }
 }
