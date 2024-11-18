@@ -5741,7 +5741,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/RonasIT/laravel-project-initializator.git",
-                "reference": "8bc1cb4c8d1f8aa5e009a53d7a68d66b9ab28e0b"
+                "reference": "890935c6eb792c58d7894e6ab0e2ccb56e32e7d7"
             },
             "require": {
                 "ext-json": "*",
@@ -5781,8 +5781,20 @@
             "license": [
                 "MIT"
             ],
+            "authors": [
+                {
+                    "name": "Ronas IT",
+                    "homepage": "https://github.com/RonasIT/laravel-project-initializator/graphs/contributors"
+                }
+            ],
             "description": "Provided tools for project initialization.",
-            "time": "2024-11-18T11:24:18+00:00"
+            "keywords": [
+                "init",
+                "laravel",
+                "project-initializator",
+                "readme"
+            ],
+            "time": "2024-11-18T13:28:17+00:00"
         },
         {
             "name": "ronasit/laravel-swagger",
