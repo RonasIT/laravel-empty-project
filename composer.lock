@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1fa78ed9c20446e60a37bb2de7fcfd74",
+    "content-hash": "f93e6cf6c8b471b4ff6516d36e075529",
     "packages": [
         {
             "name": "brick/math",
@@ -5737,11 +5737,11 @@
         },
         {
             "name": "ronasit/laravel-project-initializator",
-            "version": "dev-move_init_commant_from_empty_project",
+            "version": "dev-main",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RonasIT/laravel-project-initializator.git",
-                "reference": "890935c6eb792c58d7894e6ab0e2ccb56e32e7d7"
+                "reference": "ae2173bd5b410b8b6560ee50ad88395830de8254"
             },
             "require": {
                 "ext-json": "*",
@@ -5759,6 +5759,7 @@
                 "php-coveralls/php-coveralls": "^2.7",
                 "phpunit/phpunit": "^10.5.30"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -5794,7 +5795,7 @@
                 "project-initializator",
                 "readme"
             ],
-            "time": "2024-11-18T13:28:17+00:00"
+            "time": "2024-11-19T04:17:03+00:00"
         },
         {
             "name": "ronasit/laravel-swagger",

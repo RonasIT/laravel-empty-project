@@ -26,7 +26,7 @@
     "symfony/http-client": "^7.1.3",
     "symfony/mailgun-mailer": "^7.1.3",
     "symfony/postmark-mailer": "^7.1",
-    "ronasit/laravel-project-initializator": "dev-move_init_commant_from_empty_project"
+    "ronasit/laravel-project-initializator": "dev-main"
   },
   "require-dev": {
     "ext-json": "*",
