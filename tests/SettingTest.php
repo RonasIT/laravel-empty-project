@@ -37,7 +37,7 @@ class SettingTest extends TestCase
     {
         $setting = $this->getJsonFixture('update_setting.json');
 
-        $response = $this->actingAs(self::$admin)->json('put', "/settings/not-exists", $setting['value']);
+        $response = $this->actingAs(self::$admin)->json('put', '/settings/not-exists', $setting['value']);
 
         $response->assertNotFound();
     }

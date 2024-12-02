@@ -9,6 +9,7 @@ use RonasIT\Support\Services\EntityService;
 
 /**
  * @property SettingRepository $repository
+ *
  * @mixin SettingRepository
  */
 class SettingService extends EntityService

@@ -6,7 +6,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use RonasIT\Support\Traits\MigrationTrait;
 
-return new class () extends Migration {
+return new class extends Migration
+{
     use MigrationTrait;
 
     public function up(): void

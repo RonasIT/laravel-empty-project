@@ -30,8 +30,6 @@ abstract class TestCase extends BaseTestCase
 
     /**
      * Creates the application.
-     *
-     * @return Application
      */
     public function createApplication(): Application
     {
