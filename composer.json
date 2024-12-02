@@ -89,7 +89,7 @@
         "stop-on-failure": ["pre-commit"]
       },
       "pre-commit": [
-        "docker compose -f docker-compose.analyse.yaml up -d && docker compose -f docker-compose.analyse.yaml exec -T nginx vendor/bin/pint"
+        "docker compose up -d php && docker compose exec -T nginx vendor/bin/pint --repair"
       ]
     }
   },
