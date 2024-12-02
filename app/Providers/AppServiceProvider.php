@@ -19,6 +19,7 @@ class AppServiceProvider extends ServiceProvider
          * @param  VersionEnum|null  $end
          * @param  string|null  $param  (default is 'version')
          * @param  Route|null  $instance
+         *
          * @return Route|RouteRegistrar
          */
         $versionRange = function (?VersionEnum $start, ?VersionEnum $end, ?string $param, ?Route $instance = null) {
