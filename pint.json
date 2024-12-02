@@ -2,6 +2,10 @@
   "preset": "laravel",
   "rules": {
     "not_operator_with_successor_space": false,
+    "php_unit_set_up_tear_down_visibility": false,
+    "php_unit_method_casing": {
+      "case": "camel_case"
+    },
     "concat_space": {
       "spacing": "one"
     },
