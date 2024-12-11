@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3f76ed903157a1245a3774869a2a2b80",
+    "content-hash": "458b6b64ed39b191910a0a67bd232f9f",
     "packages": [
         {
             "name": "brick/math",
@@ -11284,16 +11284,16 @@
         },
         {
             "name": "ronasit/laravel-project-initializator",
-            "version": "0.0.2-beta",
+            "version": "0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RonasIT/laravel-project-initializator.git",
-                "reference": "e285579a3aac9f00d41a8e2039788c6598de2f70"
+                "reference": "e9c17c4fbfd8ba6959f895c21f2328cd28666e28"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RonasIT/laravel-project-initializator/zipball/e285579a3aac9f00d41a8e2039788c6598de2f70",
-                "reference": "e285579a3aac9f00d41a8e2039788c6598de2f70",
+                "url": "https://api.github.com/repos/RonasIT/laravel-project-initializator/zipball/e9c17c4fbfd8ba6959f895c21f2328cd28666e28",
+                "reference": "e9c17c4fbfd8ba6959f895c21f2328cd28666e28",
                 "shasum": ""
             },
             "require": {
@@ -11344,9 +11344,9 @@
             ],
             "support": {
                 "issues": "https://github.com/RonasIT/laravel-project-initializator/issues",
-                "source": "https://github.com/RonasIT/laravel-project-initializator/tree/0.0.2-beta"
+                "source": "https://github.com/RonasIT/laravel-project-initializator/tree/0.1"
             },
-            "time": "2024-12-02T03:41:05+00:00"
+            "time": "2024-12-09T08:17:14+00:00"
         },
         {
             "name": "symfony/config",
@@ -11626,9 +11626,7 @@
     ],
     "aliases": [],
     "minimum-stability": "beta",
-    "stability-flags": {
-        "ronasit/laravel-project-initializator": 10
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
