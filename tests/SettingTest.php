@@ -21,7 +21,7 @@ class SettingTest extends TestCase
 
     public function testUpdate()
     {
-        $setting = $this->getJsonFixture('update_setting.json');
+        $setting = $this->getJsonFixture('update_setting');
 
         $response = $this->actingAs(self::$admin)->json('put', "/settings/{$setting['name']}", $setting['value']);
 
@@ -35,7 +35,7 @@ class SettingTest extends TestCase
 
     public function testUpdateNotExists()
     {
-        $setting = $this->getJsonFixture('update_setting.json');
+        $setting = $this->getJsonFixture('update_setting');
 
         $response = $this->actingAs(self::$admin)->json('put', '/settings/not-exists', $setting['value']);
 
@@ -44,7 +44,7 @@ class SettingTest extends TestCase
 
     public function testUpdateNoAuth()
     {
-        $setting = $this->getJsonFixture('update_setting.json');
+        $setting = $this->getJsonFixture('update_setting');
 
         $response = $this->json('put', "/settings/{$setting['name']}", $setting['value']);
 
@@ -58,7 +58,7 @@ class SettingTest extends TestCase
 
     public function testUpdateNoPermission()
     {
-        $setting = $this->getJsonFixture('update_setting.json');
+        $setting = $this->getJsonFixture('update_setting');
 
         $response = $this->actingAs(self::$user)->json('put', "/settings/{$setting['name']}", $setting['value']);
 
@@ -95,7 +95,7 @@ class SettingTest extends TestCase
     {
         $response = $this->actingAs(self::$admin)->json('get', '/settings/states');
 
-        $this->assertEqualsFixture('get_setting.json', $response->json());
+        $this->assertEqualsFixture('get_setting', $response->json());
     }
 
     public function testGetNotExists()
@@ -110,33 +110,33 @@ class SettingTest extends TestCase
         return [
             [
                 'filter' => ['query' => 'states'],
-                'fixture' => 'get_setting_by_key.json',
+                'fixture' => 'get_setting_by_key',
             ],
             [
                 'filter' => [
                     'order_by' => 'name',
                     'desc' => false,
                 ],
-                'fixture' => 'get_settings_check_order.json',
+                'fixture' => 'get_settings_check_order',
             ],
             [
                 'filter' => [
                     'per_page' => 2,
                 ],
-                'fixture' => 'search_per_page.json',
+                'fixture' => 'search_per_page',
             ],
             [
                 'filter' => [
                     'all' => 1,
                 ],
-                'fixture' => 'search_all.json',
+                'fixture' => 'search_all',
             ],
             [
                 'filter' => [
                     'per_page' => 1,
                     'query' => 'states',
                 ],
-                'fixture' => 'search_complex.json',
+                'fixture' => 'search_complex',
             ],
         ];
     }
@@ -156,7 +156,7 @@ class SettingTest extends TestCase
         return [
             [
                 'filter' => [],
-                'fixture' => 'get_public_settings.json',
+                'fixture' => 'get_public_settings',
             ],
         ];
     }
@@ -180,7 +180,7 @@ class SettingTest extends TestCase
 
         $result = app(SettingService::class)->set($setting['name'], $setting['value']);
 
-        $this->assertEqualsFixture('setting_set_not_exists.json', $result->jsonSerialize());
+        $this->assertEqualsFixture('setting_set_not_exists', $result->jsonSerialize());
 
         $this->assertDatabaseHas('settings', [
             'name' => $setting['name'],
@@ -197,7 +197,7 @@ class SettingTest extends TestCase
 
         $result = app(SettingService::class)->set($setting['name'], $setting['value']);
 
-        $this->assertEqualsFixture('setting_set_exists.json', $result->jsonSerialize());
+        $this->assertEqualsFixture('setting_set_exists', $result->jsonSerialize());
 
         $this->assertDatabaseHas('settings', [
             'name' => $setting['name'],
@@ -209,20 +209,20 @@ class SettingTest extends TestCase
     {
         $result = app(SettingService::class)->get('attribute');
 
-        $this->assertEqualsFixture('setting_get_exists.json', $result);
+        $this->assertEqualsFixture('setting_get_exists', $result);
     }
 
     public function testGetExistsJsonSetting()
     {
         $result = app(SettingService::class)->get('settings.timezone');
 
-        $this->assertEqualsFixture('setting_get_exists_json.json', $result);
+        $this->assertEqualsFixture('setting_get_exists_json', $result);
     }
 
     public function testGetNotExistsSetting()
     {
         $result = app(SettingService::class)->get('not_exists_attribute');
 
-        $this->assertEqualsFixture('setting_get_not_exists.json', $result);
+        $this->assertEqualsFixture('setting_get_not_exists', $result);
     }
 }

@@ -22,7 +22,7 @@ class AuthTest extends TestCase
     {
         parent::setUp();
 
-        self::$users ??= $this->getJsonFixture('users.json');
+        self::$users ??= $this->getJsonFixture('users');
         self::$admin ??= User::find(1);
 
         self::$userState ??= new ModelTestState(User::class);
@@ -104,20 +104,20 @@ class AuthTest extends TestCase
     {
         $this->mockBcryptHasher();
 
-        $data = $this->getJsonFixture('new_user.json');
+        $data = $this->getJsonFixture('new_user');
 
         $response = $this->actingAs(self::$admin)->json('post', '/register', $data);
 
         $response->assertOk();
 
-        self::$userState->assertChangesEqualsFixture('register_authorized_user_users_state.json');
+        self::$userState->assertChangesEqualsFixture('register_authorized_user_users_state');
     }
 
     public function testRegisterFromGuestUser()
     {
         $this->mockBcryptHasher();
 
-        $data = $this->getJsonFixture('new_user.json');
+        $data = $this->getJsonFixture('new_user');
 
         $response = $this->json('post', '/register', $data);
 
@@ -127,12 +127,12 @@ class AuthTest extends TestCase
         $response->assertCookie('token');
         $this->assertEquals(0, $response->getCookie('token', false)->getExpiresTime());
 
-        self::$userState->assertChangesEqualsFixture('register_from_guest_user_users_state.json');
+        self::$userState->assertChangesEqualsFixture('register_from_guest_user_users_state');
     }
 
     public function testRegisterFromGuestUserWithRemember()
     {
-        $data = $this->getJsonFixture('new_user.json');
+        $data = $this->getJsonFixture('new_user');
 
         $response = $this->json('post', '/register', [
             ...$data,
@@ -292,13 +292,13 @@ class AuthTest extends TestCase
     {
         $this->mockBcryptHasher();
 
-        $data = $this->getJsonFixture('restore_password.json');
+        $data = $this->getJsonFixture('restore_password');
 
         $response = $this->json('post', '/auth/restore-password', $data);
 
         $response->assertNoContent();
 
-        self::$userState->assertChangesEqualsFixture('restore_password_users_state.json');
+        self::$userState->assertChangesEqualsFixture('restore_password_users_state');
 
         $this->assertDatabaseMissing('password_reset_tokens', [
             'email' => 'fidel.kutch@example.com',
@@ -307,7 +307,7 @@ class AuthTest extends TestCase
 
     public function testRestorePasswordWrongToken()
     {
-        $data = $this->getJsonFixture('restore_password_wrong_token.json');
+        $data = $this->getJsonFixture('restore_password_wrong_token');
 
         $response = $this->json('post', '/auth/restore-password', $data);
 
