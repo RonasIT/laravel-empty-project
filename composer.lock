@@ -5662,16 +5662,16 @@
         },
         {
             "name": "ronasit/laravel-helpers",
-            "version": "3.1",
+            "version": "3.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RonasIT/laravel-helpers.git",
-                "reference": "098b4cc9cddbedb24ef403a77123cb4df3ac9b8c"
+                "reference": "22bd3bb97291dbdd34a02c59eebf907d23c8adfd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RonasIT/laravel-helpers/zipball/098b4cc9cddbedb24ef403a77123cb4df3ac9b8c",
-                "reference": "098b4cc9cddbedb24ef403a77123cb4df3ac9b8c",
+                "url": "https://api.github.com/repos/RonasIT/laravel-helpers/zipball/22bd3bb97291dbdd34a02c59eebf907d23c8adfd",
+                "reference": "22bd3bb97291dbdd34a02c59eebf907d23c8adfd",
                 "shasum": ""
             },
             "require": {
@@ -5738,9 +5738,9 @@
             ],
             "support": {
                 "issues": "https://github.com/RonasIT/laravel-helpers/issues",
-                "source": "https://github.com/RonasIT/laravel-helpers/tree/3.1"
+                "source": "https://github.com/RonasIT/laravel-helpers/tree/3.1.5"
             },
-            "time": "2024-12-02T05:30:04+00:00"
+            "time": "2024-12-26T04:51:59+00:00"
         },
         {
             "name": "ronasit/laravel-swagger",
