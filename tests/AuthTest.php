@@ -247,7 +247,7 @@ class AuthTest extends TestCase
     {
         Mail::fake();
 
-        $this->mockOpensslRandomPseudoBytes();
+        $this->mockOpensslRandomPseudoBytes('123123');
 
         $response = $this->json('post', '/auth/forgot-password', [
             'email' => 'fidel.kutch@example.com',

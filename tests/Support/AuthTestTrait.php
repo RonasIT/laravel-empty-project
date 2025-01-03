@@ -11,8 +11,6 @@ trait AuthTestTrait
 
     public function mockOpensslRandomPseudoBytes(string $password): void
     {
-        //hash_hmac('sha256', $password, 'b"DÉV&´G"áËa\x1Ae&õš,Ü\x16½\x1A\x15‘\x07CM—ºSVxÅ\x16"');
-
         $this->mockNativeFunction('Illuminate\Auth\Passwords', [
             $this->functionCall(
                 name: 'hash_hmac',
