@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use RonasIT\Support\BaseRequest;
+use RonasIT\Support\Http\BaseRequest;
 
 class Request extends BaseRequest
 {
