@@ -28,7 +28,7 @@ class UserTest extends TestCase
 
     public function testCreate()
     {
-        $this->mockBcryptHasher();
+        $this->mockBcryptHasher('123123');
 
         $data = $this->getJsonFixture('create_user.json');
 
