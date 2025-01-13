@@ -102,7 +102,7 @@ class AuthTest extends TestCase
 
     public function testRegisterAuthorizedUser()
     {
-        $this->mockBcryptHasher();
+        $this->mockBcryptHasher('666999');
 
         $data = $this->getJsonFixture('new_user.json');
 
@@ -115,7 +115,7 @@ class AuthTest extends TestCase
 
     public function testRegisterFromGuestUser()
     {
-        $this->mockBcryptHasher();
+        $this->mockBcryptHasher('666999');
 
         $data = $this->getJsonFixture('new_user.json');
 
@@ -290,7 +290,7 @@ class AuthTest extends TestCase
 
     public function testRestorePassword()
     {
-        $this->mockBcryptHasher();
+        $this->mockBcryptHasher('new_password');
 
         $data = $this->getJsonFixture('restore_password.json');
 

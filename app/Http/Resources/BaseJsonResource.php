@@ -2,9 +2,8 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Http\Resources\Json\JsonResource;
+use RonasIT\Support\BaseResource;
 
-class BaseJsonResource extends JsonResource
+class BaseJsonResource extends BaseResource
 {
-    public static $wrap = null;
 }
