@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources;
 
-use RonasIT\Support\BaseResource;
+use RonasIT\Support\Http\BaseResource;
 
 class BaseJsonResource extends BaseResource
 {
