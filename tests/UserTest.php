@@ -30,20 +30,20 @@ class UserTest extends TestCase
     {
         $this->mockBcryptHasher('123123');
 
-        $data = $this->getJsonFixture('create_user.json');
+        $data = $this->getJsonFixture('create_user');
 
         $response = $this->actingAs(self::$admin)->json('post', '/users', $data);
 
         $response->assertCreated();
 
-        $this->assertEqualsFixture('user_created.json', $response->json());
+        $this->assertEqualsFixture('user_created', $response->json());
 
-        self::$userState->assertChangesEqualsFixture('user_created_users_state.json');
+        self::$userState->assertChangesEqualsFixture('user_created_users_state');
     }
 
     public function testCreateNoAuth()
     {
-        $data = $this->getJsonFixture('create_user.json');
+        $data = $this->getJsonFixture('create_user');
 
         $response = $this->json('post', '/users', $data);
 
@@ -54,7 +54,7 @@ class UserTest extends TestCase
 
     public function testCreateNoPermission()
     {
-        $data = $this->getJsonFixture('create_user.json');
+        $data = $this->getJsonFixture('create_user');
 
         $response = $this->actingAs(self::$user)->json('post', '/users', $data);
 
@@ -72,18 +72,18 @@ class UserTest extends TestCase
 
     public function testUpdate()
     {
-        $data = $this->getJsonFixture('update_user.json');
+        $data = $this->getJsonFixture('update_user');
 
         $response = $this->actingAs(self::$admin)->json('put', '/users/2', $data);
 
         $response->assertNoContent();
 
-        self::$userState->assertChangesEqualsFixture('user_updated_users_state.json');
+        self::$userState->assertChangesEqualsFixture('user_updated_users_state');
     }
 
     public function testUpdateByUser()
     {
-        $data = $this->getJsonFixture('update_user.json');
+        $data = $this->getJsonFixture('update_user');
 
         $response = $this->actingAs(self::$user)->json('put', '/users/2', $data);
 
@@ -103,7 +103,7 @@ class UserTest extends TestCase
 
     public function testUpdateNotExists()
     {
-        $data = $this->getJsonFixture('update_user.json');
+        $data = $this->getJsonFixture('update_user');
 
         $response = $this->actingAs(self::$admin)->json('put', '/users/0', $data);
 
@@ -112,7 +112,7 @@ class UserTest extends TestCase
 
     public function testUpdateNoAuth()
     {
-        $data = $this->getJsonFixture('update_user.json');
+        $data = $this->getJsonFixture('update_user');
 
         $response = $this->json('put', '/users/1', $data);
 
@@ -123,18 +123,18 @@ class UserTest extends TestCase
 
     public function testUpdateProfile()
     {
-        $data = $this->getJsonFixture('update_user.json');
+        $data = $this->getJsonFixture('update_user');
 
         $response = $this->actingAs(self::$admin)->json('put', '/profile', $data);
 
         $response->assertNoContent();
 
-        self::$userState->assertChangesEqualsFixture('profile_updated_users_state.json');
+        self::$userState->assertChangesEqualsFixture('profile_updated_users_state');
     }
 
     public function testUpdateProfileWithPassword()
     {
-        $data = $this->getJsonFixture('update_profile_with_password.json');
+        $data = $this->getJsonFixture('update_profile_with_password');
 
         $response = $this->actingAs(self::$user)->json('put', '/profile', $data);
 
@@ -143,7 +143,7 @@ class UserTest extends TestCase
 
     public function testUpdateProfileWithPasswordEmptyOldPassword()
     {
-        $data = $this->getJsonFixture('update_profile_with_password_without_old.json');
+        $data = $this->getJsonFixture('update_profile_with_password_without_old');
 
         $response = $this->actingAs(self::$user)->json('put', '/profile', $data);
 
@@ -152,7 +152,7 @@ class UserTest extends TestCase
 
     public function testUpdateProfileWithPasswordWrongOldPassword()
     {
-        $data = $this->getJsonFixture('update_profile_with_password_with_wrong_old.json');
+        $data = $this->getJsonFixture('update_profile_with_password_with_wrong_old');
 
         $response = $this->actingAs(self::$user)->json('put', '/profile', $data);
 
@@ -161,7 +161,7 @@ class UserTest extends TestCase
 
     public function testUpdateProfileNoAuth()
     {
-        $data = $this->getJsonFixture('update_user.json');
+        $data = $this->getJsonFixture('update_user');
 
         $response = $this->json('put', '/profile', $data);
 
@@ -212,7 +212,7 @@ class UserTest extends TestCase
 
         $response->assertNoContent();
 
-        self::$userState->assertChangesEqualsFixture('user_deleted_users_state.json');
+        self::$userState->assertChangesEqualsFixture('user_deleted_users_state');
     }
 
     public function testDeleteOwnUser()
@@ -246,7 +246,7 @@ class UserTest extends TestCase
 
         $response->assertOk();
 
-        $this->assertEqualsFixture('get_user.json', $response->json());
+        $this->assertEqualsFixture('get_user', $response->json());
     }
 
     public function testGet()
@@ -257,7 +257,7 @@ class UserTest extends TestCase
 
         $response->assertOk();
 
-        $this->assertEqualsFixture('get_user.json', $response->json());
+        $this->assertEqualsFixture('get_user', $response->json());
     }
 
     public function testGetNotExists()
@@ -272,26 +272,26 @@ class UserTest extends TestCase
         return [
             [
                 'filter' => ['all' => 1],
-                'fixture' => 'search_by_all_user.json',
+                'fixture' => 'search_by_all_user',
             ],
             [
                 'filter' => [
                     'page' => 1,
                     'per_page' => 2,
                 ],
-                'fixture' => 'search_by_page_per_page_user.json',
+                'fixture' => 'search_by_page_per_page_user',
             ],
             [
                 'filter' => ['query' => 'Another User'],
-                'fixture' => 'get_users_by_name.json',
+                'fixture' => 'get_users_by_name',
             ],
             [
                 'filter' => ['query' => 'admin@example.com'],
-                'fixture' => 'get_users_by_email.json',
+                'fixture' => 'get_users_by_email',
             ],
             [
                 'filter' => ['query' => 'Admin'],
-                'fixture' => 'get_users_by_query.json',
+                'fixture' => 'get_users_by_query',
             ],
             [
                 'filter' => [
@@ -300,14 +300,14 @@ class UserTest extends TestCase
                     'order_by' => 'created_at',
                     'desc' => false,
                 ],
-                'fixture' => 'get_users_complex.json',
+                'fixture' => 'get_users_complex',
             ],
             [
                 'filter' => [
                     'desc' => false,
                     'order_by' => 'name',
                 ],
-                'fixture' => 'get_users_check_order.json',
+                'fixture' => 'get_users_check_order',
             ],
         ];
     }
