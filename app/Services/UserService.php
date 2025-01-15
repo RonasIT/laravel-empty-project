@@ -53,6 +53,12 @@ class UserService extends EntityService
 
     public function forgotPassword(string $email): string
     {
+        $user = $this->withTrashed()->first(['email' => $email]);
+
+        if (!$user || $user->deleted_at) {
+            return Password::RESET_LINK_SENT;
+        }
+
         return Password::sendResetLink(
             credentials: ['email' => $email],
             callback: fn ($user, $token) => Mail::to($user->email)->send(new ForgotPasswordMail(['hash' => $token])),
