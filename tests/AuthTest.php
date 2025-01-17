@@ -274,7 +274,11 @@ class AuthTest extends TestCase
             'email' => 'not_exists@example.com',
         ]);
 
-        $response->assertUnprocessable();
+        $response->assertNoContent();
+
+        $this->assertDatabaseMissing('password_reset_tokens', [
+            'email' => 'not_exists@example.com',
+        ]);
     }
 
     public function testForgotPasswordThrottled()

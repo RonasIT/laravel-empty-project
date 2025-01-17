@@ -53,6 +53,12 @@ class UserService extends EntityService
 
     public function forgotPassword(string $email): string
     {
+        $user = $this->first(['email' => $email]);
+
+        if (empty($user)) {
+            return Password::RESET_LINK_SENT;
+        }
+
         return Password::sendResetLink(
             credentials: ['email' => $email],
             callback: fn ($user, $token) => Mail::to($user->email)->send(new ForgotPasswordMail(['hash' => $token])),
