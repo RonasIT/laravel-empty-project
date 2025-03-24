@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Tests\Support\AuthTestTrait;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Testing\Fluent\AssertableJson;
-use RonasIT\Support\Tests\ModelTestState;
+use RonasIT\Support\Testing\ModelTestState;
 
 class AuthTest extends TestCase
 {
