@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b6e075a9902c97638b29016c47ca0279",
+    "content-hash": "644c73d1d421325fc800e48a62a039d9",
     "packages": [
         {
             "name": "brick/math",
@@ -5662,26 +5662,25 @@
         },
         {
             "name": "ronasit/laravel-helpers",
-            "version": "3.1.7",
+            "version": "3.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RonasIT/laravel-helpers.git",
-                "reference": "45d228ba8d145575623d315dd8d06ec3922ac30b"
+                "reference": "581b1a338c1b1e375f11148ec93323f786406548"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RonasIT/laravel-helpers/zipball/45d228ba8d145575623d315dd8d06ec3922ac30b",
-                "reference": "45d228ba8d145575623d315dd8d06ec3922ac30b",
+                "url": "https://api.github.com/repos/RonasIT/laravel-helpers/zipball/581b1a338c1b1e375f11148ec93323f786406548",
+                "reference": "581b1a338c1b1e375f11148ec93323f786406548",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "guzzlehttp/guzzle": "^7.9.2",
-                "laravel/framework": "^11.20",
+                "laravel/framework": ">=11.20",
                 "maatwebsite/excel": "^3.1.55",
                 "php": ">=8.3",
-                "php-mock/php-mock-phpunit": "^2.10",
-                "tecnickcom/tcpdf": "^6.7.5"
+                "php-mock/php-mock-phpunit": "^2.10"
             },
             "require-dev": {
                 "brainmaestro/composer-git-hooks": "^3.0",
@@ -5716,9 +5715,7 @@
                     "src/helpers.php"
                 ],
                 "psr-4": {
-                    "RonasIT\\Support\\": "src/",
-                    "RonasIT\\Support\\Tests\\": "tests/",
-                    "RonasIT\\Support\\Tests\\Support\\": "tests/support/"
+                    "RonasIT\\Support\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -5738,27 +5735,27 @@
             ],
             "support": {
                 "issues": "https://github.com/RonasIT/laravel-helpers/issues",
-                "source": "https://github.com/RonasIT/laravel-helpers/tree/3.1.7"
+                "source": "https://github.com/RonasIT/laravel-helpers/tree/3.3.1"
             },
-            "time": "2025-01-10T06:32:49+00:00"
+            "time": "2025-03-18T16:24:43+00:00"
         },
         {
             "name": "ronasit/laravel-swagger",
-            "version": "3.1",
+            "version": "3.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RonasIT/laravel-swagger.git",
-                "reference": "9895e8e4b32468e542323504b9fe046b1533c49f"
+                "reference": "d8dea15cbbc76d1cf07d75c9fb4cb4474b4eb30b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RonasIT/laravel-swagger/zipball/9895e8e4b32468e542323504b9fe046b1533c49f",
-                "reference": "9895e8e4b32468e542323504b9fe046b1533c49f",
+                "url": "https://api.github.com/repos/RonasIT/laravel-swagger/zipball/d8dea15cbbc76d1cf07d75c9fb4cb4474b4eb30b",
+                "reference": "d8dea15cbbc76d1cf07d75c9fb4cb4474b4eb30b",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "laravel/framework": "^11.34",
+                "laravel/framework": ">=11.34",
                 "php": "^8.3",
                 "phpunit/phpunit": "^11.4"
             },
@@ -5798,14 +5795,13 @@
                 "auto-documentation",
                 "laravel",
                 "rest-api",
-                "swagger",
-                "testing"
+                "swagger"
             ],
             "support": {
                 "issues": "https://github.com/RonasIT/laravel-swagger/issues",
-                "source": "https://github.com/RonasIT/laravel-swagger/tree/3.1"
+                "source": "https://github.com/RonasIT/laravel-swagger/tree/3.1.5"
             },
-            "time": "2024-12-02T05:35:31+00:00"
+            "time": "2025-03-18T13:10:20+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -9792,78 +9788,6 @@
             "time": "2024-11-08T15:48:14+00:00"
         },
         {
-            "name": "tecnickcom/tcpdf",
-            "version": "6.7.7",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/tecnickcom/TCPDF.git",
-                "reference": "cfbc0028cc23f057f2baf9e73bdc238153c22086"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/tecnickcom/TCPDF/zipball/cfbc0028cc23f057f2baf9e73bdc238153c22086",
-                "reference": "cfbc0028cc23f057f2baf9e73bdc238153c22086",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.5.0"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "config",
-                    "include",
-                    "tcpdf.php",
-                    "tcpdf_parser.php",
-                    "tcpdf_import.php",
-                    "tcpdf_barcodes_1d.php",
-                    "tcpdf_barcodes_2d.php",
-                    "include/tcpdf_colors.php",
-                    "include/tcpdf_filters.php",
-                    "include/tcpdf_font_data.php",
-                    "include/tcpdf_fonts.php",
-                    "include/tcpdf_images.php",
-                    "include/tcpdf_static.php",
-                    "include/barcodes/datamatrix.php",
-                    "include/barcodes/pdf417.php",
-                    "include/barcodes/qrcode.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-3.0-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "Nicola Asuni",
-                    "email": "info@tecnick.com",
-                    "role": "lead"
-                }
-            ],
-            "description": "TCPDF is a PHP class for generating PDF documents and barcodes.",
-            "homepage": "http://www.tcpdf.org/",
-            "keywords": [
-                "PDFD32000-2008",
-                "TCPDF",
-                "barcodes",
-                "datamatrix",
-                "pdf",
-                "pdf417",
-                "qrcode"
-            ],
-            "support": {
-                "issues": "https://github.com/tecnickcom/TCPDF/issues",
-                "source": "https://github.com/tecnickcom/TCPDF/tree/6.7.7"
-            },
-            "funding": [
-                {
-                    "url": "https://www.paypal.com/cgi-bin/webscr?cmd=_donations&currency_code=GBP&business=paypal@tecnick.com&item_name=donation%20for%20tcpdf%20project",
-                    "type": "custom"
-                }
-            ],
-            "time": "2024-10-26T12:15:02+00:00"
-        },
-        {
             "name": "theseer/tokenizer",
             "version": "1.2.3",
             "source": {
@@ -11216,22 +11140,22 @@
         },
         {
             "name": "ronasit/laravel-entity-generator",
-            "version": "3.2.2",
+            "version": "3.3.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RonasIT/laravel-entity-generator.git",
-                "reference": "208a33722883e63043d6d5c47c673a3619ed59d6"
+                "reference": "55c3234207cca370c85bc2274cf7cb251a777299"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RonasIT/laravel-entity-generator/zipball/208a33722883e63043d6d5c47c673a3619ed59d6",
-                "reference": "208a33722883e63043d6d5c47c673a3619ed59d6",
+                "url": "https://api.github.com/repos/RonasIT/laravel-entity-generator/zipball/55c3234207cca370c85bc2274cf7cb251a777299",
+                "reference": "55c3234207cca370c85bc2274cf7cb251a777299",
                 "shasum": ""
             },
             "require": {
                 "doctrine/dbal": "^4.2",
                 "ext-json": "*",
-                "laravel/framework": "^11.31.0",
+                "laravel/framework": ">=11.31.0",
                 "laravel/legacy-factories": ">=1.4.0",
                 "php": "^8.3",
                 "ronasit/laravel-helpers": "^3.0.1-beta"
@@ -11278,22 +11202,22 @@
             ],
             "support": {
                 "issues": "https://github.com/RonasIT/laravel-entity-generator/issues",
-                "source": "https://github.com/RonasIT/laravel-entity-generator/tree/3.2.2"
+                "source": "https://github.com/RonasIT/laravel-entity-generator/tree/3.3.2"
             },
-            "time": "2024-12-02T04:37:33+00:00"
+            "time": "2025-03-18T13:08:50+00:00"
         },
         {
             "name": "ronasit/laravel-project-initializator",
-            "version": "0.1",
+            "version": "0.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RonasIT/laravel-project-initializator.git",
-                "reference": "e9c17c4fbfd8ba6959f895c21f2328cd28666e28"
+                "reference": "ef22ad954688cd8dc499fde123847c9ee1fce156"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RonasIT/laravel-project-initializator/zipball/e9c17c4fbfd8ba6959f895c21f2328cd28666e28",
-                "reference": "e9c17c4fbfd8ba6959f895c21f2328cd28666e28",
+                "url": "https://api.github.com/repos/RonasIT/laravel-project-initializator/zipball/ef22ad954688cd8dc499fde123847c9ee1fce156",
+                "reference": "ef22ad954688cd8dc499fde123847c9ee1fce156",
                 "shasum": ""
             },
             "require": {
@@ -11344,9 +11268,9 @@
             ],
             "support": {
                 "issues": "https://github.com/RonasIT/laravel-project-initializator/issues",
-                "source": "https://github.com/RonasIT/laravel-project-initializator/tree/0.1"
+                "source": "https://github.com/RonasIT/laravel-project-initializator/tree/0.1.3"
             },
-            "time": "2024-12-09T08:17:14+00:00"
+            "time": "2025-02-17T06:14:01+00:00"
         },
         {
             "name": "symfony/config",
@@ -11626,7 +11550,7 @@
     ],
     "aliases": [],
     "minimum-stability": "beta",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

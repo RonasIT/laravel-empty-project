@@ -9,7 +9,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Testing\TestResponse;
 use RonasIT\AutoDoc\Traits\AutoDocTestCaseTrait;
-use RonasIT\Support\Tests\TestCase as BaseTestCase;
+use RonasIT\Support\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {

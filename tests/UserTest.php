@@ -5,7 +5,7 @@ namespace App\Tests;
 use App\Models\User;
 use App\Tests\Support\AuthTestTrait;
 use PHPUnit\Framework\Attributes\DataProvider;
-use RonasIT\Support\Tests\ModelTestState;
+use RonasIT\Support\Testing\ModelTestState;
 
 class UserTest extends TestCase
 {
