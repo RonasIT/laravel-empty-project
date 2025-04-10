@@ -101,11 +101,8 @@ return Application::configure(basePath: dirname(__DIR__))
         });
 
         $exceptions->render(function (HttpException $exception, Request $request) {
-            return $request->expectsJson()
-                ? response()->json(
-                    ['error' => $exception->getMessage()],
-                    $exception->getStatusCode(),
-                )
+            return ($request->expectsJson())
+                ? response()->json(['error' => $exception->getMessage()], $exception->getStatusCode())
                 : null;
         });
 
