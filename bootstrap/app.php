@@ -20,6 +20,7 @@ use Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode;
 use Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull;
 use Illuminate\Foundation\Http\Middleware\ValidatePostSize;
 use Illuminate\Http\Middleware\HandleCors;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Routing\Middleware\ThrottleRequests;
 use Illuminate\Session\Middleware\StartSession;
@@ -97,6 +98,12 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $exceptions->render(function (ExpectationFailedException $exception) {
             throw $exception;
+        });
+
+        $exceptions->render(function (HttpException $exception, Request $request) {
+            return ($request->expectsJson())
+                ? response()->json(['error' => $exception->getMessage()], $exception->getStatusCode())
+                : null;
         });
 
         $exceptions->dontFlash([
