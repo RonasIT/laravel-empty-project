@@ -25,7 +25,7 @@ services:
       XDEBUG_CLIENT_HOST: host.docker.internal
 
   pgsql:
-    image: bitnami/postgresql:16
+    image: bitnami/postgresql:17.4.0
     ports:
       - 5432:5432
     environment:
@@ -34,7 +34,7 @@ services:
       - .:/app
 
   pgsql_test:
-    image: bitnami/postgresql:16
+    image: bitnami/postgresql:17.4.0
     ports:
       - 5433:5432
     environment:
