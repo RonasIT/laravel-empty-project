@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Auth;
 
 use App\Http\Resources\BaseJsonResource;
+use App\Http\Resources\User\UserResource;
 use App\Models\User;
 use Symfony\Component\HttpFoundation\Cookie;
 
@@ -22,7 +23,7 @@ class SuccessLoginResource extends BaseJsonResource
             'token' => $this->token,
             'ttl' => config('jwt.ttl'),
             'refresh_ttl' => config('jwt.refresh_ttl'),
-            'user' => $this->user,
+            'user' => UserResource::make($this->user),
         ];
     }
 
