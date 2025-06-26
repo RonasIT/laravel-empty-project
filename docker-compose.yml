@@ -1,7 +1,7 @@
 services:
 
   nginx:
-    image: ghcr.io/ronasit/php-nginx-dev:8.3
+    image: ghcr.io/ronasit/php-nginx-dev:8.4
     working_dir: /app
     command: >
       bash -c "chmod +x ./docker/entrypoint.sh && ./docker/entrypoint.sh && cd /opt/docker && supervisord"
@@ -50,7 +50,7 @@ services:
         - 6379:6379
 
   php:
-    image: webdevops/php:8.3-alpine
+    image: webdevops/php:8.4-alpine
     working_dir: /app
     volumes:
       - ./:/app
