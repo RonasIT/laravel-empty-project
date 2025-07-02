@@ -23,6 +23,8 @@ abstract class TestCase extends BaseTestCase
     {
         parent::setUp();
 
+        $this->setAPIVersion(VersionEnum::last());
+
         $defaultGuard = config('auth.defaults.guard');
 
         self::$isJwtGuard = config("auth.guards.{$defaultGuard}.driver") === 'jwt';
@@ -63,12 +65,5 @@ abstract class TestCase extends BaseTestCase
         }
 
         return parent::call($method, $uri, $parameters, $cookies, $files, $server, $content);
-    }
-
-    public function json($method, $uri, array $data = [], array $headers = [], $options = 0, ?VersionEnum $apiVersion = null): TestResponse
-    {
-        $apiVersion = (empty($apiVersion)) ? last(VersionEnum::values()) : $apiVersion->value;
-
-        return parent::json($method, "/v{$apiVersion}{$uri}", $data, $headers);
     }
 }
