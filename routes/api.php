@@ -14,9 +14,9 @@ Route::prefix('v{version}')
 
                 Route::controller(UserController::class)->group(function () {
                     Route::post('users', 'create');
-                    Route::put('users/{id}', 'update');
-                    Route::delete('users/{id}', 'delete');
-                    Route::get('users/{id}', 'get');
+                    Route::put('users/{id}', 'update')->whereNumber('id');
+                    Route::delete('users/{id}', 'delete')->whereNumber('id');
+                    Route::get('users/{id}', 'get')->whereNumber('id');
                     Route::get('users', 'search');
                     Route::get('profile', 'profile');
                     Route::put('profile', 'updateProfile');
