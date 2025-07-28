@@ -260,6 +260,15 @@ class UserTest extends TestCase
         $this->assertEqualsFixture('get_user', $response->json());
     }
 
+    public function testGetWrongUrl()
+    {
+        $response = $this->actingAs(self::$admin)->json('get', '/users/test');
+
+        $response->assertNotFound();
+
+        $response->assertJson(['error' => 'The route v0.1/users/test could not be found.']);
+    }
+
     public function testGetNotExists()
     {
         $response = $this->actingAs(self::$admin)->json('get', '/users/0');
