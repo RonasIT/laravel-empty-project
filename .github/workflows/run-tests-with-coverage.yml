@@ -2,9 +2,9 @@ name: Run tests with coverage
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "development" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "development" ]
 
 jobs:
   tests-with-coverage:
