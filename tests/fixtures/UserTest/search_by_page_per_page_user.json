@@ -14,8 +14,8 @@
         }
     ],
     "links": {
-        "first": "http:\/\/localhost\/v0.1\/users?page=1",
-        "last": "http:\/\/localhost\/v0.1\/users?page=1",
+        "first": "https:\/\/localhost\/v0.1\/users?page=1",
+        "last": "https:\/\/localhost\/v0.1\/users?page=1",
         "prev": null,
         "next": null
     },
@@ -30,7 +30,7 @@
                 "active": false
             },
             {
-                "url": "http:\/\/localhost\/v0.1\/users?page=1",
+                "url": "https:\/\/localhost\/v0.1\/users?page=1",
                 "label": "1",
                 "active": true
             },
@@ -40,7 +40,7 @@
                 "active": false
             }
         ],
-        "path": "http:\/\/localhost\/v0.1\/users",
+        "path": "https:\/\/localhost\/v0.1\/users",
         "per_page": 2,
         "to": 2,
         "total": 2

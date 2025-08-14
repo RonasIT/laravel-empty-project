@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "843d293f052ea09bac864fa29f7c45d7",
+    "content-hash": "9bb7361400fb04e45d7f17db10814c0f",
     "packages": [
         {
             "name": "brick/math",
@@ -3980,16 +3980,16 @@
         },
         {
             "name": "nikic/php-parser",
-            "version": "v5.4.0",
+            "version": "v5.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/nikic/PHP-Parser.git",
-                "reference": "447a020a1f875a434d62f2a401f53b82a396e494"
+                "reference": "f103601b29efebd7ff4a1ca7b3eeea9e3336a2a2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/447a020a1f875a434d62f2a401f53b82a396e494",
-                "reference": "447a020a1f875a434d62f2a401f53b82a396e494",
+                "url": "https://api.github.com/repos/nikic/PHP-Parser/zipball/f103601b29efebd7ff4a1ca7b3eeea9e3336a2a2",
+                "reference": "f103601b29efebd7ff4a1ca7b3eeea9e3336a2a2",
                 "shasum": ""
             },
             "require": {
@@ -4008,7 +4008,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "5.0-dev"
+                    "dev-master": "5.x-dev"
                 }
             },
             "autoload": {
@@ -4032,9 +4032,9 @@
             ],
             "support": {
                 "issues": "https://github.com/nikic/PHP-Parser/issues",
-                "source": "https://github.com/nikic/PHP-Parser/tree/v5.4.0"
+                "source": "https://github.com/nikic/PHP-Parser/tree/v5.6.1"
             },
-            "time": "2024-12-30T11:07:19+00:00"
+            "time": "2025-08-13T20:13:15+00:00"
         },
         {
             "name": "nunomaduro/collision",
@@ -6121,16 +6121,16 @@
         },
         {
             "name": "ronasit/laravel-helpers",
-            "version": "3.4.5",
+            "version": "3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RonasIT/laravel-helpers.git",
-                "reference": "d680d000497286a7b8de0d197cecd8baf16fb8d4"
+                "reference": "eeb12597fc85386adf6160e4738aadfb28bbdf2a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RonasIT/laravel-helpers/zipball/d680d000497286a7b8de0d197cecd8baf16fb8d4",
-                "reference": "d680d000497286a7b8de0d197cecd8baf16fb8d4",
+                "url": "https://api.github.com/repos/RonasIT/laravel-helpers/zipball/eeb12597fc85386adf6160e4738aadfb28bbdf2a",
+                "reference": "eeb12597fc85386adf6160e4738aadfb28bbdf2a",
                 "shasum": ""
             },
             "require": {
@@ -6196,34 +6196,35 @@
             ],
             "support": {
                 "issues": "https://github.com/RonasIT/laravel-helpers/issues",
-                "source": "https://github.com/RonasIT/laravel-helpers/tree/3.4.5"
+                "source": "https://github.com/RonasIT/laravel-helpers/tree/3.5"
             },
-            "time": "2025-06-23T08:22:31+00:00"
+            "time": "2025-08-13T11:41:48+00:00"
         },
         {
             "name": "ronasit/laravel-swagger",
-            "version": "3.1.5",
+            "version": "3.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RonasIT/laravel-swagger.git",
-                "reference": "d8dea15cbbc76d1cf07d75c9fb4cb4474b4eb30b"
+                "reference": "2a8f884ba5fc3986ab4021367079580f36c63744"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RonasIT/laravel-swagger/zipball/d8dea15cbbc76d1cf07d75c9fb4cb4474b4eb30b",
-                "reference": "d8dea15cbbc76d1cf07d75c9fb4cb4474b4eb30b",
+                "url": "https://api.github.com/repos/RonasIT/laravel-swagger/zipball/2a8f884ba5fc3986ab4021367079580f36c63744",
+                "reference": "2a8f884ba5fc3986ab4021367079580f36c63744",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
                 "laravel/framework": ">=11.34",
                 "php": "^8.3",
-                "phpunit/phpunit": "^11.4"
+                "phpunit/phpunit": ">=11.4"
             },
             "require-dev": {
-                "orchestra/testbench": "^9.3",
+                "orchestra/testbench": ">=9.3",
                 "php-coveralls/php-coveralls": "^2.7",
-                "php-mock/php-mock-phpunit": "^2.10"
+                "php-mock/php-mock-phpunit": ">=2.10",
+                "ronasit/laravel-helpers": "^3.4"
             },
             "type": "library",
             "extra": {
@@ -6260,9 +6261,9 @@
             ],
             "support": {
                 "issues": "https://github.com/RonasIT/laravel-swagger/issues",
-                "source": "https://github.com/RonasIT/laravel-swagger/tree/3.1.5"
+                "source": "https://github.com/RonasIT/laravel-swagger/tree/3.2.3"
             },
-            "time": "2025-03-18T13:10:20+00:00"
+            "time": "2025-08-14T08:52:43+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -11676,7 +11677,7 @@
     ],
     "aliases": [],
     "minimum-stability": "beta",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
