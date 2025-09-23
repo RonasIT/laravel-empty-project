@@ -8,7 +8,7 @@ return [
         'controllers' => 'app/Http/Controllers',
         'migrations' => 'database/migrations',
         'seeders' => 'database/seeders',
-        'database_seeder' => 'database/seeds/DatabaseSeeder.php',
+        'database_seeder' => 'database/seeders/DatabaseSeeder.php',
         'repositories' => 'app/Repositories',
         'tests' => 'tests',
         'routes' => 'routes/api.php',
