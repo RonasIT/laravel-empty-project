@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Middleware\CheckVersionMiddleware;
-use App\Http\Middleware\ClearVersion;
 use App\Http\Middleware\EncryptCookies;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Http\Middleware\TrimStrings;
@@ -29,6 +27,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use PHPUnit\Framework\ExpectationFailedException;
 use RonasIT\AutoDoc\Http\Middleware\AutoDocMiddleware;
+use RonasIT\Support\Http\Middleware\VersioningMiddleware;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 return Application::configure(basePath: dirname(__DIR__))
@@ -58,7 +57,6 @@ return Application::configure(basePath: dirname(__DIR__))
             'guest' => RedirectIfAuthenticated::class,
             'throttle' => ThrottleRequests::class,
             'maintenance' => CheckForMaintenanceMode::class,
-            'clear_version' => ClearVersion::class,
         ]);
 
         $middleware->group('web', [
@@ -74,7 +72,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->group('api', [
             'throttle:60,1',
             'bindings',
-            CheckVersionMiddleware::class,
+            VersioningMiddleware::class,
         ]);
 
         $middleware->group('auth_group', [

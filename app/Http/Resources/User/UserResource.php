@@ -2,9 +2,9 @@
 
 namespace App\Http\Resources\User;
 
-use App\Http\Resources\BaseJsonResource;
+use RonasIT\Support\Http\BaseResource;
 
-class UserResource extends BaseJsonResource
+class UserResource extends BaseResource
 {
     public function toArray($request): array
     {

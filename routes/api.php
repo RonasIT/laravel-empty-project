@@ -6,7 +6,6 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\UserController;
 
 Route::prefix('v{version}')
-    ->middleware('clear_version')
     ->group(function () {
         Route::versionFrom(VersionEnum::v0_1)->group(function () {
             Route::middleware('auth_group')->group(function () {

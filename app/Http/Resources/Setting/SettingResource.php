@@ -2,9 +2,9 @@
 
 namespace App\Http\Resources\Setting;
 
-use App\Http\Resources\BaseJsonResource;
+use RonasIT\Support\Http\BaseResource;
 
-class SettingResource extends BaseJsonResource
+class SettingResource extends BaseResource
 {
     public function toArray($request): array
     {

@@ -36,7 +36,7 @@
     "php-coveralls/php-coveralls": "^2.8",
     "phpunit/phpunit": "^12.3",
     "ronasit/laravel-entity-generator": "^3.3",
-    "ronasit/laravel-project-initializator": "^0.1.9"
+    "ronasit/laravel-project-initializator": "^0.2.0"
   },
   "autoload": {
     "classmap": [
