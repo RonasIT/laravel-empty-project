@@ -2,10 +2,10 @@
 
 namespace App\Http\Resources\Auth;
 
-use App\Http\Resources\BaseJsonResource;
+use RonasIT\Support\Http\BaseResource;
 use Symfony\Component\HttpFoundation\Cookie;
 
-class RefreshTokenResource extends BaseJsonResource
+class RefreshTokenResource extends BaseResource
 {
     public function __construct(
         protected string $newToken,

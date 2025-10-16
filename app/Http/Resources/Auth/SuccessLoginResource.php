@@ -2,12 +2,12 @@
 
 namespace App\Http\Resources\Auth;
 
-use App\Http\Resources\BaseJsonResource;
 use App\Http\Resources\User\UserResource;
 use App\Models\User;
+use RonasIT\Support\Http\BaseResource;
 use Symfony\Component\HttpFoundation\Cookie;
 
-class SuccessLoginResource extends BaseJsonResource
+class SuccessLoginResource extends BaseResource
 {
     public function __construct(
         protected string $token,
