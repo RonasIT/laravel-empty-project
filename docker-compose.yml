@@ -25,25 +25,25 @@ services:
       XDEBUG_CLIENT_HOST: host.docker.internal
 
   pgsql:
-    image: bitnami/postgresql:17.4.0
+    image: postgres:17.6
     ports:
       - 5432:5432
     environment:
-      ALLOW_EMPTY_PASSWORD: "yes"
+      POSTGRES_HOST_AUTH_METHOD: "trust"
     volumes:
       - .:/app
 
   pgsql_test:
-    image: bitnami/postgresql:17.4.0
+    image: postgres:17.6
     ports:
       - 5433:5432
     environment:
-      ALLOW_EMPTY_PASSWORD: "yes"
+      POSTGRES_HOST_AUTH_METHOD: "trust"
     volumes:
       - .:/app
 
   redis:
-    image: bitnami/redis:7.4
+    image: redis:8.2.3
     environment:
       ALLOW_EMPTY_PASSWORD: "yes"
     ports:

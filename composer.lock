@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e6b80d8fb035d51ac17dc47aa19570e5",
+    "content-hash": "27fe1c93937aa2cdefe6230ab162855e",
     "packages": [
         {
             "name": "brick/math",
@@ -2036,16 +2036,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v12.34.0",
+            "version": "v12.37.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "f9ec5a5d88bc8c468f17b59f88e05c8ac3c8d687"
+                "reference": "3c3c4ad30f5b528b164a7c09aa4ad03118c4c125"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/f9ec5a5d88bc8c468f17b59f88e05c8ac3c8d687",
-                "reference": "f9ec5a5d88bc8c468f17b59f88e05c8ac3c8d687",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/3c3c4ad30f5b528b164a7c09aa4ad03118c4c125",
+                "reference": "3c3c4ad30f5b528b164a7c09aa4ad03118c4c125",
                 "shasum": ""
             },
             "require": {
@@ -2251,7 +2251,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2025-10-14T13:58:31+00:00"
+            "time": "2025-11-04T15:39:33+00:00"
         },
         {
             "name": "laravel/legacy-factories",
@@ -4553,16 +4553,16 @@
         },
         {
             "name": "php-open-source-saver/jwt-auth",
-            "version": "v2.8.2",
+            "version": "v2.8.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-Open-Source-Saver/jwt-auth.git",
-                "reference": "9af3bd953b5671247c330562183e159f10700533"
+                "reference": "563f7dc025f48b9ecbacc271da509bbb4c6b3b23"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-Open-Source-Saver/jwt-auth/zipball/9af3bd953b5671247c330562183e159f10700533",
-                "reference": "9af3bd953b5671247c330562183e159f10700533",
+                "url": "https://api.github.com/repos/PHP-Open-Source-Saver/jwt-auth/zipball/563f7dc025f48b9ecbacc271da509bbb4c6b3b23",
+                "reference": "563f7dc025f48b9ecbacc271da509bbb4c6b3b23",
                 "shasum": ""
             },
             "require": {
@@ -4645,7 +4645,7 @@
                 "issues": "https://github.com/PHP-Open-Source-Saver/jwt-auth/issues",
                 "source": "https://github.com/PHP-Open-Source-Saver/jwt-auth"
             },
-            "time": "2025-03-17T11:41:37+00:00"
+            "time": "2025-10-15T12:02:51+00:00"
         },
         {
             "name": "phpoffice/phpspreadsheet",
@@ -5164,16 +5164,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "12.4.1",
+            "version": "12.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "fc5413a2e6d240d2f6d9317bdf7f0a24e73de194"
+                "reference": "a94ea4d26d865875803b23aaf78c3c2c670ea2ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/fc5413a2e6d240d2f6d9317bdf7f0a24e73de194",
-                "reference": "fc5413a2e6d240d2f6d9317bdf7f0a24e73de194",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/a94ea4d26d865875803b23aaf78c3c2c670ea2ea",
+                "reference": "a94ea4d26d865875803b23aaf78c3c2c670ea2ea",
                 "shasum": ""
             },
             "require": {
@@ -5241,7 +5241,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/12.4.1"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/12.4.2"
             },
             "funding": [
                 {
@@ -5265,7 +5265,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-10-09T14:08:29+00:00"
+            "time": "2025-10-30T08:41:39+00:00"
         },
         {
             "name": "psr/cache",
@@ -11495,16 +11495,16 @@
         },
         {
             "name": "ronasit/laravel-entity-generator",
-            "version": "3.3.8",
+            "version": "3.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RonasIT/laravel-entity-generator.git",
-                "reference": "59bfe879cbb74b4d27a8a90f5c443eb3f542ad43"
+                "reference": "55a07ef5f098b47a47304d68843f1cdd0cf2e9c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RonasIT/laravel-entity-generator/zipball/59bfe879cbb74b4d27a8a90f5c443eb3f542ad43",
-                "reference": "59bfe879cbb74b4d27a8a90f5c443eb3f542ad43",
+                "url": "https://api.github.com/repos/RonasIT/laravel-entity-generator/zipball/55a07ef5f098b47a47304d68843f1cdd0cf2e9c1",
+                "reference": "55a07ef5f098b47a47304d68843f1cdd0cf2e9c1",
                 "shasum": ""
             },
             "require": {
@@ -11554,9 +11554,9 @@
             ],
             "support": {
                 "issues": "https://github.com/RonasIT/laravel-entity-generator/issues",
-                "source": "https://github.com/RonasIT/laravel-entity-generator/tree/3.3.8"
+                "source": "https://github.com/RonasIT/laravel-entity-generator/tree/3.4.4"
             },
-            "time": "2025-09-12T07:19:10+00:00"
+            "time": "2025-11-03T15:46:35+00:00"
         },
         {
             "name": "ronasit/laravel-project-initializator",
@@ -11964,11 +11964,11 @@
     ],
     "aliases": [],
     "minimum-stability": "beta",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": "^8.3",
+        "php": "^8.4",
         "ext-openssl": "*"
     },
     "platform-dev": {
