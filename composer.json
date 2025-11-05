@@ -24,7 +24,8 @@
     "spatie/laravel-ignition": "^2.9",
     "symfony/http-client": "^v7.3.0",
     "symfony/mailgun-mailer": "^v7.3.0",
-    "symfony/postmark-mailer": "^v7.3.0"
+    "symfony/postmark-mailer": "^v7.3.0",
+    "symfony/console": "7.3"
   },
   "require-dev": {
     "ext-json": "*",
