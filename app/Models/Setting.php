@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\Auth;
 use RonasIT\Support\Traits\ModelTrait;
 
 class Setting extends Model
@@ -23,11 +22,7 @@ class Setting extends Model
 
     public function scopeApplySettingPermissionRestrictions(Builder $query): void
     {
-        $user = Auth::user();
-
-        if ($user && !$user->isAdmin()) {
-            $query->where('is_public', true);
-        }
+        $query->where('is_public', true);
     }
 
     protected function casts(): array

@@ -11,7 +11,6 @@ class UserTest extends TestCase
 {
     use AuthTestTrait;
 
-    protected static User $admin;
     protected static User $user;
 
     protected static ModelTestState $userState;
@@ -20,112 +19,16 @@ class UserTest extends TestCase
     {
         parent::setUp();
 
-        self::$admin ??= User::find(1);
-        self::$user ??= User::find(2);
+        self::$user ??= User::find(1);
 
         self::$userState ??= new ModelTestState(User::class);
-    }
-
-    public function testCreate()
-    {
-        $this->mockBcryptHasher('123123');
-
-        $data = $this->getJsonFixture('create_user');
-
-        $response = $this->actingAs(self::$admin)->json('post', '/users', $data);
-
-        $response->assertCreated();
-
-        $this->assertEqualsFixture('user_created', $response->json());
-
-        self::$userState->assertChangesEqualsFixture('user_created_users_state');
-    }
-
-    public function testCreateNoAuth()
-    {
-        $data = $this->getJsonFixture('create_user');
-
-        $response = $this->json('post', '/users', $data);
-
-        $response->assertUnauthorized();
-
-        self::$userState->assertNotChanged();
-    }
-
-    public function testCreateNoPermission()
-    {
-        $data = $this->getJsonFixture('create_user');
-
-        $response = $this->actingAs(self::$user)->json('post', '/users', $data);
-
-        $response->assertForbidden();
-
-        self::$userState->assertNotChanged();
-    }
-
-    public function testCreateUserExists()
-    {
-        $response = $this->actingAs(self::$admin)->json('post', '/users', self::$user->toArray());
-
-        $response->assertUnprocessable();
-    }
-
-    public function testUpdate()
-    {
-        $data = $this->getJsonFixture('update_user');
-
-        $response = $this->actingAs(self::$admin)->json('put', '/users/2', $data);
-
-        $response->assertNoContent();
-
-        self::$userState->assertChangesEqualsFixture('user_updated_users_state');
-    }
-
-    public function testUpdateByUser()
-    {
-        $data = $this->getJsonFixture('update_user');
-
-        $response = $this->actingAs(self::$user)->json('put', '/users/2', $data);
-
-        $response->assertForbidden();
-    }
-
-    public function testUpdateWithEmailOfAnotherUser()
-    {
-        $response = $this->actingAs(self::$admin)->json('put', '/users/2', [
-            'email' => 'admin@example.com',
-        ]);
-
-        $response->assertUnprocessable();
-
-        self::$userState->assertNotChanged();
-    }
-
-    public function testUpdateNotExists()
-    {
-        $data = $this->getJsonFixture('update_user');
-
-        $response = $this->actingAs(self::$admin)->json('put', '/users/0', $data);
-
-        $response->assertNotFound();
-    }
-
-    public function testUpdateNoAuth()
-    {
-        $data = $this->getJsonFixture('update_user');
-
-        $response = $this->json('put', '/users/1', $data);
-
-        $response->assertUnauthorized();
-
-        self::$userState->assertNotChanged();
     }
 
     public function testUpdateProfile()
     {
         $data = $this->getJsonFixture('update_user');
 
-        $response = $this->actingAs(self::$admin)->json('put', '/profile', $data);
+        $response = $this->actingAs(self::$user)->json('put', '/profile', $data);
 
         $response->assertNoContent();
 
@@ -136,7 +39,7 @@ class UserTest extends TestCase
     {
         $data = $this->getJsonFixture('update_profile_with_password');
 
-        $response = $this->actingAs(self::$user)->json('put', '/profile', $data);
+        $response = $this->actingAs(User::find(2))->json('put', '/profile', $data);
 
         $response->assertNoContent();
     }
@@ -178,9 +81,7 @@ class UserTest extends TestCase
 
         $response->assertCookieExpired('token');
 
-        $this->assertDatabaseMissing('users', [
-            'id' => 2,
-        ]);
+        $this->assertDatabaseMissing('users', ['id' => 1]);
     }
 
     public function testDeleteProfileWithoutBlacklist()
@@ -199,50 +100,9 @@ class UserTest extends TestCase
         $response->assertUnauthorized();
     }
 
-    public function testDeleteProfileAsAdmin()
-    {
-        $response = $this->actingAs(self::$admin)->json('delete', '/profile');
-
-        $response->assertForbidden();
-    }
-
-    public function testDelete()
-    {
-        $response = $this->actingAs(self::$admin)->json('delete', '/users/2');
-
-        $response->assertNoContent();
-
-        self::$userState->assertChangesEqualsFixture('user_deleted_users_state');
-    }
-
-    public function testDeleteOwnUser()
-    {
-        $response = $this->actingAs(self::$admin)->json('delete', '/users/1');
-
-        $response->assertForbidden();
-    }
-
-    public function testDeleteNotExists()
-    {
-        $response = $this->actingAs(self::$admin)->json('delete', '/users/0');
-
-        $response->assertNotFound();
-    }
-
-    public function testDeleteNoAuth()
-    {
-        $response = $this->json('delete', '/users/1');
-
-        $response->assertUnauthorized();
-
-        self::$userState->assertNotChanged();
-    }
-
     public function testGetProfile()
     {
-        $response = $this->actingAs(self::$admin)->json('get', '/profile', [
-            'with' => ['role'],
-        ]);
+        $response = $this->actingAs(self::$user)->json('get', '/profile');
 
         $response->assertOk();
 
@@ -251,7 +111,7 @@ class UserTest extends TestCase
 
     public function testGet()
     {
-        $response = $this->actingAs(self::$admin)->json('get', '/users/1', [
+        $response = $this->actingAs(self::$user)->json('get', '/users/1', [
             'with' => ['role'],
         ]);
 
@@ -262,28 +122,28 @@ class UserTest extends TestCase
 
     public function testGetIdParamAsString()
     {
-        $response = $this->actingAs(self::$admin)->json('get', '/users/test');
+        $response = $this->actingAs(self::$user)->json('get', '/users/test');
 
         $response->assertNotFound();
     }
 
     public function testPutIdParamAsString()
     {
-        $response = $this->actingAs(self::$admin)->json('put', '/users/test');
+        $response = $this->actingAs(self::$user)->json('put', '/users/test');
 
         $response->assertNotFound();
     }
 
     public function testDeleteIdParamAsString()
     {
-        $response = $this->actingAs(self::$admin)->json('delete', '/users/test');
+        $response = $this->actingAs(self::$user)->json('delete', '/users/test');
 
         $response->assertNotFound();
     }
 
     public function testGetNotExists()
     {
-        $response = $this->actingAs(self::$admin)->json('get', '/users/0');
+        $response = $this->actingAs(self::$user)->json('get', '/users/0');
 
         $response->assertNotFound();
     }
@@ -317,7 +177,6 @@ class UserTest extends TestCase
             [
                 'filter' => [
                     'query' => 'Admin',
-                    'with' => ['role'],
                     'order_by' => 'created_at',
                     'desc' => false,
                 ],
@@ -336,7 +195,7 @@ class UserTest extends TestCase
     #[DataProvider('getSearchFilters')]
     public function testSearch(array $filter, string $fixture)
     {
-        $response = $this->actingAs(self::$admin)->json('get', '/users', $filter);
+        $response = $this->actingAs(self::$user)->json('get', '/users', $filter);
 
         $response->assertOk();
 

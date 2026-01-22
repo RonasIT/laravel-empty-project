@@ -3,12 +3,10 @@
 namespace App\Services;
 
 use App\Mail\ForgotPasswordMail;
-use App\Models\Role;
 use App\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
@@ -36,7 +34,6 @@ class UserService extends EntityService
 
     public function create(array $data): Model
     {
-        $data['role_id'] = Arr::get($data, 'role_id', Role::USER);
         $data['password'] = Hash::make($data['password']);
 
         return $this->repository->create($data);
