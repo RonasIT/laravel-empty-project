@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5828a29abe6864355bd8d07fb0fc7048",
+    "content-hash": "e760a64098df81dcb266e54973138157",
     "packages": [
         {
             "name": "brick/math",
@@ -10856,16 +10856,16 @@
         },
         {
             "name": "ronasit/laravel-project-initializator",
-            "version": "0.2.7",
+            "version": "0.2.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RonasIT/laravel-project-initializator.git",
-                "reference": "f2dad49766343142d51e9e1cd2546a4443192086"
+                "reference": "9b2d89abf4cee972ffdd2b46cacb1b675808a047"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RonasIT/laravel-project-initializator/zipball/f2dad49766343142d51e9e1cd2546a4443192086",
-                "reference": "f2dad49766343142d51e9e1cd2546a4443192086",
+                "url": "https://api.github.com/repos/RonasIT/laravel-project-initializator/zipball/9b2d89abf4cee972ffdd2b46cacb1b675808a047",
+                "reference": "9b2d89abf4cee972ffdd2b46cacb1b675808a047",
                 "shasum": ""
             },
             "require": {
@@ -10919,9 +10919,9 @@
             ],
             "support": {
                 "issues": "https://github.com/RonasIT/laravel-project-initializator/issues",
-                "source": "https://github.com/RonasIT/laravel-project-initializator/tree/0.2.7"
+                "source": "https://github.com/RonasIT/laravel-project-initializator/tree/0.2.8"
             },
-            "time": "2026-01-21T08:22:58+00:00"
+            "time": "2026-01-22T08:12:05+00:00"
         },
         {
             "name": "symfony/config",

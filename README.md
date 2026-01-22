@@ -68,8 +68,6 @@ Init your new project.
 php artisan init <project_name>
 ```
 
-Set required configs: `contact.email` in the `configs/auto-doc.php`.
-
 Run tests to generate documentation
 
 ```sh
