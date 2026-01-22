@@ -55,16 +55,6 @@ return [
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
             'throw' => true,
         ],
-
-        'gcs' => [
-            'driver' => 'gcs',
-            'key_file_path' => env('GOOGLE_CLOUD_STORAGE_KEY_FILE_PATH', null),
-            'project_id' => env('GOOGLE_CLOUD_PROJECT_ID'),
-            'bucket' => env('GOOGLE_CLOUD_STORAGE_BUCKET'),
-            'path_prefix' => env('GOOGLE_CLOUD_STORAGE_PATH_PREFIX', null),
-            'visibility' => 'public',
-            'throw' => true,
-        ],
     ],
 
     /*

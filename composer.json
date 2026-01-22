@@ -20,7 +20,6 @@
     "psr/simple-cache": "^3.0",
     "ronasit/laravel-helpers": "^3.5.8",
     "ronasit/laravel-swagger": "^3.2.4",
-    "spatie/laravel-google-cloud-storage": "^2.3",
     "spatie/laravel-ignition": "^2.9",
     "symfony/http-client": "^v7.3.0",
     "symfony/mailgun-mailer": "^v7.3.0",
