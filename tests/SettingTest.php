@@ -19,57 +19,6 @@ class SettingTest extends TestCase
         self::$user ??= User::find(2);
     }
 
-    public function testUpdate()
-    {
-        $setting = $this->getJsonFixture('update_setting');
-
-        $response = $this->actingAs(self::$admin)->json('put', "/settings/{$setting['name']}", $setting['value']);
-
-        $response->assertNoContent();
-
-        $this->assertDatabaseHas('settings', [
-            'name' => $setting['name'],
-            'value' => json_encode($setting['value']),
-        ]);
-    }
-
-    public function testUpdateNotExists()
-    {
-        $setting = $this->getJsonFixture('update_setting');
-
-        $response = $this->actingAs(self::$admin)->json('put', '/settings/not-exists', $setting['value']);
-
-        $response->assertNotFound();
-    }
-
-    public function testUpdateNoAuth()
-    {
-        $setting = $this->getJsonFixture('update_setting');
-
-        $response = $this->json('put', "/settings/{$setting['name']}", $setting['value']);
-
-        $response->assertUnauthorized();
-
-        $this->assertDatabaseMissing('settings', [
-            'name' => $setting['name'],
-            'value' => json_encode($setting['value']),
-        ]);
-    }
-
-    public function testUpdateNoPermission()
-    {
-        $setting = $this->getJsonFixture('update_setting');
-
-        $response = $this->actingAs(self::$user)->json('put', "/settings/{$setting['name']}", $setting['value']);
-
-        $response->assertForbidden();
-
-        $this->assertDatabaseMissing('settings', [
-            'name' => $setting['name'],
-            'value' => json_encode($setting['value']),
-        ]);
-    }
-
     public function testGetAsAdmin()
     {
         $response = $this->actingAs(self::$admin)->json('get', '/settings/states');
@@ -102,7 +51,7 @@ class SettingTest extends TestCase
     {
         $response = $this->actingAs(self::$admin)->json('get', '/settings/0');
 
-        $response->assertNotFound();
+        $response->assertForbidden();
     }
 
     public static function getSearchFilters(): array

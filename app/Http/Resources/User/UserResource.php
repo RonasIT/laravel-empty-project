@@ -12,7 +12,6 @@ class UserResource extends BaseResource
             'id' => $this->resource->id,
             'name' => $this->resource->name,
             'email' => $this->resource->email,
-            'role_id' => $this->resource->role_id,
             'role' => RoleResource::make($this->whenLoaded('role')),
         ];
     }

@@ -12,9 +12,6 @@ Route::prefix('v{version}')
                 Route::post('auth/logout', [AuthController::class, 'logout']);
 
                 Route::controller(UserController::class)->group(function () {
-                    Route::post('users', 'create');
-                    Route::put('users/{id}', 'update')->whereNumber('id');
-                    Route::delete('users/{id}', 'delete')->whereNumber('id');
                     Route::get('users/{id}', 'get')->whereNumber('id');
                     Route::get('users', 'search');
                     Route::get('profile', 'profile');
@@ -23,7 +20,6 @@ Route::prefix('v{version}')
                 });
 
                 Route::controller(SettingController::class)->group(function () {
-                    Route::put('settings/{name}', 'update');
                     Route::get('settings/{name}', 'get');
                     Route::get('settings', 'search');
                 });

@@ -23,6 +23,7 @@ services:
       XDEBUG_DISCOVER_CLIENT_HOST: 0
       XDEBUG_CLIENT_PORT: 9000
       XDEBUG_CLIENT_HOST: host.docker.internal
+      php.xdebug.log_level: 0
 
   pgsql:
     image: postgres:17.6

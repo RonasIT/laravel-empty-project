@@ -8,10 +8,9 @@
             }
         },
         {
-            "name": "mailgun",
+            "name": "settings",
             "value": {
-                "api_key": "superKey",
-                "account_id": "3495"
+                "timezone": "australia"
             }
         }
     ],
@@ -54,6 +53,6 @@
         "path": "https:\/\/localhost\/v0.1\/settings",
         "per_page": 2,
         "to": 2,
-        "total": 4
+        "total": 3
     }
 }

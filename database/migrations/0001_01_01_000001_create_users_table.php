@@ -13,12 +13,6 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->integer('role_id');
-            $table
-                ->foreign('role_id')
-                ->references('id')
-                ->on('roles')
-                ->onUpdate('cascade');
             $table->rememberToken();
             $table->timestamps();
         });

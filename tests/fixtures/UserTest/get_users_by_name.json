@@ -3,8 +3,7 @@
         {
             "id": 2,
             "name": "Another User",
-            "email": "user@example.com",
-            "role_id": 2
+            "email": "user@example.com"
         }
     ],
     "links": {

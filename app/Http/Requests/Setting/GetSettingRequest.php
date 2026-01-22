@@ -17,7 +17,7 @@ class GetSettingRequest extends Request
         $service = app(SettingService::class);
         $this->setting = $service->findBy('name', $this->route('name'));
 
-        return $this->user()->isAdmin() || Arr::get($this->setting, 'is_public');
+        return Arr::get($this->setting, 'is_public', false);
     }
 
     public function validateResolved(): void

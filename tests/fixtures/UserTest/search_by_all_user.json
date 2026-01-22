@@ -3,14 +3,12 @@
         {
             "id": 1,
             "name": "Mr Admin",
-            "email": "admin@example.com",
-            "role_id": 1
+            "email": "admin@example.com"
         },
         {
             "id": 2,
             "name": "Another User",
-            "email": "user@example.com",
-            "role_id": 2
+            "email": "user@example.com"
         }
     ],
     "links": {
