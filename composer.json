@@ -10,21 +10,20 @@
   "require": {
     "php": "^8.4",
     "ext-openssl": "*",
-    "laravel/framework": "^v12.37.0",
+    "laravel/framework": "^12.37.0",
     "laravel/legacy-factories": "^1.4",
     "laravel/tinker": "^2.10",
     "laravel/ui": "^4.6",
     "maatwebsite/excel": "^3.1",
-    "nunomaduro/collision": "^v8.8",
-    "php-open-source-saver/jwt-auth": "^v2.8.3",
+    "nunomaduro/collision": "^8.8",
+    "php-open-source-saver/jwt-auth": "^2.8.3",
     "psr/simple-cache": "^3.0",
     "ronasit/laravel-helpers": "^3.5.8",
     "ronasit/laravel-swagger": "^3.2.4",
     "spatie/laravel-ignition": "^2.9",
-    "symfony/http-client": "^v7.3.0",
-    "symfony/mailgun-mailer": "^v7.3.0",
-    "symfony/postmark-mailer": "^v7.3.0",
-    "symfony/console": "7.3"
+    "symfony/http-client": "^7.3.0",
+    "symfony/mailgun-mailer": "^7.3.0",
+    "symfony/postmark-mailer": "^7.3.0"
   },
   "require-dev": {
     "ext-json": "*",
@@ -34,7 +33,7 @@
     "laravel/pint": "^1.25",
     "mockery/mockery": "^1.6",
     "php-coveralls/php-coveralls": "^2.8",
-    "phpunit/phpunit": "^12.4.2",
+    "phpunit/phpunit": "^13.0.1",
     "ronasit/laravel-entity-generator": "^3.4.4",
     "ronasit/laravel-project-initializator": "^0.2.8"
   },
