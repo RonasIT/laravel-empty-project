@@ -8,11 +8,11 @@
   "license": "MIT",
   "type": "project",
   "require": {
-    "php": "^8.4",
+    "php": "^8.4.1",
     "ext-openssl": "*",
     "laravel/framework": "^12.37.0",
     "laravel/legacy-factories": "^1.4",
-    "laravel/tinker": "^2.10",
+    "laravel/tinker": "^3",
     "laravel/ui": "^4.6",
     "maatwebsite/excel": "^3.1",
     "nunomaduro/collision": "^8.8",
@@ -21,13 +21,13 @@
     "ronasit/laravel-helpers": "^3.5.8",
     "ronasit/laravel-swagger": "^3.2.4",
     "spatie/laravel-ignition": "^2.9",
-    "symfony/http-client": "^7.3.0",
-    "symfony/mailgun-mailer": "^7.3.0",
-    "symfony/postmark-mailer": "^7.3.0"
+    "symfony/http-client": "^8",
+    "symfony/mailgun-mailer": "^8",
+    "symfony/postmark-mailer": "^8"
   },
   "require-dev": {
     "ext-json": "*",
-    "barryvdh/laravel-ide-helper": "^v3.6.0",
+    "barryvdh/laravel-ide-helper": "^3.6.0",
     "brainmaestro/composer-git-hooks": "^3.0",
     "fakerphp/faker": "^1.24",
     "laravel/pint": "^1.25",
