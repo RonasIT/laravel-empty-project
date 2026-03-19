@@ -21,7 +21,7 @@ jobs:
 
     services:
       postgres:
-        image: postgres:17.4
+        image: postgres:18.3
         env:
           POSTGRES_PASSWORD: ""
           POSTGRES_USER: forge
