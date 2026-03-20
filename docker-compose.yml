@@ -44,7 +44,7 @@ services:
       - .:/app
 
   redis:
-    image: redis:8.2.3
+    image: redis:8.6
     environment:
       ALLOW_EMPTY_PASSWORD: "yes"
     ports:
