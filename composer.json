@@ -28,7 +28,6 @@
   "require-dev": {
     "ext-json": "*",
     "barryvdh/laravel-ide-helper": "^3.6.0",
-    "brainmaestro/composer-git-hooks": "^3.0",
     "fakerphp/faker": "^1.24",
     "laravel/pint": "^1.25",
     "mockery/mockery": "^1.6",
@@ -58,16 +57,14 @@
       "php artisan clear-compiled",
       "[ $COMPOSER_DEV_MODE -eq 0 ] || php artisan ide-helper:generate",
       "[ $COMPOSER_DEV_MODE -eq 0 ] || php artisan ide-helper:meta",
-      "[ $COMPOSER_DEV_MODE -eq 0 ] || php artisan ide-helper:models -N",
-      "[ $COMPOSER_DEV_MODE -eq 0 ] || cghooks add --ignore-lock"
+      "[ $COMPOSER_DEV_MODE -eq 0 ] || php artisan ide-helper:models -N"
     ],
     "post-update-cmd": [
       "Illuminate\\Foundation\\ComposerScripts::postUpdate",
       "php artisan clear-compiled",
       "php artisan ide-helper:generate",
       "php artisan ide-helper:meta",
-      "php artisan ide-helper:models -N",
-      "cghooks update"
+      "php artisan ide-helper:models -N"
     ],
     "post-root-package-install": [
       "php -r \"copy('.env.example', '.env');\""
@@ -80,16 +77,6 @@
     "preferred-install": "dist",
     "sort-packages": true,
     "optimize-autoloader": true
-  },
-  "extra": {
-    "hooks": {
-      "config": {
-        "stop-on-failure": ["pre-commit"]
-      },
-      "pre-commit": [
-        "docker compose up -d php && docker compose exec -T nginx vendor/bin/pint --repair"
-      ]
-    }
   },
   "minimum-stability": "beta"
 }
