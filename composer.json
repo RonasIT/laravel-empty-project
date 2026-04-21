@@ -32,7 +32,6 @@
     "fakerphp/faker": "^1.24",
     "laravel/pint": "^1.25",
     "mockery/mockery": "^1.6",
-    "php-coveralls/php-coveralls": "^2.8",
     "phpunit/phpunit": "^13.0.1",
     "ronasit/laravel-entity-generator": "^4",
     "ronasit/laravel-project-initializator": "^0.2.11"
