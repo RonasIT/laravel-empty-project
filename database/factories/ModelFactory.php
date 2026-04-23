@@ -1,6 +1,10 @@
 <?php
 
 use App\Models\Role;
+use App\Models\Setting;
+use App\Models\User;
+use Faker\Generator;
+use Illuminate\Database\Eloquent\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -15,8 +19,8 @@ use Illuminate\Support\Str;
 |
 */
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(App\Models\User::class, function (Faker\Generator $faker) {
+/** @var Factory $factory */
+$factory->define(User::class, function (Generator $faker) {
     static $password;
 
     return [
@@ -28,12 +32,12 @@ $factory->define(App\Models\User::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(App\Models\Role::class, function () {
+$factory->define(Role::class, function () {
     return [
         'name' => 'user',
     ];
 });
-$factory->define(App\Models\Setting::class, function (Faker\Generator $faker) {
+$factory->define(Setting::class, function (Generator $faker) {
     return [
         'key' => $faker->word,
         'value' => $faker->word,

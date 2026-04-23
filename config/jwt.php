@@ -1,5 +1,9 @@
 <?php
 
+use PHPOpenSourceSaver\JWTAuth\Providers\Auth\Illuminate as AuthIlluminateProvider;
+use PHPOpenSourceSaver\JWTAuth\Providers\JWT\Lcobucci as JWTLcobucciProvider;
+use PHPOpenSourceSaver\JWTAuth\Providers\Storage\Illuminate as StorageIlluminateProvider;
+
 /*
  * This file is part of jwt-auth.
  *
@@ -274,7 +278,7 @@ return [
         |
         */
 
-        'jwt' => PHPOpenSourceSaver\JWTAuth\Providers\JWT\Lcobucci::class,
+        'jwt' => JWTLcobucciProvider::class,
 
         /*
         |--------------------------------------------------------------------------
@@ -285,7 +289,7 @@ return [
         |
         */
 
-        'auth' => PHPOpenSourceSaver\JWTAuth\Providers\Auth\Illuminate::class,
+        'auth' => AuthIlluminateProvider::class,
 
         /*
         |--------------------------------------------------------------------------
@@ -296,7 +300,7 @@ return [
         |
         */
 
-        'storage' => PHPOpenSourceSaver\JWTAuth\Providers\Storage\Illuminate::class,
+        'storage' => StorageIlluminateProvider::class,
 
     ],
 
